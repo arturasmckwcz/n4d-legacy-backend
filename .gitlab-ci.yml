@@ -1,0 +1,18 @@
+stages:
+  - pre-commit
+
+before_script:
+  - apt update && apt install -y curl bash git
+  - curl -LsSf https://astral.sh/uv/install.sh | sh
+  - export PATH=$PATH:/root/.cargo/bin
+  - uv venv
+  - source .venv/bin/activate
+  - uv pip install -r requirements.txt -r dev-requirements.txt
+
+pre-commit:
+  stage: pre-commit
+  image: python:3.12-slim
+  script:
+    - pre-commit run --all-files
+  rules:
+    - when: always
