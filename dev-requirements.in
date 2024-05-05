@@ -1,0 +1,6 @@
+-r requirements.txt
+ruff
+pyright
+pre-commit
+pytest
+ruff-lsp
