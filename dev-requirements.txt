@@ -12,6 +12,7 @@ cattrs==23.2.3
     #   pygls
 cfgv==3.4.0
     # via pre-commit
+coverage==7.5.1
 distlib==0.3.8
     # via virtualenv
 django==5.0.4

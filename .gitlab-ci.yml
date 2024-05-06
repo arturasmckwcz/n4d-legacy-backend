@@ -1,5 +1,5 @@
 stages:
-  - pre-commit
+  - code-check
 
 before_script:
   - apt update && apt install -y curl bash git
@@ -10,9 +10,18 @@ before_script:
   - uv pip install -r requirements.txt -r dev-requirements.txt
 
 pre-commit:
-  stage: pre-commit
+  stage: code-check
   image: python:3.12-slim
   script:
     - pre-commit run --all-files
   rules:
     - when: always
+
+pyright:
+  stage: code-check
+  image: python:3.12-slim
+  script:
+    - pyright -p pyrightconfig-ci.json
+  rules:
+    - when: always
+

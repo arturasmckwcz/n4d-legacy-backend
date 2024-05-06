@@ -4,3 +4,5 @@ pyright
 pre-commit
 pytest
 ruff-lsp
+coverage
+django-types
