@@ -1,1 +1,5 @@
-django
+djangorestframework
+djoser
+django-cors-headers
+python-dotenv
+django-ses
