@@ -1,0 +1,23 @@
+services:
+  django:
+    container_name: django
+    build: .
+    volumes:
+      - .:/app
+    expose:
+      - "8000"
+    env_file:
+      - .env.local
+    command: python manage.py runserver 0.0.0.0:8000
+
+  nginx:
+    container_name: nginx
+    image: nginx:latest
+    volumes:
+      - ./nginx/conf.d:/etc/nginx/conf.d
+      - ./nginx/cert:/etc/nginx/cert
+    ports:
+      - "8080:80"
+      - "8443:443"
+    depends_on:
+      - django

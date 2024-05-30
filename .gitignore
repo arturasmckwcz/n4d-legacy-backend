@@ -2,3 +2,5 @@ __pycache__*
 .venv
 db*
 pyrightconfig.json
+.env*
+cert
