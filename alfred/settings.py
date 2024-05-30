@@ -1,41 +1,27 @@
-from os import getenv, path
-from pathlib import Path
-
-import dotenv
-from django.core.management.utils import get_random_secret_key
-
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
-
-dotenv_file = BASE_DIR / ".env.local"
-if path.isfile(dotenv_file):
-    dotenv.load_dotenv(dotenv_file)
+from .config.globals import BASE_DIR
+from .utils import read_env_var
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = getenv("DJANGO_SECRET_KEY", get_random_secret_key())
+SECRET_KEY = read_env_var("DJANGO_SECRET_KEY")
 
 # aws SES access
-AWS_SES_ACCESS_KEY_ID = getenv("AWS_SES_ACCESS_KEY_ID")
-AWS_SES_SECRET_ACCESS_KEY = getenv("AWS_SES_SECRET_ACCESS_KEY")
-AWS_SES_REGION_NAME = getenv("AWS_SES_REGION_NAME")
+AWS_SES_ACCESS_KEY_ID = read_env_var("AWS_SES_ACCESS_KEY_ID")
+AWS_SES_SECRET_ACCESS_KEY = read_env_var("AWS_SES_SECRET_ACCESS_KEY")
+AWS_SES_REGION_NAME = read_env_var("AWS_SES_REGION_NAME")
 AWS_SES_REGION_ENDPOINT = f"email.{AWS_SES_REGION_NAME}.amazonaws.com"
-AWS_SES_FROM_EMAIL = getenv("AWS_SES_FROM_EMAIL")
+AWS_SES_FROM_EMAIL = read_env_var("AWS_SES_FROM_EMAIL")
 USE_SES_V2 = True
 
-DOMAIN = getenv("DOMAIN")
-SITE_NAME = getenv("SITE_NAME")
-
+DOMAIN = read_env_var("DOMAIN")
+SITE_NAME = read_env_var("SITE_NAME")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = getenv("DEBUG", "False") == "True"
+DEBUG = read_env_var("ENVIRONMENT") == "develop"
 
-ALLOWED_HOSTS = getenv(
-    "DJANGO_ALLOWED_HOSTS", "127.0.0.1,localhost,192.168.0.124,192.168.178.69"
-).split(",")
-
+ALLOWED_HOSTS = read_env_var("ALLOWED_HOSTS")
 
 # Application definition
 
@@ -61,6 +47,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "alfred.middleware.PartitionedCookieMiddleware",
 ]
 
 ROOT_URLCONF = "alfred.urls"
@@ -99,7 +86,7 @@ DATABASES = {
 EMAIL_BACKEND = "django_ses.SESBackend"
 DEFULT_FROM_EMAIL = AWS_SES_FROM_EMAIL
 
-AUTH_USER_MODEL = "users.AlbertUser"
+AUTH_USER_MODEL = "users.AlfredUser"
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
 AUTH_PASSWORD_VALIDATORS = [
@@ -140,7 +127,7 @@ STATIC_ROOT = BASE_DIR / "static"
 # https://www.django-rest-framework.org
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": [
-        "rest_framework_simplejwt.authentication.JWTAuthentication",
+        "users.authentication.AlfredJWTAuthentication",
     ],
     "DEFAULT_PERMISSION_CLASSES": ["rest_framework.permissions.IsAuthenticated"],
 }
@@ -153,13 +140,21 @@ DJOSER = {
     "PASSWORD_RESET_CONFIRM_RETYPE": True,
     "TOKEN_MODEL": None,
 }
+
+AUTH_COOKIE = "access"
+AUTH_COOKIE_REFRESH = "refresh"
+AUTH_COOKIE_ACCESS_MAX_AGE = 60 * 30  # half an hour
+AUTH_COOKIE_REFRESH_MAX_AGE = 60 * 60 * 24 * 45  # 45 days
+AUTH_COOKIE_SECURE = True
+AUTH_COOKIE_HTTP_ONLY = True
+AUTH_COOKIE_PATH = "/"
+AUTH_COOKIE_SAMESITE = "None"
+
 # default jwt settings https://django-rest-framework-simplejwt.readthedocs.io/en/latest/settings.html
 # SIMPLE_JWT = {}
 
 # corsheaders allowed
-CORS_ALLOWED_ORIGINS = getenv(
-    "CORS_ALLOWED_ORIGINS", "http://localhost:5174,http://127.0.0.1:5174"
-).split(",")
+CORS_ALLOWED_ORIGINS = read_env_var("CORS_ALLOWED_ORIGINS")
 CORS_ALLOW_CREDENTIALS = True
 
 # Default primary key field type
