@@ -1,11 +1,14 @@
 import json
 from os import PathLike, getenv
 
+from rest_framework.request import Request
+from rest_framework.response import Response
+
 from .config.defaults import defaults
 from .config.globals import BASE_DIR
 
 
-def get_list_from_str(list_string) -> list[str] | str | None:
+def itemize_str(list_string) -> list[str] | str | None:
     if isinstance(list_string, str):
         value = [item.strip() for item in list_string.split(",")]
         return value[0] if len(value) == 1 else value
@@ -17,7 +20,7 @@ def read_local_env(local_env_path: PathLike) -> dict:
         with open(local_env_path, "r") as env_file:
             local_env = json.load(env_file)
             for key, value in local_env.items():
-                local_env[key] = get_list_from_str(value)
+                local_env[key] = itemize_str(value)
     except FileNotFoundError:
         pass
 
@@ -34,7 +37,7 @@ def read_env_var(
     value = getenv(name)
 
     if value:
-        return get_list_from_str(value)
+        return itemize_str(value)
 
     if name in defaults:
         return defaults[name]
@@ -43,3 +46,23 @@ def read_env_var(
         raise BaseException(f"Environment var {name} has to be set!")
 
     return None
+
+
+class AlfredRequest(Request):
+    def __init__(self, request: Request):
+        self.__dict__.update(request.__dict__)
+
+    def set_data_attr(self, key: str, value: str) -> None:
+        if isinstance(self.data, dict):
+            self.data[key] = value
+
+
+class AlfredResponse(Response):
+    def __init__(self, response: Response):
+        self.__dict__.update(response.__dict__)
+
+    def get_data_attr(self, key: str) -> str:
+        if isinstance(self.data, dict):
+            return self.data.get(key, "")
+
+        return ""

@@ -6,7 +6,6 @@ from .views import (
     AlfredTokenRefreshView,
     AlfredTokenVerifyView,
     AlfredUserGoupsView,
-    AlfredUserQuoteView,
 )
 
 urlpatterns = [
@@ -15,5 +14,4 @@ urlpatterns = [
     path("jwt/verify/", AlfredTokenVerifyView.as_view()),
     path("user/logout/", AlfredLogoutView.as_view()),
     path("user/groups/", AlfredUserGoupsView.as_view()),
-    path("user/quote/", AlfredUserQuoteView.as_view()),
 ]

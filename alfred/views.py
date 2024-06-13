@@ -10,4 +10,8 @@ class AlfredSanityView(APIView):
     permission_classes = (AllowAny,)
 
     def get(self, request: Request):
-        return Response({"message": "OK"}, status=HTTPStatus.OK)
+        x_requested_from = request.headers.get("X-Requested-From")
+        return Response(
+            {"message": "OK", "x_requested_from": x_requested_from},
+            status=HTTPStatus.OK,
+        )

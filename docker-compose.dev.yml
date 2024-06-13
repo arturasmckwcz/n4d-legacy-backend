@@ -1,7 +1,8 @@
 services:
-  django:
-    container_name: django
+  alfred:
+    container_name: alfred
     build: .
+    image: alfred:local
     volumes:
       - .:/app
     expose:
@@ -17,7 +18,7 @@ services:
       - ./nginx/conf.d:/etc/nginx/conf.d
       - ./nginx/cert:/etc/nginx/cert
     ports:
-      - "8080:80"
-      - "8443:443"
+      - "${API_PORT_NON_TLS:-8080}:80"
+      - "${API_PORT:-8443}:443"
     depends_on:
-      - django
+      - alfred

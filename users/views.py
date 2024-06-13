@@ -1,9 +1,6 @@
-from datetime import timedelta
 from http import HTTPStatus
 
-import requests
 from django.conf import settings
-from django.utils import timezone
 from rest_framework import status  # TODO: figure if it does the same as HTTPStatus
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -13,8 +10,8 @@ from rest_framework_simplejwt.views import (
     TokenVerifyView,
 )
 
+from alfred.utils import AlfredRequest, AlfredResponse
 from users.serializers import GroupSerializer
-from users.utils import AlfredRequest, AlfredResponse
 
 
 class AlfredTokenObtainPairView(TokenObtainPairView):
@@ -105,26 +102,3 @@ class AlfredUserGoupsView(APIView):
 
         serializer = GroupSerializer(groups, many=True)
         return Response(serializer.data)
-
-
-class AlfredUserQuoteView(APIView):
-    timer = {"last_time": timezone.now()}
-    fallback_quote = "<blockquote>&ldquo;You don't have to move mountains. You'll change the world simply by being a warm, kind-hearted human being.&rdquo; &mdash; <footer>Anita Krizzan</footer></blockquote>"
-    quote_response = {"quote": fallback_quote}
-
-    def get(self, request):
-        try:
-            time_now = timezone.now()
-            if time_now >= self.timer["last_time"] + timedelta(days=1):
-                self.timer["last_time"] = time_now
-                response = requests.get("https://zenquotes.io/api/random")
-                response.raise_for_status()  # Raise an HTTPError on bad status
-                data = response.json()
-                if data and isinstance(data, list) and "h" in data[0]:
-                    quote = data[0]["h"]
-                    self.quote_response["quote"] = quote
-            return Response(self.quote_response, status=status.HTTP_200_OK)
-        except requests.exceptions.RequestException as e:
-            return Response(
-                {"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR
-            )
