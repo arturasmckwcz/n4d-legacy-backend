@@ -14,6 +14,21 @@ def itemize_str(list_string) -> list[str] | str | None:
         return value[0] if len(value) == 1 else value
 
 
+def flatten_list(_list: list) -> list:
+    try:
+        if not isinstance(_list, list):
+            raise TypeError("Input should be a list")
+
+        result = []
+        for item in _list:
+            result += item if isinstance(item, list) else [item]
+
+        return result
+    except TypeError as err:
+        print(f"TypeError: {err}")
+        return []
+
+
 def read_local_env(local_env_path: PathLike) -> dict:
     local_env = {}
     try:

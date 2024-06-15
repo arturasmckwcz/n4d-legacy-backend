@@ -16,5 +16,8 @@ defaults = {
         "http://192.168.0.124:3080",
         "http://192.168.178.69:3080",
     ],
+    "CORS_ALLOWED_HEADERS": [
+        "X-Requested-From",
+    ],
     "DOMAIN": "192.168.0.124:3080",
 }

@@ -14,6 +14,7 @@ from rest_framework.test import APIClient
 from alfred.utils import (
     AlfredRequest,
     AlfredResponse,
+    flatten_list,
     itemize_str,
     read_env_var,
     read_local_env,
@@ -32,7 +33,7 @@ def test_sanity_endpoint(api_client):
     response = api_client.get(reverse("sanity"))
     assert isinstance(response, Response)
     assert response.status_code == HTTPStatus.OK
-    assert response.data == {"message": "OK"}
+    assert response.data == {"message": "OK", "x_requested_from": None}
 
 
 @pytest.mark.parametrize(
@@ -46,6 +47,21 @@ def test_sanity_endpoint(api_client):
 def test_itemize_str(input_str, expected_output):
     result = itemize_str(input_str)
     assert result == expected_output
+
+
+@pytest.mark.parametrize(
+    "input_list, expected_output",
+    [
+        (
+            [[], ["1", "2"], ["3"], 4],
+            ["1", "2", "3", 4],
+        ),
+        ([None, [{}, True]], [None, {}, True]),
+        ({"key": "value"}, []),
+    ],
+)
+def test_flaten_list(input_list, expected_output):
+    assert flatten_list(input_list) == expected_output
 
 
 @pytest.mark.parametrize(

@@ -1,5 +1,7 @@
+from corsheaders.defaults import default_headers
+
 from .config.globals import BASE_DIR
-from .utils import read_env_var
+from .utils import flatten_list, read_env_var
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
@@ -155,6 +157,9 @@ AUTH_COOKIE_SAMESITE = "None"
 
 # corsheaders allowed
 CORS_ALLOWED_ORIGINS = read_env_var("CORS_ALLOWED_ORIGINS")
+CORS_ALLOW_HEADERS = list(default_headers) + flatten_list(
+    [read_env_var("CORS_ALLOWED_HEADERS")]
+)
 CORS_ALLOW_CREDENTIALS = True
 
 # Default primary key field type
