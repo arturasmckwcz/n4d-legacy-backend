@@ -1,15 +1,18 @@
 stages:
   - code-check
+  - docker
 
-before_script:
-  - apt update && apt install -y curl bash git
-  - curl -LsSf https://astral.sh/uv/install.sh | sh
-  - export PATH=$PATH:/root/.cargo/bin
-  - uv venv
-  - source .venv/bin/activate
-  - uv pip install -r requirements.txt -r dev-requirements.txt
+.pre_commit_before:
+  before_script:
+    - apt update && apt install -y curl bash git
+    - curl -LsSf https://astral.sh/uv/install.sh | sh
+    - export PATH=$PATH:/root/.cargo/bin
+    - uv venv
+    - source .venv/bin/activate
+    - uv pip install -r requirements.txt -r dev-requirements.txt
 
 pre-commit:
+  extends: .pre_commit_before
   stage: code-check
   image: python:3.12-slim
   script:
@@ -19,9 +22,40 @@ pre-commit:
 
 pyright:
   stage: code-check
+  extends: .pre_commit_before
   image: python:3.12-slim
   script:
     - pyright -p pyrightconfig-ci.json
   rules:
     - when: always
 
+.docker_before_script:
+  image:
+    name: docker:26.1
+  services:
+    - docker:26.1-dind
+  variables:
+    ECR_URI: $ECR_REGISTRY/$ECR_REPOSITORY
+  before_script:
+    - apk add --no-cache curl jq python3 py3-pip
+    - python3 -m venv venv
+    - source venv/bin/activate
+    - pip install awscli
+    - echo "Logging in to Amazon ECR..."
+    - aws --version
+    - aws ecr get-login-password | docker login --username AWS --password-stdin $ECR_REGISTRY
+    - docker --version
+
+build-and-push:
+  extends: .docker_before_script
+  stage: docker
+  script:
+    - echo "Building the Docker image..."
+    - docker build -t $ECR_URI:$CI_COMMIT_REF_SLUG .
+    - docker tag $ECR_URI:$CI_COMMIT_REF_SLUG $ECR_URI:latest
+    - echo "Pushing the Docker image to ECR..."
+    - docker push $ECR_URI:$CI_COMMIT_REF_SLUG
+    - docker push $ECR_URI:latest
+  rules:
+    - when: manual
+  allow_failure: true

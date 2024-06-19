@@ -1,7 +1,7 @@
 ## Development
 
 #### How to start django
-
+Ensure that you have env variables set.
 `python manage.py runserver`
 
 #### How to use uv
@@ -74,6 +74,19 @@ AWS_SES_FROM_EMAIL=
 DOMAIN="frontend domain used in email templates"
 
 SITE_NAME="used as a team name in email templates"
+
+#### HOW TO RUN THE PROJECT LOCALLY WITH DOCKER COMPOSE
+`docker-compose -f docker-compose.dev.yml  up --build`
+
+#### HOW TO DEPLOY A DOCKER IMAGE TO Amazon ECR
+
+Be sure that the env vars are set:
+(e.g. GitLab CI/CD Environment Variables)
+AWS_ACCESS_KEY_ID
+AWS_SECRET_ACCESS_KEY
+AWS_DEFAULT_REGION
+ECR_REGISTRY
+ECR_REPOSITORY
 
 #### Dockerized
 
