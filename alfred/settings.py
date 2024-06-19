@@ -162,6 +162,8 @@ CORS_ALLOW_HEADERS = list(default_headers) + flatten_list(
 )
 CORS_ALLOW_CREDENTIALS = True
 
+CSRF_TRUSTED_ORIGINS = read_env_var("CSRF_TRUSTED_ORIGINS")
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 

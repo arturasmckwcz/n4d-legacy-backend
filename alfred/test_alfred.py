@@ -60,7 +60,7 @@ def test_itemize_str(input_str, expected_output):
         ({"key": "value"}, []),
     ],
 )
-def test_flaten_list(input_list, expected_output):
+def test_flatten_list(input_list, expected_output):
     assert flatten_list(input_list) == expected_output
 
 
