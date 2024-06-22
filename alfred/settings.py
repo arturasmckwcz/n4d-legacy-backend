@@ -106,6 +106,10 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+PASSWORD_HASHERS = [
+    "django.contrib.auth.hashers.PBKDF2PasswordHasher",
+]
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.0/topics/i18n/
@@ -135,12 +139,18 @@ REST_FRAMEWORK = {
 }
 # djoser settings https://djoser.readthedocs.io/en/latest/settings.html
 DJOSER = {
+    "LOGIN_FIELD": "email",
     "PASSWORD_RESET_CONFIRM_URL": "password-reset/{uid}/{token}",
     "SEND_ACTIVATION_EMAIL": True,
     "ACTIVATION_URL": "activation/{uid}/{token}",
     "USER_CREATE_PASSWORD_RETYPE": True,
     "PASSWORD_RESET_CONFIRM_RETYPE": True,
     "TOKEN_MODEL": None,
+    "SERIALIZERS": {
+        "user_create": "users.serializers.AlfredUserCreateSerializer",
+        "user": "users.serializers.AlfredUserSerializer",
+        "current_user": "users.serializers.AlfredUserSerializer",
+    },
 }
 
 AUTH_COOKIE = "access"

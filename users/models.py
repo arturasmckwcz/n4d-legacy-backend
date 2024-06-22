@@ -42,6 +42,10 @@ class AlfredUser(AbstractBaseUser, PermissionsMixin):
     is_staff = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)
 
+    first_name = models.CharField(max_length=30, blank=True, null=True)
+    last_name = models.CharField(max_length=30, blank=True, null=True)
+    username = models.CharField(max_length=30, blank=True, null=True)
+
     objects = AlfredUserManager()
 
     USERNAME_FIELD = "email"
