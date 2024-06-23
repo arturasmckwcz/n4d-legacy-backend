@@ -1,6 +1,19 @@
 stages:
   - code-check
   - docker
+  - test
+
+variables:
+  DJANGO_SECRET_KEY: "your-secret-key"
+  DEBUG: "False"
+  AWS_SES_ACCESS_KEY_ID: "your-access-key-id"
+  AWS_SES_SECRET_ACCESS_KEY: "your-secret-access-key"
+  AWS_SES_REGION_NAME: "your-region-name"
+  AWS_SES_FROM_EMAIL: "your-from-email"
+  DOMAIN: "your-domain"
+  SITE_NAME: "your-site-name"
+  CORS_ALLOW_HEADERS: "['*']"
+  ALLOWED_HOSTS: "['*']"
 
 .pre_commit_before:
   before_script:
@@ -51,11 +64,54 @@ build-and-push:
   stage: docker
   script:
     - echo "Building the Docker image..."
-    - docker build -t $ECR_URI:$CI_COMMIT_REF_SLUG .
+    - docker build --build-arg DJANGO_SECRET_KEY=${DJANGO_SECRET_KEY}
+               --build-arg DEBUG=${DEBUG}
+               --build-arg AWS_SES_ACCESS_KEY_ID=${AWS_SES_ACCESS_KEY_ID}
+               --build-arg AWS_SES_SECRET_ACCESS_KEY=${AWS_SES_SECRET_ACCESS_KEY}
+               --build-arg AWS_SES_REGION_NAME=${AWS_SES_REGION_NAME}
+               --build-arg AWS_SES_FROM_EMAIL=${AWS_SES_FROM_EMAIL}
+               --build-arg DOMAIN=${DOMAIN}
+               --build-arg SITE_NAME=${SITE_NAME}
+               --build-arg CORS_ALLOW_HEADERS=${CORS_ALLOW_HEADERS}
+               --build-arg ALLOWED_HOSTS=${ALLOWED_HOSTS}
+               -t $ECR_URI:$CI_COMMIT_REF_SLUG .
     - docker tag $ECR_URI:$CI_COMMIT_REF_SLUG $ECR_URI:latest
     - echo "Pushing the Docker image to ECR..."
     - docker push $ECR_URI:$CI_COMMIT_REF_SLUG
     - docker push $ECR_URI:latest
+  rules:
+    - when: manual
+  allow_failure: true
+
+run-test:
+  extends: .docker_before_script
+  stage: test
+  needs:
+    - build-and-push
+  script:
+    - docker pull $ECR_URI:$CI_COMMIT_REF_SLUG
+    - docker network create alfred-network
+    - >
+      docker run -d --name alfred -p 8000:8000 --network=alfred-network
+      -e DJANGO_SECRET_KEY=${DJANGO_SECRET_KEY}
+      -e DEBUG=${DEBUG}
+      -e AWS_SES_ACCESS_KEY_ID=${AWS_SES_ACCESS_KEY_ID}
+      -e AWS_SES_SECRET_ACCESS_KEY=${AWS_SES_SECRET_ACCESS_KEY}
+      -e AWS_SES_REGION_NAME=${AWS_SES_REGION_NAME}
+      -e AWS_SES_FROM_EMAIL=${AWS_SES_FROM_EMAIL}
+      -e DOMAIN=${DOMAIN}
+      -e SITE_NAME=${SITE_NAME}
+      -e CORS_ALLOW_HEADERS=${CORS_ALLOW_HEADERS}
+      -e ALLOWED_HOSTS=${ALLOWED_HOSTS}
+      $ECR_URI:$CI_COMMIT_REF_SLUG
+
+    - docker build -t alfred-e2e -f tests_e2e/Dockerfile .
+    - >
+      docker run
+      --network alfred-network
+      --env ALFRED_API_URL=http://alfred:8000
+      alfred-e2e
+
   rules:
     - when: manual
   allow_failure: true

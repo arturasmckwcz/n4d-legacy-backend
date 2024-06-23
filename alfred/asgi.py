@@ -1,5 +1,4 @@
-"""
-ASGI config for alfred project.
+"""ASGI config for alfred project.
 
 It exposes the ASGI callable as a module-level variable named ``application``.
 

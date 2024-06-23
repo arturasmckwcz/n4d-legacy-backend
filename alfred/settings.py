@@ -80,7 +80,7 @@ DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.sqlite3",
         "NAME": BASE_DIR / "db.sqlite3",
-    }
+    },
 }
 
 
@@ -168,7 +168,7 @@ AUTH_COOKIE_SAMESITE = "None"
 # corsheaders allowed
 CORS_ALLOWED_ORIGINS = read_env_var("CORS_ALLOWED_ORIGINS")
 CORS_ALLOW_HEADERS = list(default_headers) + flatten_list(
-    [read_env_var("CORS_ALLOWED_HEADERS")]
+    [read_env_var("CORS_ALLOWED_HEADERS")],
 )
 CORS_ALLOW_CREDENTIALS = True
 

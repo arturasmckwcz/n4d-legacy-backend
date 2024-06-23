@@ -1,0 +1,22 @@
+services:
+  alfred:
+    container_name: alfred
+    build: 
+      context: .
+      args:
+        DJANGO_SECRET_KEY: ${DJANGO_SECRET_KEY}
+        DEBUG: ${DEBUG}
+        AWS_SES_ACCESS_KEY_ID: ${AWS_SES_ACCESS_KEY_ID}
+        AWS_SES_SECRET_ACCESS_KEY: ${AWS_SES_SECRET_ACCESS_KEY}
+        AWS_SES_REGION_NAME: ${AWS_SES_REGION_NAME}
+        AWS_SES_FROM_EMAIL: ${AWS_SES_FROM_EMAIL}
+        DOMAIN: ${DOMAIN}
+        SITE_NAME: ${SITE_NAME}
+        ALLOWED_HOSTS: ${ALLOWED_HOSTS}
+        CORS_ALLOWED_ORIGINS: ${CORS_ALLOWED_ORIGINS}
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"
+    expose:
+      - "8000"

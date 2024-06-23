@@ -1,5 +1,4 @@
-"""
-WSGI config for alfred project.
+"""WSGI config for alfred project.
 
 It exposes the WSGI callable as a module-level variable named ``application``.
 

@@ -24,7 +24,7 @@ environ.setdefault("DJANGO_SETTINGS_MODULE", "alfred.settings")
 setup()
 
 
-@pytest.fixture
+@pytest.fixture()
 def api_client():
     return APIClient()
 
@@ -95,7 +95,9 @@ def test_non_string_input(input_value):
 )
 def test_read_local_env(file_data, expected_result, side_effect):
     with patch(
-        "builtins.open", new_callable=mock_open, read_data=file_data
+        "builtins.open",
+        new_callable=mock_open,
+        read_data=file_data,
     ) as mock_file:
         mock_file.side_effect = side_effect
 

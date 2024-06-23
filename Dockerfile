@@ -1,20 +1,4 @@
-FROM python:3.10-slim
-
-ENV PYTHONDONTWRITEBYTECODE 1
-ENV PYTHONUNBUFFERED 1
-
-WORKDIR /app
-
-COPY requirements.txt /app/
-COPY dev-requirements.txt /app/
-
-RUN apt update && apt upgrade
-
-RUN pip install --no-cache-dir -r requirements.txt -r dev-requirements.txt
-
-COPY . /app/
-
-EXPOSE 8000
+FROM python:3.12-slim
 
 ARG DJANGO_SECRET_KEY
 ARG DEBUG
@@ -24,6 +8,8 @@ ARG AWS_SES_REGION_NAME
 ARG AWS_SES_FROM_EMAIL
 ARG DOMAIN
 ARG SITE_NAME
+ARG CORS_ALLOW_HEADERS
+ARG ALLOWED_HOSTS
 
 ENV DJANGO_SECRET_KEY=${DJANGO_SECRET_KEY}
 ENV DEBUG=${DEBUG}
@@ -33,5 +19,24 @@ ENV AWS_SES_REGION_NAME=${AWS_SES_REGION_NAME}
 ENV AWS_SES_FROM_EMAIL=${AWS_SES_FROM_EMAIL}
 ENV DOMAIN=${DOMAIN}
 ENV SITE_NAME=${SITE_NAME}
+ENV CORS_ALLOW_HEAFERS=${CORS_ALLOW_HEADERS}
+ENV ALLOWED_HOSTS=${ALLOWED_HOSTS}
+
+ENV PYTHONDONTWRITEBYTECODE 1
+ENV PYTHONUNBUFFERED 1
+
+WORKDIR /app
+
+RUN apt update && apt upgrade
+
+COPY requirements.txt /app/
+
+RUN pip install --upgrade pip && pip install -r requirements.txt
+
+COPY . /app/
+
+RUN python manage.py migrate
+
+EXPOSE 8000
 
 CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]

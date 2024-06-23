@@ -2,7 +2,9 @@
 ruff
 pyright
 pre-commit
+pytest
 pytest-django
 ruff-lsp
 coverage
 django-types
+pydantic

@@ -76,7 +76,9 @@ DOMAIN="frontend domain used in email templates"
 SITE_NAME="used as a team name in email templates"
 
 #### HOW TO RUN THE PROJECT LOCALLY WITH DOCKER COMPOSE
-`docker-compose -f docker-compose.dev.yml  up --build`
+```
+docker compose --env-file .env.local -f docker-compose.dev.yaml up --build
+```
 
 #### HOW TO DEPLOY A DOCKER IMAGE TO Amazon ECR
 
