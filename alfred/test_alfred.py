@@ -30,10 +30,12 @@ def api_client():
 
 
 def test_sanity_endpoint(api_client):
+    x_requested_from = "Wayne Manor"
+    api_client.credentials(HTTP_X_REQUESTED_FROM=x_requested_from)
     response = api_client.get(reverse("sanity"))
     assert isinstance(response, Response)
     assert response.status_code == HTTPStatus.OK
-    assert response.data == {"message": "OK", "x_requested_from": None}
+    assert response.data == {"message": "OK", "x_requested_from": x_requested_from}
 
 
 @pytest.mark.parametrize(
@@ -42,6 +44,7 @@ def test_sanity_endpoint(api_client):
         ("apple,banana,cherry", ["apple", "banana", "cherry"]),
         ("apple", "apple"),
         ("", ""),
+        (0, None),
     ],
 )
 def test_itemize_str(input_str, expected_output):

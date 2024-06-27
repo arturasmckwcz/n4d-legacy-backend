@@ -1,4 +1,3 @@
-# based on a full example from: https://docs.djangoproject.com/en/5.0/topics/auth/customizing/
 from django.contrib.auth.models import (
     AbstractBaseUser,
     BaseUserManager,
@@ -37,19 +36,24 @@ class AlfredUserManager(BaseUserManager):
 
 
 class AlfredUser(AbstractBaseUser, PermissionsMixin):
+    class UserType(models.TextChoices):
+        VOLUNTEER = "volunteer", "Volunteer"
+        RAC = "rac", "RAC"
+        NGO = "ngo", "NGO"
+        UNDEFINED = "undefined", "Undefined"
+
     email = models.EmailField(unique=True, max_length=255)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)
-
-    first_name = models.CharField(max_length=30, blank=True, null=True)
-    last_name = models.CharField(max_length=30, blank=True, null=True)
-    username = models.CharField(max_length=30, blank=True, null=True)
+    user_type = models.CharField(
+        max_length=30, choices=UserType.choices, default=UserType.UNDEFINED
+    )
 
     objects = AlfredUserManager()
 
     USERNAME_FIELD = "email"
-    REQUIRED_FIELDS = []
+    REQUIRED_FIELDS = ["username", "first_name", "last_name", "user_type"]
 
     def __str__(self):
         return str(self.email)

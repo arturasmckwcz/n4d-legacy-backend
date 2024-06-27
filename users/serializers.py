@@ -14,10 +14,10 @@ class GroupSerializer(serializers.ModelSerializer):
 class AlfredUserCreateSerializer(UserCreateSerializer):
     class Meta(UserCreateSerializer.Meta):
         model = AlfredUser
-        fields = ("id", "email", "password")
+        fields = ("id", "email", "password", "user_type")
 
 
 class AlfredUserSerializer(UserSerializer):
     class Meta(UserSerializer.Meta):
         model = AlfredUser
-        fields = ("id", "email")
+        fields = ("id", "email", "user_type")

@@ -10,10 +10,12 @@ from .config.globals import BASE_DIR
 
 
 def itemize_str(list_string) -> list[str] | str | None:
-    if list_string[0] == "[":
-        return ast.literal_eval(list_string)
-
     if isinstance(list_string, str):
+        if len(list_string) == 0:
+            return ""
+        if list_string[0] == "[":
+            return ast.literal_eval(list_string)
+
         value = [item.strip() for item in list_string.split(",")]
         return value[0] if len(value) == 1 else value
 
