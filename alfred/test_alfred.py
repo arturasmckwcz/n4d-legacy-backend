@@ -1,7 +1,6 @@
 from http import HTTPStatus
 from os import environ
-from pathlib import Path
-from unittest.mock import Mock, mock_open, patch
+from unittest.mock import Mock, patch
 
 import pytest
 from django import setup
@@ -17,7 +16,6 @@ from alfred.utils import (
     flatten_list,
     itemize_str,
     read_env_var,
-    read_local_env,
 )
 
 environ.setdefault("DJANGO_SETTINGS_MODULE", "alfred.settings")
@@ -77,37 +75,6 @@ def test_flatten_list(input_list, expected_output):
 )
 def test_non_string_input(input_value):
     assert itemize_str(input_value) is None
-
-
-@pytest.mark.parametrize(
-    "file_data, expected_result, side_effect",
-    [
-        (
-            '{"KEY1": "value1,value2", "KEY2": "single_value"}',
-            {"KEY1": ["value1", "value2"], "KEY2": "single_value"},
-            None,
-        ),
-        (None, {}, FileNotFoundError),
-        (
-            '{"KEY1": "value1,value2", "KEY2": ""}',
-            {"KEY1": ["value1", "value2"], "KEY2": ""},
-            None,
-        ),
-        ('{"KEY1": 123, "KEY2": "value"}', {"KEY1": None, "KEY2": "value"}, None),
-    ],
-)
-def test_read_local_env(file_data, expected_result, side_effect):
-    with patch(
-        "builtins.open",
-        new_callable=mock_open,
-        read_data=file_data,
-    ) as mock_file:
-        mock_file.side_effect = side_effect
-
-        local_env_path = Path("fake_path.json")
-        result = read_local_env(local_env_path)
-
-        assert result == expected_result
 
 
 @pytest.mark.parametrize(

@@ -110,3 +110,18 @@ docker compose -p batman -f docker-compose.dev.yml up
 ```
 API_PORT_NON_TLS=8080 API_PORT=8443 docker compose -p batman -f docker-compose.dev.yml up
 ```
+
+#### Local
+0. cd to project dir
+1. Quick way to export env vars
+```
+set -a && source .env && set +a
+```
+2. Activate venv
+```
+source .venv/bin/activate
+```
+2. Run
+```
+python3 manage.py runserver
+```

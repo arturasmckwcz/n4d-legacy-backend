@@ -1,3 +1,4 @@
+import structlog
 from django.contrib.auth.models import (
     AbstractBaseUser,
     BaseUserManager,
@@ -5,10 +6,13 @@ from django.contrib.auth.models import (
 )
 from django.db import models
 
+logger = structlog.get_logger(__name__)
+
 
 class AlfredUserManager(BaseUserManager):
     def create_user(self, email, password=None, **kwargs):
         if not email:
+            logger.error("Users without email")
             raise ValueError("Users must have an email address")
 
         email = self.normalize_email(email).lower()
@@ -20,6 +24,7 @@ class AlfredUserManager(BaseUserManager):
         user.set_password(password)
         user.save(using=self._db)
 
+        logger.debug(f"{user=}")
         return user
 
     def create_superuser(self, email, password=None, **kwargs):
@@ -32,6 +37,7 @@ class AlfredUserManager(BaseUserManager):
         user.is_staff = True
 
         user.save(using=self._db)
+        logger.debug(f"Saving {user=}")
         return user
 
 

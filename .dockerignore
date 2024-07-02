@@ -4,3 +4,4 @@ db*
 pyrightconfig.json
 .env*
 cert
+logs

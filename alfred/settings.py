@@ -1,3 +1,6 @@
+import os
+
+import structlog
 from corsheaders.defaults import default_headers
 
 from .config.globals import BASE_DIR
@@ -21,7 +24,7 @@ DOMAIN = read_env_var("DOMAIN")
 SITE_NAME = read_env_var("SITE_NAME")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = read_env_var("ENVIRONMENT") == "develop"
+DEBUG = read_env_var("DEBUG")
 
 ALLOWED_HOSTS = read_env_var("ALLOWED_HOSTS")
 
@@ -34,6 +37,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "django_structlog",
     "corsheaders",
     "rest_framework",
     "djoser",
@@ -50,6 +54,7 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "alfred.middleware.PartitionedCookieMiddleware",
+    "django_structlog.middlewares.RequestMiddleware",
 ]
 
 ROOT_URLCONF = "alfred.urls"
@@ -178,3 +183,59 @@ CSRF_TRUSTED_ORIGINS = read_env_var("CSRF_TRUSTED_ORIGINS")
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": True,
+    "formatters": {
+        "json_formatter": {
+            "()": structlog.stdlib.ProcessorFormatter,
+            "processor": structlog.processors.JSONRenderer(),
+        },
+        "plain_console": {
+            "()": structlog.stdlib.ProcessorFormatter,
+            "processor": structlog.dev.ConsoleRenderer(),
+        },
+    },
+    "handlers": {
+        "console": {
+            "class": "logging.StreamHandler",
+            "formatter": "plain_console",
+        },
+        "json_file": {
+            "class": "logging.handlers.WatchedFileHandler",
+            "filename": "logs/json.log",
+            "formatter": "json_formatter",
+        },
+    },
+    "loggers": {
+        "django_structlog": {
+            "handlers": ["console", "json_file"],
+            "level": "DEBUG",
+        },
+        "root": {
+            "handlers": ["console", "json_file"],
+            "level": "DEBUG",
+        },
+    },
+}
+
+structlog.configure(
+    processors=[
+        structlog.contextvars.merge_contextvars,
+        structlog.stdlib.filter_by_level,
+        structlog.processors.TimeStamper(fmt="iso"),
+        structlog.stdlib.add_logger_name,
+        structlog.stdlib.add_log_level,
+        structlog.stdlib.PositionalArgumentsFormatter(),
+        structlog.processors.StackInfoRenderer(),
+        structlog.processors.format_exc_info,
+        structlog.processors.UnicodeDecoder(),
+        structlog.stdlib.ProcessorFormatter.wrap_for_formatter,
+    ],
+    logger_factory=structlog.stdlib.LoggerFactory(),
+    cache_logger_on_first_use=True,
+)
+
+# ensure that json logs have their output
+os.makedirs(os.path.join(BASE_DIR, "logs"), exist_ok=True)

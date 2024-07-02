@@ -1,12 +1,13 @@
 import ast
-import json
-from os import PathLike, getenv
+from os import getenv
 
+import structlog
 from rest_framework.request import Request
 from rest_framework.response import Response
 
 from .config.defaults import defaults
-from .config.globals import BASE_DIR
+
+logger = structlog.get_logger(__name__)
 
 
 def itemize_str(list_string) -> list[str] | str | None:
@@ -31,25 +32,8 @@ def flatten_list(_list: list) -> list:
 
         return result
     except TypeError as err:
-        print(f"TypeError: {err}")
+        logger.error(f"Error {err} at flattening list")
         return []
-
-
-def read_local_env(local_env_path: PathLike) -> dict:
-    local_env = {}
-    try:
-        with open(local_env_path) as env_file:
-            local_env = json.load(env_file)
-            for key, value in local_env.items():
-                local_env[key] = itemize_str(value)
-    except FileNotFoundError:
-        pass
-
-    return local_env
-
-
-dotenv_file = BASE_DIR / ".env.json"
-defaults.update(read_local_env(dotenv_file))
 
 
 def read_env_var(
@@ -58,6 +42,8 @@ def read_env_var(
 ) -> str | int | float | tuple | list | dict | None:
     value = getenv(name)
 
+    logger.debug(f"Reading {name} {value}")
+
     if value:
         return itemize_str(value)
 
@@ -65,6 +51,7 @@ def read_env_var(
         return defaults[name]
 
     if is_mandatory:
+        logger.error(f"Enviroment var {name} is mandatory")
         raise BaseException(f"Environment var {name} has to be set!")
 
     return None
@@ -73,6 +60,7 @@ def read_env_var(
 class AlfredRequest(Request):
     def __init__(self, request: Request):
         self.__dict__.update(request.__dict__)
+        logger.debug(f"Alfred request {request}")
 
     def set_data_attr(self, key: str, value: str) -> None:
         if isinstance(self.data, dict):
@@ -82,6 +70,7 @@ class AlfredRequest(Request):
 class AlfredResponse(Response):
     def __init__(self, response: Response):
         self.__dict__.update(response.__dict__)
+        logger.debug(f"Alfred response {response}")
 
     def get_data_attr(self, key: str) -> str:
         if isinstance(self.data, dict):

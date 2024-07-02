@@ -1,2 +1,5 @@
 # TODO
 # select = ["ALL"]
+
+# sort imports, until ruff will make it by default
+lint.extend-select = ["I"]

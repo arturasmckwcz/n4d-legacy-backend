@@ -3,3 +3,4 @@ djoser
 django-cors-headers
 python-dotenv
 django-ses
+django-structlog

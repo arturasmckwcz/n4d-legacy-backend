@@ -27,7 +27,7 @@ ENV PYTHONUNBUFFERED 1
 
 WORKDIR /app
 
-RUN apt update && apt upgrade
+RUN apt update -y && apt upgrade -y
 
 COPY requirements.txt /app/
 
