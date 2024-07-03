@@ -7,4 +7,4 @@ COPY tests_e2e /app/tests_e2e
 
 RUN pip install --upgrade pip && pip install -r dev-requirements.txt
 
-ENTRYPOINT ["python3", "-m", "pytest", "tests_e2e"]
+ENTRYPOINT ["python3", "-m", "pytest", "-vvv", "tests_e2e"]

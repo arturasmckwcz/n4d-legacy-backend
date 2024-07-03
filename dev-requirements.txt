@@ -6,13 +6,16 @@ asgiref==3.8.1
     # via
     #   django
     #   django-cors-headers
+    #   django-structlog
 attrs==23.2.0
     # via
     #   cattrs
+    #   jsonschema
     #   lsprotocol
-boto3==1.34.99
+    #   referencing
+boto3==1.34.138
     # via django-ses
-botocore==1.34.99
+botocore==1.34.138
     # via
     #   boto3
     #   s3transfer
@@ -20,7 +23,7 @@ cattrs==23.2.3
     # via
     #   lsprotocol
     #   pygls
-certifi==2024.2.2
+certifi==2024.6.2
     # via requests
 cffi==1.16.0
     # via cryptography
@@ -29,7 +32,7 @@ cfgv==3.4.0
 charset-normalizer==3.3.2
     # via requests
 coverage==7.5.1
-cryptography==42.0.6
+cryptography==42.0.8
     # via social-auth-core
 defusedxml==0.7.1
     # via
@@ -37,36 +40,50 @@ defusedxml==0.7.1
     #   social-auth-core
 distlib==0.3.8
     # via virtualenv
-django==5.0.4
+django==5.0.6
     # via
     #   django-cors-headers
     #   django-ses
+    #   django-structlog
     #   djangorestframework
     #   djangorestframework-simplejwt
     #   djoser
+    #   drf-spectacular
     #   social-auth-app-django
-django-cors-headers==4.3.1
-django-ses==4.0.0
+django-cors-headers==4.4.0
+django-ipware==7.0.1
+    # via django-structlog
+django-ses==4.1.0
+django-structlog==8.1.0
 django-templated-mail==1.1.1
     # via djoser
 django-types==0.19.1
-djangorestframework==3.15.1
-    # via djangorestframework-simplejwt
+djangorestframework==3.15.2
+    # via
+    #   djangorestframework-simplejwt
+    #   drf-spectacular
 djangorestframework-simplejwt==5.3.1
     # via djoser
-djoser==2.2.2
+djoser==2.2.3
+drf-spectacular==0.27.2
 filelock==3.14.0
     # via virtualenv
 identify==2.5.36
     # via pre-commit
 idna==3.7
     # via requests
+inflection==0.5.1
+    # via drf-spectacular
 iniconfig==2.0.0
     # via pytest
 jmespath==1.0.1
     # via
     #   boto3
     #   botocore
+jsonschema==4.22.0
+    # via drf-spectacular
+jsonschema-specifications==2023.12.1
+    # via jsonschema
 lsprotocol==2023.0.1
     # via
     #   pygls
@@ -106,22 +123,34 @@ pytest-django==4.8.0
 python-dateutil==2.9.0.post0
     # via botocore
 python-dotenv==1.0.1
+python-ipware==3.0.0
+    # via django-ipware
 python3-openid==3.2.0
     # via social-auth-core
 pytz==2024.1
     # via django-ses
 pyyaml==6.0.1
-    # via pre-commit
-requests==2.31.0
+    # via
+    #   drf-spectacular
+    #   pre-commit
+referencing==0.35.1
+    # via
+    #   jsonschema
+    #   jsonschema-specifications
+requests==2.32.3
     # via
     #   requests-oauthlib
     #   social-auth-core
 requests-oauthlib==2.0.0
     # via social-auth-core
+rpds-py==0.18.1
+    # via
+    #   jsonschema
+    #   referencing
 ruff==0.4.3
     # via ruff-lsp
 ruff-lsp==0.0.53
-s3transfer==0.10.1
+s3transfer==0.10.2
     # via boto3
 setuptools==69.5.1
     # via nodeenv
@@ -133,6 +162,8 @@ social-auth-core==4.5.4
     # via social-auth-app-django
 sqlparse==0.5.0
     # via django
+structlog==24.2.0
+    # via django-structlog
 types-psycopg2==2.9.21.20240417
     # via django-types
 typing-extensions==4.11.0
@@ -140,7 +171,9 @@ typing-extensions==4.11.0
     #   pydantic
     #   pydantic-core
     #   ruff-lsp
-urllib3==2.2.1
+uritemplate==4.1.1
+    # via drf-spectacular
+urllib3==2.2.2
     # via
     #   botocore
     #   requests
