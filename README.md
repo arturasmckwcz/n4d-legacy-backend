@@ -1,3 +1,6 @@
+![coverage](https://gitlab.com/need4deed/alfred/badges/main/coverage.svg)
+
+
 ## Development
 
 #### How to start django
@@ -93,19 +96,14 @@ ECR_REPOSITORY
 #### Dockerized
 
 1. make sure you have got docker deamon up'n'running
-2. make sure you have generated self signed certoificates for TLS:
 
-```
-openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout ./nginx/cert/localhost.key -out ./nginx/cert/localhost.crt
-```
-
-3. run containers on default ports (8080 not TLS and 8443 with TLS):
+2. run containers on default ports (8080 not TLS and 8443 with TLS):
 
 ```
 docker compose -p batman -f docker-compose.dev.yml up
 ```
 
-4. also you may run on other ports:
+3. also you may run on other ports:
 
 ```
 API_PORT_NON_TLS=8080 API_PORT=8443 docker compose -p batman -f docker-compose.dev.yml up

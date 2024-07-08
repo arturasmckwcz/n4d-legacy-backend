@@ -32,6 +32,7 @@ cfgv==3.4.0
 charset-normalizer==3.3.2
     # via requests
 coverage==7.5.1
+    # via pytest-cov
 cryptography==42.0.8
     # via social-auth-core
 defusedxml==0.7.1
@@ -118,7 +119,10 @@ pyjwt==2.8.0
     #   social-auth-core
 pyright==1.1.361
 pytest==8.2.0
-    # via pytest-django
+    # via
+    #   pytest-cov
+    #   pytest-django
+pytest-cov==5.0.0
 pytest-django==4.8.0
 python-dateutil==2.9.0.post0
     # via botocore

@@ -1,4 +1,4 @@
--r requirements.txt
+-c requirements.txt
 ruff
 pyright
 pre-commit
@@ -8,3 +8,4 @@ ruff-lsp
 coverage
 django-types
 pydantic
+pytest-cov

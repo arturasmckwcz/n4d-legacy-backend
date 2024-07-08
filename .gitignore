@@ -5,3 +5,5 @@ pyrightconfig.json
 .env*
 cert
 logs
+coverage.xml
+.coverage

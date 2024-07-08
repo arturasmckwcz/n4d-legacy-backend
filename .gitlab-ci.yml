@@ -42,6 +42,33 @@ pyright:
   rules:
     - when: always
 
+unit-tests:
+  stage: code-check
+  extends: .pre_commit_before
+  image: python:3.12-slim
+  script:
+    - pytest -vvv
+  rules:
+    - when: always
+
+
+code-coverage:
+  stage: code-check
+  coverage: '/TOTAL.*? (100(?:\.0+)?\%\|[1-9]?\d(?:\.\d+)?\%)$/'
+  extends: .pre_commit_before
+  image: python:3.12-slim
+  script:
+    - pytest --cov --cov-report term --cov-report xml:coverage.xml
+  rules:
+    - when: always
+  needs:
+    - unit-tests
+  artifacts:
+    reports:
+      coverage_report:
+        coverage_format: cobertura
+        path: coverage.xml
+
 .docker_before_script:
   image:
     name: docker:26.1
@@ -81,7 +108,6 @@ build-and-push:
     - docker push $ECR_URI:latest
   rules:
     - when: manual
-  allow_failure: true
 
 run-test:
   extends: .docker_before_script
@@ -111,7 +137,6 @@ run-test:
       --network alfred-network
       --env ALFRED_API_URL=http://alfred:8000
       alfred-e2e
-
   rules:
-    - when: manual
+    - when: always
   allow_failure: true
