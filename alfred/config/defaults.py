@@ -1,5 +1,17 @@
 from django.core.management.utils import get_random_secret_key
 
+PALETTE_COLORS = [
+    "#9163f2",
+    "#7858c6",
+    "#8870ca",
+    "#41f28d",
+    "#00ce7e",
+    "#00c980",
+    "#0540f2",
+    "#0055b8",
+    "#055eaa",
+]
+
 defaults = {
     "ENVIRONMENT": "production",
     "DJANGO_SECRET_KEY": get_random_secret_key(),

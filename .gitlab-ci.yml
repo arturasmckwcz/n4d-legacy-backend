@@ -51,7 +51,6 @@ unit-tests:
   rules:
     - when: always
 
-
 code-coverage:
   stage: code-check
   coverage: '/TOTAL.*? (100(?:\.0+)?\%\|[1-9]?\d(?:\.\d+)?\%)$/'
@@ -92,16 +91,16 @@ build-and-push:
   script:
     - echo "Building the Docker image..."
     - docker build --build-arg DJANGO_SECRET_KEY=${DJANGO_SECRET_KEY}
-               --build-arg DEBUG=${DEBUG}
-               --build-arg AWS_SES_ACCESS_KEY_ID=${AWS_SES_ACCESS_KEY_ID}
-               --build-arg AWS_SES_SECRET_ACCESS_KEY=${AWS_SES_SECRET_ACCESS_KEY}
-               --build-arg AWS_SES_REGION_NAME=${AWS_SES_REGION_NAME}
-               --build-arg AWS_SES_FROM_EMAIL=${AWS_SES_FROM_EMAIL}
-               --build-arg DOMAIN=${DOMAIN}
-               --build-arg SITE_NAME=${SITE_NAME}
-               --build-arg CORS_ALLOW_HEADERS=${CORS_ALLOW_HEADERS}
-               --build-arg ALLOWED_HOSTS=${ALLOWED_HOSTS}
-               -t $ECR_URI:$CI_COMMIT_REF_SLUG .
+      --build-arg DEBUG=${DEBUG}
+      --build-arg AWS_SES_ACCESS_KEY_ID=${AWS_SES_ACCESS_KEY_ID}
+      --build-arg AWS_SES_SECRET_ACCESS_KEY=${AWS_SES_SECRET_ACCESS_KEY}
+      --build-arg AWS_SES_REGION_NAME=${AWS_SES_REGION_NAME}
+      --build-arg AWS_SES_FROM_EMAIL=${AWS_SES_FROM_EMAIL}
+      --build-arg DOMAIN=${DOMAIN}
+      --build-arg SITE_NAME=${SITE_NAME}
+      --build-arg CORS_ALLOW_HEADERS=${CORS_ALLOW_HEADERS}
+      --build-arg ALLOWED_HOSTS=${ALLOWED_HOSTS}
+      -t $ECR_URI:$CI_COMMIT_REF_SLUG .
     - docker tag $ECR_URI:$CI_COMMIT_REF_SLUG $ECR_URI:latest
     - echo "Pushing the Docker image to ECR..."
     - docker push $ECR_URI:$CI_COMMIT_REF_SLUG
@@ -130,6 +129,8 @@ run-test:
       -e CORS_ALLOW_HEADERS=${CORS_ALLOW_HEADERS}
       -e ALLOWED_HOSTS=${ALLOWED_HOSTS}
       $ECR_URI:$CI_COMMIT_REF_SLUG
+
+    - docker exec alfred bash -c "python manage.py seed_data"
 
     - docker build -t alfred-e2e -f tests_e2e/Dockerfile .
     - >

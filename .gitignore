@@ -2,6 +2,7 @@ __pycache__*
 .venv
 db*
 pyrightconfig.json
+.env
 .env*
 cert
 logs

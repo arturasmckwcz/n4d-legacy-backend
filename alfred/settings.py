@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     "rest_framework",
     "djoser",
     "users",
+    "data",
     "drf_spectacular",
 ]
 

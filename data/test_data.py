@@ -1,0 +1,82 @@
+import pytest
+from django.core.exceptions import ValidationError
+
+from data.utils import (
+    generate_square_pattern_svg,
+    validate_latitude,
+    validate_longitude,
+)
+
+
+@pytest.mark.parametrize(
+    "size, granularity, color, expected_result",
+    [
+        (32, 4, "red", False),
+        (32, 2, "", False),
+        (32, 20, "", True),
+        (15, 2, "", True),
+        (150, 2, "", True),
+    ],
+)
+def test_generate_square_pattern_svg(size, granularity, color, expected_result):
+    square_pattern_svg = generate_square_pattern_svg(size, granularity, color)
+    result = square_pattern_svg is None
+    assert result is expected_result
+
+
+@pytest.mark.parametrize(
+    "latitude, expected_exception",
+    [
+        (0.0, None),
+        (15.78, None),
+        (-89.99, None),
+        (90.0, None),
+    ],
+)
+def test_validate_latitude(latitude, expected_exception):
+    assert validate_latitude(latitude) is expected_exception
+
+
+@pytest.mark.parametrize(
+    "latitude, expected_exception, expected_error_message",
+    [
+        (-100, ValidationError, "Latitude must be between -90 and 90 degrees."),
+        (100.1, ValidationError, "Latitude must be between -90 and 90 degrees."),
+        ("hello", TypeError, "'<' not supported between instances of 'str' and 'int'"),
+    ],
+)
+def test_validate_latitude_with_side_effect(
+    latitude, expected_exception, expected_error_message
+):
+    with pytest.raises(expected_exception) as excinfo:
+        validate_latitude(latitude)
+        assert excinfo.value.args[0] == expected_error_message
+
+
+@pytest.mark.parametrize(
+    "longitude, expected_exception",
+    [
+        (0.0, None),
+        (15.78, None),
+        (-179.99, None),
+        (180.0, None),
+    ],
+)
+def test_validate_longitude(longitude, expected_exception):
+    assert validate_longitude(longitude) is None
+
+
+@pytest.mark.parametrize(
+    "longitude, expected_exception, expected_error_message",
+    [
+        (-181, ValidationError, "Longitude must be between -180 and 180 degrees."),
+        (181.1, ValidationError, "Longitude must be between -180 and 180 degrees."),
+        ("hello", TypeError, "'<' not supported between instances of 'str' and 'int'"),
+    ],
+)
+def test_validate_longitude_with_side_effect(
+    longitude, expected_exception, expected_error_message
+):
+    with pytest.raises(expected_exception) as excinfo:
+        validate_longitude(longitude)
+        assert excinfo.value.args[0] == expected_error_message
