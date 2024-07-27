@@ -1,7 +1,19 @@
 import structlog
 from django.core.management.base import BaseCommand
 
-from data.models import Avatar, Contact, Location, Organization, Person
+from data.models import (
+    Activity,
+    Avatar,
+    Contact,
+    Language,
+    Location,
+    Opportunity,
+    Organization,
+    Payload,
+    Person,
+    Skill,
+    Timeslot,
+)
 from tests_e2e.fixtures import data, users
 from users.models import AlfredUser
 
@@ -70,5 +82,40 @@ class Command(BaseCommand):
 
             person_RAC.save()
             organization_RAC.save()
+
+            location_USSR = Location(**data.location_USSR)
+            location_USSR.save()
+
+            payload_USSR = Payload(**data.payload_USSR)
+            payload_USSR.save()
+
+            for timeslot in data.timeslots:
+                timeslot = Timeslot(**timeslot)
+                timeslot.save()
+                payload_USSR.timeslots.add(timeslot)
+
+            for activity in data.activities:
+                activity = Activity(**activity)
+                activity.save()
+                payload_USSR.activities.add(activity)
+
+            for language in data.languages:
+                language = Language(**language)
+                language.save()
+                payload_USSR.languages.add(language)
+
+            for skill in data.skills:
+                skill = Skill(**skill)
+                skill.save()
+                payload_USSR.skills.add(skill)
+
+            payload_USSR.locations.add(location_USSR)
+
+            opportunity_USSR = Opportunity(organization=organization_RAC)
+            opportunity_USSR.save()
+            opportunity_USSR.payload.add(payload_USSR)
+
+            opportunity_USSR.save()
+            payload_USSR.save()
 
             logger.info(self.style.SUCCESS("Seeding database completed!"))

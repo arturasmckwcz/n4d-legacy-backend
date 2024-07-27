@@ -5,3 +5,4 @@ python-dotenv
 django-ses
 drf-spectacular
 django-structlog
+django-recurrence

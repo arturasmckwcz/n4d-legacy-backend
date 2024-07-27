@@ -1,9 +1,8 @@
 from django.db import models
+from recurrence.fields import RecurrenceField
 
-from data.utils import (
-    validate_latitude,
-    validate_longitude,
-)
+from data.enums import LangLevels, Languages, PayloadType
+from data.utils import validate_latitude, validate_longitude
 from users.models import AlfredUser
 
 
@@ -13,6 +12,12 @@ class ModelWithTimestamps(models.Model):
 
     class Meta:  # type: ignore
         abstract = True
+
+
+class Timeslot(ModelWithTimestamps):
+    start = models.DateTimeField()
+    end = models.DateTimeField()
+    recurrence = RecurrenceField(null=True)
 
 
 class Location(ModelWithTimestamps):
@@ -35,6 +40,23 @@ class Location(ModelWithTimestamps):
         )
 
 
+class Activity(ModelWithTimestamps):
+    title = models.CharField(max_length=32, unique=True)
+    description = models.CharField(max_length=128, null=True)
+
+
+class Skill(ModelWithTimestamps):
+    title = models.CharField(max_length=32, unique=True)
+    description = models.CharField(max_length=128, null=True)
+
+
+class Language(ModelWithTimestamps):
+    iso_code = models.CharField(choices=Languages.choices, unique=True, max_length=2)
+    level = models.CharField(
+        choices=LangLevels.choices, max_length=16, default=LangLevels.FLUENT
+    )
+
+
 class Contact(ModelWithTimestamps):
     title = models.CharField(max_length=32, null=True)
 
@@ -45,7 +67,7 @@ class Contact(ModelWithTimestamps):
     def __str__(self):
         title = self.title
         return (
-            f"{title}"
+            f"'{title}'"
             if title
             else f"Phone: '{self.phone}'\nEmail: '{self.email}'\nWeb: '{self.web}'"
         )
@@ -68,8 +90,8 @@ class Person(ModelWithTimestamps):
 
     def __str__(self):
         middle_name = self.middle_name
-        middle_name = f" {middle_name}" if middle_name else ""
-        return f"{self.first_name}{middle_name} {self.last_name}"
+        middle_name = f" '{middle_name}'" if middle_name else ""
+        return f"'{self.first_name}'{middle_name} '{self.last_name}'"
 
 
 class Organization(ModelWithTimestamps):
@@ -81,3 +103,17 @@ class Organization(ModelWithTimestamps):
 
     def __str__(self):
         return f"{self.name}"
+
+
+class Payload(ModelWithTimestamps):
+    payload_type = models.CharField(choices=PayloadType.choices, max_length=16)
+    timeslots = models.ManyToManyField(Timeslot)
+    activities = models.ManyToManyField(Activity)
+    locations = models.ManyToManyField(Location)
+    languages = models.ManyToManyField(Language)
+    skills = models.ManyToManyField(Skill)
+
+
+class Opportunity(ModelWithTimestamps):
+    organization = models.ForeignKey(Organization, on_delete=models.CASCADE)
+    payload = models.ManyToManyField(Payload)

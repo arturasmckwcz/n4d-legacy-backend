@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     "users",
     "data",
     "drf_spectacular",
+    "recurrence",
 ]
 
 MIDDLEWARE = [
@@ -123,11 +124,11 @@ PASSWORD_HASHERS = [
 
 LANGUAGE_CODE = "en-us"
 
-TIME_ZONE = "UTC"
+
+TIME_ZONE = read_env_var("TIME_ZONE")
+USE_TZ = read_env_var("USE_TZ")
 
 USE_I18N = True
-
-USE_TZ = True
 
 
 # Static files (CSS, JavaScript, Images)

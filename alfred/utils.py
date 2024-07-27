@@ -51,7 +51,7 @@ def read_env_var(
         return defaults[name]
 
     if is_mandatory:
-        logger.error(f"Enviroment var {name} is mandatory")
+        logger.error(f"Environment var {name} is mandatory")
         raise BaseException(f"Environment var {name} has to be set!")
 
     return None

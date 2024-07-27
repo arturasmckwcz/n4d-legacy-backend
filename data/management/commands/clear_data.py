@@ -1,7 +1,19 @@
 import structlog
 from django.core.management.base import BaseCommand
 
-from data.models import Avatar, Contact, Location, Organization, Person
+from data.models import (
+    Activity,
+    Avatar,
+    Contact,
+    Language,
+    Location,
+    Opportunity,
+    Organization,
+    Payload,
+    Person,
+    Skill,
+    Timeslot,
+)
 from users.models import AlfredUser
 
 logger = structlog.get_logger(__name__)
@@ -14,8 +26,14 @@ class Command(BaseCommand):
         AlfredUser.objects.all().delete()
         Location.objects.all().delete()
         Contact.objects.all().delete()
+        Language.objects.all().delete()
+        Activity.objects.all().delete()
+        Skill.objects.all().delete()
+        Timeslot.objects.all().delete()
+        Payload.objects.all().delete()
         Organization.objects.all().delete()
         Person.objects.all().delete()
+        Opportunity.objects.all().delete()
         Avatar.objects.all().delete()
 
         logger.info(self.style.SUCCESS("Clearing database completed!"))

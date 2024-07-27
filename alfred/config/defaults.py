@@ -39,4 +39,6 @@ defaults = {
         "http://192.168.178.69:8000",
     ],
     "DOMAIN": "192.168.0.124:3080",
+    "TIME_ZONE": "UTC",
+    "USE_TZ": True,
 }

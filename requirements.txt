@@ -30,6 +30,7 @@ defusedxml==0.7.1
 django==5.0.6
     # via
     #   django-cors-headers
+    #   django-recurrence
     #   django-ses
     #   django-structlog
     #   djangorestframework
@@ -40,6 +41,7 @@ django==5.0.6
 django-cors-headers==4.4.0
 django-ipware==7.0.1
     # via django-structlog
+django-recurrence==1.11.1
 django-ses==4.1.0
 django-structlog==8.1.0
 django-templated-mail==1.1.1
@@ -75,7 +77,9 @@ pyjwt==2.8.0
     #   djangorestframework-simplejwt
     #   social-auth-core
 python-dateutil==2.9.0.post0
-    # via botocore
+    # via
+    #   botocore
+    #   django-recurrence
 python-dotenv==1.0.1
 python-ipware==3.0.0
     # via django-ipware
@@ -111,6 +115,8 @@ sqlparse==0.5.0
     # via django
 structlog==24.2.0
     # via django-structlog
+typing-extensions==4.12.2
+    # via asgiref
 uritemplate==4.1.1
     # via drf-spectacular
 urllib3==2.2.2
