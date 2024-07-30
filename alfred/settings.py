@@ -125,8 +125,8 @@ PASSWORD_HASHERS = [
 LANGUAGE_CODE = "en-us"
 
 
-TIME_ZONE = read_env_var("TIME_ZONE")
-USE_TZ = read_env_var("USE_TZ")
+TIME_ZONE = "UTC"
+USE_TZ = True
 
 USE_I18N = True
 

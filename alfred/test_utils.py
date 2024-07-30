@@ -29,11 +29,16 @@ def api_client():
 
 def test_sanity_endpoint(api_client):
     x_requested_from = "Wayne Manor"
+    last_commit = "I'm the last"
     api_client.credentials(HTTP_X_REQUESTED_FROM=x_requested_from)
     response = api_client.get(reverse("sanity"))
     assert isinstance(response, Response)
     assert response.status_code == HTTPStatus.OK
-    assert response.data == {"message": "OK", "x_requested_from": x_requested_from}
+    assert response.data == {
+        "message": "OK",
+        "x_requested_from": x_requested_from,
+        "last_commit": last_commit,
+    }
 
 
 @pytest.mark.parametrize(

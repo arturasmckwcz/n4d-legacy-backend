@@ -1,11 +1,26 @@
-from datetime import datetime, timedelta
+from datetime import datetime
 
-from django.utils import timezone
 from recurrence import MO, MONTHLY, SA, WEEKLY, Recurrence, Rule
 
-from data.enums import LangLevels, Languages, PayloadType
 
-dtend = timezone.now() + timedelta(days=365)
+class LangLevels:
+    BEGINNER = "beginner"
+    ADVANCED = "advanced"
+    FLUENT = "fluent"
+
+
+class Languages:
+    GERMAN = "de"
+    ENGLISH = "en"
+    RUSSIAN = "ru"
+
+
+class PayloadType:
+    OPPORTUNITY = "opportunity"
+    VOLUNTEER = "volunteer"
+
+
+dtend = datetime(2025, 12, 31, 0, 0, 0)
 
 location_Helter_Skelter = {
     "title": "Gotham RAC",
@@ -42,13 +57,13 @@ skills = [
 
 timeslots = [
     {
-        "start": timezone.make_aware(datetime(2024, 10, 7, 8, 0, 0, 0)),
-        "end": timezone.make_aware(datetime(2024, 10, 7, 8, 0, 0, 0)),
+        "start": datetime(2024, 10, 7, 8, 0, 0, 0),
+        "end": datetime(2024, 10, 7, 8, 0, 0, 0),
         "recurrence": Recurrence(rrules=[Rule(freq=WEEKLY, wkst=MO)], dtend=dtend),
     },
     {
-        "start": timezone.make_aware(datetime(2024, 7, 27, 12, 0, 0, 0)),
-        "end": timezone.make_aware(datetime(2024, 7, 27, 14, 0, 0, 0)),
+        "start": datetime(2024, 7, 27, 12, 0, 0, 0),
+        "end": datetime(2024, 7, 27, 14, 0, 0, 0),
         "recurrence": Recurrence(
             rrules=[Rule(freq=MONTHLY, bysteps=-1, byday=SA)], dtend=dtend
         ),
