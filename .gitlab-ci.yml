@@ -2,6 +2,7 @@ stages:
   - code-check
   - docker
   - test
+  - deploy
 
 variables:
   DJANGO_SECRET_KEY: "your-secret-key"
@@ -140,4 +141,17 @@ run-test:
       alfred-e2e
   rules:
     - when: always
+  allow_failure: true
+
+
+deplo-to-prod:
+  extends: .docker_before_script
+  stage: deploy
+  needs:
+    - run-test
+  script:
+    - aws ecs update-service --cluster batman-cluster --service alfred-service --force-new-deployment
+    - aws ecs wait services-stable --cluster batman-cluster --services alfred-service
+  rules:
+    - when: manual
   allow_failure: true
