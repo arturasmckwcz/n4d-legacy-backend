@@ -138,10 +138,15 @@ def test_api_opportunity():
         api_opportunity_payload.locations[1].longitude == data.locations[1]["longitude"]
     )
 
-    # for idx in range(len(api_opportunity_payload.timeslots)):
-    #     assert (
-    #         api_opportunity_payload.timeslots[idx].start == data.timeslots[idx]["start"]
-    #     )
+    for idx in range(len(api_opportunity_payload.timeslots)):
+        assert (
+            api_opportunity_payload.timeslots[idx].start == data.timeslots[idx]["start"]
+        )
+        assert api_opportunity_payload.timeslots[idx].end == data.timeslots[idx]["end"]
+        assert (
+            api_opportunity_payload.timeslots[idx].recurrence
+            == data.timeslots[idx]["recurrence"]
+        )
 
     for idx in range(len(api_opportunity_payload.activities)):
         assert (

@@ -1,5 +1,4 @@
 from django.db import models
-from recurrence.fields import RecurrenceField
 
 from data.enums import LangLevels, Languages, PayloadType
 from data.utils import validate_latitude, validate_longitude
@@ -17,7 +16,7 @@ class ModelWithTimestamps(models.Model):
 class Timeslot(ModelWithTimestamps):
     start = models.DateTimeField()
     end = models.DateTimeField()
-    recurrence = RecurrenceField(null=True)
+    recurrence = models.CharField(max_length=512)
 
 
 class Location(ModelWithTimestamps):
