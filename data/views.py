@@ -1,5 +1,6 @@
 import structlog
 from rest_framework.generics import ListAPIView
+from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -21,10 +22,10 @@ class DataPersonView(APIView):
 
 
 class DataOpportunityListView(ListAPIView):
+    permission_classes = (AllowAny,)
     queryset = Opportunity.objects.all()
     serializer_class = OpportunitySerializer
 
     def get_serializer_context(self):
         context = super().get_serializer_context()
-        # context["depth"] = 1
         return context
