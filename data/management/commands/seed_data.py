@@ -12,6 +12,7 @@ from data.models import (
     Payload,
     Person,
     Skill,
+    TargetGroup,
     Timeslot,
 )
 from tests_e2e.fixtures import data, users
@@ -83,9 +84,6 @@ class Command(BaseCommand):
             person_RAC.save()
             organization_RAC.save()
 
-            location_USSR = Location(**data.location_USSR)
-            location_USSR.save()
-
             payload_USSR = Payload(**data.payload_USSR)
             payload_USSR.save()
 
@@ -94,10 +92,15 @@ class Command(BaseCommand):
                 timeslot.save()
                 payload_USSR.timeslots.add(timeslot)
 
-            for activity in data.activities:
-                activity = Activity(**activity)
-                activity.save()
-                payload_USSR.activities.add(activity)
+            for location in data.locations:
+                location = Location(**location)
+                location.save()
+                payload_USSR.locations.add(location)
+
+            for location in data.activities:
+                location = Activity(**location)
+                location.save()
+                payload_USSR.activities.add(location)
 
             for language in data.languages:
                 language = Language(**language)
@@ -109,11 +112,17 @@ class Command(BaseCommand):
                 skill.save()
                 payload_USSR.skills.add(skill)
 
-            payload_USSR.locations.add(location_USSR)
-
-            opportunity_USSR = Opportunity(organization=organization_RAC)
+            opportunity_USSR = Opportunity(
+                **data.opportunity, organization=organization_RAC
+            )
             opportunity_USSR.save()
-            opportunity_USSR.payload.add(payload_USSR)
+
+            for target_group in data.target_groups:
+                target_group = TargetGroup(**target_group)
+                target_group.save()
+                opportunity_USSR.target_groups.add(target_group)
+
+            opportunity_USSR.payloads.add(payload_USSR)
 
             opportunity_USSR.save()
             payload_USSR.save()

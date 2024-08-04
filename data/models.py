@@ -45,6 +45,11 @@ class Activity(ModelWithTimestamps):
     description = models.CharField(max_length=128, null=True)
 
 
+class TargetGroup(ModelWithTimestamps):
+    title = models.CharField(max_length=32, unique=True)
+    description = models.CharField(max_length=128, null=True)
+
+
 class Skill(ModelWithTimestamps):
     title = models.CharField(max_length=32, unique=True)
     description = models.CharField(max_length=128, null=True)
@@ -115,5 +120,8 @@ class Payload(ModelWithTimestamps):
 
 
 class Opportunity(ModelWithTimestamps):
+    title = models.CharField(max_length=128, default="Good Samaritan")
     organization = models.ForeignKey(Organization, on_delete=models.CASCADE)
-    payload = models.ManyToManyField(Payload)
+    volunteers_number = models.IntegerField(default=1)
+    target_groups = models.ManyToManyField(TargetGroup)
+    payloads = models.ManyToManyField(Payload)

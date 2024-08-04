@@ -1,35 +1,235 @@
 from rest_framework import serializers
 
-from data.models import Person
+from data.models import (
+    Activity,
+    Avatar,
+    Contact,
+    Language,
+    Location,
+    Opportunity,
+    Organization,
+    Payload,
+    Person,
+    Skill,
+    Timeslot,
+)
+from users.serializers import AlfredUserSerializer
 
 
-class DataPersonSerializer(serializers.ModelSerializer):
+class PersonSerializer(serializers.ModelSerializer):
+    user = serializers.SerializerMethodField(read_only=True)
+    avatar = serializers.SerializerMethodField(read_only=True)
+    contact = serializers.SerializerMethodField(read_only=True)
+    location = serializers.SerializerMethodField(read_only=True)
+
     class Meta:
         model = Person
         fields = [
             "first_name",
             "middle_name",
             "last_name",
+            "date_of_birth",
+            "user",
+            "avatar",
+            "contact",
+            "location",
         ]
+
+    def get_user(self, obj):
+        user_details = AlfredUserSerializer(obj.user).data
+        if isinstance(user_details, dict):
+            del user_details["id"]
+        return user_details
+
+    def get_avatar(self, obj):
+        avatar = AvatarSerializer(obj.avatar).data
+        return avatar
+
+    def get_contact(self, obj):
+        contact_details = ContactSerializer(obj.contact).data
+        return contact_details
+
+    def get_location(self, obj):
+        location_details = LocationSerializer(obj.location).data
+        return location_details
 
     def to_representation(self, instance):
         response = super().to_representation(instance)
-        response["date_of_birth"] = (
-            instance.date_ofBirth.strftime("%d-%m-%Y")
-            if instance.date_of_birth
-            else None
-        )
-        response["user_type"] = instance.user.user_type
-        response["avatar"] = instance.avatar.pic
-        response["contact_phone"] = instance.contact.phone
-        # if a user didn't provide email use the one from credentials
-        response["contact_email"] = (
-            instance.contact.email if instance.contact.email else instance.user.email
-        )
-        response["contact_web"] = instance.contact.web
-        response["location_street_address"] = instance.location.street_address
-        response["location_post_code"] = instance.location.post_code
-        response["location_city"] = instance.location.city
-        response["location_country"] = instance.location.country
-
         return response
+
+
+class AvatarSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Avatar
+        fields = ["pic"]
+
+
+class SkillSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Skill
+        fields = [
+            "title",
+            "description",
+        ]
+
+
+class LanguageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Language
+        fields = [
+            "iso_code",
+            "level",
+        ]
+
+
+class ActivitySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Activity
+        fields = [
+            "title",
+            "description",
+        ]
+
+
+class TimeslotSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Timeslot
+        fields = [
+            "start",
+            "end",
+            "recurrence",
+        ]
+
+
+class ContactSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Contact
+        fields = [
+            "title",
+            "phone",
+            "email",
+            "web",
+        ]
+
+
+class LocationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Location
+        fields = [
+            "title",
+            "street_address",
+            "post_code",
+            "city",
+            "country",
+            "latitude",
+            "longitude",
+        ]
+
+
+class OrganizationSerializer(serializers.ModelSerializer):
+    contact = serializers.SerializerMethodField(read_only=True)
+    location = serializers.SerializerMethodField(read_only=True)
+    avatar = serializers.SerializerMethodField(read_only=True)
+    persons = serializers.SerializerMethodField(read_only=True)
+
+    class Meta:
+        model = Organization
+        fields = ["name", "location", "contact", "avatar", "persons"]
+
+    def get_contact(self, obj):
+        contact_details = ContactSerializer(obj.contact).data
+        return contact_details
+
+    def get_location(self, obj):
+        location_details = LocationSerializer(obj.location).data
+        return location_details
+
+    def get_avatar(self, obj):
+        avatar_details = AvatarSerializer(obj.avatar).data
+        return avatar_details
+
+    def get_persons(self, obj):
+        persons_details = [
+            PersonSerializer(person).data for person in obj.persons.all()
+        ]
+        return persons_details
+
+
+class PayloadSerializer(serializers.ModelSerializer):
+    locations = serializers.SerializerMethodField(read_only=True)
+    timeslots = serializers.SerializerMethodField(read_only=True)
+    activities = serializers.SerializerMethodField(read_only=True)
+    languages = serializers.SerializerMethodField(read_only=True)
+    skills = serializers.SerializerMethodField(read_only=True)
+
+    class Meta:
+        model = Payload
+        fields = [
+            "locations",
+            "payload_type",
+            "timeslots",
+            "activities",
+            "languages",
+            "skills",
+        ]
+
+    def get_locations(self, obj):
+        locations_details = [
+            LocationSerializer(location).data for location in obj.locations.all()
+        ]
+        return locations_details
+
+    def get_timeslots(self, obj):
+        timeslots_details = [
+            TimeslotSerializer(timeslot).data for timeslot in obj.timeslots.all()
+        ]
+        return timeslots_details
+
+    def get_activities(self, obj):
+        activities_details = [
+            ActivitySerializer(activity).data for activity in obj.activities.all()
+        ]
+        return activities_details
+
+    def get_languages(self, obj):
+        languages_details = [
+            LanguageSerializer(language).data for language in obj.languages.all()
+        ]
+        return languages_details
+
+    def get_skills(self, obj):
+        skills_details = [SkillSerializer(skill).data for skill in obj.skills.all()]
+        return skills_details
+
+
+class OpportunitySerializer(serializers.ModelSerializer):
+    organization = serializers.SerializerMethodField(read_only=True)
+    payloads = serializers.SerializerMethodField(read_only=True)
+
+    class Meta:
+        model = Opportunity
+        fields = [
+            "title",
+            "volunteers_number",
+            "organization",
+            "payloads",
+        ]
+
+    def get_organization(self, obj):
+        organization_details = OrganizationSerializer(obj.organization).data
+        return organization_details
+
+    def get_payloads(self, obj):
+        payloads_details = [
+            PayloadSerializer(payload).data for payload in obj.payloads.all()
+        ]
+        return payloads_details
+
+    def to_representation(self, instance):
+        depth = self.context.get("depth", None)
+        response = super().to_representation(instance)
+        return (
+            response
+            if depth is None
+            else {"message": "do not know how to render given depth"}
+        )

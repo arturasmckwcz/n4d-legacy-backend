@@ -29,13 +29,20 @@ location_Helter_Skelter = {
     "city": "Gotham",
     "country": "USA",
 }
-location_USSR = {
-    "title": "USSR",
-    "street_address": "Hölle Platz 1",
-    "post_code": "00666",
-    "city": "Moscow",
-    "country": "USSR",
-}
+locations = [
+    {
+        "title": "USSR",
+        "street_address": "Hölle Platz 1",
+        "post_code": "00666",
+        "city": "Moscow",
+        "country": "USSR",
+    },
+    {
+        "title": "Inner Mongolia",
+        "latitude": 47.80780396727952,
+        "longitude": 106.95299192104217,
+    },
+]
 
 languages = [
     {"iso_code": Languages.GERMAN, "level": LangLevels.BEGINNER},
@@ -47,6 +54,12 @@ activities = [
     {"title": "Daycare"},
     {"title": "Translation"},
     {"title": "Sports"},
+]
+
+target_groups = [
+    {"title": "Kids"},
+    {"title": "Women"},
+    {"title": "Men"},
 ]
 
 skills = [
@@ -81,3 +94,5 @@ person_RAC = {"first_name": "John", "middle_name": None, "last_name": "Doe"}
 contact_Helter_Skelter = {"title": "Helter Skelter", "phone": "+49 30 3009090"}
 
 organization_RAC_name = "Helter Skelter"
+
+opportunity = {"title": "Apocalipsis Now", "volunteers_number": 7}

@@ -12,6 +12,7 @@ from data.models import (
     Payload,
     Person,
     Skill,
+    TargetGroup,
     Timeslot,
 )
 from users.models import AlfredUser
@@ -28,6 +29,7 @@ class Command(BaseCommand):
         Contact.objects.all().delete()
         Language.objects.all().delete()
         Activity.objects.all().delete()
+        TargetGroup.objects.all().delete()
         Skill.objects.all().delete()
         Timeslot.objects.all().delete()
         Payload.objects.all().delete()
