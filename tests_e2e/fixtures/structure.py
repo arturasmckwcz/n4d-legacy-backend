@@ -39,6 +39,7 @@ class ApiPerson(BaseModel):
     first_name: str
     last_name: str
     middle_name: Optional[str | None]
+    name: str
     date_of_birth: Optional[str | None]
     user: ApiUser
     location: ApiLocation
@@ -55,6 +56,11 @@ class ApiOrganization(BaseModel):
 
 
 class ApiActivity(BaseModel):
+    title: str
+    description: Optional[str | None]
+
+
+class ApiTargetGroup(BaseModel):
     title: str
     description: Optional[str | None]
 
@@ -84,8 +90,26 @@ class ApiPayload(BaseModel):
     skills: Optional[List[ApiSkill]]
 
 
+class ApiPayloadFlattered(BaseModel):
+    payload_type: str
+    locations: List[str]
+    timeslots: List[str]
+    activities: List[str]
+    languages: List[str]
+    skills: Optional[List[str]]
+
+
 class ApiOpportunity(BaseModel):
     title: str
     volunteers_number: int
     organization: ApiOrganization
+    target_groups: List[ApiTargetGroup]
     payloads: List[ApiPayload]
+
+
+class ApiOpportunityFlattered(BaseModel):
+    title: str
+    volunteers_number: int
+    organization: str
+    target_groups: List[str]
+    payloads: List[ApiPayloadFlattered]

@@ -14,6 +14,7 @@ class ModelWithTimestamps(models.Model):
 
 
 class Timeslot(ModelWithTimestamps):
+    title = models.CharField(max_length=32, null=True)
     start = models.DateTimeField()
     end = models.DateTimeField()
     recurrence = models.CharField(max_length=512)
@@ -92,10 +93,14 @@ class Person(ModelWithTimestamps):
     location = models.ForeignKey(Location, on_delete=models.CASCADE)
     organizations = models.ManyToManyField("data.Organization", blank=True)
 
-    def __str__(self):
+    @property
+    def name(self):
         middle_name = self.middle_name
-        middle_name = f" '{middle_name}'" if middle_name else ""
-        return f"'{self.first_name}'{middle_name} '{self.last_name}'"
+        middle_name = f" {middle_name}" if middle_name else ""
+        return f"{self.first_name}{middle_name} {self.last_name}"
+
+    def __str__(self):
+        return self.name
 
 
 class Organization(ModelWithTimestamps):

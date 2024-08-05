@@ -11,8 +11,10 @@ from data.models import (
     Payload,
     Person,
     Skill,
+    TargetGroup,
     Timeslot,
 )
+from data.utils import flatten_dict
 from users.serializers import AlfredUserSerializer
 
 
@@ -25,6 +27,7 @@ class PersonSerializer(serializers.ModelSerializer):
     class Meta:
         model = Person
         fields = [
+            "name",
             "first_name",
             "middle_name",
             "last_name",
@@ -91,10 +94,20 @@ class ActivitySerializer(serializers.ModelSerializer):
         ]
 
 
+class TargetGroupSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = TargetGroup
+        fields = [
+            "title",
+            "description",
+        ]
+
+
 class TimeslotSerializer(serializers.ModelSerializer):
     class Meta:
         model = Timeslot
         fields = [
+            "title",
             "start",
             "end",
             "recurrence",
@@ -204,6 +217,7 @@ class PayloadSerializer(serializers.ModelSerializer):
 
 class OpportunitySerializer(serializers.ModelSerializer):
     organization = serializers.SerializerMethodField(read_only=True)
+    target_groups = serializers.SerializerMethodField(read_only=True)
     payloads = serializers.SerializerMethodField(read_only=True)
 
     class Meta:
@@ -211,6 +225,7 @@ class OpportunitySerializer(serializers.ModelSerializer):
         fields = [
             "title",
             "volunteers_number",
+            "target_groups",
             "organization",
             "payloads",
         ]
@@ -219,6 +234,13 @@ class OpportunitySerializer(serializers.ModelSerializer):
         organization_details = OrganizationSerializer(obj.organization).data
         return organization_details
 
+    def get_target_groups(self, obj):
+        target_groups_details = [
+            TargetGroupSerializer(target_group).data
+            for target_group in obj.target_groups.all()
+        ]
+        return target_groups_details
+
     def get_payloads(self, obj):
         payloads_details = [
             PayloadSerializer(payload).data for payload in obj.payloads.all()
@@ -226,10 +248,6 @@ class OpportunitySerializer(serializers.ModelSerializer):
         return payloads_details
 
     def to_representation(self, instance):
-        depth = self.context.get("depth", None)
+        primary_keys = self.context.get("primary_keys", None)
         response = super().to_representation(instance)
-        return (
-            response
-            if depth is None
-            else {"message": "do not know how to render given depth"}
-        )
+        return flatten_dict(response, primary_keys)

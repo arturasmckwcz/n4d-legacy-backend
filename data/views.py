@@ -28,4 +28,5 @@ class DataOpportunityListView(ListAPIView):
 
     def get_serializer_context(self):
         context = super().get_serializer_context()
+        context["primary_keys"] = ["iso_code", "name", "title"]
         return context

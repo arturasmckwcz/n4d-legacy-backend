@@ -66,3 +66,39 @@ def generate_square_pattern_svg(size: int, granularity: int, color: str) -> str 
     {random_rects()}
   </svg>
   """
+
+
+def flatten_dict(data: dict, primary_keys: list | None = None) -> dict:
+    if primary_keys is None:
+        return data
+
+    def get_primary_key_value(obj):
+        for key in obj.keys():
+            if key in primary_keys:
+                return obj[key]
+
+    def list_value(data: list) -> list:
+        result = []
+        for item in data:
+            if isinstance(item, dict):
+                primary_value = get_primary_key_value(item)
+                result.append(primary_value if primary_value else flatten(item))
+            elif isinstance(item, list):
+                result.append(list_value(item))
+        return result
+
+    def flatten(obj):
+        if isinstance(obj, dict):
+            result = {}
+            for key, value in obj.items():
+                if isinstance(value, dict):
+                    result[key] = get_primary_key_value(value)
+                elif isinstance(value, list):
+                    result[key] = list_value(value)
+                else:
+                    result[key] = value
+
+            return result
+        return {}
+
+    return flatten(data)

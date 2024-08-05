@@ -2,6 +2,7 @@ import pytest
 from django.core.exceptions import ValidationError
 
 from data.utils import (
+    flatten_dict,
     generate_square_pattern_svg,
     validate_latitude,
     validate_longitude,
@@ -80,3 +81,31 @@ def test_validate_longitude_with_side_effect(
     with pytest.raises(expected_exception) as excinfo:
         validate_longitude(longitude)
         assert excinfo.value.args[0] == expected_error_message
+
+
+@pytest.mark.parametrize(
+    "data, primary_keys, expected",
+    [
+        ({}, None, {}),
+        (5, [], {}),
+        ({"a": 1, "b": 2}, None, {"a": 1, "b": 2}),
+        ({"a": 1, "b": 2}, [], {"a": 1, "b": 2}),
+        (
+            {"a": 1, "b": [{"c": 3}, {"c": 4}], "e": 5},
+            ["c"],
+            {"a": 1, "b": [3, 4], "e": 5},
+        ),
+        (
+            {
+                "a": 1,
+                "b": [{"c": 3}, {"c": 4}],
+                "e": [{"f": 5, "g": [{"d": 7}, {"d": 8}]}],
+            },
+            ["c", "d"],
+            {"a": 1, "b": [3, 4], "e": [{"f": 5, "g": [7, 8]}]},
+        ),
+    ],
+)
+def test_flatten_dict(data, primary_keys, expected):
+    result = flatten_dict(data, primary_keys)
+    assert result == expected

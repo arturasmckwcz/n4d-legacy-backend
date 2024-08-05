@@ -71,13 +71,15 @@ skills = [
 
 timeslots = [
     {
-        "start": datetime(2024, 10, 7, 8, 0, 0, 0, tzinfo=utc_tz),
-        "end": datetime(2024, 10, 7, 8, 0, 0, 0, tzinfo=utc_tz),
+        "title": "Monday Morning",
+        "start": datetime(2024, 10, 7, 8, 8, 0, 0, tzinfo=utc_tz),
+        "end": datetime(2024, 10, 7, 8, 11, 0, 0, tzinfo=utc_tz),
         "recurrence": str(Recurrence(rrules=[Rule(freq=WEEKLY, wkst=MO)], dtend=dtend)),
     },
     {
-        "start": datetime(2024, 7, 27, 12, 0, 0, 0, tzinfo=utc_tz),
-        "end": datetime(2024, 7, 27, 14, 0, 0, 0, tzinfo=utc_tz),
+        "title": "Last Saturday Noon",
+        "start": datetime(2024, 7, 27, 12, 11, 0, 0, tzinfo=utc_tz),
+        "end": datetime(2024, 7, 27, 14, 14, 0, 0, tzinfo=utc_tz),
         "recurrence": str(
             Recurrence(rrules=[Rule(freq=MONTHLY, bysteps=-1, byday=SA)], dtend=dtend)
         ),
