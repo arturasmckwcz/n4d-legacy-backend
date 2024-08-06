@@ -37,6 +37,7 @@ defaults = {
         "http://192.168.0.124:8000",
         "http://192.168.1.144:8000",
         "http://192.168.178.69:8000",
+        "https://api.need4deed.org",
     ],
     "DOMAIN": "192.168.0.124:3080",
     "ALFRED_LAST_COMMIT_HASH": "I'm the last",

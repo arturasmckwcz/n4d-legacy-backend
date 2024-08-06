@@ -123,3 +123,14 @@ source .venv/bin/activate
 ```
 python3 manage.py runserver
 ```
+
+
+### Run books
+# How to:
+
+*Add another project files to the CI/CD pipeline of this project?*
+
+Go to the another project -> Settings -> CI/CD -> Job token permissions 
+Add this group/project to the allowlist
+Use CI_JOB_TOKEN in this project
+
