@@ -112,8 +112,10 @@ class Command(BaseCommand):
                 skill.save()
                 payload_USSR.skills.add(skill)
 
+            payload_USSR.save()
+
             opportunity_USSR = Opportunity(
-                **data.opportunity, organization=organization_RAC
+                **data.opportunity, organization=organization_RAC, payload=payload_USSR
             )
             opportunity_USSR.save()
 
@@ -122,9 +124,6 @@ class Command(BaseCommand):
                 target_group.save()
                 opportunity_USSR.target_groups.add(target_group)
 
-            opportunity_USSR.payloads.add(payload_USSR)
-
             opportunity_USSR.save()
-            payload_USSR.save()
 
             logger.info(self.style.SUCCESS("Seeding database completed!"))

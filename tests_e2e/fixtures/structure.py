@@ -104,7 +104,7 @@ class ApiOpportunity(BaseModel):
     volunteers_number: int
     organization: ApiOrganization
     target_groups: List[ApiTargetGroup]
-    payloads: List[ApiPayload]
+    payload: ApiPayload
 
 
 class ApiOpportunityFlattered(BaseModel):
@@ -112,4 +112,4 @@ class ApiOpportunityFlattered(BaseModel):
     volunteers_number: int
     organization: str
     target_groups: List[str]
-    payloads: List[ApiPayloadFlattered]
+    payload: ApiPayloadFlattered

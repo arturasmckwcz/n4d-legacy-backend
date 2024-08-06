@@ -218,7 +218,7 @@ class PayloadSerializer(serializers.ModelSerializer):
 class OpportunitySerializer(serializers.ModelSerializer):
     organization = serializers.SerializerMethodField(read_only=True)
     target_groups = serializers.SerializerMethodField(read_only=True)
-    payloads = serializers.SerializerMethodField(read_only=True)
+    payload = serializers.SerializerMethodField(read_only=True)
 
     class Meta:
         model = Opportunity
@@ -227,7 +227,7 @@ class OpportunitySerializer(serializers.ModelSerializer):
             "volunteers_number",
             "target_groups",
             "organization",
-            "payloads",
+            "payload",
         ]
 
     def get_organization(self, obj):
@@ -241,11 +241,9 @@ class OpportunitySerializer(serializers.ModelSerializer):
         ]
         return target_groups_details
 
-    def get_payloads(self, obj):
-        payloads_details = [
-            PayloadSerializer(payload).data for payload in obj.payloads.all()
-        ]
-        return payloads_details
+    def get_payload(self, obj):
+        payload_details = PayloadSerializer(obj.payload).data
+        return payload_details
 
     def to_representation(self, instance):
         primary_keys = self.context.get("primary_keys", None)

@@ -24,6 +24,7 @@ defaults = {
         "api",
     ],
     "CORS_ALLOWED_ORIGINS": [
+        "http://localhost:5000",
         "http://localhost:3000",
         "http://192.168.0.124:3000",
         "http://192.168.1.144:3000",

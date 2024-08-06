@@ -128,4 +128,4 @@ class Opportunity(ModelWithTimestamps):
     organization = models.ForeignKey(Organization, on_delete=models.CASCADE)
     volunteers_number = models.IntegerField(default=1)
     target_groups = models.ManyToManyField(TargetGroup)
-    payloads = models.ManyToManyField(Payload)
+    payload = models.OneToOneField(Payload, on_delete=models.CASCADE)

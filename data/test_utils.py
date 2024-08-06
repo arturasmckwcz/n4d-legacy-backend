@@ -86,10 +86,13 @@ def test_validate_longitude_with_side_effect(
 @pytest.mark.parametrize(
     "data, primary_keys, expected",
     [
-        ({}, None, {}),
-        (5, [], {}),
+        ([], None, []),
         ({"a": 1, "b": 2}, None, {"a": 1, "b": 2}),
-        ({"a": 1, "b": 2}, [], {"a": 1, "b": 2}),
+        (
+            {"a": 1, "b": [{"c": 3}, {"c": 4}], "e": 5},
+            [],
+            {"a": 1, "b": [{"c": 3}, {"c": 4}], "e": 5},
+        ),
         (
             {"a": 1, "b": [{"c": 3}, {"c": 4}], "e": 5},
             ["c"],
@@ -104,6 +107,7 @@ def test_validate_longitude_with_side_effect(
             ["c", "d"],
             {"a": 1, "b": [3, 4], "e": [{"f": 5, "g": [7, 8]}]},
         ),
+        (5, [""], {}),
     ],
 )
 def test_flatten_dict(data, primary_keys, expected):

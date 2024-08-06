@@ -11,7 +11,7 @@ API_LOGIN_URL = f"{ALFRED_API_URL}/api/jwt/create/"
 API_ME_URL = f"{ALFRED_API_URL}/api/opportunity/"
 
 
-class ApiOpportunityRespose(BaseModel):
+class ApiOpportunityResponse(BaseModel):
     items: List[structure.ApiOpportunityFlattered]
 
     model_config = ConfigDict(extra="forbid")
@@ -29,7 +29,7 @@ def test_api_opportunity():
 
     headers = {"Authorization": f"Bearer {login_response.access}"}
     api_opportunity_request = requests.get(url=API_ME_URL, headers=headers)
-    response = ApiOpportunityRespose(items=api_opportunity_request.json())
+    response = ApiOpportunityResponse(items=api_opportunity_request.json())
     api_opportunity_response = response.items[0]
 
     assert api_opportunity_request.status_code == HTTPStatus.OK
@@ -46,7 +46,7 @@ def test_api_opportunity():
     for idx in range(len(api_opportunity_target_groups)):
         assert api_opportunity_target_groups[idx] == data.target_groups[idx]["title"]
 
-    api_opportunity_payload = api_opportunity_response.payloads[0]
+    api_opportunity_payload = api_opportunity_response.payload
     assert api_opportunity_payload.payload_type == data.payload_USSR["payload_type"]
 
     assert api_opportunity_payload.locations[0] == data.locations[0]["title"]
