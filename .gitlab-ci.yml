@@ -13,8 +13,9 @@ variables:
   AWS_SES_FROM_EMAIL: "your-from-email"
   DOMAIN: "your-domain"
   SITE_NAME: "your-site-name"
-  CORS_ALLOW_HEADERS: "['*']"
   ALLOWED_HOSTS: "['*']"
+  POSTGRES_HOST: "postgres.alfred.local"
+  
 
 .pre_commit_before:
   before_script:
@@ -101,6 +102,7 @@ build-and-push:
       --build-arg SITE_NAME=${SITE_NAME}
       --build-arg CORS_ALLOW_HEADERS=${CORS_ALLOW_HEADERS}
       --build-arg ALLOWED_HOSTS=${ALLOWED_HOSTS}
+      --build-arg POSTGRES_HOST=${POSTGRES_HOST}
       -t $ECR_URI:$CI_COMMIT_REF_SLUG .
     - docker tag $ECR_URI:$CI_COMMIT_REF_SLUG $ECR_URI:latest
     - echo "Pushing the Docker image to ECR..."
@@ -138,6 +140,7 @@ run-test-e2e:
     - build-and-push-e2e-test
   script:
     # pull the scheme
+    # # change the branch name if needed for testing with another wayne-manor branch
     - git clone -b main https://gitlab-ci-token:${CI_JOB_TOKEN}@gitlab.com/need4deed/wayne-manor.git wayne-manor
     - STACK_NAME=batman-${CI_COMMIT_SHORT_SHA}
     # the create stack command has to be one line otherwise it breaks the deployment

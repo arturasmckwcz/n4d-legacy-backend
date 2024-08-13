@@ -59,7 +59,7 @@ class AlfredUser(AbstractBaseUser, PermissionsMixin):
     objects = AlfredUserManager()
 
     USERNAME_FIELD = "email"
-    REQUIRED_FIELDS = ["username", "first_name", "last_name", "user_type"]
+    REQUIRED_FIELDS = ["user_type"]
 
     def __str__(self):
         return str(self.email)

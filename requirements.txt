@@ -70,6 +70,7 @@ oauthlib==3.2.2
     # via
     #   requests-oauthlib
     #   social-auth-core
+psycopg2-binary==2.9.9
 pycparser==2.22
     # via cffi
 pyjwt==2.8.0
@@ -115,8 +116,6 @@ sqlparse==0.5.0
     # via django
 structlog==24.2.0
     # via django-structlog
-typing-extensions==4.12.2
-    # via asgiref
 uritemplate==4.1.1
     # via drf-spectacular
 urllib3==2.2.2

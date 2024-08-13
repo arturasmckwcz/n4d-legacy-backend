@@ -10,6 +10,8 @@ ARG DOMAIN
 ARG SITE_NAME
 ARG CORS_ALLOW_HEADERS
 ARG ALLOWED_HOSTS
+ARG POSTGRES_HOST
+
 
 ENV DJANGO_SECRET_KEY=${DJANGO_SECRET_KEY}
 ENV DEBUG=${DEBUG}
@@ -19,8 +21,9 @@ ENV AWS_SES_REGION_NAME=${AWS_SES_REGION_NAME}
 ENV AWS_SES_FROM_EMAIL=${AWS_SES_FROM_EMAIL}
 ENV DOMAIN=${DOMAIN}
 ENV SITE_NAME=${SITE_NAME}
-ENV CORS_ALLOW_HEAFERS=${CORS_ALLOW_HEADERS}
+ENV CORS_ALLOW_HEADERS=${CORS_ALLOW_HEADERS}
 ENV ALLOWED_HOSTS=${ALLOWED_HOSTS}
+ENV POSTGRES_HOST=${POSTGRES_HOST}
 
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
@@ -29,14 +32,15 @@ WORKDIR /app
 
 RUN apt update -y && apt upgrade -y
 
+RUN apt-get install -y postgresql-client \
+    && rm -rf /var/lib/apt/lists/*
+
 COPY requirements.txt /app/
 
 RUN pip install --upgrade pip && pip install -r requirements.txt
 
 COPY . /app/
 
-RUN python manage.py migrate
-
 EXPOSE 8000
 
-CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+ENTRYPOINT ["./entrypoint.sh"]

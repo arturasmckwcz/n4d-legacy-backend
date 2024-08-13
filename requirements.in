@@ -6,3 +6,4 @@ django-ses
 drf-spectacular
 django-structlog
 django-recurrence
+psycopg2-binary

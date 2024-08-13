@@ -86,8 +86,12 @@ WSGI_APPLICATION = "alfred.wsgi.application"
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": "test_name",
+        "USER": "test_user",
+        "PASSWORD": "test_password",
+        "HOST": read_env_var("POSTGRES_HOST"),
+        "PORT": 5432,
     },
 }
 
@@ -174,8 +178,7 @@ AUTH_COOKIE_SAMESITE = "None"
 # default jwt settings https://django-rest-framework-simplejwt.readthedocs.io/en/latest/settings.html
 # SIMPLE_JWT = {}
 
-# corsheaders allowed
-CORS_ALLOWED_ORIGINS = read_env_var("CORS_ALLOWED_ORIGINS")
+# it's not possible to set * for CORS_ALLOWED_ORIGINS
 CORS_ALLOW_HEADERS = list(default_headers) + flatten_list(
     [read_env_var("CORS_ALLOWED_HEADERS")],
 )

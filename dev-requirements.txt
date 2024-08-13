@@ -69,10 +69,6 @@ djangorestframework-simplejwt==5.3.1
     # via djoser
 djoser==2.2.3
 drf-spectacular==0.27.2
-exceptiongroup==1.2.2
-    # via
-    #   cattrs
-    #   pytest
 filelock==3.14.0
     # via virtualenv
 identify==2.5.36
@@ -112,6 +108,7 @@ platformdirs==4.2.1
 pluggy==1.5.0
     # via pytest
 pre-commit==3.7.0
+psycopg2-binary==2.9.9
 pycparser==2.22
     # via cffi
 pydantic==2.7.4
@@ -176,16 +173,10 @@ sqlparse==0.5.0
     # via django
 structlog==24.2.0
     # via django-structlog
-tomli==2.0.1
-    # via
-    #   coverage
-    #   pytest
 types-psycopg2==2.9.21.20240417
     # via django-types
 typing-extensions==4.12.2
     # via
-    #   asgiref
-    #   cattrs
     #   pydantic
     #   pydantic-core
     #   ruff-lsp

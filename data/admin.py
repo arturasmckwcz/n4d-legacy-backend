@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from data.models import Avatar, Contact, Location, Organization, Person
+from data.models import Avatar, Contact, Location, Opportunity, Organization, Person
 
 
 @admin.register(Contact)
@@ -25,4 +25,9 @@ class PersonAdmin(admin.ModelAdmin):
 
 @admin.register(Organization)
 class OrganizationAdmin(admin.ModelAdmin):
+    pass
+
+
+@admin.register(Opportunity)
+class OpportunityAdmin(admin.ModelAdmin):
     pass
