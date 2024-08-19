@@ -26,8 +26,11 @@ defaults = {
     "CORS_ALLOWED_ORIGINS": [
         "http://localhost:5000",
         "http://localhost:3000",
+        "http://192.168.0.124:5000",
         "http://192.168.0.124:3000",
+        "http://192.168.1.144:5000",
         "http://192.168.1.144:3000",
+        "http://192.168.178.69:5000",
         "http://192.168.178.69:3000",
     ],
     "CORS_ALLOWED_HEADERS": [
@@ -41,5 +44,6 @@ defaults = {
         "https://api.need4deed.org",
     ],
     "DOMAIN": "192.168.0.124:3080",
+    "POSTGRES_HOST": "postgresdb",
     "ALFRED_LAST_COMMIT_HASH": "I'm the last",
 }

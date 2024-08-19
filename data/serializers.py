@@ -228,6 +228,9 @@ class OpportunitySerializer(serializers.ModelSerializer):
             "target_groups",
             "organization",
             "payload",
+            "notion_id",
+            "status",
+            "vo_information",
         ]
 
     def get_organization(self, obj):

@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     "data",
     "drf_spectacular",
     "recurrence",
+    "parse_opportunities",
 ]
 
 MIDDLEWARE = [
@@ -179,6 +180,7 @@ AUTH_COOKIE_SAMESITE = "None"
 # SIMPLE_JWT = {}
 
 # it's not possible to set * for CORS_ALLOWED_ORIGINS
+CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOW_HEADERS = list(default_headers) + flatten_list(
     [read_env_var("CORS_ALLOWED_HEADERS")],
 )

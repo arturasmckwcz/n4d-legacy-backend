@@ -1,6 +1,11 @@
 import random
+from functools import reduce
 
+import structlog
 from django.core.exceptions import ValidationError
+from django.db.models import Q
+
+logger = structlog.get_logger(__name__)
 
 
 def validate_latitude(latitude: float):
@@ -69,6 +74,23 @@ def generate_square_pattern_svg(size: int, granularity: int, color: str) -> str 
 
 
 def flatten_dict(data: dict, primary_keys: list | None = None) -> dict:
+    """Flattens a nested dictionary based on specified primary keys.
+
+    Recursively flattens a nested dictionary, preserving list structures.
+    If primary keys are provided, the function attempts to extract the value
+    of the first primary key found in each nested dictionary and replaces
+    the nested dictionary with this value. If no primary key is found, the
+    dictionary is flattened recursively.
+
+    Args:
+        data: The nested dictionary to flatten.
+        primary_keys: A list of keys to prioritize for flattening.
+            If None or empty, the entire dictionary is flattened.
+
+    Returns:
+        A flattened dictionary.
+    """
+
     if (primary_keys is None) or (len(primary_keys) == 0):
         return data
 
@@ -102,3 +124,31 @@ def flatten_dict(data: dict, primary_keys: list | None = None) -> dict:
         return {}
 
     return flatten(data)
+
+
+def filter_queryset(queryset, filter_dict):
+    """Filters a queryset based on a given filter dictionary.
+
+    Args:
+        queryset: The queryset to filter.
+        filter_dict: A dictionary where keys are field names and values are lists of allowed values.
+            example: {"status":["Volunteers Needed"]}
+
+    Returns:
+        The filtered queryset.
+    """
+
+    filter_dict_items = filter_dict.items()
+    logger.debug(f"filter_dict: {filter_dict}")
+    logger.debug(f"filter_dict_items: {filter_dict_items}")
+    if len(filter_dict_items) == 0:
+        return queryset
+
+    filters = []
+    for field, values in filter_dict_items:
+        q_objects = [Q(**{field: value}) for value in values]
+        filters.append(reduce(lambda x, y: x | y, q_objects))
+
+    logger.debug(f"filters: {filters}")
+
+    return queryset.filter(reduce(lambda x, y: x & y, filters))

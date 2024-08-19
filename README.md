@@ -1,9 +1,9 @@
 ![coverage](https://gitlab.com/need4deed/alfred/badges/main/coverage.svg)
 
-
 ## Development
 
 #### How to start django
+
 Ensure that you have env variables set.
 `python manage.py runserver`
 
@@ -79,6 +79,7 @@ DOMAIN="frontend domain used in email templates"
 SITE_NAME="used as a team name in email templates"
 
 #### HOW TO RUN THE PROJECT LOCALLY WITH DOCKER COMPOSE
+
 ```
 docker compose --env-file .env.local -f docker-compose.dev.yaml up --build
 ```
@@ -110,27 +111,65 @@ API_PORT_NON_TLS=8080 API_PORT=8443 docker compose -p batman -f docker-compose.d
 ```
 
 #### Local
+
 0. cd to project dir
 1. Quick way to export env vars
+
 ```
 set -a && source .env && set +a
 ```
+
 2. Activate venv
+
 ```
 source .venv/bin/activate
 ```
+
 2. Run
+
 ```
 python3 manage.py runserver
 ```
 
-
 ### Run books
+
 # How to:
 
-*Add another project files to the CI/CD pipeline of this project?*
+_Add another project files to the CI/CD pipeline of this project?_
 
-Go to the another project -> Settings -> CI/CD -> Job token permissions 
+Go to the another project -> Settings -> CI/CD -> Job token permissions
 Add this group/project to the allowlist
 Use CI_JOB_TOKEN in this project
 
+### Loading opportunities as `json` file
+
+#### Endpoit
+
+```
+/api/opportunities.json/
+```
+
+takes form field of type `file` named `json_file`
+
+#### File format
+
+Please check [the test file](./tests_e2e/fixtures/opportunities.json) as example
+It should be an array of objects
+Each object should correspond to the following OTD:
+
+```
+{
+    "Status": "opportunity.status",
+    "Name": "opportunity.title",
+    "Type": "payload.activities",
+    "District": "payload.locations",
+    "Number of volunteers needed": "opportunity.volunteers_number",
+    "Schedule": "payload.timeslots",
+    "Accommodation Centre": "opportunity.organization",
+    "Languages needed": "payload.languages",
+    "Target group": "opportunity.target_groups",
+    "VO information": "opportunity.vo_information",
+    "ID": "opportunity.notion_id",
+
+}
+```

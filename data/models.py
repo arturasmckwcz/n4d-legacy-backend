@@ -1,6 +1,6 @@
 from django.db import models
 
-from data.enums import LangLevels, Languages, PayloadType
+from data.enums import LangLevels, Languages, PayloadType, Statuses
 from data.utils import validate_latitude, validate_longitude
 from users.models import AlfredUser
 
@@ -14,14 +14,14 @@ class ModelWithTimestamps(models.Model):
 
 
 class Timeslot(ModelWithTimestamps):
-    title = models.CharField(max_length=32, null=True)
-    start = models.DateTimeField()
-    end = models.DateTimeField()
-    recurrence = models.CharField(max_length=512)
+    title = models.CharField(max_length=64, unique=True)
+    start = models.DateTimeField(null=True)
+    end = models.DateTimeField(null=True)
+    recurrence = models.CharField(max_length=512, null=True)
 
 
 class Location(ModelWithTimestamps):
-    title = models.CharField(max_length=32, null=True)
+    title = models.CharField(max_length=32, unique=True, null=True)
 
     street_address = models.CharField(max_length=128, null=False)
     post_code = models.CharField(max_length=8, null=False)
@@ -44,15 +44,24 @@ class Activity(ModelWithTimestamps):
     title = models.CharField(max_length=32, unique=True)
     description = models.CharField(max_length=128, null=True)
 
+    def __str__(self):
+        return f"{self.title}"
+
 
 class TargetGroup(ModelWithTimestamps):
     title = models.CharField(max_length=32, unique=True)
     description = models.CharField(max_length=128, null=True)
 
+    def __str__(self):
+        return f"{self.title}"
+
 
 class Skill(ModelWithTimestamps):
     title = models.CharField(max_length=32, unique=True)
     description = models.CharField(max_length=128, null=True)
+
+    def __str__(self):
+        return f"{self.title}"
 
 
 class Language(ModelWithTimestamps):
@@ -61,10 +70,12 @@ class Language(ModelWithTimestamps):
         choices=LangLevels.choices, max_length=16, default=LangLevels.FLUENT
     )
 
+    def __str__(self):
+        return f"{self.iso_code}"
+
 
 class Contact(ModelWithTimestamps):
-    title = models.CharField(max_length=32, null=True)
-
+    title = models.CharField(max_length=32, unique=True)
     phone = models.CharField(max_length=64, null=True)
     email = models.EmailField(null=True)
     web = models.URLField(null=True)
@@ -100,11 +111,11 @@ class Person(ModelWithTimestamps):
         return f"{self.first_name}{middle_name} {self.last_name}"
 
     def __str__(self):
-        return self.name
+        return f"{self.name}"
 
 
 class Organization(ModelWithTimestamps):
-    name = models.CharField(max_length=128, null=False)
+    name = models.CharField(max_length=512, null=False, unique=True)
     location = models.ForeignKey(Location, on_delete=models.CASCADE)
     contact = models.ForeignKey(Contact, on_delete=models.CASCADE)
     avatar = models.ForeignKey(Avatar, on_delete=models.CASCADE, null=True)
@@ -124,8 +135,11 @@ class Payload(ModelWithTimestamps):
 
 
 class Opportunity(ModelWithTimestamps):
-    title = models.CharField(max_length=128, default="Good Samaritan")
-    organization = models.ForeignKey(Organization, on_delete=models.CASCADE)
+    notion_id = models.CharField(max_length=16, unique=True)
+    title = models.CharField(max_length=256)
     volunteers_number = models.IntegerField(default=1)
+    status = models.CharField(choices=Statuses.choices, max_length=48)
+    organization = models.ForeignKey(Organization, on_delete=models.CASCADE)
+    vo_information = models.TextField(null=True)
     target_groups = models.ManyToManyField(TargetGroup)
     payload = models.OneToOneField(Payload, on_delete=models.CASCADE)

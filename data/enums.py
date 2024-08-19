@@ -9,6 +9,17 @@ class Languages(models.TextChoices):
     RUSSIAN = "ru", "Русский"
     TURKISH = "tr", "Türkçe"
     UKRAINIAN = "uk", "Українська"
+    OTHER = "ot", "Other"
+
+
+class Statuses(models.TextChoices):
+    VOLUNTEERS_NEEDED = "Volunteers Needed"
+    CHECK_WITH_VC = "Check with the VC"
+    URGENT = "Urgent"
+    SEARCH_IN_PROGRESS = "Search in Progress"
+    NO_VOLUNTEERS_NEEDED = "No Volunteers Needed"
+    DONE = "Done"
+    INACTIVE = "Inactive"
 
 
 class LangLevels(models.TextChoices):

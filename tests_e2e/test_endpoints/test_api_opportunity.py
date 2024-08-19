@@ -7,8 +7,10 @@ from pydantic import BaseModel, ConfigDict
 from tests_e2e.fixtures import data, structure, users
 from tests_e2e.test_endpoints.variables import ALFRED_API_URL
 
+primary_keys_param = "?primary_keys=%5B%22name%22%2C%22title%22%2C%22iso_code%22%5D"
+
 API_LOGIN_URL = f"{ALFRED_API_URL}/api/jwt/create/"
-API_ME_URL = f"{ALFRED_API_URL}/api/opportunity/"
+API_OPPORTUNITY_URL = f"{ALFRED_API_URL}/api/opportunity/{primary_keys_param}"
 
 
 class ApiOpportunityResponse(BaseModel):
@@ -28,7 +30,7 @@ def test_api_opportunity():
     assert login_request.status_code == HTTPStatus.OK
 
     headers = {"Authorization": f"Bearer {login_response.access}"}
-    api_opportunity_request = requests.get(url=API_ME_URL, headers=headers)
+    api_opportunity_request = requests.get(url=API_OPPORTUNITY_URL, headers=headers)
     response = ApiOpportunityResponse(items=api_opportunity_request.json())
     api_opportunity_response = response.items[0]
 

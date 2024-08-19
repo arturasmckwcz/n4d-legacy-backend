@@ -76,11 +76,12 @@ class ApiLanguage(BaseModel):
 
 
 class ApiTimeslot(BaseModel):
-    start: datetime
-    end: datetime
+    start: Optional[datetime]
+    end: Optional[datetime]
     recurrence: Optional[str | None]
 
 
+# TODO: maybe all those classes of title/description could be represented by one ApiTitleDescription?
 class ApiPayload(BaseModel):
     payload_type: str
     locations: List[ApiLocation]
@@ -103,6 +104,9 @@ class ApiOpportunity(BaseModel):
     title: str
     volunteers_number: int
     organization: ApiOrganization
+    notion_id: str
+    status: str
+    vo_information: Optional[str]
     target_groups: List[ApiTargetGroup]
     payload: ApiPayload
 
@@ -111,5 +115,8 @@ class ApiOpportunityFlattered(BaseModel):
     title: str
     volunteers_number: int
     organization: str
+    notion_id: str
+    status: str
+    vo_information: Optional[str]
     target_groups: List[str]
     payload: ApiPayloadFlattered

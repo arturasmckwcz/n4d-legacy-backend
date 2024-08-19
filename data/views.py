@@ -1,4 +1,8 @@
+import json
+
 import structlog
+from django.db.models import QuerySet
+from django.utils.datastructures import MultiValueDictKeyError
 from rest_framework.generics import ListAPIView
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
@@ -6,6 +10,7 @@ from rest_framework.views import APIView
 
 from data.models import Opportunity
 from data.serializers import OpportunitySerializer, PersonSerializer
+from data.utils import filter_queryset
 
 logger = structlog.get_logger(__name__)
 
@@ -23,10 +28,28 @@ class DataPersonView(APIView):
 
 class DataOpportunityListView(ListAPIView):
     permission_classes = (AllowAny,)
-    queryset = Opportunity.objects.all()
     serializer_class = OpportunitySerializer
+
+    def get_queryset(self) -> QuerySet[Opportunity]:
+        try:
+            filter_dict = json.loads(self.request.query_params["search"])
+        except json.JSONDecodeError:
+            logger.warn("invalid search param value.")
+            filter_dict = {}
+        except MultiValueDictKeyError:
+            logger.warn("missing search param.")
+            filter_dict = {}
+        opportunities = Opportunity.objects.filter()
+        return filter_queryset(opportunities, filter_dict)
 
     def get_serializer_context(self):
         context = super().get_serializer_context()
-        context["primary_keys"] = ["iso_code", "name", "title"]
+        try:
+            primary_keys = json.loads(self.request.query_params["primary_keys"])
+        except json.JSONDecodeError:
+            logger.warn("invalid primary_keys param value.")
+            primary_keys = []
+        except MultiValueDictKeyError:
+            primary_keys = []
+        context["primary_keys"] = primary_keys
         return context

@@ -98,4 +98,9 @@ contact_Helter_Skelter = {"title": "Helter Skelter", "phone": "+49 30 3009090"}
 
 organization_RAC_name = "Helter Skelter"
 
-opportunity = {"title": "Apocalipsis Now", "volunteers_number": 7}
+opportunity = {
+    "notion_id": "TEST-1",
+    "title": "Apocalipsis Now",
+    "volunteers_number": 7,
+    "status": "Volunteers Needed",
+}
