@@ -1,4 +1,5 @@
 import json
+from http import HTTPStatus
 
 import structlog
 from django.db.models import QuerySet
@@ -53,3 +54,14 @@ class DataOpportunityListView(ListAPIView):
             primary_keys = []
         context["primary_keys"] = primary_keys
         return context
+
+
+class DataOpportunityFlush(APIView):
+    permission_classes = (AllowAny,)
+
+    def delete(self, request):
+        logger.info("Flushing opportunities...")
+        Opportunity.objects.all().delete()
+        return Response(
+            {"message": "Opportunities has been flushed."}, status=HTTPStatus.NO_CONTENT
+        )
