@@ -51,7 +51,6 @@ def test_api_opportunities_json():
     upload_request = requests.post(
         API_OPPORTUNITIES_JSON_URL, files={"json_file": file_to_upload}, headers=headers
     )
-
     upload_response = ApiOpportunitiesJsonResponse(**upload_request.json())
     assert (
         upload_response.message

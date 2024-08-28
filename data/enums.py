@@ -24,11 +24,4 @@ class Statuses(models.TextChoices):
 
 class LangLevels(models.TextChoices):
     BEGINNER = "beginner", "Beginer"
-    INTERMEDIATE = "intermediate", "Intermediate"
-    ADVANCED = "advanced", "Advanced"
     FLUENT = "fluent", "Fluent"
-
-
-class PayloadType(models.TextChoices):
-    VOLUNTEER = "volunteer", "Volunteer"
-    OPPORTUNITY = "opportunity", "Opportunity"

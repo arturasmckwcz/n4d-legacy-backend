@@ -15,7 +15,6 @@ API_OPPORTUNITY_URL = f"{ALFRED_API_URL}/api/opportunity/{primary_keys_param}"
 
 class ApiOpportunityResponse(BaseModel):
     items: List[structure.ApiOpportunityFlattered]
-
     model_config = ConfigDict(extra="forbid")
 
 
@@ -37,35 +36,31 @@ def test_api_opportunity():
     assert api_opportunity_request.status_code == HTTPStatus.OK
 
     assert api_opportunity_response.title == data.opportunity["title"]
-    assert (
-        api_opportunity_response.volunteers_number
-        == data.opportunity["volunteers_number"]
-    )
-
-    assert api_opportunity_response.organization == data.organization_RAC_name
 
     api_opportunity_target_groups = api_opportunity_response.target_groups
     for idx in range(len(api_opportunity_target_groups)):
         assert api_opportunity_target_groups[idx] == data.target_groups[idx]["title"]
 
-    api_opportunity_payload = api_opportunity_response.payload
-    assert api_opportunity_payload.payload_type == data.payload_USSR["payload_type"]
+    assert api_opportunity_response.locations[0] == data.locations[0]["title"]
+    assert api_opportunity_response.locations[1] == data.locations[1]["title"]
 
-    assert api_opportunity_payload.locations[0] == data.locations[0]["title"]
+    assert len(api_opportunity_response.timeslots) > 0
+    for idx in range(len(api_opportunity_response.timeslots)):
+        assert api_opportunity_response.timeslots[idx] == data.timeslots[idx]["title"]
 
-    assert api_opportunity_payload.locations[1] == data.locations[1]["title"]
+    assert len(api_opportunity_response.activities) > 0
+    for idx in range(len(api_opportunity_response.activities)):
+        assert api_opportunity_response.activities[idx] == data.activities[idx]["title"]
 
-    for idx in range(len(api_opportunity_payload.timeslots)):
-        assert api_opportunity_payload.timeslots[idx] == data.timeslots[idx]["title"]
-
-    for idx in range(len(api_opportunity_payload.activities)):
-        assert api_opportunity_payload.activities[idx] == data.activities[idx]["title"]
-
-    for idx in range(len(api_opportunity_payload.languages)):
-        assert api_opportunity_payload.languages[idx] == data.languages[idx]["iso_code"]
-
-    for idx in range(len(api_opportunity_payload.skills)):  # type: ignore
+    assert len(api_opportunity_response.languages) > 0
+    for idx in range(len(api_opportunity_response.languages)):
         assert (
-            api_opportunity_payload.skills[idx]  # type: ignore
+            api_opportunity_response.languages[idx] == data.languages[idx]["iso_code"]
+        )
+
+    assert len(api_opportunity_response.skills) > 0
+    for idx in range(len(api_opportunity_response.skills)):  # type: ignore
+        assert (
+            api_opportunity_response.skills[idx]  # type: ignore
             == data.skills[idx]["title"]
         )

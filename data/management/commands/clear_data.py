@@ -9,7 +9,6 @@ from data.models import (
     Location,
     Opportunity,
     Organization,
-    Payload,
     Person,
     Skill,
     TargetGroup,
@@ -32,7 +31,6 @@ class Command(BaseCommand):
         TargetGroup.objects.all().delete()
         Skill.objects.all().delete()
         Timeslot.objects.all().delete()
-        Payload.objects.all().delete()
         Organization.objects.all().delete()
         Person.objects.all().delete()
         Opportunity.objects.all().delete()

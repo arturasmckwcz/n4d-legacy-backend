@@ -8,7 +8,6 @@ from data.models import (
     Location,
     Opportunity,
     Organization,
-    Payload,
     Person,
     Skill,
     TargetGroup,
@@ -168,23 +167,41 @@ class OrganizationSerializer(serializers.ModelSerializer):
         return persons_details
 
 
-class PayloadSerializer(serializers.ModelSerializer):
+class OpportunitySerializer(serializers.ModelSerializer):
+    organization = serializers.SerializerMethodField(read_only=True)
+    target_groups = serializers.SerializerMethodField(read_only=True)
     locations = serializers.SerializerMethodField(read_only=True)
     timeslots = serializers.SerializerMethodField(read_only=True)
     activities = serializers.SerializerMethodField(read_only=True)
     languages = serializers.SerializerMethodField(read_only=True)
     skills = serializers.SerializerMethodField(read_only=True)
+    # vo_information = serializers.SerializerMethodField(read_only=True)
 
     class Meta:
-        model = Payload
+        model = Opportunity
         fields = [
+            "title",
+            "target_groups",
+            "organization",
             "locations",
-            "payload_type",
             "timeslots",
             "activities",
             "languages",
             "skills",
+            "status",
+            "vo_information",
         ]
+
+    def get_organization(self, obj):
+        organization_details = OrganizationSerializer(obj.organization).data
+        return organization_details
+
+    def get_target_groups(self, obj):
+        target_groups_details = [
+            TargetGroupSerializer(target_group).data
+            for target_group in obj.target_groups.all()
+        ]
+        return target_groups_details
 
     def get_locations(self, obj):
         locations_details = [
@@ -213,40 +230,6 @@ class PayloadSerializer(serializers.ModelSerializer):
     def get_skills(self, obj):
         skills_details = [SkillSerializer(skill).data for skill in obj.skills.all()]
         return skills_details
-
-
-class OpportunitySerializer(serializers.ModelSerializer):
-    organization = serializers.SerializerMethodField(read_only=True)
-    target_groups = serializers.SerializerMethodField(read_only=True)
-    payload = serializers.SerializerMethodField(read_only=True)
-
-    class Meta:
-        model = Opportunity
-        fields = [
-            "title",
-            "volunteers_number",
-            "target_groups",
-            "organization",
-            "payload",
-            "notion_id",
-            "status",
-            "vo_information",
-        ]
-
-    def get_organization(self, obj):
-        organization_details = OrganizationSerializer(obj.organization).data
-        return organization_details
-
-    def get_target_groups(self, obj):
-        target_groups_details = [
-            TargetGroupSerializer(target_group).data
-            for target_group in obj.target_groups.all()
-        ]
-        return target_groups_details
-
-    def get_payload(self, obj):
-        payload_details = PayloadSerializer(obj.payload).data
-        return payload_details
 
     def to_representation(self, instance):
         primary_keys = self.context.get("primary_keys", None)

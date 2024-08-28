@@ -5,7 +5,6 @@ from recurrence import MO, MONTHLY, SA, WEEKLY, Recurrence, Rule
 
 class LangLevels:
     BEGINNER = "beginner"
-    ADVANCED = "advanced"
     FLUENT = "fluent"
 
 
@@ -13,11 +12,6 @@ class Languages:
     GERMAN = "de"
     ENGLISH = "en"
     RUSSIAN = "ru"
-
-
-class PayloadType:
-    OPPORTUNITY = "opportunity"
-    VOLUNTEER = "volunteer"
 
 
 utc_tz = timezone.utc
@@ -47,7 +41,6 @@ locations = [
 
 languages = [
     {"iso_code": Languages.GERMAN, "level": LangLevels.BEGINNER},
-    {"iso_code": Languages.ENGLISH, "level": LangLevels.ADVANCED},
     {"iso_code": Languages.RUSSIAN, "level": LangLevels.FLUENT},
 ]
 
@@ -86,8 +79,6 @@ timeslots = [
     },
 ]
 
-payload_USSR = {"payload_type": PayloadType.OPPORTUNITY}
-
 contact_RAC = {"title": "RAC", "phone": "+49 30 3009090"}
 
 avatar_RAC = {"pic": "<svg></svg>"}
@@ -101,6 +92,5 @@ organization_RAC_name = "Helter Skelter"
 opportunity = {
     "notion_id": "TEST-1",
     "title": "Apocalipsis Now",
-    "volunteers_number": 7,
     "status": "Volunteers Needed",
 }

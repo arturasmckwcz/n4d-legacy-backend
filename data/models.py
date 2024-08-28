@@ -1,6 +1,6 @@
 from django.db import models
 
-from data.enums import LangLevels, Languages, PayloadType, Statuses
+from data.enums import LangLevels, Languages, Statuses
 from data.utils import validate_latitude, validate_longitude
 from users.models import AlfredUser
 
@@ -19,17 +19,20 @@ class Timeslot(ModelWithTimestamps):
     end = models.DateTimeField(null=True)
     recurrence = models.CharField(max_length=512, null=True)
 
+    def __str__(self):
+        return self.title
+
 
 class Location(ModelWithTimestamps):
-    title = models.CharField(max_length=32, unique=True, null=True)
-
-    street_address = models.CharField(max_length=128, null=False)
-    post_code = models.CharField(max_length=8, null=False)
-    city = models.CharField(max_length=64, null=False)
-    country = models.CharField(max_length=64, null=False)
-
-    latitude = models.FloatField(validators=[validate_latitude], null=True)
-    longitude = models.FloatField(validators=[validate_longitude], null=True)
+    title = models.CharField(max_length=32, unique=True, default="Location title")
+    street_address = models.CharField(max_length=128, blank=True)
+    post_code = models.CharField(max_length=8, blank=True)
+    city = models.CharField(max_length=64, blank=True)
+    country = models.CharField(max_length=64, blank=True)
+    latitude = models.FloatField(validators=[validate_latitude], blank=True, null=True)
+    longitude = models.FloatField(
+        validators=[validate_longitude], blank=True, null=True
+    )
 
     def __str__(self):
         title = self.title
@@ -45,7 +48,7 @@ class Activity(ModelWithTimestamps):
     description = models.CharField(max_length=128, null=True)
 
     def __str__(self):
-        return f"{self.title}"
+        return self.title
 
 
 class TargetGroup(ModelWithTimestamps):
@@ -53,7 +56,7 @@ class TargetGroup(ModelWithTimestamps):
     description = models.CharField(max_length=128, null=True)
 
     def __str__(self):
-        return f"{self.title}"
+        return self.title
 
 
 class Skill(ModelWithTimestamps):
@@ -61,17 +64,17 @@ class Skill(ModelWithTimestamps):
     description = models.CharField(max_length=128, null=True)
 
     def __str__(self):
-        return f"{self.title}"
+        return self.title
 
 
 class Language(ModelWithTimestamps):
-    iso_code = models.CharField(choices=Languages.choices, unique=True, max_length=2)
+    iso_code = models.CharField(choices=Languages.choices, max_length=2)
     level = models.CharField(
         choices=LangLevels.choices, max_length=16, default=LangLevels.FLUENT
     )
 
     def __str__(self):
-        return f"{self.iso_code}"
+        return self.iso_code
 
 
 class Contact(ModelWithTimestamps):
@@ -125,21 +128,21 @@ class Organization(ModelWithTimestamps):
         return f"{self.name}"
 
 
-class Payload(ModelWithTimestamps):
-    payload_type = models.CharField(choices=PayloadType.choices, max_length=16)
-    timeslots = models.ManyToManyField(Timeslot)
-    activities = models.ManyToManyField(Activity)
+class Opportunity(ModelWithTimestamps):
+    title = models.CharField(max_length=128, default="Good Samaritan")
+    organization = models.ForeignKey(
+        Organization, on_delete=models.CASCADE, null=True, blank=True
+    )
+    volunteers_number = models.IntegerField(default=1)
+    target_groups = models.ManyToManyField(TargetGroup, blank=True)
+    timeslots = models.ManyToManyField(Timeslot, blank=True)
+    activities = models.ManyToManyField(Activity, blank=True)
     locations = models.ManyToManyField(Location)
     languages = models.ManyToManyField(Language)
-    skills = models.ManyToManyField(Skill)
-
-
-class Opportunity(ModelWithTimestamps):
+    skills = models.ManyToManyField(Skill, blank=True)
     notion_id = models.CharField(max_length=16, unique=True)
-    title = models.CharField(max_length=256)
-    volunteers_number = models.IntegerField(default=1)
     status = models.CharField(choices=Statuses.choices, max_length=48)
-    organization = models.ForeignKey(Organization, on_delete=models.CASCADE)
-    vo_information = models.TextField(null=True)
-    target_groups = models.ManyToManyField(TargetGroup)
-    payload = models.OneToOneField(Payload, on_delete=models.CASCADE)
+    vo_information = models.TextField(blank=True, null=True)
+
+    def __str__(self):
+        return self.title

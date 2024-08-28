@@ -8,7 +8,6 @@ from data.models import (
     Location,
     Opportunity,
     Organization,
-    Payload,
     TargetGroup,
     Timeslot,
 )
@@ -41,12 +40,12 @@ sample = {
 json_model_key_map = {
     "Status": "opportunity.status",
     "Name": "opportunity.title",
-    "Type": "payload.activities",
-    "District": "payload.locations",
+    "Type": "opportunity.activities",
+    "District": "opportunity.locations",
     "Number of volunteers needed": "opportunity.volunteers_number",
-    "Schedule": "payload.timeslots",
+    "Schedule": "opportunity.timeslots",
     "Accommodation Centre": "opportunity.organization",
-    "Languages needed": "payload.languages",
+    "Languages needed": "opportunity.languages",
     "Target group": "opportunity.target_groups",
     "VO information": "opportunity.vo_information",
     "ID": "opportunity.notion_id",
@@ -72,69 +71,20 @@ def parse_opportunity_json(json_data: list[dict]):
     # 1. do DTO mapping
     for opportunity_json in json_data:
         opportunity = {}
-        payload = {}
         for key, value in json_model_key_map.items():
             if value:
                 model, field = value.split(".")
                 if model == "opportunity":
                     opportunity[field] = get_value(field, opportunity_json[key])
-                elif model == "payload":
-                    payload[field] = opportunity_json[key]
 
         # 2. figure what already existing objects fits or create new ones
-        payload = parse_payload_dict(payload)
-        logger.debug(f"opportunity: {opportunity}")
-        opportunity = parse_opportunity_dict(opportunity, payload)
+        logger.debug(f"{opportunity=}")
+        opportunity = parse_opportunity_dict(opportunity)
 
     return len(json_data)
 
 
-def parse_payload_dict(payload_dict) -> Payload:
-    """ ""
-    "Type": "payload.activities",
-    "District": "payload.locations",
-    "Schedule": "payload.timeslots",
-    "Languages needed": "payload.languages",
-    """
-    payload = Payload(payload_type="opportunity")
-    payload.save()
-
-    activities = [
-        get_instance(opt={"title": activity.strip()}, model=Activity)
-        for activity in payload_dict["activities"].split(",")
-    ]
-    for activity in activities:
-        payload.activities.add(activity)
-
-    locations = [
-        get_instance(opt={"title": location.strip()}, model=Location)
-        for location in payload_dict["locations"].split(",")
-    ]
-    for location in locations:
-        payload.locations.add(location)
-
-    timeslots = [
-        get_instance(opt={"title": timeslot.strip()}, model=Timeslot)
-        for timeslot in payload_dict["timeslots"].split(",")
-    ]
-    for timeslot in timeslots:
-        payload.timeslots.add(timeslot)
-
-    languages = [
-        get_instance(
-            opt={"iso_code": get_lang_data(language.strip())["iso_code"]},
-            data=get_lang_data(language.strip()),
-            model=Language,
-        )
-        for language in payload_dict["languages"].split(",")
-    ]
-    for language in languages:
-        payload.languages.add(language)
-
-    return payload
-
-
-def parse_opportunity_dict(opportunity_dict: dict, payload: Payload) -> Opportunity:
+def parse_opportunity_dict(opportunity_dict: dict) -> Opportunity:
     """
     "Name": "opportunity.title",
     "Accommodation Centre": "opportunity.organization",
@@ -159,13 +109,46 @@ def parse_opportunity_dict(opportunity_dict: dict, payload: Payload) -> Opportun
 
     del opportunity_dict["target_groups"]
 
-    opportunity = Opportunity(
-        **opportunity_dict, organization=organization, payload=payload
-    )
+    logger.debug(f"{opportunity_dict}")
+
+    # opportunity = Opportunity(**opportunity_dict, organization=organization)
+
+    activities = [
+        get_instance(opt={"title": activity.strip()}, model=Activity)
+        for activity in opportunity_dict["activities"].split(",")
+    ]
+    del opportunity_dict["activities"]
+
+    locations = [
+        get_instance(opt={"title": location.strip()}, model=Location)
+        for location in opportunity_dict["locations"].split(",")
+    ]
+    del opportunity_dict["locations"]
+
+    timeslots = [
+        get_instance(opt={"title": timeslot.strip()}, model=Timeslot)
+        for timeslot in opportunity_dict["timeslots"].split(",")
+    ]
+    del opportunity_dict["timeslots"]
+
+    languages = []
+    for language in opportunity_dict["languages"].split(","):
+        languages = Language.objects.filter(
+            iso_code=get_lang_data(language.strip())["iso_code"]
+        )
+    del opportunity_dict["languages"]
+
+    opportunity = Opportunity(**opportunity_dict, organization=organization)
     opportunity.save()
 
+    opportunity.activities.set(activities)
+    opportunity.locations.set(locations)
+    opportunity.timeslots.set(timeslots)
+    opportunity.languages.set(languages)
     opportunity.target_groups.set(target_groups)
+    opportunity.save()
 
+    logger.debug(f"{opportunity=} {opportunity.__dict__}")
     return opportunity
 
 

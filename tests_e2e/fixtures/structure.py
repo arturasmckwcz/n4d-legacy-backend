@@ -81,42 +81,24 @@ class ApiTimeslot(BaseModel):
     recurrence: Optional[str | None]
 
 
-# TODO: maybe all those classes of title/description could be represented by one ApiTitleDescription?
-class ApiPayload(BaseModel):
-    payload_type: str
+class ApiOpportunity(BaseModel):
+    title: str
+    organization: ApiOrganization
+    target_groups: List[ApiTargetGroup]
     locations: List[ApiLocation]
     timeslots: List[ApiTimeslot]
     activities: List[ApiActivity]
     languages: List[ApiLanguage]
     skills: Optional[List[ApiSkill]]
-
-
-class ApiPayloadFlattered(BaseModel):
-    payload_type: str
-    locations: List[str]
-    timeslots: List[str]
-    activities: List[str]
-    languages: List[str]
-    skills: Optional[List[str]]
-
-
-class ApiOpportunity(BaseModel):
-    title: str
-    volunteers_number: int
-    organization: ApiOrganization
-    notion_id: str
     status: str
-    vo_information: Optional[str]
-    target_groups: List[ApiTargetGroup]
-    payload: ApiPayload
 
 
 class ApiOpportunityFlattered(BaseModel):
     title: str
-    volunteers_number: int
-    organization: str
-    notion_id: str
     status: str
-    vo_information: Optional[str]
-    target_groups: List[str]
-    payload: ApiPayloadFlattered
+    target_groups: list
+    locations: list
+    timeslots: list
+    activities: list
+    languages: list
+    skills: Optional[list]

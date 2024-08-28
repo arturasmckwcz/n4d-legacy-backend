@@ -9,7 +9,6 @@ from data.models import (
     Location,
     Opportunity,
     Organization,
-    Payload,
     Person,
     Skill,
     TargetGroup,
@@ -79,40 +78,36 @@ class Command(BaseCommand):
         person_RAC.save()
         organization_RAC.save()
 
-        payload_USSR = Payload(**data.payload_USSR)
-        payload_USSR.save()
+        opportunity_USSR = Opportunity(
+            **data.opportunity,
+            organization=organization_RAC,
+        )
+        opportunity_USSR.save()
 
         for timeslot in data.timeslots:
             timeslot = Timeslot(**timeslot)
             timeslot.save()
-            payload_USSR.timeslots.add(timeslot)
+            opportunity_USSR.timeslots.add(timeslot)
 
         for location in data.locations:
             location = Location(**location)
             location.save()
-            payload_USSR.locations.add(location)
+            opportunity_USSR.locations.add(location)
 
-        for location in data.activities:
-            location = Activity(**location)
-            location.save()
-            payload_USSR.activities.add(location)
+        for activity in data.activities:
+            activity = Activity(**activity)
+            activity.save()
+            opportunity_USSR.activities.add(activity)
 
         for language in data.languages:
             language = Language(**language)
             language.save()
-            payload_USSR.languages.add(language)
+            opportunity_USSR.languages.add(language)
 
         for skill in data.skills:
             skill = Skill(**skill)
             skill.save()
-            payload_USSR.skills.add(skill)
-
-        payload_USSR.save()
-
-        opportunity_USSR = Opportunity(
-            **data.opportunity, organization=organization_RAC, payload=payload_USSR
-        )
-        opportunity_USSR.save()
+            opportunity_USSR.skills.add(skill)
 
         for target_group in data.target_groups:
             target_group = TargetGroup(**target_group)
