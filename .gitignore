@@ -8,3 +8,6 @@ cert
 logs
 coverage.xml
 .coverage
+
+# data files for manual upload to the database
+data_for_upload

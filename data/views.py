@@ -2,7 +2,6 @@ import json
 from http import HTTPStatus
 
 import structlog
-from django.db.models import QuerySet
 from django.utils.datastructures import MultiValueDictKeyError
 from rest_framework.generics import ListAPIView
 from rest_framework.permissions import AllowAny
@@ -31,9 +30,9 @@ class DataOpportunityListView(ListAPIView):
     permission_classes = (AllowAny,)
     serializer_class = OpportunitySerializer
 
-    def get_queryset(self) -> QuerySet[Opportunity]:
+    def get_queryset(self):  # type: ignore (askinkg for return type Never which is nonsense)
         try:
-            filter_dict = json.loads(self.request.query_params["search"])
+            filter_dict = json.loads(self.request.GET["search"])
         except json.JSONDecodeError:
             logger.warn("invalid search param value.")
             filter_dict = {}
@@ -46,7 +45,7 @@ class DataOpportunityListView(ListAPIView):
     def get_serializer_context(self):
         context = super().get_serializer_context()
         try:
-            primary_keys = json.loads(self.request.query_params["primary_keys"])
+            primary_keys = json.loads(self.request.GET["primary_keys"])
         except json.JSONDecodeError:
             logger.warn("invalid primary_keys param value.")
             primary_keys = []

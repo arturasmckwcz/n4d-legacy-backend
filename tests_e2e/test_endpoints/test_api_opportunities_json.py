@@ -9,10 +9,10 @@ from pydantic import BaseModel, ConfigDict
 from tests_e2e.fixtures import structure, users
 from tests_e2e.test_endpoints.variables import ALFRED_API_URL
 
-primary_keys_param = "?search=%7B%22status%22%3A%5B%22e2e_test%22%5D%7D"
+url_encoded_params = "?search=%7B%22status%22%3A%5B%22e2e_test%22%5D%7D"
 
 API_LOGIN_URL = f"{ALFRED_API_URL}/api/jwt/create/"
-API_OPPORTUNITY_URL = f"{ALFRED_API_URL}/api/opportunity/{primary_keys_param}"
+API_OPPORTUNITY_URL = f"{ALFRED_API_URL}/api/opportunity/{url_encoded_params}"
 API_OPPORTUNITIES_JSON_URL = f"{ALFRED_API_URL}/api/opportunities.json/"
 FILE_OPPORTUNITIES_JSON_URI = os.path.join(
     os.path.dirname(os.path.abspath(__file__)), "../fixtures/opportunities.json"
@@ -54,13 +54,13 @@ def test_api_opportunities_json():
     upload_response = ApiOpportunitiesJsonResponse(**upload_request.json())
     assert (
         upload_response.message
-        == "JSON file uploaded and successfully processed 3 items"
+        == "JSON file uploaded and successfully processed 5 items"
     )
     assert upload_request.status_code == HTTPStatus.OK
 
     api_opportunity_request = requests.get(url=API_OPPORTUNITY_URL, headers=headers)
-    assert len(api_opportunity_request.json()) == 3
+    assert len(api_opportunity_request.json()) == 5
 
     response = ApiOpportunityResponse(items=api_opportunity_request.json())
 
-    assert len(response.items) == 3
+    assert len(response.items) == 5

@@ -25,3 +25,8 @@ class Statuses(models.TextChoices):
 class LangLevels(models.TextChoices):
     BEGINNER = "beginner", "Beginer"
     FLUENT = "fluent", "Fluent"
+
+
+class OpportunityType:
+    GENERAL = "general"
+    ACCOMPANYING = "accompanying"

@@ -1,7 +1,12 @@
+from functools import reduce
+from unittest.mock import MagicMock
+
 import pytest
 from django.core.exceptions import ValidationError
+from django.db.models import Q
 
 from data.utils import (
+    filter_queryset,
     flatten_dict,
     generate_square_pattern_svg,
     validate_latitude,
@@ -113,3 +118,51 @@ def test_validate_longitude_with_side_effect(
 def test_flatten_dict(data, primary_keys, expected):
     result = flatten_dict(data, primary_keys)
     assert result == expected
+
+
+@pytest.mark.parametrize(
+    "queryset, filter_dict, expected_filter_calls",
+    [
+        (
+            MagicMock(),
+            {"status": ["Volunteers Needed"]},
+            [Q(status="Volunteers Needed")],
+        ),
+        (
+            MagicMock(),
+            {"status": ["Volunteers Needed", "Closed"]},
+            [Q(status="Volunteers Needed") | Q(status="Closed")],
+        ),
+        (
+            MagicMock(),
+            {"status": ["Volunteers Needed", "Closed"], "type": ["Urgent", "Standard"]},
+            [
+                Q(status="Volunteers Needed") | Q(status="Closed"),
+                Q(type="Urgent") | Q(type="Standard"),
+            ],
+        ),
+    ],
+)
+def test_filter_queryset(queryset, filter_dict, expected_filter_calls):
+    queryset.filter = MagicMock(return_value=queryset)
+
+    result = filter_queryset(queryset, filter_dict)
+
+    expected_call = reduce(lambda x, y: x & y, expected_filter_calls)
+    queryset.filter.assert_called_once_with(expected_call)
+
+    assert result == queryset
+
+
+@pytest.mark.parametrize(
+    "queryset, filter_dict, expected_filter_calls",
+    [(MagicMock(), {}, [])],
+)
+def test_empty_filter_queryset(queryset, filter_dict, expected_filter_calls):
+    queryset.filter = MagicMock(return_value=queryset)
+
+    result = filter_queryset(queryset, filter_dict)
+
+    queryset.filter.assert_not_called()
+
+    assert result == queryset

@@ -102,7 +102,12 @@ class Command(BaseCommand):
         for language in data.languages:
             language = Language(**language)
             language.save()
-            opportunity_USSR.languages.add(language)
+            if language.iso_code in [
+                data.languages[0]["iso_code"],
+                data.languages[1]["iso_code"],
+                data.languages[2]["iso_code"],
+            ]:
+                opportunity_USSR.languages.add(language)
 
         for skill in data.skills:
             skill = Skill(**skill)

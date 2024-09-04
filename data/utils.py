@@ -140,7 +140,6 @@ def filter_queryset(queryset, filter_dict):
 
     filter_dict_items = filter_dict.items()
     logger.debug(f"filter_dict: {filter_dict}")
-    logger.debug(f"filter_dict_items: {filter_dict_items}")
     if len(filter_dict_items) == 0:
         return queryset
 

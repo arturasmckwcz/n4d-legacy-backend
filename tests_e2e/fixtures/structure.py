@@ -71,6 +71,7 @@ class ApiSkill(BaseModel):
 
 
 class ApiLanguage(BaseModel):
+    title: str
     iso_code: str
     level: str
 

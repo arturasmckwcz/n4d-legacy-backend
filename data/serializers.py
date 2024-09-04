@@ -1,5 +1,6 @@
 from rest_framework import serializers
 
+from data.enums import OpportunityType
 from data.models import (
     Activity,
     Avatar,
@@ -79,6 +80,7 @@ class LanguageSerializer(serializers.ModelSerializer):
     class Meta:
         model = Language
         fields = [
+            "title",
             "iso_code",
             "level",
         ]
@@ -175,7 +177,7 @@ class OpportunitySerializer(serializers.ModelSerializer):
     activities = serializers.SerializerMethodField(read_only=True)
     languages = serializers.SerializerMethodField(read_only=True)
     skills = serializers.SerializerMethodField(read_only=True)
-    # vo_information = serializers.SerializerMethodField(read_only=True)
+    opportunity_type = serializers.SerializerMethodField(read_only=True)
 
     class Meta:
         model = Opportunity
@@ -190,6 +192,7 @@ class OpportunitySerializer(serializers.ModelSerializer):
             "skills",
             "status",
             "vo_information",
+            "opportunity_type",
         ]
 
     def get_organization(self, obj):
@@ -225,11 +228,22 @@ class OpportunitySerializer(serializers.ModelSerializer):
         languages_details = [
             LanguageSerializer(language).data for language in obj.languages.all()
         ]
-        return languages_details
+        translate_language_details = [
+            LanguageSerializer(language).data
+            for language in obj.translate_languages.all()
+        ]
+        return languages_details + translate_language_details
 
     def get_skills(self, obj):
         skills_details = [SkillSerializer(skill).data for skill in obj.skills.all()]
         return skills_details
+
+    def get_opportunity_type(self, obj):
+        return (
+            OpportunityType.GENERAL
+            if len(obj.translate_languages.all()) == 0
+            else OpportunityType.ACCOMPANYING
+        )
 
     def to_representation(self, instance):
         primary_keys = self.context.get("primary_keys", None)
