@@ -27,6 +27,40 @@ class LangLevels(models.TextChoices):
     FLUENT = "fluent", "Fluent"
 
 
+class BerlinLocations(models.TextChoices):
+    CHARLOTTENBURG = "Charlottenburg", "Charlottenburg"
+    FRIEDRICHSHAIN = "Friedrichshain", "Friedrichshain"
+    HELLERSDORF = "Hellersdorf", "Hellersdorf"
+    KOPENICK = "Köpenick", "Köpenick"
+    KREUZBERG = "Kreuzberg", "Kreuzberg"
+    LICHTENBERG = "Lichtenberg", "Lichtenberg"
+    MARZAHN = "Marzahn", "Marzahn"
+    MITTE = "Mitte", "Mitte"
+    MOABIT = "Moabit", "Moabit"
+    NEUKOLLN = "Neukölln", "Neukölln"
+    PANKOW = "Pankow", "Pankow"
+    PRENZLAUER_BERG = "Prenzlauer Berg", "Prenzlauer Berg"
+    REINICKENDORF = "Reinickendorf", "Reinickendorf"
+    RUDOW = "Rudow", "Rudow"
+    SCHONEBERG = "Schöneberg", "Schöneberg"
+    SPANDAU = "Spandau", "Spandau"
+    STEGLITZ = "Steglitz", "Steglitz"
+    TEGEL = "Tegel", "Tegel"
+    TEMPELHOF = "Tempelhof", "Tempelhof"
+    TREPTOW = "Treptow", "Treptow"
+    WEDDING = "Wedding", "Wedding"
+    WEISSENSEE = "Weißensee", "Weißensee"
+    WILMERSDORF = "Wilmersdorf", "Wilmersdorf"
+    ZEHLENDORF = "Zehlendorf", "Zehlendorf"
+    REMOTELY = "Remotely", "Remotely"
+
+
+class Need4DeedTimeSlots(models.TextChoices):
+    MORNING = "morning", "Morning"
+    AFTERNOON = "afternoon", "Afternoon"
+    EVENING = "evening", "Evening"
+
+
 class OpportunityType:
     GENERAL = "general"
     ACCOMPANYING = "accompanying"

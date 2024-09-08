@@ -5,7 +5,6 @@ from data.models import (
     Activity,
     Avatar,
     Contact,
-    Language,
     Location,
     Opportunity,
     Organization,
@@ -98,16 +97,6 @@ class Command(BaseCommand):
             activity = Activity(**activity)
             activity.save()
             opportunity_USSR.activities.add(activity)
-
-        for language in data.languages:
-            language = Language(**language)
-            language.save()
-            if language.iso_code in [
-                data.languages[0]["iso_code"],
-                data.languages[1]["iso_code"],
-                data.languages[2]["iso_code"],
-            ]:
-                opportunity_USSR.languages.add(language)
 
         for skill in data.skills:
             skill = Skill(**skill)

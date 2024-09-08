@@ -1,6 +1,14 @@
 from django.contrib import admin
 
-from data.models import Avatar, Contact, Location, Opportunity, Organization, Person
+from data.models import (
+    Avatar,
+    Contact,
+    Location,
+    Opportunity,
+    Organization,
+    Person,
+    VolunteerForm,
+)
 
 
 @admin.register(Contact)
@@ -30,4 +38,9 @@ class OrganizationAdmin(admin.ModelAdmin):
 
 @admin.register(Opportunity)
 class OpportunityAdmin(admin.ModelAdmin):
+    pass
+
+
+@admin.register(VolunteerForm)
+class VolunteerFormAdmin(admin.ModelAdmin):
     pass

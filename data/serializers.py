@@ -4,15 +4,18 @@ from data.enums import OpportunityType
 from data.models import (
     Activity,
     Avatar,
+    BerlinLocation,
     Contact,
     Language,
     Location,
+    Need4DeedDaySchedule,
     Opportunity,
     Organization,
     Person,
     Skill,
     TargetGroup,
     Timeslot,
+    VolunteerForm,
 )
 from data.utils import flatten_dict
 from users.serializers import AlfredUserSerializer
@@ -249,3 +252,87 @@ class OpportunitySerializer(serializers.ModelSerializer):
         primary_keys = self.context.get("primary_keys", None)
         response = super().to_representation(instance)
         return flatten_dict(response, primary_keys)
+
+
+class VolunteerFormSerialiser(serializers.ModelSerializer):
+    schedule = serializers.ListField(
+        child=serializers.ListField(child=serializers.CharField()), write_only=True
+    )
+    preffered_berlin_locations = serializers.ListField(
+        child=serializers.CharField(), write_only=True
+    )
+    languages = serializers.ListField(
+        child=serializers.ListField(child=serializers.CharField()), write_only=True
+    )
+    activities = serializers.ListField(child=serializers.CharField(), write_only=True)
+    skills = serializers.ListField(child=serializers.CharField(), write_only=True)
+    translate_languages = serializers.ListField(
+        child=serializers.ListField(child=serializers.CharField()), write_only=True
+    )
+
+    class Meta:
+        model = VolunteerForm
+        exclude = ["notion_id"]
+        read_only_fields = ["form_id"]
+
+    def validate_postal_code(self, value):
+        if len(str(value)) != 5:
+            raise serializers.ValidationError("Postal code should have five digits")
+        return value
+
+    def create(self, validated_data):
+        schedule_data = validated_data.pop("schedule", [])
+        locations_data = validated_data.pop("preffered_berlin_locations", [])
+        languages_data = validated_data.pop("languages", [])
+        activities_data = validated_data.pop("activities", [])
+        skills_data = validated_data.pop("skills", [])
+        translate_languages_data = validated_data.pop("translate_languages", [])
+
+        schedule_objects = []
+        for day, time_slot in schedule_data:
+            day_number = int(day)
+            schedule, _ = Need4DeedDaySchedule.objects.get_or_create(
+                day=day_number, time_slot=time_slot
+            )
+            schedule_objects.append(schedule)
+
+        location_objects = []
+        for location_name in locations_data:
+            location, _ = BerlinLocation.objects.get_or_create(name=location_name)
+            location_objects.append(location)
+
+        language_objects = []
+        for iso_code, level in languages_data:
+            language, _ = Language.objects.get_or_create(
+                iso_code=iso_code,
+                level=level,
+            )
+            language_objects.append(language)
+
+        activity_objects = []
+        for activity_name in activities_data:
+            activity, _ = Activity.objects.get_or_create(title=activity_name)
+            activity_objects.append(activity)
+
+        skill_objects = []
+        for skill_name in skills_data:
+            skill, _ = Skill.objects.get_or_create(title=skill_name)
+            skill_objects.append(skill)
+
+        translate_language_objects = []
+        for iso_code, level in translate_languages_data:
+            language, _ = Language.objects.get_or_create(
+                iso_code=iso_code,
+                level=level,
+            )
+            translate_language_objects.append(language)
+
+        volunteer_form = VolunteerForm.objects.create(**validated_data)
+        volunteer_form.schedule.set(schedule_objects)
+        volunteer_form.preffered_berlin_locations.set(location_objects)
+        volunteer_form.languages.set(language_objects)
+        volunteer_form.activities.set(activity_objects)
+        volunteer_form.skills.set(skill_objects)
+        volunteer_form.translate_languages.set(translate_language_objects)
+
+        return volunteer_form

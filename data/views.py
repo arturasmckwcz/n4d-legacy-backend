@@ -3,13 +3,17 @@ from http import HTTPStatus
 
 import structlog
 from django.utils.datastructures import MultiValueDictKeyError
-from rest_framework.generics import ListAPIView
+from rest_framework.generics import CreateAPIView, ListAPIView
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from data.models import Opportunity
-from data.serializers import OpportunitySerializer, PersonSerializer
+from data.serializers import (
+    OpportunitySerializer,
+    PersonSerializer,
+    VolunteerFormSerialiser,
+)
 from data.utils import filter_queryset
 
 logger = structlog.get_logger(__name__)
@@ -53,6 +57,11 @@ class DataOpportunityListView(ListAPIView):
             primary_keys = []
         context["primary_keys"] = primary_keys
         return context
+
+
+class VolunteerFormCreateView(CreateAPIView):
+    permission_classes = (AllowAny,)
+    serializer_class = VolunteerFormSerialiser
 
 
 class DataOpportunityFlush(APIView):

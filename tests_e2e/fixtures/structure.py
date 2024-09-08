@@ -1,5 +1,5 @@
 from datetime import datetime
-from typing import List, Optional
+from typing import List, Optional, TypeAlias
 
 from pydantic import BaseModel
 
@@ -103,3 +103,29 @@ class ApiOpportunityFlattered(BaseModel):
     activities: list
     languages: list
     skills: Optional[list]
+
+
+ScheduleItem: TypeAlias = tuple[int, str]
+LanguageItem: TypeAlias = tuple[str, str]
+
+
+class VolunteerFormData(BaseModel):
+    schedule: list[ScheduleItem]
+    preffered_berlin_locations: list[str]
+    languages: list[LanguageItem]
+    activities: list[str]
+    full_name: str
+    phone: str
+    email: str
+    postal_code: int
+    if_good_conduct_certificate: bool
+    if_measles_vaccination: bool
+    lead_from: str
+    skills: list[str]
+
+    schedule_comments: Optional[str] = None
+    languages_comments: Optional[str] = None
+    activities_comments: Optional[str] = None
+    lead_from_comments: Optional[str] = None
+    translate_languages: Optional[list[LanguageItem]] = None
+    origin_opportunity_id: Optional[str] = None

@@ -214,7 +214,7 @@ run-test-e2e:
   rules:
     - when: manual
 
-deplo-to-prod:
+deploy-to-prod:
   extends: .docker_before_script
   stage: deploy
   needs:

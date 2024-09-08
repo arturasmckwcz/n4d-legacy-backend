@@ -52,10 +52,6 @@ def test_api_opportunity():
     for idx in range(len(api_opportunity_response.activities)):
         assert api_opportunity_response.activities[idx] == data.activities[idx]["title"]
 
-    assert len(api_opportunity_response.languages) > 0
-    for idx in range(len(api_opportunity_response.languages)):
-        assert api_opportunity_response.languages[idx] == data.languages[idx]["title"]
-
     if not api_opportunity_response.skills:  # to ensure type hint
         api_opportunity_response.skills = []
     assert len(api_opportunity_response.skills) > 0
