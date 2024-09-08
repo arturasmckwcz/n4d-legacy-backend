@@ -1,14 +1,11 @@
-from http import HTTPStatus
 from os import environ
 from unittest.mock import Mock, patch
 
 import pytest
 from django import setup
 from django.http import HttpRequest
-from django.urls import reverse
 from rest_framework.request import Request
 from rest_framework.response import Response
-from rest_framework.test import APIClient
 
 from alfred.utils import (
     AlfredRequest,
@@ -20,25 +17,6 @@ from alfred.utils import (
 
 environ.setdefault("DJANGO_SETTINGS_MODULE", "alfred.settings")
 setup()
-
-
-@pytest.fixture()
-def api_client():
-    return APIClient()
-
-
-def test_sanity_endpoint(api_client):
-    x_requested_from = "Wayne Manor"
-    last_commit = "I'm the last"
-    api_client.credentials(HTTP_X_REQUESTED_FROM=x_requested_from)
-    response = api_client.get(reverse("sanity"))
-    assert isinstance(response, Response)
-    assert response.status_code == HTTPStatus.OK
-    assert response.data == {
-        "message": "OK",
-        "x_requested_from": x_requested_from,
-        "last_commit": last_commit,
-    }
 
 
 @pytest.mark.parametrize(

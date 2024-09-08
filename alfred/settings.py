@@ -46,9 +46,11 @@ INSTALLED_APPS = [
     "drf_spectacular",
     "recurrence",
     "parse_opportunities",
+    "silk",
 ]
 
 MIDDLEWARE = [
+    "silk.middleware.SilkyMiddleware",  #
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "corsheaders.middleware.CorsMiddleware",
@@ -60,6 +62,11 @@ MIDDLEWARE = [
     "alfred.middleware.PartitionedCookieMiddleware",
     "django_structlog.middlewares.RequestMiddleware",
 ]
+
+SILKY_AUTHENTICATION = True  # User must login to silk
+SILKY_AUTHORISATION = True  # User must have permissions to login to silk
+SILKY_META = True  # trace silk's impact on the code
+SILKY_INTERCEPT_PERCENT = 100  # log only N% of requests
 
 ROOT_URLCONF = "alfred.urls"
 

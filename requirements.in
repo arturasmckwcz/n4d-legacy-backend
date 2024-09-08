@@ -7,3 +7,4 @@ drf-spectacular
 django-structlog
 django-recurrence
 psycopg2-binary
+django-silk
