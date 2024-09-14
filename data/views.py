@@ -7,6 +7,7 @@ from rest_framework.generics import CreateAPIView, ListAPIView
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from silk.profiling.profiler import silk_profile
 
 from data.models import Opportunity
 from data.serializers import (
@@ -34,6 +35,7 @@ class DataOpportunityListView(ListAPIView):
     permission_classes = (AllowAny,)
     serializer_class = OpportunitySerializer
 
+    @silk_profile(name="Post Profiling")
     def get_queryset(self):  # type: ignore (askinkg for return type Never which is nonsense)
         try:
             filter_dict = json.loads(self.request.GET["search"])

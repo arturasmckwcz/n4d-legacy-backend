@@ -72,9 +72,9 @@ code-coverage:
 
 .docker_before_script:
   image:
-    name: docker:26.1
+    name: docker:27.2
   services:
-    - docker:26.1-dind
+    - docker:27.2-dind
   variables:
     ECR_URI: $ECR_REGISTRY/$ECR_REPOSITORY
   before_script:
@@ -103,6 +103,7 @@ build-and-push:
       --build-arg CORS_ALLOW_HEADERS=${CORS_ALLOW_HEADERS}
       --build-arg ALLOWED_HOSTS=${ALLOWED_HOSTS}
       --build-arg POSTGRES_HOST=${POSTGRES_HOST}
+      --build-arg GLITCHTIP_DSN=${GLITCHTIP_DSN}
       -t $ECR_URI:$CI_COMMIT_REF_SLUG .
     - docker tag $ECR_URI:$CI_COMMIT_REF_SLUG $ECR_URI:latest
     - echo "Pushing the Docker image to ECR..."

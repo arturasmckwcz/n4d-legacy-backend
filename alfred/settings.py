@@ -1,5 +1,6 @@
 import os
 
+import sentry_sdk
 import structlog
 from corsheaders.defaults import default_headers
 
@@ -21,10 +22,16 @@ AWS_SES_FROM_EMAIL = read_env_var("AWS_SES_FROM_EMAIL")
 USE_SES_V2 = True
 
 DOMAIN = read_env_var("DOMAIN")
+
 SITE_NAME = read_env_var("SITE_NAME")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = read_env_var("DEBUG")
+
+if not DEBUG:
+    # error tracking should work only on prod
+    GLITCHTIP_DSN = read_env_var("GLITCHTIP_DSN")
+    sentry_sdk.init(GLITCHTIP_DSN)  # type: ignore
 
 ALLOWED_HOSTS = read_env_var("ALLOWED_HOSTS")
 
@@ -67,6 +74,7 @@ SILKY_AUTHENTICATION = True  # User must login to silk
 SILKY_AUTHORISATION = True  # User must have permissions to login to silk
 SILKY_META = True  # trace silk's impact on the code
 SILKY_INTERCEPT_PERCENT = 100  # log only N% of requests
+SILKY_PYTHON_PROFILER = True  # turn on cprofile
 
 ROOT_URLCONF = "alfred.urls"
 

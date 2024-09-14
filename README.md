@@ -101,13 +101,13 @@ ECR_REPOSITORY
 2. run containers on default ports (8080 not TLS and 8443 with TLS):
 
 ```
-docker compose -p batman -f docker-compose.dev.yml up
+docker compose -p batman -f docker-compose.dev.yaml up
 ```
 
 3. also you may run on other ports:
 
 ```
-API_PORT_NON_TLS=8080 API_PORT=8443 docker compose -p batman -f docker-compose.dev.yml up
+API_PORT_NON_TLS=8080 API_PORT=8443 docker compose -p batman -f docker-compose.dev.yaml up
 ```
 
 #### Local

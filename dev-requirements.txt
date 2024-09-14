@@ -26,7 +26,9 @@ cattrs==23.2.3
     #   lsprotocol
     #   pygls
 certifi==2024.6.2
-    # via requests
+    # via
+    #   requests
+    #   sentry-sdk
 cffi==1.16.0
     # via cryptography
 cfgv==3.4.0
@@ -169,6 +171,7 @@ ruff==0.4.3
 ruff-lsp==0.0.53
 s3transfer==0.10.2
     # via boto3
+sentry-sdk==2.14.0
 setuptools==69.5.1
     # via nodeenv
 six==1.16.0
@@ -196,5 +199,6 @@ urllib3==2.2.2
     # via
     #   botocore
     #   requests
+    #   sentry-sdk
 virtualenv==20.26.1
     # via pre-commit

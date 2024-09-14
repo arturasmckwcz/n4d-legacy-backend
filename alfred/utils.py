@@ -36,13 +36,27 @@ def flatten_list(_list: list) -> list:
         return []
 
 
+def bool_string_to_bool(value: str | None) -> str | bool | None:
+    if isinstance(value, str):
+        if value.lower() == "true":
+            return True
+        elif value.lower() == "false":
+            return False
+    return value
+
+
 def read_env_var(
     name: str,
     is_mandatory=True,
 ) -> str | int | float | tuple | list | dict | None:
     value = getenv(name)
 
-    logger.debug(f"Reading {name} {value}")
+    logger.debug(f"Reading {name} {value} {type(value)}")
+
+    value = bool_string_to_bool(value=value)
+
+    if isinstance(value, bool):
+        return value
 
     if value:
         return itemize_str(value)
