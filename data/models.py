@@ -5,7 +5,6 @@ from django.db import models
 from data.enums import (
     BerlinLocations,
     LangLevels,
-    Languages,
     Need4DeedTimeSlots,
 )
 from data.utils import validate_latitude, validate_longitude
@@ -76,7 +75,7 @@ class Skill(ModelWithTimestamps):
 
 class Language(ModelWithTimestamps):
     title = models.CharField(max_length=128)
-    iso_code = models.CharField(choices=Languages.choices, max_length=2)
+    iso_code = models.CharField(max_length=3)
     level = models.CharField(
         choices=LangLevels.choices, max_length=16, default=LangLevels.FLUENT
     )

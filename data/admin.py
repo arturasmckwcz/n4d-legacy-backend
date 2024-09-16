@@ -3,6 +3,7 @@ from django.contrib import admin
 from data.models import (
     Avatar,
     Contact,
+    Language,
     Location,
     Opportunity,
     Organization,
@@ -18,6 +19,11 @@ class ContactAdmin(admin.ModelAdmin):
 
 @admin.register(Location)
 class LocationAdmin(admin.ModelAdmin):
+    pass
+
+
+@admin.register(Language)
+class LanguageAdmin(admin.ModelAdmin):
     pass
 
 
