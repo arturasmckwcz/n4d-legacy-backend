@@ -7,7 +7,7 @@ logger = structlog.get_logger(__name__)
 
 
 class Command(BaseCommand):
-    help = "Deletes data from tables that used for e2e."
+    help = "Deletes all data from data_opportunity table."
 
     def handle(self, *args, **kwargs):
         Opportunity.objects.all().delete()
