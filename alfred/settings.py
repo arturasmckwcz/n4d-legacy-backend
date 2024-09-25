@@ -8,7 +8,7 @@ from .config.globals import BASE_DIR
 from .utils import flatten_list, read_env_var
 
 # Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
+
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = read_env_var("DJANGO_SECRET_KEY")
@@ -33,7 +33,13 @@ if not DEBUG:
     GLITCHTIP_DSN = read_env_var("GLITCHTIP_DSN")
     sentry_sdk.init(GLITCHTIP_DSN)  # type: ignore
 
-ALLOWED_HOSTS = read_env_var("ALLOWED_HOSTS")
+    # Redirect all HTTP requests to HTTPS
+    # SECURE_SSL_REDIRECT = True
+
+    USE_X_FORWARDED_HOST = True
+    SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+
+ALLOWED_HOSTS = ["*"]
 
 # Application definition
 
@@ -52,12 +58,13 @@ INSTALLED_APPS = [
     "data",
     "drf_spectacular",
     "recurrence",
-    "parse_opportunities",
     "silk",
+    "django_celery_beat",
+    "gunicorn",
 ]
 
 MIDDLEWARE = [
-    "silk.middleware.SilkyMiddleware",  #
+    "silk.middleware.SilkyMiddleware",  # it has be on the top
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "corsheaders.middleware.CorsMiddleware",
@@ -68,6 +75,7 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "alfred.middleware.PartitionedCookieMiddleware",
     "django_structlog.middlewares.RequestMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
 ]
 
 SILKY_AUTHENTICATION = True  # User must login to silk
@@ -75,6 +83,18 @@ SILKY_AUTHORISATION = True  # User must have permissions to login to silk
 SILKY_META = True  # trace silk's impact on the code
 SILKY_INTERCEPT_PERCENT = 100  # log only N% of requests
 SILKY_PYTHON_PROFILER = True  # turn on cprofile
+
+CELERY_BROKER_URL = read_env_var("CELERY_BROKER_URL")
+CELERY_RESULT_BACKEND = read_env_var("CELERY_RESULT_BACKEND")
+CELERY_ACCEPT_CONTENT = ["application/json"]
+CELERY_RESULT_SERIALIZER = "json"
+CELERY_TASK_SERIALIZER = "json"
+CELERY_TIMEZONE = "UTC"
+CELERY_HIJACK_ROOT_LOGGER = False
+CELERY_WORKER_REDIRECT_STDOUTS = False
+
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+
 
 ROOT_URLCONF = "alfred.urls"
 
@@ -201,7 +221,11 @@ CORS_ALLOW_HEADERS = list(default_headers) + flatten_list(
 )
 CORS_ALLOW_CREDENTIALS = True
 
-CSRF_TRUSTED_ORIGINS = read_env_var("CSRF_TRUSTED_ORIGINS")
+CSRF_TRUSTED_ORIGINS = [
+    "http://localhost:8000",
+    "http://127.0.0.1:8000",
+    "http://0.0.0.0:8000",
+]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
@@ -218,7 +242,7 @@ SPECTACULAR_SETTINGS = {
 
 LOGGING = {
     "version": 1,
-    "disable_existing_loggers": True,
+    "disable_existing_loggers": False,
     "formatters": {
         "json_formatter": {
             "()": structlog.stdlib.ProcessorFormatter,
@@ -240,14 +264,25 @@ LOGGING = {
             "formatter": "json_formatter",
         },
     },
+    "root": {
+        "handlers": ["console", "json_file"],
+        "level": "DEBUG",
+    },
     "loggers": {
         "django_structlog": {
             "handlers": ["console", "json_file"],
             "level": "DEBUG",
+            "propagate": True,
         },
-        "root": {
+        "celery": {
             "handlers": ["console", "json_file"],
             "level": "DEBUG",
+            "propagate": True,
+        },
+        "alfred": {
+            "handlers": ["console", "json_file"],
+            "level": "DEBUG",
+            "propagate": True,
         },
     },
 }

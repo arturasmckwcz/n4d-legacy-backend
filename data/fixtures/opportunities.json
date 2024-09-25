@@ -1,0 +1,3096 @@
+[
+  {
+    "fields": {
+      "activities": [
+        1
+      ],
+      "berlin_locations": [
+        6
+      ],
+      "created_at": "2024-09-19T16:24:10.292Z",
+      "languages": [],
+      "last_edited_time_notion": "2024-09-14T13:10:00Z",
+      "notion_id": "30ddc9bb-f1b0-4276-95a8-c9eecccea73d",
+      "organization": null,
+      "skills": [],
+      "status": "Volunteers Needed",
+      "target_groups": [
+        1,
+        2
+      ],
+      "timeslots": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "title": "Support with homework in Lichtenberg",
+      "translate_languages": [],
+      "updated_at": "2024-09-19T16:24:10.308Z",
+      "vo_information": "The kids speak German, we don’t know anything about their ages or grades. They would need help with various subjects.",
+      "volunteers_number": 2
+    },
+    "model": "data.opportunity",
+    "pk": 1
+  },
+  {
+    "fields": {
+      "activities": [
+        2
+      ],
+      "berlin_locations": [
+        3
+      ],
+      "created_at": "2024-09-19T16:24:10.312Z",
+      "languages": [],
+      "last_edited_time_notion": "2024-09-14T13:10:00Z",
+      "notion_id": "5922a6f7-8fdf-4042-b570-1f1d1bf14539",
+      "organization": null,
+      "skills": [],
+      "status": "Volunteers Needed",
+      "target_groups": [
+        1
+      ],
+      "timeslots": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        7
+      ],
+      "title": "Support with daycare during summer break in Hellersdorf",
+      "translate_languages": [],
+      "updated_at": "2024-09-19T16:24:10.318Z",
+      "vo_information": "Bis Ende August \nKinder",
+      "volunteers_number": 3
+    },
+    "model": "data.opportunity",
+    "pk": 2
+  },
+  {
+    "fields": {
+      "activities": [
+        3
+      ],
+      "berlin_locations": [
+        11
+      ],
+      "created_at": "2024-09-19T16:24:10.320Z",
+      "languages": [],
+      "last_edited_time_notion": "2024-09-14T13:10:00Z",
+      "notion_id": "7f02828e-95c2-4db1-882b-21c731da3b4b",
+      "organization": null,
+      "skills": [],
+      "status": "DONE",
+      "target_groups": [],
+      "timeslots": [
+        8
+      ],
+      "title": "Multi Translation Buchholtz ",
+      "translate_languages": [],
+      "updated_at": "2024-09-19T16:24:10.322Z",
+      "vo_information": "Wohnungssuche\n\nIn Zusammenarbeit mit dem SozialTeam Bieten wir eine kleines Seminar an über das Wohnungssuche in Berlin an.\nFolgende Fragen wird beantwortet:\n- Was ist WBS und wer hat Anspruch?\n- wie findet man eine Wohnung überhaupt?\n- Was ist zu beachten?\n\nDatum: 13.06.2024\nZeit:\n\n14:30 - Arabisch\n16:00 - Türkisch\nOrt: Buchholzer Str 110-140 13159 Berlin",
+      "volunteers_number": 1
+    },
+    "model": "data.opportunity",
+    "pk": 3
+  },
+  {
+    "fields": {
+      "activities": [
+        4
+      ],
+      "berlin_locations": [
+        12
+      ],
+      "created_at": "2024-09-19T16:24:10.324Z",
+      "languages": [],
+      "last_edited_time_notion": "2024-09-14T13:10:00Z",
+      "notion_id": "a977121a-b5be-494c-a860-27babad55375",
+      "organization": null,
+      "skills": [],
+      "status": "Volunteers Needed",
+      "target_groups": [
+        3
+      ],
+      "timeslots": [
+        3,
+        9
+      ],
+      "title": "Accompany residents to a FreiluftKino in Prenzlauerberg",
+      "translate_languages": [],
+      "updated_at": "2024-09-19T16:24:10.327Z",
+      "vo_information": "Könnte ich über euch Ehrenamtlichen finden, die Lust hätten einige Bewohner aus der Unterkunft abzuholen und mit denen zur Filmveranstaltung zu kommen? (20 min. zu fuß) Die Veranstaltung ist kostenlos, die Ehrenamtlichen + Bewohner bekommen die Getränke umsonst  \n\n21. August 2024, 20:30 – 22:30 Uhr\n28. August 2024, 20:30 – 22:30 Uhr\n4. September 2024, 20:15 – 22:15 Uhr\n11. September 2024, 20:00 – 22:00 Uhr\n\nContact person: Hend Reffky Mobil: +49 (0)159 043 61 513 Email: ",
+      "volunteers_number": 3
+    },
+    "model": "data.opportunity",
+    "pk": 4
+  },
+  {
+    "fields": {
+      "activities": [
+        2
+      ],
+      "berlin_locations": [
+        3
+      ],
+      "created_at": "2024-09-19T16:24:10.328Z",
+      "languages": [],
+      "last_edited_time_notion": "2024-09-14T13:10:00Z",
+      "notion_id": "d206f868-4167-403c-bb39-c4d7932f4617",
+      "organization": null,
+      "skills": [],
+      "status": "Inactive",
+      "target_groups": [
+        1
+      ],
+      "timeslots": [
+        10
+      ],
+      "title": "Sports - Help for preschool teachers",
+      "translate_languages": [],
+      "updated_at": "2024-09-19T16:24:10.330Z",
+      "vo_information": null,
+      "volunteers_number": 1
+    },
+    "model": "data.opportunity",
+    "pk": 5
+  },
+  {
+    "fields": {
+      "activities": [
+        5
+      ],
+      "berlin_locations": [
+        10
+      ],
+      "created_at": "2024-09-19T16:24:10.332Z",
+      "languages": [],
+      "last_edited_time_notion": "2024-09-14T13:10:00Z",
+      "notion_id": "f375f610-5f3e-441f-b0d8-1a801b08787b",
+      "organization": null,
+      "skills": [],
+      "status": "Inactive",
+      "target_groups": [
+        3
+      ],
+      "timeslots": [
+        11
+      ],
+      "title": "Gardening in Neukölln",
+      "translate_languages": [],
+      "updated_at": "2024-09-19T16:24:10.334Z",
+      "vo_information": "The schedule is flexible and can be discussed with volunteers. The idea is to build new raised beds and plant them with whatever the residents would like to have there.",
+      "volunteers_number": 1
+    },
+    "model": "data.opportunity",
+    "pk": 6
+  },
+  {
+    "fields": {
+      "activities": [
+        6
+      ],
+      "berlin_locations": [
+        12
+      ],
+      "created_at": "2024-09-19T16:24:10.335Z",
+      "languages": [],
+      "last_edited_time_notion": "2024-09-14T13:10:00Z",
+      "notion_id": "41d07995-cfe4-4040-8419-e73de29445e8",
+      "organization": null,
+      "skills": [],
+      "status": "Volunteers Needed",
+      "target_groups": [],
+      "timeslots": [
+        1,
+        5,
+        7
+      ],
+      "title": "Sorting and giving out donations from Tafel in Pankow",
+      "translate_languages": [],
+      "updated_at": "2024-09-19T16:24:10.338Z",
+      "vo_information": "Wir suchen noch Leute, die uns bei der  Sortierung  und Ausgabe von den Spenden der Tafel e. V. am Montag und/oder  Freitag  zwischen 14 und 17 Uhr helfen.\nBerliner Tafel is organising food donations, more info here ",
+      "volunteers_number": 2
+    },
+    "model": "data.opportunity",
+    "pk": 7
+  },
+  {
+    "fields": {
+      "activities": [
+        4
+      ],
+      "berlin_locations": [
+        6
+      ],
+      "created_at": "2024-09-19T16:24:10.339Z",
+      "languages": [],
+      "last_edited_time_notion": "2024-09-14T13:10:00Z",
+      "notion_id": "94e139b0-2fad-41ff-bd1a-e1e686ed0c9a",
+      "organization": null,
+      "skills": [],
+      "status": "DONE",
+      "target_groups": [
+        1
+      ],
+      "timeslots": [
+        12,
+        13
+      ],
+      "title": "Accompanying - Doctor’s appointment",
+      "translate_languages": [],
+      "updated_at": "2024-09-19T16:24:10.341Z",
+      "vo_information": "Der Arzttermin ist am 28.05.24 um 13:30 Uhr im Sana Klinikum Haus F Zimmer F041.\nEs geht um den Sohn von Frau Nino Letodiani, Gabrieli, er ist 7 Jahre alt. Die Familie spricht nur georgisch, ich würde einen anderen Bewohner bitten zu begleiten, dieser spricht sowohl russisch als auch georgisch.\n \nHier noch die genauen Kontaktdaten von der Ärztin:\nKatja Nietz / Beate Scheibel / Franziska Klemm\nAufnahme Bereich Neuropädiatrie/Adipositas\n \nSana Klinikum Lichtenberg\nSozialpädiatrisches Zentrum \nFanningerstr. 32\n10365 Berlin\nTelefon: 030 / 55185245\nFax:          030 / 55185288\nMail: ",
+      "volunteers_number": 1
+    },
+    "model": "data.opportunity",
+    "pk": 8
+  },
+  {
+    "fields": {
+      "activities": [
+        7
+      ],
+      "berlin_locations": [
+        6
+      ],
+      "created_at": "2024-09-19T16:24:10.342Z",
+      "languages": [],
+      "last_edited_time_notion": "2024-09-14T13:10:00Z",
+      "notion_id": "985fd407-5a69-42a8-922e-0f26b1b491f2",
+      "organization": null,
+      "skills": [],
+      "status": "DONE",
+      "target_groups": [
+        3
+      ],
+      "timeslots": [
+        11
+      ],
+      "title": "Going for walks with a resident of a refugee acommodation centre",
+      "translate_languages": [],
+      "updated_at": "2024-09-19T16:24:10.344Z",
+      "vo_information": null,
+      "volunteers_number": 1
+    },
+    "model": "data.opportunity",
+    "pk": 9
+  },
+  {
+    "fields": {
+      "activities": [
+        8,
+        9
+      ],
+      "berlin_locations": [
+        23
+      ],
+      "created_at": "2024-09-19T16:24:10.345Z",
+      "languages": [],
+      "last_edited_time_notion": "2024-09-14T13:10:00Z",
+      "notion_id": "bf2bc89d-c3e4-455b-9bd5-e23823ae8256",
+      "organization": null,
+      "skills": [],
+      "status": "DONE",
+      "target_groups": [
+        1
+      ],
+      "timeslots": [
+        14,
+        15
+      ],
+      "title": "Play with kids and organise activities for the during a summer festival in Wilmersdorf",
+      "translate_languages": [],
+      "updated_at": "2024-09-19T16:24:10.348Z",
+      "vo_information": "They are looking for volunteers who can organise activities for kids (face painting, games, sports, pop-corn etc.). \n\nVolunteers can just come by at 1 pm. We don’t need to introduce them before hand.\n\nContact person: Young-Sun Song",
+      "volunteers_number": 2
+    },
+    "model": "data.opportunity",
+    "pk": 10
+  },
+  {
+    "fields": {
+      "activities": [
+        10
+      ],
+      "berlin_locations": [
+        11
+      ],
+      "created_at": "2024-09-19T16:24:10.350Z",
+      "languages": [],
+      "last_edited_time_notion": "2024-09-14T13:10:00Z",
+      "notion_id": "f36c4a5a-c827-45b7-8573-4c6586f0522d",
+      "organization": null,
+      "skills": [],
+      "status": "Volunteers Needed",
+      "target_groups": [
+        3
+      ],
+      "timeslots": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        16
+      ],
+      "title": "Support a clothing bank in Pankow",
+      "translate_languages": [],
+      "updated_at": "2024-09-19T16:24:10.354Z",
+      "vo_information": "They need new volunteers. The schedule can be discussed with the volunteer coordinator. ",
+      "volunteers_number": 2
+    },
+    "model": "data.opportunity",
+    "pk": 11
+  },
+  {
+    "fields": {
+      "activities": [
+        4
+      ],
+      "berlin_locations": [
+        8
+      ],
+      "created_at": "2024-09-19T16:24:10.355Z",
+      "languages": [],
+      "last_edited_time_notion": "2024-09-14T13:10:00Z",
+      "notion_id": "0ae53dce-acd0-454a-bd2d-ef9014a91e52",
+      "organization": null,
+      "skills": [],
+      "status": "Inactive",
+      "target_groups": [
+        1
+      ],
+      "timeslots": [
+        17,
+        18
+      ],
+      "title": "Doctor’s Appointment: Kid",
+      "translate_languages": [],
+      "updated_at": "2024-09-19T16:24:10.358Z",
+      "vo_information": "Arian Stoian hatte den folgenden Termin:\nDienstag, 20. August 2024 um 09:00 Uhr\nOrt: Hautklinik, Charité Campus Mitte, Luisenstr. 2-5, 10117 Berlin\nArian is a son of Frau Stojan, they speak Russian and Romanian",
+      "volunteers_number": 1
+    },
+    "model": "data.opportunity",
+    "pk": 12
+  },
+  {
+    "fields": {
+      "activities": [
+        3
+      ],
+      "berlin_locations": [
+        11
+      ],
+      "created_at": "2024-09-19T16:24:10.359Z",
+      "languages": [],
+      "last_edited_time_notion": "2024-09-14T13:10:00Z",
+      "notion_id": "9957151d-ff26-4380-88d6-31c1fe42c45b",
+      "organization": null,
+      "skills": [],
+      "status": "Inactive",
+      "target_groups": [],
+      "timeslots": [
+        19
+      ],
+      "title": "vietnamesisches Greifswalderstr ",
+      "translate_languages": [],
+      "updated_at": "2024-09-19T16:24:10.361Z",
+      "vo_information": "vietnamesisches Dolmetschen. Sie hat einen Termin am 12.06.2024 um 9:30 Uhr in der MVZ-Caritas in Greifswalder Str.139 Berlin.",
+      "volunteers_number": 1
+    },
+    "model": "data.opportunity",
+    "pk": 13
+  },
+  {
+    "fields": {
+      "activities": [
+        10
+      ],
+      "berlin_locations": [],
+      "created_at": "2024-09-19T16:24:10.362Z",
+      "languages": [],
+      "last_edited_time_notion": "2024-09-14T13:10:00Z",
+      "notion_id": "99d57aaf-2103-4d15-8ed8-d6af249bf891",
+      "organization": null,
+      "skills": [],
+      "status": "Inactive",
+      "target_groups": [],
+      "timeslots": [
+        20
+      ],
+      "title": "Action day asked for by Aprilsix volunteers",
+      "translate_languages": [],
+      "updated_at": "2024-09-19T16:24:10.363Z",
+      "vo_information": " Freiwilligenarbeit für ein Team von LucaNet (30 Personen) in Berlin für Montag, den 24.06., am Nachmittag (ab circa 14:00 Uhr).\nKönnen wir euch mit kleinen Teams aus 2-5 Personen bei bestimmten Aktionen unterstützen?",
+      "volunteers_number": 30
+    },
+    "model": "data.opportunity",
+    "pk": 14
+  },
+  {
+    "fields": {
+      "activities": [
+        4
+      ],
+      "berlin_locations": [
+        26
+      ],
+      "created_at": "2024-09-19T16:24:10.364Z",
+      "languages": [],
+      "last_edited_time_notion": "2024-09-14T13:10:00Z",
+      "notion_id": "a861e6f6-fbfc-4e83-b2b0-3bd5783a8a9e",
+      "organization": null,
+      "skills": [],
+      "status": "DONE",
+      "target_groups": [
+        1
+      ],
+      "timeslots": [],
+      "title": "Accompany children to external events around Berlin",
+      "translate_languages": [],
+      "updated_at": "2024-09-19T16:24:10.366Z",
+      "vo_information": "Gleich schon beginnen die Sommerferien. Damit unsere lieben Kinder sich aber nicht langweilen müssen, haben wir ihnen ein buntes Programm mit zahlreichen Aktivitäten und Ausflügen zusammengestellt.\n \nEben für diese Ausflüge benötigen wir noch die ein oder andere erwachsene Begleitperson, damit möglichst viele Kinder daran teilnehmen können (Pro Erwachsenen 5 Kinder).Folgendes ist geplant:\n \n• 02.08. – Lobecksportplatz, 10 -13:30 Uhr\n• 05.08. – Treptower Park, Insel der Jugend, 14 – 17 Uhr\n• 06.08. – Kino: Garfield, Cubix Alexanderplatz, 9:30 – 13 Uhr\n• 12.08. – Plantsche, Volkspark Friedrichshain, 10:30 – 16:30 Uhr\n• 13.08. – Naturkundemuseum, 9:30 -14 Uhr\n• 19.08. – Gleisdreieckpark, 10 – 16:30 Uhr\n• 23.08. – Britzer Garten, 9:30 – 13:30 Uhr\n• 26.08. – Spielplatz Ritterburg, 14 – 16:30 Uhr\n• 28.08. – Holzbauworkshop Kreativhaus Mitte, 10 – 13 Uhr\n• 29.08. – Haus der Natur, Wuhlheide, 10 – 17:00 Uhr\n \nEs handelt sich größtenteils um Halbtagsausflüge. Treffpunkt ist immer hier bei uns in der Unterkunft. Natürlich müssen die Kinder hierhin auch wieder zurück.\nWer also Zeit und Lust hat (oder jemanden kennt, der Zeit und Lust hat) bei einer oder mehreren Aktivitäten zu unterstützen, melde sich für nähere Informationen bitte bei uns unter ",
+      "volunteers_number": 6
+    },
+    "model": "data.opportunity",
+    "pk": 15
+  },
+  {
+    "fields": {
+      "activities": [
+        4
+      ],
+      "berlin_locations": [
+        6
+      ],
+      "created_at": "2024-09-19T16:24:10.368Z",
+      "languages": [],
+      "last_edited_time_notion": "2024-09-14T13:10:00Z",
+      "notion_id": "bec74eed-4d9d-47f1-8bca-46a232f2a40d",
+      "organization": null,
+      "skills": [],
+      "status": "Inactive",
+      "target_groups": [
+        3
+      ],
+      "timeslots": [
+        11
+      ],
+      "title": "Going to appointments with a ",
+      "translate_languages": [],
+      "updated_at": "2024-09-19T16:24:10.369Z",
+      "vo_information": "Konkret bin ich auf der Suche nach eine Person, die unser Bewohner(mit Seheinschräkung)für Begleitung zu den behördlichen oder ärztliche Termine ,gemeinsame Spaziergänge.\nSo 1 oder 2 Mal in der Woche wäre schön, er ist spricht gut Englisch. Wäre super Jemand ,der auch Englisch spricht.\nHabt ihr gerade Leute, die sie uns vermitteln können?\n ",
+      "volunteers_number": 1
+    },
+    "model": "data.opportunity",
+    "pk": 16
+  },
+  {
+    "fields": {
+      "activities": [
+        11
+      ],
+      "berlin_locations": [
+        20
+      ],
+      "created_at": "2024-09-19T16:24:10.371Z",
+      "languages": [],
+      "last_edited_time_notion": "2024-09-14T13:10:00Z",
+      "notion_id": "c84b9eb9-cdb8-41ff-b459-b03b3db8697b",
+      "organization": null,
+      "skills": [],
+      "status": "Inactive",
+      "target_groups": [
+        1,
+        3
+      ],
+      "timeslots": [
+        1,
+        21
+      ],
+      "title": "Teach German in a language café",
+      "translate_languages": [],
+      "updated_at": "2024-09-19T16:24:10.373Z",
+      "vo_information": null,
+      "volunteers_number": 1
+    },
+    "model": "data.opportunity",
+    "pk": 17
+  },
+  {
+    "fields": {
+      "activities": [
+        12,
+        13,
+        14
+      ],
+      "berlin_locations": [
+        7
+      ],
+      "created_at": "2024-09-19T16:24:10.375Z",
+      "languages": [],
+      "last_edited_time_notion": "2024-09-14T13:10:00Z",
+      "notion_id": "2ca747f0-d0d6-4813-b1cb-b034c733266c",
+      "organization": null,
+      "skills": [],
+      "status": "Search in process",
+      "target_groups": [
+        1,
+        2
+      ],
+      "timeslots": [
+        11,
+        22
+      ],
+      "title": "Organise fun activities for kids and teens in Marzahn - IB",
+      "translate_languages": [],
+      "updated_at": "2024-09-19T16:24:10.378Z",
+      "vo_information": "Anything volunteers can do as their own activities. preferably with kids teens is welcome mainly until 18.00 but after some familiarity also during after work hours. Additionally sometimes soft accompanying to the LEA or court as",
+      "volunteers_number": 5
+    },
+    "model": "data.opportunity",
+    "pk": 18
+  },
+  {
+    "fields": {
+      "activities": [
+        4
+      ],
+      "berlin_locations": [
+        3,
+        20
+      ],
+      "created_at": "2024-09-19T16:24:10.379Z",
+      "languages": [],
+      "last_edited_time_notion": "2024-09-14T13:10:00Z",
+      "notion_id": "8e0d553d-3757-4f0d-8b8f-cb644bb7fe2e",
+      "organization": null,
+      "skills": [],
+      "status": "No Volunteers Needed",
+      "target_groups": [
+        3
+      ],
+      "timeslots": [
+        11
+      ],
+      "title": "Opening bank accounts",
+      "translate_languages": [],
+      "updated_at": "2024-09-19T16:24:10.381Z",
+      "vo_information": null,
+      "volunteers_number": 3
+    },
+    "model": "data.opportunity",
+    "pk": 19
+  },
+  {
+    "fields": {
+      "activities": [
+        3,
+        4
+      ],
+      "berlin_locations": [
+        26
+      ],
+      "created_at": "2024-09-19T16:24:10.382Z",
+      "languages": [],
+      "last_edited_time_notion": "2024-09-14T13:10:00Z",
+      "notion_id": "bcd0a636-e6e5-435b-b10d-b2222aece007",
+      "organization": null,
+      "skills": [],
+      "status": "Inactive",
+      "target_groups": [
+        3
+      ],
+      "timeslots": [
+        11,
+        23
+      ],
+      "title": "Accompanying to administrative offices",
+      "translate_languages": [],
+      "updated_at": "2024-09-19T16:24:10.385Z",
+      "vo_information": "Needed everywhere.",
+      "volunteers_number": 10
+    },
+    "model": "data.opportunity",
+    "pk": 20
+  },
+  {
+    "fields": {
+      "activities": [
+        3
+      ],
+      "berlin_locations": [
+        6
+      ],
+      "created_at": "2024-09-19T16:24:10.386Z",
+      "languages": [],
+      "last_edited_time_notion": "2024-09-14T13:10:00Z",
+      "notion_id": "d68df599-7d8a-4924-b24c-3ca97feddd91",
+      "organization": null,
+      "skills": [],
+      "status": "DONE",
+      "target_groups": [
+        3
+      ],
+      "timeslots": [
+        24
+      ],
+      "title": "Sorting Papers for Residents",
+      "translate_languages": [],
+      "updated_at": "2024-09-19T16:24:10.388Z",
+      "vo_information": "wir wollen hier im Hagenower Ring am 01.07. 15-18 Uhr ein Event machen,bei welchem wir Bewohner*innen dabei helfen ihre Unterlagen/Dokumente zusortieren und abzuheften.",
+      "volunteers_number": 1
+    },
+    "model": "data.opportunity",
+    "pk": 21
+  },
+  {
+    "fields": {
+      "activities": [
+        2
+      ],
+      "berlin_locations": [
+        10
+      ],
+      "created_at": "2024-09-19T16:24:10.389Z",
+      "languages": [],
+      "last_edited_time_notion": "2024-09-14T13:10:00Z",
+      "notion_id": "e90e629c-7e82-400a-bd0b-3b51dd50863d",
+      "organization": null,
+      "skills": [],
+      "status": "Volunteers Needed",
+      "target_groups": [
+        1
+      ],
+      "timeslots": [
+        3,
+        7,
+        25
+      ],
+      "title": "Supporting with daycare",
+      "translate_languages": [],
+      "updated_at": "2024-09-19T16:24:10.391Z",
+      "vo_information": "Most of the children are from Syria. The daycare coordinator speaks only German. They need an independent person with daycare experience.",
+      "volunteers_number": 2
+    },
+    "model": "data.opportunity",
+    "pk": 22
+  },
+  {
+    "fields": {
+      "activities": [
+        2
+      ],
+      "berlin_locations": [
+        19
+      ],
+      "created_at": "2024-09-19T16:24:10.392Z",
+      "languages": [],
+      "last_edited_time_notion": "2024-09-14T13:10:00Z",
+      "notion_id": "57dcec6e-caf7-47bf-8827-5bd096fbcb9c",
+      "organization": null,
+      "skills": [],
+      "status": "Volunteers Needed",
+      "target_groups": [
+        1
+      ],
+      "timeslots": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        26
+      ],
+      "title": "Support with daycare in Tempelhof",
+      "translate_languages": [],
+      "updated_at": "2024-09-19T16:24:10.396Z",
+      "vo_information": "Support the daycare staff with organising games and activities for chidlren.\nThey would be happy to get volunteers who can come regularly and organise creative activities for the kids between 12:30 and 16:30. ",
+      "volunteers_number": 2
+    },
+    "model": "data.opportunity",
+    "pk": 23
+  },
+  {
+    "fields": {
+      "activities": [
+        4
+      ],
+      "berlin_locations": [
+        11
+      ],
+      "created_at": "2024-09-19T16:24:10.398Z",
+      "languages": [],
+      "last_edited_time_notion": "2024-09-14T13:10:00Z",
+      "notion_id": "951914d9-1fd5-4d55-a7e1-d33fb2a4cdf2",
+      "organization": null,
+      "skills": [],
+      "status": "DONE",
+      "target_groups": [
+        3
+      ],
+      "timeslots": [
+        27,
+        28
+      ],
+      "title": " artz Myocardszintigraphie",
+      "translate_languages": [],
+      "updated_at": "2024-09-19T16:24:10.400Z",
+      "vo_information": "ich hätte eine Begleitungsanfrage bei Need4Deed für Russisch/Deutsch Übersetzung (im Notfall ginge vllt. auch Englisch Russisch)\n\nEs geht um eine Myocardszintigraphie der Nuklearmedizin. Der Termin ist am 23.5. um 8:30 und soll wohl 3,5h lang gehen! Falls 3,5h nicht möglich ist, dann ist kürzer immer noch besser als gar nicht. Einsatzort  ist Die Praxis ffür Nuklearmedizin, Schönhauser Allee 82, 10439 Berlin.",
+      "volunteers_number": 1
+    },
+    "model": "data.opportunity",
+    "pk": 24
+  },
+  {
+    "fields": {
+      "activities": [
+        6
+      ],
+      "berlin_locations": [
+        19
+      ],
+      "created_at": "2024-09-19T16:24:10.402Z",
+      "languages": [],
+      "last_edited_time_notion": "2024-09-14T13:10:00Z",
+      "notion_id": "b03643b7-36e5-4f79-a25d-b33979c4d300",
+      "organization": null,
+      "skills": [],
+      "status": "DONE",
+      "target_groups": [
+        3,
+        2,
+        4,
+        5,
+        1
+      ],
+      "timeslots": [
+        11
+      ],
+      "title": "Group of volunteers to help the Volunteer Coordinators of Hangars",
+      "translate_languages": [],
+      "updated_at": "2024-09-19T16:24:10.405Z",
+      "vo_information": "coordinator contacted all volunteers ",
+      "volunteers_number": 5
+    },
+    "model": "data.opportunity",
+    "pk": 25
+  },
+  {
+    "fields": {
+      "activities": [
+        15,
+        16
+      ],
+      "berlin_locations": [
+        20
+      ],
+      "created_at": "2024-09-19T16:24:10.406Z",
+      "languages": [],
+      "last_edited_time_notion": "2024-09-14T13:10:00Z",
+      "notion_id": "b12ca3f0-8a69-4030-a7a2-e9a84fcc3b3d",
+      "organization": null,
+      "skills": [],
+      "status": "Volunteers Needed",
+      "target_groups": [
+        4
+      ],
+      "timeslots": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        22
+      ],
+      "title": "Sewing or Knitting with Women in Treptow-Köpenick",
+      "translate_languages": [],
+      "updated_at": "2024-09-19T16:24:10.410Z",
+      "vo_information": "There are sewing machines and materials for knitting in the accommodation centre. They are looking for a volunteer who could knit/sew with the women twice a month.",
+      "volunteers_number": 2
+    },
+    "model": "data.opportunity",
+    "pk": 26
+  },
+  {
+    "fields": {
+      "activities": [
+        7,
+        13
+      ],
+      "berlin_locations": [
+        11
+      ],
+      "created_at": "2024-09-19T16:24:10.411Z",
+      "languages": [],
+      "last_edited_time_notion": "2024-09-14T13:10:00Z",
+      "notion_id": "942627e4-3749-45f8-91cb-adc5b74377b3",
+      "organization": null,
+      "skills": [],
+      "status": "Volunteers Needed",
+      "target_groups": [
+        2
+      ],
+      "timeslots": [
+        2,
+        21
+      ],
+      "title": "Organise activites for teenagers in Pankow",
+      "translate_languages": [],
+      "updated_at": "2024-09-19T16:24:10.413Z",
+      "vo_information": "Volunteers are needed for a so-called Jungstreff where teenagers meet and do fun things together. We don’t have any specific information about this activity.",
+      "volunteers_number": 1
+    },
+    "model": "data.opportunity",
+    "pk": 27
+  },
+  {
+    "fields": {
+      "activities": [
+        8
+      ],
+      "berlin_locations": [
+        6
+      ],
+      "created_at": "2024-09-19T16:24:10.415Z",
+      "languages": [],
+      "last_edited_time_notion": "2024-09-19T12:34:00Z",
+      "notion_id": "0e7ab0a4-bacf-4eb4-8b9d-071b25a3f93f",
+      "organization": null,
+      "skills": [],
+      "status": "Volunteers Needed",
+      "target_groups": [],
+      "timeslots": [],
+      "title": "Sommerfest Refugium bla bla",
+      "translate_languages": [],
+      "updated_at": "2024-09-19T16:24:10.416Z",
+      "vo_information": " Auf-Abbau, Kinderschminken, Getränke/Snacks Ausgabe, Spielangebote, Hüpfburg Betreuung",
+      "volunteers_number": 2
+    },
+    "model": "data.opportunity",
+    "pk": 28
+  },
+  {
+    "fields": {
+      "activities": [
+        8
+      ],
+      "berlin_locations": [
+        10
+      ],
+      "created_at": "2024-09-19T16:24:10.417Z",
+      "languages": [],
+      "last_edited_time_notion": "2024-09-14T13:10:00Z",
+      "notion_id": "5306b3a7-e357-428e-8ff8-598d48c59abd",
+      "organization": null,
+      "skills": [],
+      "status": "DONE",
+      "target_groups": [
+        1,
+        2,
+        3
+      ],
+      "timeslots": [
+        29
+      ],
+      "title": "Support during a Summer Festival",
+      "translate_languages": [],
+      "updated_at": "2024-09-19T16:24:10.419Z",
+      "vo_information": "Volunteers are needed for serving food and drinks, organising activities for children and teenagers",
+      "volunteers_number": 2
+    },
+    "model": "data.opportunity",
+    "pk": 29
+  },
+  {
+    "fields": {
+      "activities": [
+        4
+      ],
+      "berlin_locations": [
+        8
+      ],
+      "created_at": "2024-09-19T16:24:10.420Z",
+      "languages": [],
+      "last_edited_time_notion": "2024-09-14T13:10:00Z",
+      "notion_id": "799f52bc-1718-45b3-8db6-43f4b402c2a7",
+      "organization": null,
+      "skills": [],
+      "status": "DONE",
+      "target_groups": [
+        3
+      ],
+      "timeslots": [
+        18,
+        30
+      ],
+      "title": "Sprachmittlung Farsi",
+      "translate_languages": [],
+      "updated_at": "2024-09-19T16:24:10.422Z",
+      "vo_information": "Der Termin findet in der Charité ",
+      "volunteers_number": 1
+    },
+    "model": "data.opportunity",
+    "pk": 30
+  },
+  {
+    "fields": {
+      "activities": [
+        5
+      ],
+      "berlin_locations": [
+        6
+      ],
+      "created_at": "2024-09-19T16:24:10.423Z",
+      "languages": [],
+      "last_edited_time_notion": "2024-09-14T13:10:00Z",
+      "notion_id": "7cce0fd0-3862-46cb-8e4c-9bb911591365",
+      "organization": null,
+      "skills": [],
+      "status": "Inactive",
+      "target_groups": [
+        3
+      ],
+      "timeslots": [
+        11
+      ],
+      "title": "Support with the community garden",
+      "translate_languages": [],
+      "updated_at": "2024-09-19T16:24:10.425Z",
+      "vo_information": "Starting spring",
+      "volunteers_number": 2
+    },
+    "model": "data.opportunity",
+    "pk": 31
+  },
+  {
+    "fields": {
+      "activities": [
+        4
+      ],
+      "berlin_locations": [
+        8
+      ],
+      "created_at": "2024-09-19T16:24:10.426Z",
+      "languages": [],
+      "last_edited_time_notion": "2024-09-14T13:10:00Z",
+      "notion_id": "9d3aee59-b14f-494d-8aef-cb1d26fcbc10",
+      "organization": null,
+      "skills": [],
+      "status": "Inactive",
+      "target_groups": [
+        4
+      ],
+      "timeslots": [
+        31,
+        32
+      ],
+      "title": "Accompanying of a pregnant person to Charite",
+      "translate_languages": [],
+      "updated_at": "2024-09-19T16:24:10.428Z",
+      "vo_information": "wir suchen dringend eine Übersetzer Deutsch/Türkisch, wir haben eine schwangere Frau in Gefahr, sie hat nächste Woche 29.05.2024 um 10:30 Uhr im Charité Campus Virchow Klinikum, Augustenbursplatz1, 13353 Berlin, Mittelallee 9 Links, Schwangerenberatung, die Mutter ist Frau Yildiz .\nContact of the social worker: ",
+      "volunteers_number": 1
+    },
+    "model": "data.opportunity",
+    "pk": 32
+  },
+  {
+    "fields": {
+      "activities": [
+        11
+      ],
+      "berlin_locations": [
+        3
+      ],
+      "created_at": "2024-09-19T16:24:10.430Z",
+      "languages": [],
+      "last_edited_time_notion": "2024-09-14T13:10:00Z",
+      "notion_id": "f95f1a34-fd96-4ad3-a71e-021941ba57b6",
+      "organization": null,
+      "skills": [],
+      "status": "Search in process",
+      "target_groups": [
+        4
+      ],
+      "timeslots": [
+        4
+      ],
+      "title": "Support a German language support for women in Hellersdorf",
+      "translate_languages": [],
+      "updated_at": "2024-09-19T16:24:10.431Z",
+      "vo_information": "There is a group of women in the RAC that would love to have someone to practice their German with.\nThe volunteer should preferably be a woman.",
+      "volunteers_number": 1
+    },
+    "model": "data.opportunity",
+    "pk": 33
+  },
+  {
+    "fields": {
+      "activities": [
+        1,
+        17
+      ],
+      "berlin_locations": [
+        9
+      ],
+      "created_at": "2024-09-19T16:24:10.432Z",
+      "languages": [],
+      "last_edited_time_notion": "2024-09-14T13:10:00Z",
+      "notion_id": "11c3de6d-96b4-4bdd-aeea-6bc94a2672a5",
+      "organization": null,
+      "skills": [],
+      "status": "No Volunteers Needed",
+      "target_groups": [
+        3
+      ],
+      "timeslots": [
+        11
+      ],
+      "title": "Help an older Ukrainian woman learn and practice German ",
+      "translate_languages": [],
+      "updated_at": "2024-09-19T16:24:10.434Z",
+      "vo_information": "She takes care of her husband and has very little free time to practice German. It would be great to have someone for a German-Russian/German-Ukrainian.",
+      "volunteers_number": 1
+    },
+    "model": "data.opportunity",
+    "pk": 34
+  },
+  {
+    "fields": {
+      "activities": [
+        18
+      ],
+      "berlin_locations": [
+        13
+      ],
+      "created_at": "2024-09-19T16:24:10.436Z",
+      "languages": [],
+      "last_edited_time_notion": "2024-09-14T13:10:00Z",
+      "notion_id": "16db306a-b8cc-4766-81c1-14c47b8beab0",
+      "organization": null,
+      "skills": [],
+      "status": "Volunteers Needed",
+      "target_groups": [
+        1
+      ],
+      "timeslots": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        11,
+        33
+      ],
+      "title": "Read books for kids in Renickendorf",
+      "translate_languages": [],
+      "updated_at": "2024-09-19T16:24:10.440Z",
+      "vo_information": "There is a small library in the refugee accommodation centre with books in different languages. They need volunteers who enjoy reading books for or with the children.\nThe schedule is flexible and can be discussed individually.",
+      "volunteers_number": 3
+    },
+    "model": "data.opportunity",
+    "pk": 35
+  },
+  {
+    "fields": {
+      "activities": [
+        19
+      ],
+      "berlin_locations": [
+        3
+      ],
+      "created_at": "2024-09-19T16:24:10.442Z",
+      "languages": [],
+      "last_edited_time_notion": "2024-09-14T13:10:00Z",
+      "notion_id": "5dacd712-a3ed-4a91-8240-b1d239f8bd87",
+      "organization": null,
+      "skills": [],
+      "status": "Inactive",
+      "target_groups": [
+        3
+      ],
+      "timeslots": [
+        11
+      ],
+      "title": "Sorting letters and papers with the refugees",
+      "translate_languages": [],
+      "updated_at": "2024-09-19T16:24:10.443Z",
+      "vo_information": null,
+      "volunteers_number": 3
+    },
+    "model": "data.opportunity",
+    "pk": 36
+  },
+  {
+    "fields": {
+      "activities": [
+        4
+      ],
+      "berlin_locations": [
+        16
+      ],
+      "created_at": "2024-09-19T16:24:10.445Z",
+      "languages": [],
+      "last_edited_time_notion": "2024-09-14T13:10:00Z",
+      "notion_id": "9b2208e4-babd-483f-af6e-693a560ad698",
+      "organization": null,
+      "skills": [],
+      "status": "DONE",
+      "target_groups": [
+        1
+      ],
+      "timeslots": [
+        34,
+        35
+      ],
+      "title": "Doctor’s Appointment: Kid",
+      "translate_languages": [],
+      "updated_at": "2024-09-19T16:24:10.447Z",
+      "vo_information": "Termine der Kinder von Frau Stoian/Butucel.\nIsmail Butucel hat einen Termin am 17.06.24 um 10:40 Uhr\nBei Dr. med. Margrit Lock, Klosterstraße 34, 13581 Berlin. ",
+      "volunteers_number": 1
+    },
+    "model": "data.opportunity",
+    "pk": 37
+  },
+  {
+    "fields": {
+      "activities": [
+        7
+      ],
+      "berlin_locations": [
+        7
+      ],
+      "created_at": "2024-09-19T16:24:10.448Z",
+      "languages": [],
+      "last_edited_time_notion": "2024-09-14T13:10:00Z",
+      "notion_id": "ad9a3575-6ccc-46a9-ad62-da6e50da1dd2",
+      "organization": null,
+      "skills": [],
+      "status": "DONE",
+      "target_groups": [
+        3,
+        4
+      ],
+      "timeslots": [
+        11
+      ],
+      "title": "Supporting a French speaking mother",
+      "translate_languages": [],
+      "updated_at": "2024-09-19T16:24:10.450Z",
+      "vo_information": "Ideally a volunteer would come to the reception centre once a week",
+      "volunteers_number": 1
+    },
+    "model": "data.opportunity",
+    "pk": 38
+  },
+  {
+    "fields": {
+      "activities": [
+        12,
+        13,
+        14,
+        20
+      ],
+      "berlin_locations": [
+        11
+      ],
+      "created_at": "2024-09-19T16:24:10.452Z",
+      "languages": [],
+      "last_edited_time_notion": "2024-09-14T13:10:00Z",
+      "notion_id": "c9cbab6c-8f18-46ac-b1a0-79654c459c8f",
+      "organization": null,
+      "skills": [],
+      "status": "No Volunteers Needed",
+      "target_groups": [
+        3
+      ],
+      "timeslots": [
+        11
+      ],
+      "title": "Workshops on different topics (dance, painting, make up etc.)",
+      "translate_languages": [],
+      "updated_at": "2024-09-19T16:24:10.454Z",
+      "vo_information": null,
+      "volunteers_number": 1
+    },
+    "model": "data.opportunity",
+    "pk": 39
+  },
+  {
+    "fields": {
+      "activities": [
+        5
+      ],
+      "berlin_locations": [
+        20
+      ],
+      "created_at": "2024-09-19T16:24:10.455Z",
+      "languages": [],
+      "last_edited_time_notion": "2024-09-14T13:10:00Z",
+      "notion_id": "d47eac7c-7519-42b4-9f5d-0f8f770a645b",
+      "organization": null,
+      "skills": [],
+      "status": "Volunteers Needed",
+      "target_groups": [
+        3
+      ],
+      "timeslots": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        22
+      ],
+      "title": "Support with gardening (Vegetable Garden) in Treptow-Köpenick",
+      "translate_languages": [],
+      "updated_at": "2024-09-19T16:24:10.458Z",
+      "vo_information": "There is a small vegetable garden in the yard, and the staff would be happy to have some support with it from a volunteer who knows how to garden.\nThe gardening season would be over around mid-October.",
+      "volunteers_number": 2
+    },
+    "model": "data.opportunity",
+    "pk": 40
+  },
+  {
+    "fields": {
+      "activities": [
+        2
+      ],
+      "berlin_locations": [
+        6
+      ],
+      "created_at": "2024-09-19T16:24:10.460Z",
+      "languages": [],
+      "last_edited_time_notion": "2024-09-14T13:10:00Z",
+      "notion_id": "33617b33-40f2-43de-a172-424674af2fd2",
+      "organization": null,
+      "skills": [],
+      "status": "Search in process",
+      "target_groups": [
+        1
+      ],
+      "timeslots": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        36
+      ],
+      "title": "Organise activities for daycare in Lichtenberg",
+      "translate_languages": [],
+      "updated_at": "2024-09-19T16:24:10.463Z",
+      "vo_information": "They don’t have daycare other than on Thursdays. There is one daycare worker that needs support as there are quite a lot of kids.",
+      "volunteers_number": 2
+    },
+    "model": "data.opportunity",
+    "pk": 41
+  },
+  {
+    "fields": {
+      "activities": [
+        4
+      ],
+      "berlin_locations": [
+        24
+      ],
+      "created_at": "2024-09-19T16:24:10.464Z",
+      "languages": [],
+      "last_edited_time_notion": "2024-09-14T13:10:00Z",
+      "notion_id": "5ca6163c-0f7c-4709-b5b8-1e17dba1c960",
+      "organization": null,
+      "skills": [],
+      "status": "Volunteers Needed",
+      "target_groups": [],
+      "timeslots": [
+        11
+      ],
+      "title": "Support with accompanying kids around in the neighborhood in Zehlendorf",
+      "translate_languages": [],
+      "updated_at": "2024-09-19T16:24:10.465Z",
+      "vo_information": "Accompany children around the neighbourhood to different activities, e.g. football etc.",
+      "volunteers_number": 2
+    },
+    "model": "data.opportunity",
+    "pk": 42
+  },
+  {
+    "fields": {
+      "activities": [
+        21
+      ],
+      "berlin_locations": [
+        4
+      ],
+      "created_at": "2024-09-19T16:24:10.466Z",
+      "languages": [],
+      "last_edited_time_notion": "2024-09-14T13:10:00Z",
+      "notion_id": "7e8e3482-6515-4d50-b69a-be5884e3f69c",
+      "organization": null,
+      "skills": [],
+      "status": "Volunteers Needed",
+      "target_groups": [
+        2,
+        3,
+        5
+      ],
+      "timeslots": [
+        11,
+        37
+      ],
+      "title": "Play table tennis with residents of a refugee accommodation centre in Treptow-Köpenick",
+      "translate_languages": [],
+      "updated_at": "2024-09-19T16:24:10.469Z",
+      "vo_information": "There is table tennis in the yard. They need a volunteer to come by and play with the residents. Times can be flexible and discussed with the RAC staff.",
+      "volunteers_number": 1
+    },
+    "model": "data.opportunity",
+    "pk": 43
+  },
+  {
+    "fields": {
+      "activities": [
+        4
+      ],
+      "berlin_locations": [
+        15
+      ],
+      "created_at": "2024-09-19T16:24:10.470Z",
+      "languages": [],
+      "last_edited_time_notion": "2024-09-14T13:10:00Z",
+      "notion_id": "8adf747d-8ce0-4c22-ae67-35674c1712a1",
+      "organization": null,
+      "skills": [],
+      "status": "DONE",
+      "target_groups": [
+        5
+      ],
+      "timeslots": [
+        31,
+        38
+      ],
+      "title": "Accompanying to Agentur für Arbeit Tempelhof-Schöneberg",
+      "translate_languages": [],
+      "updated_at": "2024-09-19T16:24:10.472Z",
+      "vo_information": "Accompanying a refugee to the Agentur für Arbeit (Tempelhof-Schöneberg) - They requested more documents from him. The address: Alarichstraße 12 - 17, 12105 Berlin. \nContact of the social worker: 015116253449\n\nContact of the refugee: 01778522437 (Ihor Yakomenchuk)",
+      "volunteers_number": 1
+    },
+    "model": "data.opportunity",
+    "pk": 44
+  },
+  {
+    "fields": {
+      "activities": [
+        17
+      ],
+      "berlin_locations": [
+        20
+      ],
+      "created_at": "2024-09-19T16:24:10.473Z",
+      "languages": [],
+      "last_edited_time_notion": "2024-09-14T13:10:00Z",
+      "notion_id": "8b0cf241-9b1e-49f4-a0d5-dc12107bc44e",
+      "organization": null,
+      "skills": [],
+      "status": "DONE",
+      "target_groups": [
+        3
+      ],
+      "timeslots": [
+        11
+      ],
+      "title": "German Exam Prep",
+      "translate_languages": [],
+      "updated_at": "2024-09-19T16:24:10.475Z",
+      "vo_information": null,
+      "volunteers_number": 1
+    },
+    "model": "data.opportunity",
+    "pk": 45
+  },
+  {
+    "fields": {
+      "activities": [
+        2
+      ],
+      "berlin_locations": [
+        16
+      ],
+      "created_at": "2024-09-19T16:24:10.476Z",
+      "languages": [],
+      "last_edited_time_notion": "2024-09-14T13:10:00Z",
+      "notion_id": "1e01be93-4a4a-4621-9e39-b1ebcce5e0bb",
+      "organization": null,
+      "skills": [],
+      "status": "Search in process",
+      "target_groups": [],
+      "timeslots": [
+        11,
+        33
+      ],
+      "title": "Child care",
+      "translate_languages": [],
+      "updated_at": "2024-09-19T16:24:10.478Z",
+      "vo_information": null,
+      "volunteers_number": 1
+    },
+    "model": "data.opportunity",
+    "pk": 46
+  },
+  {
+    "fields": {
+      "activities": [
+        4
+      ],
+      "berlin_locations": [
+        11
+      ],
+      "created_at": "2024-09-19T16:24:10.480Z",
+      "languages": [],
+      "last_edited_time_notion": "2024-09-14T13:10:00Z",
+      "notion_id": "598a704c-9ec9-4a17-9ba9-c8eafbb1c6f6",
+      "organization": null,
+      "skills": [],
+      "status": "Inactive",
+      "target_groups": [
+        3
+      ],
+      "timeslots": [
+        39,
+        40
+      ],
+      "title": "Wohnungsbesichtigung",
+      "translate_languages": [],
+      "updated_at": "2024-09-19T16:24:10.482Z",
+      "vo_information": "John-Schehr-Straße 58 in 10407 Berlin am Donnerstag, 30.05. um 10:45 Uhr\nFamilie Frau Kinash / Herr Ndubuisi\nTreffpunkt wäre unten vor dem Haus",
+      "volunteers_number": 1
+    },
+    "model": "data.opportunity",
+    "pk": 47
+  },
+  {
+    "fields": {
+      "activities": [
+        2
+      ],
+      "berlin_locations": [
+        6
+      ],
+      "created_at": "2024-09-19T16:24:10.484Z",
+      "languages": [],
+      "last_edited_time_notion": "2024-09-14T13:10:00Z",
+      "notion_id": "84ce8f0a-db3b-4f42-b38d-2e8e287c3ff3",
+      "organization": null,
+      "skills": [],
+      "status": "Search in process",
+      "target_groups": [
+        1
+      ],
+      "timeslots": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        11,
+        33
+      ],
+      "title": "Organise activities for kids in Lichtenberg",
+      "translate_languages": [],
+      "updated_at": "2024-09-19T16:24:10.487Z",
+      "vo_information": "They need a volunteer to help organise activities for kids and support the daycare workers. Times can be discussed with the volunteer. Most of the kids go to school, so most of daycare usually happens 14-17.",
+      "volunteers_number": 2
+    },
+    "model": "data.opportunity",
+    "pk": 48
+  },
+  {
+    "fields": {
+      "activities": [
+        3
+      ],
+      "berlin_locations": [
+        6
+      ],
+      "created_at": "2024-09-19T16:24:10.488Z",
+      "languages": [],
+      "last_edited_time_notion": "2024-09-14T13:10:00Z",
+      "notion_id": "98ff9306-b49e-48ae-8f07-95d3fbdae6bf",
+      "organization": null,
+      "skills": [],
+      "status": "Inactive",
+      "target_groups": [
+        3
+      ],
+      "timeslots": [
+        41
+      ],
+      "title": "Translation at LEA on the 4th of March at 10:10",
+      "translate_languages": [],
+      "updated_at": "2024-09-19T16:24:10.490Z",
+      "vo_information": "A translator needed for a family from Afghanistan",
+      "volunteers_number": 1
+    },
+    "model": "data.opportunity",
+    "pk": 49
+  },
+  {
+    "fields": {
+      "activities": [
+        7,
+        13,
+        19
+      ],
+      "berlin_locations": [
+        10
+      ],
+      "created_at": "2024-09-19T16:24:10.491Z",
+      "languages": [],
+      "last_edited_time_notion": "2024-09-14T13:10:00Z",
+      "notion_id": "9c36c970-ea55-4a96-9a76-c659491ea2ae",
+      "organization": null,
+      "skills": [],
+      "status": "Volunteers Needed",
+      "target_groups": [
+        4
+      ],
+      "timeslots": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        33
+      ],
+      "title": "Organise activities for women in Neukölln",
+      "translate_languages": [],
+      "updated_at": "2024-09-19T16:24:10.495Z",
+      "vo_information": "A volunteer, preferably a woman, is needed to organise fun activities for women in the RAC. It can include going out or doing something that interests the residents in the RAC.",
+      "volunteers_number": 1
+    },
+    "model": "data.opportunity",
+    "pk": 50
+  },
+  {
+    "fields": {
+      "activities": [
+        1,
+        22
+      ],
+      "berlin_locations": [
+        6,
+        3
+      ],
+      "created_at": "2024-09-19T16:24:10.496Z",
+      "languages": [],
+      "last_edited_time_notion": "2024-09-14T13:10:00Z",
+      "notion_id": "f2223e9f-3d2c-4ca0-8cd1-ae71dadf825a",
+      "organization": null,
+      "skills": [],
+      "status": "Inactive",
+      "target_groups": [
+        2,
+        3
+      ],
+      "timeslots": [
+        11
+      ],
+      "title": "Teaching people how to use a PC",
+      "translate_languages": [],
+      "updated_at": "2024-09-19T16:24:10.499Z",
+      "vo_information": "Maxie-Wander-Str. (Marzahn) also needs a volunteer to help set up their PCs",
+      "volunteers_number": 2
+    },
+    "model": "data.opportunity",
+    "pk": 51
+  },
+  {
+    "fields": {
+      "activities": [
+        21
+      ],
+      "berlin_locations": [
+        3
+      ],
+      "created_at": "2024-09-19T16:24:10.500Z",
+      "languages": [],
+      "last_edited_time_notion": "2024-09-14T13:10:00Z",
+      "notion_id": "382d8a5e-c5cd-41f5-90f6-9841a274f2a2",
+      "organization": null,
+      "skills": [],
+      "status": "Search in process",
+      "target_groups": [
+        1,
+        2
+      ],
+      "timeslots": [
+        11,
+        42,
+        43
+      ],
+      "title": "Sports and activities for kids and teens in Hellersdorf on the weekend",
+      "translate_languages": [],
+      "updated_at": "2024-09-19T16:24:10.503Z",
+      "vo_information": "It’s more urgent in Maxie-Wander-Str. and can happen over the weekend.",
+      "volunteers_number": 2
+    },
+    "model": "data.opportunity",
+    "pk": 52
+  },
+  {
+    "fields": {
+      "activities": [
+        8,
+        9
+      ],
+      "berlin_locations": [
+        3
+      ],
+      "created_at": "2024-09-19T16:24:10.504Z",
+      "languages": [],
+      "last_edited_time_notion": "2024-09-14T13:10:00Z",
+      "notion_id": "83acaeeb-3e8c-448c-9935-b71c5a329426",
+      "organization": null,
+      "skills": [],
+      "status": "DONE",
+      "target_groups": [
+        2,
+        3
+      ],
+      "timeslots": [
+        44,
+        45
+      ],
+      "title": "Support during a sports festival in Hellersdorf",
+      "translate_languages": [],
+      "updated_at": "2024-09-19T16:24:10.507Z",
+      "vo_information": "They need volunteers to support the staff during the sports festival. Here is the description of activities:\nStationen: Beachvolleyball; Basketball; Badminton; Tischtennis; Fußball-Dart; Fußballspiel; Hüpfburg; Disc Golf; Balance Challenge / Slackline; Ziel Wurf (Cricket); Karate; Schach; Bike Parkour; Malen?; ... (Grüne sind bereits bestätigt)\n\nDas sind die Veranstaltungen, und jede Station braucht eine oder zwei Personen, die die Karten stempeln (die Teilnehmer könnten ihre Karten stempeln lassen und am Ende einen Preis für ihre Teilnahme bekommen) oder die Namen der Kinder aufschreiben, die teilnehmen möchten, oder die Kinder zu den richtigen Stationen führen, kurz gesagt, am Stand anwesend sein. ",
+      "volunteers_number": 3
+    },
+    "model": "data.opportunity",
+    "pk": 53
+  },
+  {
+    "fields": {
+      "activities": [
+        1,
+        17
+      ],
+      "berlin_locations": [
+        9
+      ],
+      "created_at": "2024-09-19T16:24:10.509Z",
+      "languages": [],
+      "last_edited_time_notion": "2024-09-14T13:10:00Z",
+      "notion_id": "8bf3d1fd-27dc-45a1-9ed8-3b1427f93214",
+      "organization": null,
+      "skills": [],
+      "status": "Volunteers Needed",
+      "target_groups": [
+        3
+      ],
+      "timeslots": [
+        11
+      ],
+      "title": "Teach a couple from Afghanistan how to read and write in German in Moabit",
+      "translate_languages": [],
+      "updated_at": "2024-09-19T16:24:10.510Z",
+      "vo_information": "They are older and need to learn how to read and write in German before they can start attending a German course",
+      "volunteers_number": 1
+    },
+    "model": "data.opportunity",
+    "pk": 54
+  },
+  {
+    "fields": {
+      "activities": [
+        10
+      ],
+      "berlin_locations": [
+        19
+      ],
+      "created_at": "2024-09-19T16:24:10.511Z",
+      "languages": [],
+      "last_edited_time_notion": "2024-09-14T13:10:00Z",
+      "notion_id": "9f5c49ef-f20e-4f22-a285-57dc8c9c0b05",
+      "organization": null,
+      "skills": [],
+      "status": "No Volunteers Needed",
+      "target_groups": [
+        3,
+        5
+      ],
+      "timeslots": [
+        3,
+        5,
+        46
+      ],
+      "title": "Sorting men’s clothing",
+      "translate_languages": [],
+      "updated_at": "2024-09-19T16:24:10.514Z",
+      "vo_information": "Volunteers should be male-presenting",
+      "volunteers_number": 3
+    },
+    "model": "data.opportunity",
+    "pk": 55
+  },
+  {
+    "fields": {
+      "activities": [
+        23
+      ],
+      "berlin_locations": [
+        3
+      ],
+      "created_at": "2024-09-19T16:24:10.515Z",
+      "languages": [],
+      "last_edited_time_notion": "2024-09-14T13:10:00Z",
+      "notion_id": "c8e7cf71-254e-472c-9fdf-b51a160b8acb",
+      "organization": null,
+      "skills": [],
+      "status": "Inactive",
+      "target_groups": [
+        3
+      ],
+      "timeslots": [
+        11
+      ],
+      "title": "Help with building a pavilion for a RAC",
+      "translate_languages": [],
+      "updated_at": "2024-09-19T16:24:10.517Z",
+      "vo_information": "Unterstützung bei einem Bauprojekt: Pavillon mit Sitzmöglichkeiten auf dem Hof der Gemeinschaftsunterkunft",
+      "volunteers_number": 2
+    },
+    "model": "data.opportunity",
+    "pk": 56
+  },
+  {
+    "fields": {
+      "activities": [
+        11
+      ],
+      "berlin_locations": [
+        10
+      ],
+      "created_at": "2024-09-19T16:24:10.519Z",
+      "languages": [],
+      "last_edited_time_notion": "2024-09-14T13:10:00Z",
+      "notion_id": "ece10392-d2b4-4cb5-a030-b6ef5f1ba678",
+      "organization": null,
+      "skills": [],
+      "status": "Volunteers Needed",
+      "target_groups": [
+        3
+      ],
+      "timeslots": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        11,
+        33
+      ],
+      "title": "Organise a German language café in Britz",
+      "translate_languages": [],
+      "updated_at": "2024-09-19T16:24:10.523Z",
+      "vo_information": "Every resident of the refugee accommodation centre is welcome to join language café. The idea for it is to give the residents a safe space to practice German and learn useful words ans phrases. \nIt should be very accessible.\nIt does not exist there so volunteers should be also able to set it up and run it.",
+      "volunteers_number": 2
+    },
+    "model": "data.opportunity",
+    "pk": 57
+  },
+  {
+    "fields": {
+      "activities": [
+        4
+      ],
+      "berlin_locations": [
+        8
+      ],
+      "created_at": "2024-09-19T16:24:10.524Z",
+      "languages": [],
+      "last_edited_time_notion": "2024-09-14T13:10:00Z",
+      "notion_id": "17d80acf-97ab-40a1-ab5f-f51f9185d3d7",
+      "organization": null,
+      "skills": [],
+      "status": "Inactive",
+      "target_groups": [
+        4
+      ],
+      "timeslots": [
+        47,
+        48
+      ],
+      "title": "Voruntersuchung für die OP",
+      "translate_languages": [],
+      "updated_at": "2024-09-19T16:24:10.527Z",
+      "vo_information": "ich benötige für eine Bewohnerin Aghunik Yeganyan von uns am 03.06.2024 eine Sprachmittlung in der Sprache Russisch. Der Termin ist in der Charité im Brustzentrum(Luisenstraße 65, 10117 Berlin). Die Bewohnerin wird an dem Tag operiert, vermutlich beginnt der Termin um 7:00 oder 8:00 Uhr morgens und wird gehen, bis unsere Bewohnerin in den OP gebracht wird. Genauere Zeiten erfahre ich am Freitag, da an diesem Tag die Voruntersuchungen für die Operation stattfinden.",
+      "volunteers_number": 1
+    },
+    "model": "data.opportunity",
+    "pk": 58
+  },
+  {
+    "fields": {
+      "activities": [
+        7,
+        11,
+        13
+      ],
+      "berlin_locations": [
+        11
+      ],
+      "created_at": "2024-09-19T16:24:10.528Z",
+      "languages": [],
+      "last_edited_time_notion": "2024-09-14T13:10:00Z",
+      "notion_id": "5d6d486e-89e3-44f1-98af-fcc5f5c3c2e0",
+      "organization": null,
+      "skills": [],
+      "status": "Volunteers Needed",
+      "target_groups": [
+        5
+      ],
+      "timeslots": [
+        2,
+        49
+      ],
+      "title": "Organise activities for a Männer*cafe in Pankow",
+      "translate_languages": [],
+      "updated_at": "2024-09-19T16:24:10.531Z",
+      "vo_information": "Volunteers are needed for a Männer Cafe (two hours for the men living in the RAC to meet and talk about things interesting to them)",
+      "volunteers_number": 1
+    },
+    "model": "data.opportunity",
+    "pk": 59
+  },
+  {
+    "fields": {
+      "activities": [
+        3,
+        4
+      ],
+      "berlin_locations": [
+        26
+      ],
+      "created_at": "2024-09-19T16:24:10.532Z",
+      "languages": [],
+      "last_edited_time_notion": "2024-09-14T13:10:00Z",
+      "notion_id": "5dfda2bd-85b6-4867-b3f4-e9fb57615dc4",
+      "organization": null,
+      "skills": [],
+      "status": "Inactive",
+      "target_groups": [
+        3
+      ],
+      "timeslots": [
+        11,
+        23
+      ],
+      "title": "Accompanying to doctor’s appointments",
+      "translate_languages": [],
+      "updated_at": "2024-09-19T16:24:10.534Z",
+      "vo_information": "Needed everywhere, short notice",
+      "volunteers_number": 10
+    },
+    "model": "data.opportunity",
+    "pk": 60
+  },
+  {
+    "fields": {
+      "activities": [
+        3
+      ],
+      "berlin_locations": [
+        11
+      ],
+      "created_at": "2024-09-19T16:24:10.536Z",
+      "languages": [],
+      "last_edited_time_notion": "2024-09-14T13:10:00Z",
+      "notion_id": "72cce9d2-f2e4-4277-b6b4-c8a5ecdff265",
+      "organization": null,
+      "skills": [],
+      "status": "Inactive",
+      "target_groups": [],
+      "timeslots": [
+        11
+      ],
+      "title": "Translation Support",
+      "translate_languages": [],
+      "updated_at": "2024-09-19T16:24:10.537Z",
+      "vo_information": null,
+      "volunteers_number": 1
+    },
+    "model": "data.opportunity",
+    "pk": 61
+  },
+  {
+    "fields": {
+      "activities": [
+        5
+      ],
+      "berlin_locations": [
+        19
+      ],
+      "created_at": "2024-09-19T16:24:10.539Z",
+      "languages": [],
+      "last_edited_time_notion": "2024-09-14T13:10:00Z",
+      "notion_id": "cfc945d2-4b54-4abd-8d85-0cd422c05315",
+      "organization": null,
+      "skills": [],
+      "status": "Inactive",
+      "target_groups": [
+        3
+      ],
+      "timeslots": [
+        5,
+        11
+      ],
+      "title": "Gardening group",
+      "translate_languages": [],
+      "updated_at": "2024-09-19T16:24:10.541Z",
+      "vo_information": "On a winter break till spring",
+      "volunteers_number": 4
+    },
+    "model": "data.opportunity",
+    "pk": 62
+  },
+  {
+    "fields": {
+      "activities": [
+        10
+      ],
+      "berlin_locations": [
+        3
+      ],
+      "created_at": "2024-09-19T16:24:10.542Z",
+      "languages": [],
+      "last_edited_time_notion": "2024-09-14T13:10:00Z",
+      "notion_id": "e3538c77-9cf3-4c5d-8f07-8b6a4788dcc4",
+      "organization": null,
+      "skills": [],
+      "status": "Volunteers Needed",
+      "target_groups": [
+        3
+      ],
+      "timeslots": [
+        3,
+        11,
+        33
+      ],
+      "title": "Support a clothing bank in Hellersdorf",
+      "translate_languages": [],
+      "updated_at": "2024-09-19T16:24:10.544Z",
+      "vo_information": "There is a clothing bank in the refugee accommodation centre and two of the residents volunteer there. They would like to get some support from other volunteers.\nThe schedule can be discussed with the volunteer coordinator.\nThey also need volunteers who can help with looking for donations of winter clothes and collecting them.",
+      "volunteers_number": 2
+    },
+    "model": "data.opportunity",
+    "pk": 63
+  },
+  {
+    "fields": {
+      "activities": [
+        3
+      ],
+      "berlin_locations": [
+        15
+      ],
+      "created_at": "2024-09-19T16:24:10.545Z",
+      "languages": [],
+      "last_edited_time_notion": "2024-09-14T13:10:00Z",
+      "notion_id": "195623c1-9d16-4cec-a4b2-cdedbd7cd20c",
+      "organization": null,
+      "skills": [],
+      "status": "DONE",
+      "target_groups": [
+        3
+      ],
+      "timeslots": [
+        41
+      ],
+      "title": "Translation at Amtsgericht Schöneberg on the 28th of March at 9:30",
+      "translate_languages": [],
+      "updated_at": "2024-09-19T16:24:10.547Z",
+      "vo_information": "A translator needed for a teenage mom with a baby",
+      "volunteers_number": 1
+    },
+    "model": "data.opportunity",
+    "pk": 64
+  },
+  {
+    "fields": {
+      "activities": [
+        7
+      ],
+      "berlin_locations": [
+        6
+      ],
+      "created_at": "2024-09-19T16:24:10.548Z",
+      "languages": [],
+      "last_edited_time_notion": "2024-09-14T13:10:00Z",
+      "notion_id": "4c5cf362-327d-4c78-a8d5-5df9fe12a7b6",
+      "organization": null,
+      "skills": [],
+      "status": "DONE",
+      "target_groups": [
+        4
+      ],
+      "timeslots": [
+        25,
+        50
+      ],
+      "title": "Organising and supporting a women’s group",
+      "translate_languages": [],
+      "updated_at": "2024-09-19T16:24:10.550Z",
+      "vo_information": "Hast du gerade eine Person(gerne eine Frau),die Lust hast bei Frauencafé mitzuhelfen? Sowohl Unterstützung bei der Vorbereitung, Durchführung und Nachbereitung. Sie kann gerne ihre Idee einbringen. Eine plus wäre,wenn die Person türkisch, russisch, georgisch oder arabisch zusätzlich kann. Aber das ist kein Muss",
+      "volunteers_number": 1
+    },
+    "model": "data.opportunity",
+    "pk": 65
+  },
+  {
+    "fields": {
+      "activities": [
+        10
+      ],
+      "berlin_locations": [
+        7
+      ],
+      "created_at": "2024-09-19T16:24:10.551Z",
+      "languages": [],
+      "last_edited_time_notion": "2024-09-14T13:10:00Z",
+      "notion_id": "5a20d010-b889-4339-bdf7-acb3121c0547",
+      "organization": null,
+      "skills": [],
+      "status": "Volunteers Needed",
+      "target_groups": [
+        3
+      ],
+      "timeslots": [
+        51
+      ],
+      "title": "Support with setting up a clothing bank in Marzahn",
+      "translate_languages": [],
+      "updated_at": "2024-09-19T16:24:10.553Z",
+      "vo_information": "The volunteer coordinator would like to set up a clothing bank in the refugee accommodation centre. \nThey are looking for 5-6 people who can assist with this task.",
+      "volunteers_number": 6
+    },
+    "model": "data.opportunity",
+    "pk": 66
+  },
+  {
+    "fields": {
+      "activities": [
+        12
+      ],
+      "berlin_locations": [
+        10
+      ],
+      "created_at": "2024-09-19T16:24:10.554Z",
+      "languages": [],
+      "last_edited_time_notion": "2024-09-14T13:10:00Z",
+      "notion_id": "c4fd01d2-371a-46d1-84b9-e8c7e65408bf",
+      "organization": null,
+      "skills": [],
+      "status": "Volunteers Needed",
+      "target_groups": [
+        1,
+        2
+      ],
+      "timeslots": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        33
+      ],
+      "title": "Organise arts and crafts classes for kids and teens in Neukölln",
+      "translate_languages": [],
+      "updated_at": "2024-09-19T16:24:10.558Z",
+      "vo_information": "Volunteers are needed for organising arts and crafts activities for children, e.g. drawling, painting, moulding, origami etc.",
+      "volunteers_number": 2
+    },
+    "model": "data.opportunity",
+    "pk": 67
+  },
+  {
+    "fields": {
+      "activities": [
+        1
+      ],
+      "berlin_locations": [
+        24
+      ],
+      "created_at": "2024-09-19T16:24:10.560Z",
+      "languages": [],
+      "last_edited_time_notion": "2024-09-14T13:10:00Z",
+      "notion_id": "ce49198a-6717-4432-969d-0f4ed3017cfa",
+      "organization": null,
+      "skills": [],
+      "status": "Search in process",
+      "target_groups": [
+        1
+      ],
+      "timeslots": [
+        11,
+        22
+      ],
+      "title": "Help with homework (German and English) in Zehlendorf",
+      "translate_languages": [],
+      "updated_at": "2024-09-19T16:24:10.562Z",
+      "vo_information": "They need volunteers who can support kids with tutoring and helping them with homework (various school subjects including English). The kids speak German and are in different grades. Volunteers should be able to speak German except for English tutoring.",
+      "volunteers_number": 2
+    },
+    "model": "data.opportunity",
+    "pk": 68
+  },
+  {
+    "fields": {
+      "activities": [
+        3
+      ],
+      "berlin_locations": [
+        3
+      ],
+      "created_at": "2024-09-19T16:24:10.564Z",
+      "languages": [],
+      "last_edited_time_notion": "2024-09-14T13:10:00Z",
+      "notion_id": "f76db14d-12bf-4cb9-8168-07f3664ae26f",
+      "organization": null,
+      "skills": [],
+      "status": "Inactive",
+      "target_groups": [],
+      "timeslots": [
+        4,
+        52
+      ],
+      "title": "Operation doctors translation persian",
+      "translate_languages": [],
+      "updated_at": "2024-09-19T16:24:10.566Z",
+      "vo_information": "  Bewohner aus Afghanistan, der Dari spricht, für zwei Termine.\n \nEr benötigt eine Begleitung zu folgendem OP-Termin im Krankenhaus:\n \nName: ",
+      "volunteers_number": 1
+    },
+    "model": "data.opportunity",
+    "pk": 69
+  },
+  {
+    "fields": {
+      "activities": [
+        10
+      ],
+      "berlin_locations": [
+        19
+      ],
+      "created_at": "2024-09-19T16:24:10.567Z",
+      "languages": [],
+      "last_edited_time_notion": "2024-09-14T13:10:00Z",
+      "notion_id": "2a5330e2-6e00-4b7b-94f4-3927263d4211",
+      "organization": null,
+      "skills": [],
+      "status": "No Volunteers Needed",
+      "target_groups": [
+        3,
+        4
+      ],
+      "timeslots": [
+        2,
+        4,
+        46
+      ],
+      "title": "Sorting women’s clothing",
+      "translate_languages": [],
+      "updated_at": "2024-09-19T16:24:10.569Z",
+      "vo_information": "Volunteers should be female-presenting",
+      "volunteers_number": 3
+    },
+    "model": "data.opportunity",
+    "pk": 70
+  },
+  {
+    "fields": {
+      "activities": [
+        2
+      ],
+      "berlin_locations": [
+        11
+      ],
+      "created_at": "2024-09-19T16:24:10.571Z",
+      "languages": [],
+      "last_edited_time_notion": "2024-09-14T13:10:00Z",
+      "notion_id": "4501d6a5-0466-435b-beb1-cfef3b259ef6",
+      "organization": null,
+      "skills": [],
+      "status": "Search in process",
+      "target_groups": [
+        1
+      ],
+      "timeslots": [
+        42,
+        46
+      ],
+      "title": "Supporting with daycare on the weekend in Pankow",
+      "translate_languages": [],
+      "updated_at": "2024-09-19T16:24:10.572Z",
+      "vo_information": "Started on April, 6th. 2024",
+      "volunteers_number": 4
+    },
+    "model": "data.opportunity",
+    "pk": 71
+  },
+  {
+    "fields": {
+      "activities": [
+        3
+      ],
+      "berlin_locations": [
+        11
+      ],
+      "created_at": "2024-09-19T16:24:10.574Z",
+      "languages": [],
+      "last_edited_time_notion": "2024-09-14T13:10:00Z",
+      "notion_id": "0be9f669-a34d-4085-b9d6-e577c86556c2",
+      "organization": null,
+      "skills": [],
+      "status": "Inactive",
+      "target_groups": [
+        3
+      ],
+      "timeslots": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        53,
+        54
+      ],
+      "title": "Translation Support",
+      "translate_languages": [],
+      "updated_at": "2024-09-19T16:24:10.577Z",
+      "vo_information": null,
+      "volunteers_number": 2
+    },
+    "model": "data.opportunity",
+    "pk": 72
+  },
+  {
+    "fields": {
+      "activities": [
+        3
+      ],
+      "berlin_locations": [
+        11
+      ],
+      "created_at": "2024-09-19T16:24:10.579Z",
+      "languages": [],
+      "last_edited_time_notion": "2024-09-14T13:10:00Z",
+      "notion_id": "169817ee-c5bc-4a8c-ad25-72eb24b85932",
+      "organization": null,
+      "skills": [],
+      "status": "Inactive",
+      "target_groups": [],
+      "timeslots": [],
+      "title": "Translation Support",
+      "translate_languages": [],
+      "updated_at": "2024-09-19T16:24:10.580Z",
+      "vo_information": null,
+      "volunteers_number": 1
+    },
+    "model": "data.opportunity",
+    "pk": 73
+  },
+  {
+    "fields": {
+      "activities": [
+        5,
+        24
+      ],
+      "berlin_locations": [
+        8
+      ],
+      "created_at": "2024-09-19T16:24:10.581Z",
+      "languages": [],
+      "last_edited_time_notion": "2024-09-14T13:10:00Z",
+      "notion_id": "2e705a88-154e-43a6-9cd2-6da704c88e4a",
+      "organization": null,
+      "skills": [],
+      "status": "DONE",
+      "target_groups": [],
+      "timeslots": [],
+      "title": "Garden volunteering day in mitte ",
+      "translate_languages": [],
+      "updated_at": "2024-09-19T16:24:10.582Z",
+      "vo_information": "Zelando team asked for one day volunteering- connected to ",
+      "volunteers_number": 10
+    },
+    "model": "data.opportunity",
+    "pk": 74
+  },
+  {
+    "fields": {
+      "activities": [
+        10
+      ],
+      "berlin_locations": [
+        6
+      ],
+      "created_at": "2024-09-19T16:24:10.583Z",
+      "languages": [],
+      "last_edited_time_notion": "2024-09-14T13:10:00Z",
+      "notion_id": "9b3839d2-c145-4d64-9bb1-a07c5f393a8b",
+      "organization": null,
+      "skills": [],
+      "status": "Volunteers Needed",
+      "target_groups": [
+        3
+      ],
+      "timeslots": [
+        3,
+        55
+      ],
+      "title": "Support the clothing bank in Lichtenberg",
+      "translate_languages": [],
+      "updated_at": "2024-09-19T16:24:10.585Z",
+      "vo_information": "The clothing bank needs help and someone who would like to get involved. At the moment they only have one volunteer who helps them. It is open on Wednesdays from 11:00 to 13:00 and the volunteers are welcome stay for around two hours or more.",
+      "volunteers_number": 2
+    },
+    "model": "data.opportunity",
+    "pk": 75
+  },
+  {
+    "fields": {
+      "activities": [
+        3
+      ],
+      "berlin_locations": [
+        6
+      ],
+      "created_at": "2024-09-19T16:24:10.586Z",
+      "languages": [],
+      "last_edited_time_notion": "2024-09-14T13:10:00Z",
+      "notion_id": "2a0e1e74-551b-42c8-92cd-6c376b9aa24f",
+      "organization": null,
+      "skills": [],
+      "status": "Inactive",
+      "target_groups": [
+        3
+      ],
+      "timeslots": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        33
+      ],
+      "title": "Translations (Farsi, Russian)",
+      "translate_languages": [],
+      "updated_at": "2024-09-19T16:24:10.589Z",
+      "vo_information": null,
+      "volunteers_number": 1
+    },
+    "model": "data.opportunity",
+    "pk": 76
+  },
+  {
+    "fields": {
+      "activities": [
+        1,
+        11
+      ],
+      "berlin_locations": [
+        3
+      ],
+      "created_at": "2024-09-19T16:24:10.590Z",
+      "languages": [],
+      "last_edited_time_notion": "2024-09-14T13:10:00Z",
+      "notion_id": "6e67e201-4e99-42ac-90d6-ce6fce726b8a",
+      "organization": null,
+      "skills": [],
+      "status": "Volunteers Needed",
+      "target_groups": [
+        3
+      ],
+      "timeslots": [
+        1,
+        4,
+        11,
+        56
+      ],
+      "title": "Lead a German language café - Help residents with homework in Hellersdorf",
+      "translate_languages": [],
+      "updated_at": "2024-09-19T16:24:10.593Z",
+      "vo_information": "Some of the residents of the refugee accommodation centre already attend a German course and need support with their homework, grammar, etc. The schedule is flexible and can be changed according to your availability.\nIt is not a classical language cafe. rather tutoring for adults.",
+      "volunteers_number": 2
+    },
+    "model": "data.opportunity",
+    "pk": 77
+  },
+  {
+    "fields": {
+      "activities": [
+        25
+      ],
+      "berlin_locations": [
+        10
+      ],
+      "created_at": "2024-09-19T16:24:10.594Z",
+      "languages": [],
+      "last_edited_time_notion": "2024-09-14T13:10:00Z",
+      "notion_id": "797b5cdb-9940-4f7c-94be-2cf88d03477d",
+      "organization": null,
+      "skills": [],
+      "status": "Inactive",
+      "target_groups": [
+        1,
+        3
+      ],
+      "timeslots": [],
+      "title": "Bike Repair",
+      "translate_languages": [],
+      "updated_at": "2024-09-19T16:24:10.596Z",
+      "vo_information": null,
+      "volunteers_number": 1
+    },
+    "model": "data.opportunity",
+    "pk": 78
+  },
+  {
+    "fields": {
+      "activities": [
+        3
+      ],
+      "berlin_locations": [
+        10
+      ],
+      "created_at": "2024-09-19T16:24:10.597Z",
+      "languages": [],
+      "last_edited_time_notion": "2024-09-14T13:10:00Z",
+      "notion_id": "9484eb1a-d9b0-4728-ae61-b78640afbc45",
+      "organization": null,
+      "skills": [],
+      "status": "Inactive",
+      "target_groups": [],
+      "timeslots": [],
+      "title": "Translation Support",
+      "translate_languages": [],
+      "updated_at": "2024-09-19T16:24:10.598Z",
+      "vo_information": null,
+      "volunteers_number": 1
+    },
+    "model": "data.opportunity",
+    "pk": 79
+  },
+  {
+    "fields": {
+      "activities": [
+        25
+      ],
+      "berlin_locations": [
+        24
+      ],
+      "created_at": "2024-09-19T16:24:10.600Z",
+      "languages": [],
+      "last_edited_time_notion": "2024-09-14T13:10:00Z",
+      "notion_id": "ce5be07c-d868-476d-a645-d2bd88d309a0",
+      "organization": null,
+      "skills": [],
+      "status": "DONE",
+      "target_groups": [],
+      "timeslots": [
+        11,
+        33
+      ],
+      "title": "Support repair bikes with the residents of an accommodation centre in Zehlendorf",
+      "translate_languages": [],
+      "updated_at": "2024-09-19T16:24:10.601Z",
+      "vo_information": "Freiwillige fpr die Mitarbeit in der Fahrradselbsthilfewerkstatt (Tatsächlich auch als Honorarkraft auf selbstständiger Basis möglich)",
+      "volunteers_number": 1
+    },
+    "model": "data.opportunity",
+    "pk": 80
+  },
+  {
+    "fields": {
+      "activities": [
+        4
+      ],
+      "berlin_locations": [
+        10
+      ],
+      "created_at": "2024-09-19T16:24:10.603Z",
+      "languages": [],
+      "last_edited_time_notion": "2024-09-14T13:10:00Z",
+      "notion_id": "d8e4d3f1-142b-4133-a902-a3e730f529d1",
+      "organization": null,
+      "skills": [],
+      "status": "Inactive",
+      "target_groups": [
+        1
+      ],
+      "timeslots": [
+        2,
+        57,
+        58
+      ],
+      "title": "Begleitung für Mutter mit 5jähriger Tochter zu einer Sprachstandsfeststellung",
+      "translate_languages": [],
+      "updated_at": "2024-09-19T16:24:10.606Z",
+      "vo_information": "wir suchen eine Russisch/Deutsch sprachige Begleitung für Mutter mit 5jähriger Tochter zu einer Sprachstandsfeststellung.\n\n\nTermin: 21.05.24 um 12Uhr\n\n\nOrt:\n\nSIBUZ Neukölln\n\nBuckower Damm 114, 12349 Berlin\n\n\nWir bitten um eine Rückmeldung  bis Donnerstag\n",
+      "volunteers_number": 1
+    },
+    "model": "data.opportunity",
+    "pk": 81
+  },
+  {
+    "fields": {
+      "activities": [
+        2
+      ],
+      "berlin_locations": [
+        8
+      ],
+      "created_at": "2024-09-19T16:24:10.607Z",
+      "languages": [],
+      "last_edited_time_notion": "2024-09-14T13:10:00Z",
+      "notion_id": "fafc6a35-ac66-40bf-850b-e52a35fd9fdd",
+      "organization": null,
+      "skills": [],
+      "status": "Check with the VC",
+      "target_groups": [
+        1
+      ],
+      "timeslots": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "title": "Daycare",
+      "translate_languages": [],
+      "updated_at": "2024-09-19T16:24:10.609Z",
+      "vo_information": null,
+      "volunteers_number": 1
+    },
+    "model": "data.opportunity",
+    "pk": 82
+  },
+  {
+    "fields": {
+      "activities": [
+        2,
+        3,
+        4
+      ],
+      "berlin_locations": [
+        3
+      ],
+      "created_at": "2024-09-19T16:24:10.611Z",
+      "languages": [],
+      "last_edited_time_notion": "2024-09-14T13:10:00Z",
+      "notion_id": "b16799a3-7a9c-428e-b93a-79c6fdc22f8d",
+      "organization": null,
+      "skills": [],
+      "status": "No Volunteers Needed",
+      "target_groups": [
+        1,
+        3,
+        4
+      ],
+      "timeslots": [
+        11,
+        23
+      ],
+      "title": "Laloka",
+      "translate_languages": [],
+      "updated_at": "2024-09-19T16:24:10.614Z",
+      "vo_information": "laloka - they migth be a saturday thing for woman and in that time they would need kids care. apart from that they sometimes need translation for appointments and especialy french",
+      "volunteers_number": 3
+    },
+    "model": "data.opportunity",
+    "pk": 83
+  },
+  {
+    "fields": {
+      "activities": [
+        3,
+        4
+      ],
+      "berlin_locations": [
+        10
+      ],
+      "created_at": "2024-09-19T16:24:10.615Z",
+      "languages": [],
+      "last_edited_time_notion": "2024-09-14T13:10:00Z",
+      "notion_id": "5ca45359-db1f-4e8b-840e-f6a763ece7b7",
+      "organization": null,
+      "skills": [],
+      "status": "DONE",
+      "target_groups": [],
+      "timeslots": [
+        8
+      ],
+      "title": "Russian German Jobcenter ",
+      "translate_languages": [],
+      "updated_at": "2024-09-19T16:24:10.617Z",
+      "vo_information": "Weg. Ich hätte eine Anfrage für den 13.06 um 9:00 Uhr bei der Agentur für Arbeit Süd, Sonnenallee 282, 12057 Berlin, für Hr. Yakymenchuk (Bewohner unserer Unterkuft). Ich würde mich auf eine baldige und hoffentlich positive Rückmeldung!",
+      "volunteers_number": 1
+    },
+    "model": "data.opportunity",
+    "pk": 84
+  },
+  {
+    "fields": {
+      "activities": [
+        7
+      ],
+      "berlin_locations": [
+        19,
+        15
+      ],
+      "created_at": "2024-09-19T16:24:10.618Z",
+      "languages": [],
+      "last_edited_time_notion": "2024-09-14T13:10:00Z",
+      "notion_id": "30b27967-d02a-487a-9d71-02459c0bf754",
+      "organization": null,
+      "skills": [],
+      "status": "Volunteers Needed",
+      "target_groups": [],
+      "timeslots": [
+        11
+      ],
+      "title": "Be a part of Hürdenspringer in Tempelhof-Schöneberg",
+      "translate_languages": [],
+      "updated_at": "2024-09-19T16:24:10.620Z",
+      "vo_information": "It’s a long-term programme that requires some serious evolvement of a volunteer",
+      "volunteers_number": 1
+    },
+    "model": "data.opportunity",
+    "pk": 85
+  },
+  {
+    "fields": {
+      "activities": [
+        1,
+        26
+      ],
+      "berlin_locations": [
+        23
+      ],
+      "created_at": "2024-09-19T16:24:10.621Z",
+      "languages": [],
+      "last_edited_time_notion": "2024-09-14T13:10:00Z",
+      "notion_id": "41206285-19cb-4104-9ddc-dfe7ff52c672",
+      "organization": null,
+      "skills": [],
+      "status": "Search in process",
+      "target_groups": [
+        1
+      ],
+      "timeslots": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        33
+      ],
+      "title": "Help with homework for elementary school students in Wilmersdorf",
+      "translate_languages": [],
+      "updated_at": "2024-09-19T16:24:10.625Z",
+      "vo_information": "It’s a regular volunteering opportunity (once a week). Support is needed for elementary school kids with different subjects. The kids speak German so the volunteer should also be able to speak German.",
+      "volunteers_number": 1
+    },
+    "model": "data.opportunity",
+    "pk": 86
+  },
+  {
+    "fields": {
+      "activities": [
+        2
+      ],
+      "berlin_locations": [
+        3
+      ],
+      "created_at": "2024-09-19T16:24:10.626Z",
+      "languages": [],
+      "last_edited_time_notion": "2024-09-14T13:10:00Z",
+      "notion_id": "5fe2256c-e35d-4fc4-a60a-f22d6d8d7adb",
+      "organization": null,
+      "skills": [],
+      "status": "No Volunteers Needed",
+      "target_groups": [
+        1
+      ],
+      "timeslots": [
+        1,
+        2,
+        3,
+        4,
+        59
+      ],
+      "title": "Support with daycare",
+      "translate_languages": [],
+      "updated_at": "2024-09-19T16:24:10.629Z",
+      "vo_information": "At least some German is required.",
+      "volunteers_number": 2
+    },
+    "model": "data.opportunity",
+    "pk": 87
+  },
+  {
+    "fields": {
+      "activities": [
+        4
+      ],
+      "berlin_locations": [
+        7
+      ],
+      "created_at": "2024-09-19T16:24:10.630Z",
+      "languages": [],
+      "last_edited_time_notion": "2024-09-14T13:10:00Z",
+      "notion_id": "831443e2-6c2d-47f1-a495-2183756e45be",
+      "organization": null,
+      "skills": [],
+      "status": "Inactive",
+      "target_groups": [
+        3
+      ],
+      "timeslots": [
+        60,
+        61
+      ],
+      "title": "Begleitung beim Arzttermin",
+      "translate_languages": [],
+      "updated_at": "2024-09-19T16:24:10.632Z",
+      "vo_information": "Der Bewohner hätte am 17.05., um 10:00 Uhr einen Arzttermin. Die Person spricht nur Türkisch und Kurdisch.",
+      "volunteers_number": 1
+    },
+    "model": "data.opportunity",
+    "pk": 88
+  },
+  {
+    "fields": {
+      "activities": [
+        7,
+        27
+      ],
+      "berlin_locations": [
+        10
+      ],
+      "created_at": "2024-09-19T16:24:10.633Z",
+      "languages": [],
+      "last_edited_time_notion": "2024-09-14T13:10:00Z",
+      "notion_id": "c22caef3-9387-480a-8ffe-888e5a9cea92",
+      "organization": null,
+      "skills": [],
+      "status": "Volunteers Needed",
+      "target_groups": [
+        4
+      ],
+      "timeslots": [
+        11
+      ],
+      "title": "Support women get to know their neighbourhood in Britz and Berlin in general",
+      "translate_languages": [],
+      "updated_at": "2024-09-19T16:24:10.636Z",
+      "vo_information": "Members of a women’s group in the refugee accommodation centre (Frauencafe) would like to go out and learn more about Berlin. Volunteers can take them to museums, walk around the neighbourhood or do other fun things. Museums and galleries sometimes provide free tickets for refugees.",
+      "volunteers_number": 2
+    },
+    "model": "data.opportunity",
+    "pk": 89
+  },
+  {
+    "fields": {
+      "activities": [
+        11
+      ],
+      "berlin_locations": [
+        8
+      ],
+      "created_at": "2024-09-19T16:24:10.637Z",
+      "languages": [],
+      "last_edited_time_notion": "2024-09-14T13:10:00Z",
+      "notion_id": "1c640fe3-dba3-470b-af47-6e59564f15e3",
+      "organization": null,
+      "skills": [],
+      "status": "Volunteers Needed",
+      "target_groups": [
+        2
+      ],
+      "timeslots": [
+        4,
+        36
+      ],
+      "title": "Lead a German language cafe in Wedding",
+      "translate_languages": [],
+      "updated_at": "2024-09-19T16:24:10.638Z",
+      "vo_information": "They need volunteers for Schlasch, a project for Club DIalog. There is a German language cafe for Russian and Ukrainian speaking teenagers once a week where thy can practice their German in a fun way.",
+      "volunteers_number": 2
+    },
+    "model": "data.opportunity",
+    "pk": 90
+  },
+  {
+    "fields": {
+      "activities": [
+        17
+      ],
+      "berlin_locations": [
+        10
+      ],
+      "created_at": "2024-09-19T16:24:10.640Z",
+      "languages": [],
+      "last_edited_time_notion": "2024-09-14T13:10:00Z",
+      "notion_id": "21cf2475-a19a-4552-b133-a6859d2455d8",
+      "organization": null,
+      "skills": [],
+      "status": "Volunteers Needed",
+      "target_groups": [
+        3
+      ],
+      "timeslots": [
+        11
+      ],
+      "title": "German language exchange in Neukölln",
+      "translate_languages": [],
+      "updated_at": "2024-09-19T16:24:10.641Z",
+      "vo_information": "Residents of the RAC would like to improve their German language skills and share more about their own language and culture with everyone who is interested.",
+      "volunteers_number": 2
+    },
+    "model": "data.opportunity",
+    "pk": 91
+  },
+  {
+    "fields": {
+      "activities": [
+        11
+      ],
+      "berlin_locations": [
+        10
+      ],
+      "created_at": "2024-09-19T16:24:10.646Z",
+      "languages": [],
+      "last_edited_time_notion": "2024-09-14T13:10:00Z",
+      "notion_id": "35127916-cd83-4379-a91d-ad46d722f7c1",
+      "organization": null,
+      "skills": [],
+      "status": "Volunteers Needed",
+      "target_groups": [
+        3
+      ],
+      "timeslots": [
+        1,
+        62
+      ],
+      "title": "Support a German language café in Neukölln",
+      "translate_languages": [],
+      "updated_at": "2024-09-19T16:24:10.651Z",
+      "vo_information": "This language cafe has been running for more than a year now. It has a core group of participants who mostly speak Arabic, but every resident of the RAC is welcome to join it.",
+      "volunteers_number": 1
+    },
+    "model": "data.opportunity",
+    "pk": 92
+  },
+  {
+    "fields": {
+      "activities": [
+        2,
+        9,
+        12
+      ],
+      "berlin_locations": [
+        12
+      ],
+      "created_at": "2024-09-19T16:24:10.654Z",
+      "languages": [],
+      "last_edited_time_notion": "2024-09-14T13:10:00Z",
+      "notion_id": "6a5cf6b0-e982-40e3-bd5e-9e6e4c40af1d",
+      "organization": null,
+      "skills": [],
+      "status": "DONE",
+      "target_groups": [
+        1
+      ],
+      "timeslots": [
+        63,
+        64
+      ],
+      "title": "Face Painting for kids for a Summer Festival",
+      "translate_languages": [],
+      "updated_at": "2024-09-19T16:24:10.661Z",
+      "vo_information": "Wir suchen also vor allem nach Menschen, die Lust darauf haben, etwas mit Kindern zu machen oder mit Eltern und Kindern. Ganz konkret suchen wir aktuell nach einer Person, die bei unserem Sommerfest am 12.07. Kinderschminken anbietet.",
+      "volunteers_number": 1
+    },
+    "model": "data.opportunity",
+    "pk": 93
+  },
+  {
+    "fields": {
+      "activities": [
+        4
+      ],
+      "berlin_locations": [
+        8
+      ],
+      "created_at": "2024-09-19T16:24:10.667Z",
+      "languages": [],
+      "last_edited_time_notion": "2024-09-14T13:10:00Z",
+      "notion_id": "e6e299f1-6231-4a9a-9cc9-3b4d4d53b37b",
+      "organization": null,
+      "skills": [],
+      "status": "DONE",
+      "target_groups": [
+        4
+      ],
+      "timeslots": [
+        65
+      ],
+      "title": "Charite accompanying Persian ",
+      "translate_languages": [],
+      "updated_at": "2024-09-19T16:24:10.671Z",
+      "vo_information": "Eine Bewohnerin (sie spricht Farsi) von uns am 21.05.2024 um 9 Uhr in die Charité (Luisentr. 2 10117 Berlin) . der Termin findet am ",
+      "volunteers_number": 1
+    },
+    "model": "data.opportunity",
+    "pk": 94
+  },
+  {
+    "fields": {
+      "activities": [
+        2,
+        4,
+        12,
+        20
+      ],
+      "berlin_locations": [
+        26
+      ],
+      "created_at": "2024-09-19T16:24:10.674Z",
+      "languages": [],
+      "last_edited_time_notion": "2024-09-14T13:10:00Z",
+      "notion_id": "f2dfccbf-7965-47f0-8de5-97d2d73d1de3",
+      "organization": null,
+      "skills": [],
+      "status": "Volunteers Needed",
+      "target_groups": [
+        1
+      ],
+      "timeslots": [
+        66
+      ],
+      "title": "Accompany kids during KinderKulturMonat in October in Berlin",
+      "translate_languages": [],
+      "updated_at": "2024-09-19T16:24:10.678Z",
+      "vo_information": "Der Kinder·Kultur·Monat ist ein Festival für Kinder und Ihre Familien in Berlin.\nMit Kunst, Musik. Tanz. Kino. Besuchen im Museum. Und vielen anderen Sachen.\nDas Festival ist jedes Jahr im Oktober.\nAn jedem Wochen·ende im Oktober\ngibt es spannende Sachen zum Mitmachen und Ausprobieren.\nIn allen Bezirken in Berlin öffnen Häuser für Kunst und Kultur Ihre Türen.\nZum Beispiel:\nTheater und Museen KinosKunst·schulen, Musik·schulen und Tanz·schulenKunst·galerien, Ausstellungenund viele andere Häuser\nAlle freuen sich auf Euch!",
+      "volunteers_number": 10
+    },
+    "model": "data.opportunity",
+    "pk": 95
+  },
+  {
+    "fields": {
+      "activities": [
+        4
+      ],
+      "berlin_locations": [
+        7
+      ],
+      "created_at": "2024-09-19T16:24:10.680Z",
+      "languages": [],
+      "last_edited_time_notion": "2024-09-14T13:10:00Z",
+      "notion_id": "3fa474d5-2556-403c-8948-7351c32b1952",
+      "organization": null,
+      "skills": [],
+      "status": "DONE",
+      "target_groups": [
+        3
+      ],
+      "timeslots": [
+        67
+      ],
+      "title": "Doctors appointments ",
+      "translate_languages": [],
+      "updated_at": "2024-09-19T16:24:10.682Z",
+      "vo_information": "Liluma Karimi\nTreffpunkt: Maxie-Wander-Straße 78, 12619 Berlin, Security\nZeit: 10.06.2024, 12:15 Uhr\nZiel: Albert-Einstein-Straße 2, Berlin-Adlershof, Ärztehaus, Zahnarztpraxis Dr. Cramm (Termin 14:00 Uhr)\nVorschlag: U5 bis Wuhletal, dann S5 bis Ostkreuz, dann S85 bis Adlershof, Rest: Fußweg\nIn der Praxis erfolgt nur eine Begutachtung der Zähne und des Behandlungsplans. Kein langer Aufenthalt oder Wartezeit. Bitte auch Begleitung zurück zur Unterkunft bzw. Absprache mit Frau Karimi.\nTelefonnummer: 213 099 114 (Sozialbüro).   ",
+      "volunteers_number": 3
+    },
+    "model": "data.opportunity",
+    "pk": 96
+  },
+  {
+    "fields": {
+      "activities": [
+        11
+      ],
+      "berlin_locations": [
+        6
+      ],
+      "created_at": "2024-09-19T16:24:10.684Z",
+      "languages": [],
+      "last_edited_time_notion": "2024-09-14T13:10:00Z",
+      "notion_id": "5359ff07-eacb-4c8e-906e-f7449a832d54",
+      "organization": null,
+      "skills": [],
+      "status": "Check with the VC",
+      "target_groups": [
+        3
+      ],
+      "timeslots": [
+        11
+      ],
+      "title": "Assist with a Language Café",
+      "translate_languages": [],
+      "updated_at": "2024-09-19T16:24:10.687Z",
+      "vo_information": "It’s not there yet but they do have rooms.",
+      "volunteers_number": 2
+    },
+    "model": "data.opportunity",
+    "pk": 97
+  },
+  {
+    "fields": {
+      "activities": [
+        7,
+        27
+      ],
+      "berlin_locations": [
+        10
+      ],
+      "created_at": "2024-09-19T16:24:10.690Z",
+      "languages": [],
+      "last_edited_time_notion": "2024-09-14T13:10:00Z",
+      "notion_id": "aaa65b1a-da82-4748-9aff-9a191f51c4e8",
+      "organization": null,
+      "skills": [],
+      "status": "Volunteers Needed",
+      "target_groups": [
+        3,
+        5
+      ],
+      "timeslots": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        11,
+        33
+      ],
+      "title": "Organise and lead a Männer*café  in Neukölln",
+      "translate_languages": [],
+      "updated_at": "2024-09-19T16:24:10.695Z",
+      "vo_information": "Männer*café offers the opportunity to learn from other men* and to support each other. Workshops, discussion groups and joint activities are offered to promote exchange and growth. It is a place where men* can gain new perspectives.\nIt  would also be great to have a volunteer who can lead the group, explain a bit about Germany and go out to explore Berlin together. ",
+      "volunteers_number": 2
+    },
+    "model": "data.opportunity",
+    "pk": 98
+  }
+]

@@ -2,17 +2,22 @@
 
 source .venv/bin/activate
 
-if [ -f .env.local ]; then
+if [ -f .env ]; then
     set -a
-    . .env.local
+    . .env
     set +a
 fi
 
-API_PORT_NON_TLS=8080 API_PORT=8443 docker compose -p batman -f docker-compose.dev.yaml up --force-recreate -V &
+docker compose -p batman -f docker-compose.dev.yaml up --force-recreate -V &
 
 sleep 15
 
 docker exec alfred python3 manage.py seed_data
+docker exec alfred python3 manage.py loaddata data/fixtures/targetgroup.json
+docker exec alfred python3 manage.py loaddata data/fixtures/activities.json 
+docker exec alfred python3 manage.py loaddata data/fixtures/berlinlocations.json
+docker exec alfred python3 manage.py loaddata data/fixtures/timeslots.json
+docker exec alfred python3 manage.py loaddata data/fixtures/opportunities.json
 
 PYTEST_DISABLE_PLUGIN_AUTOLOAD=True ALFRED_API_URL=http://localhost:8000 python3 -m pytest tests_e2e
 

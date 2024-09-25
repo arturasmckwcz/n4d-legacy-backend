@@ -102,6 +102,15 @@ class Contact(ModelWithTimestamps):
         )
 
 
+class BerlinLocation(models.Model):
+    name = models.CharField(
+        max_length=128, unique=True, choices=BerlinLocations.choices
+    )
+
+    def __str__(self):
+        return self.name
+
+
 class Avatar(ModelWithTimestamps):
     pic = models.CharField(max_length=10 * 1024)
 
@@ -147,15 +156,19 @@ class Opportunity(ModelWithTimestamps):
     target_groups = models.ManyToManyField(TargetGroup, blank=True)
     timeslots = models.ManyToManyField(Timeslot, blank=True)
     activities = models.ManyToManyField(Activity, blank=True)
-    locations = models.ManyToManyField(Location)
+    berlin_locations = models.ManyToManyField(BerlinLocation)
     languages = models.ManyToManyField(Language)
     translate_languages = models.ManyToManyField(
         Language, related_name="opportunity_translate_languages", blank=True
     )
     skills = models.ManyToManyField(Skill, blank=True)
-    notion_id = models.CharField(max_length=16, unique=True)
+    notion_id = models.UUIDField(
+        default=uuid.uuid4, editable=False, unique=True, blank=True, null=True
+    )
     status = models.CharField(max_length=128)
     vo_information = models.TextField(blank=True, null=True)
+    last_edited_time_notion = models.DateTimeField(null=True)
+    schedule_str = models.CharField(max_length=1024, null=True, blank=True)
 
     def __str__(self):
         return self.title
@@ -183,15 +196,6 @@ class Need4DeedDaySchedule(models.Model):
         return f"{self.get_day_display()} - {self.time_slot}"
 
 
-class BerlinLocation(models.Model):
-    name = models.CharField(
-        max_length=128, unique=True, choices=BerlinLocations.choices
-    )
-
-    def __str__(self):
-        return self.name
-
-
 class VolunteerForm(ModelWithTimestamps):
     form_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     full_name = models.CharField(max_length=128, null=False)
@@ -213,7 +217,10 @@ class VolunteerForm(ModelWithTimestamps):
         Language, related_name="volunteerform_translate_languages", blank=True
     )
     skills = models.ManyToManyField(Skill, blank=True)
-    notion_id = models.CharField(max_length=16, unique=True, blank=True, null=True)
-    origin_opportunity_id = models.ForeignKey(
-        Opportunity, on_delete=models.CASCADE, null=True, blank=True
+    notion_id = models.UUIDField(
+        default=uuid.uuid4, editable=False, unique=True, blank=True, null=True
     )
+    origin_opportunity_id = models.ForeignKey(
+        Opportunity, on_delete=models.SET_NULL, null=True, blank=True
+    )
+    last_edited_time_notion = models.DateTimeField(null=True)

@@ -1,0 +1,184 @@
+[
+  {
+    "fields": {
+      "name": "Charlottenburg"
+    },
+    "model": "data.berlinlocation",
+    "pk": 1
+  },
+  {
+    "fields": {
+      "name": "Friedrichshain"
+    },
+    "model": "data.berlinlocation",
+    "pk": 2
+  },
+  {
+    "fields": {
+      "name": "Hellersdorf"
+    },
+    "model": "data.berlinlocation",
+    "pk": 3
+  },
+  {
+    "fields": {
+      "name": "Köpenick"
+    },
+    "model": "data.berlinlocation",
+    "pk": 4
+  },
+  {
+    "fields": {
+      "name": "Kreuzberg"
+    },
+    "model": "data.berlinlocation",
+    "pk": 5
+  },
+  {
+    "fields": {
+      "name": "Lichtenberg"
+    },
+    "model": "data.berlinlocation",
+    "pk": 6
+  },
+  {
+    "fields": {
+      "name": "Marzahn"
+    },
+    "model": "data.berlinlocation",
+    "pk": 7
+  },
+  {
+    "fields": {
+      "name": "Mitte"
+    },
+    "model": "data.berlinlocation",
+    "pk": 8
+  },
+  {
+    "fields": {
+      "name": "Moabit"
+    },
+    "model": "data.berlinlocation",
+    "pk": 9
+  },
+  {
+    "fields": {
+      "name": "Neukölln"
+    },
+    "model": "data.berlinlocation",
+    "pk": 10
+  },
+  {
+    "fields": {
+      "name": "Pankow"
+    },
+    "model": "data.berlinlocation",
+    "pk": 11
+  },
+  {
+    "fields": {
+      "name": "Prenzlauer Berg"
+    },
+    "model": "data.berlinlocation",
+    "pk": 12
+  },
+  {
+    "fields": {
+      "name": "Reinickendorf"
+    },
+    "model": "data.berlinlocation",
+    "pk": 13
+  },
+  {
+    "fields": {
+      "name": "Rudow"
+    },
+    "model": "data.berlinlocation",
+    "pk": 14
+  },
+  {
+    "fields": {
+      "name": "Schöneberg"
+    },
+    "model": "data.berlinlocation",
+    "pk": 15
+  },
+  {
+    "fields": {
+      "name": "Spandau"
+    },
+    "model": "data.berlinlocation",
+    "pk": 16
+  },
+  {
+    "fields": {
+      "name": "Steglitz"
+    },
+    "model": "data.berlinlocation",
+    "pk": 17
+  },
+  {
+    "fields": {
+      "name": "Tegel"
+    },
+    "model": "data.berlinlocation",
+    "pk": 18
+  },
+  {
+    "fields": {
+      "name": "Tempelhof"
+    },
+    "model": "data.berlinlocation",
+    "pk": 19
+  },
+  {
+    "fields": {
+      "name": "Treptow"
+    },
+    "model": "data.berlinlocation",
+    "pk": 20
+  },
+  {
+    "fields": {
+      "name": "Wedding"
+    },
+    "model": "data.berlinlocation",
+    "pk": 21
+  },
+  {
+    "fields": {
+      "name": "Weißensee"
+    },
+    "model": "data.berlinlocation",
+    "pk": 22
+  },
+  {
+    "fields": {
+      "name": "Wilmersdorf"
+    },
+    "model": "data.berlinlocation",
+    "pk": 23
+  },
+  {
+    "fields": {
+      "name": "Zehlendorf"
+    },
+    "model": "data.berlinlocation",
+    "pk": 24
+  },
+  {
+    "fields": {
+      "name": "Remotely"
+    },
+    "model": "data.berlinlocation",
+    "pk": 25
+  },
+  {
+    "fields": {
+      "name": "Berlin"
+    },
+    "model": "data.berlinlocation",
+    "pk": 26
+  }
+]

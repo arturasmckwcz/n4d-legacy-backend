@@ -13,16 +13,7 @@ PALETTE_COLORS = [
 ]
 
 defaults = {
-    "ENVIRONMENT": "production",
     "DJANGO_SECRET_KEY": get_random_secret_key(),
-    "ALLOWED_HOSTS": [
-        "127.0.0.1",
-        "localhost",
-        "192.168.0.124",
-        "192.168.1.144",
-        "192.168.178.69",
-        "api",
-    ],
     "CORS_ALLOWED_ORIGINS": [
         "http://localhost:5000",
         "http://localhost:3000",
@@ -44,6 +35,4 @@ defaults = {
         "https://api.need4deed.org",
     ],
     "DOMAIN": "192.168.0.124:3080",
-    "POSTGRES_HOST": "postgresdb",
-    "ALFRED_LAST_COMMIT_HASH": "I'm the last",
 }

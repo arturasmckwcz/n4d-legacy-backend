@@ -143,6 +143,14 @@ class LocationSerializer(serializers.ModelSerializer):
         ]
 
 
+class BerlinLocationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = BerlinLocation
+        fields = [
+            "name",
+        ]
+
+
 class OrganizationSerializer(serializers.ModelSerializer):
     contact = serializers.SerializerMethodField(read_only=True)
     location = serializers.SerializerMethodField(read_only=True)
@@ -173,10 +181,8 @@ class OrganizationSerializer(serializers.ModelSerializer):
 
 
 class OpportunitySerializer(serializers.ModelSerializer):
-    organization = serializers.SerializerMethodField(read_only=True)
     target_groups = serializers.SerializerMethodField(read_only=True)
-    locations = serializers.SerializerMethodField(read_only=True)
-    timeslots = serializers.SerializerMethodField(read_only=True)
+    berlin_locations = serializers.SerializerMethodField(read_only=True)
     activities = serializers.SerializerMethodField(read_only=True)
     languages = serializers.SerializerMethodField(read_only=True)
     skills = serializers.SerializerMethodField(read_only=True)
@@ -185,11 +191,11 @@ class OpportunitySerializer(serializers.ModelSerializer):
     class Meta:
         model = Opportunity
         fields = [
+            "id",
             "title",
             "target_groups",
-            "organization",
-            "locations",
-            "timeslots",
+            "berlin_locations",
+            "schedule_str",
             "activities",
             "languages",
             "skills",
@@ -198,10 +204,6 @@ class OpportunitySerializer(serializers.ModelSerializer):
             "opportunity_type",
         ]
 
-    def get_organization(self, obj):
-        organization_details = OrganizationSerializer(obj.organization).data
-        return organization_details
-
     def get_target_groups(self, obj):
         target_groups_details = [
             TargetGroupSerializer(target_group).data
@@ -209,17 +211,12 @@ class OpportunitySerializer(serializers.ModelSerializer):
         ]
         return target_groups_details
 
-    def get_locations(self, obj):
-        locations_details = [
-            LocationSerializer(location).data for location in obj.locations.all()
+    def get_berlin_locations(self, obj):
+        berlin_locations_details = [
+            BerlinLocationSerializer(berlin_location).data
+            for berlin_location in obj.berlin_locations.all()
         ]
-        return locations_details
-
-    def get_timeslots(self, obj):
-        timeslots_details = [
-            TimeslotSerializer(timeslot).data for timeslot in obj.timeslots.all()
-        ]
-        return timeslots_details
+        return berlin_locations_details
 
     def get_activities(self, obj):
         activities_details = [

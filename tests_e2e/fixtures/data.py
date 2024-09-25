@@ -120,8 +120,15 @@ contact_Helter_Skelter = {"title": "Helter Skelter", "phone": "+49 30 3009090"}
 
 organization_RAC_name = "Helter Skelter"
 
-opportunity = {
-    "notion_id": "TEST-1",
-    "title": "Apocalipsis Now",
+lichtenberg_opportunity_flattered = {
+    "id": 1,
+    "title": "Support with homework in Lichtenberg",
     "status": "Volunteers Needed",
+    "target_groups": ["Kids", "Teenagers"],
+    "berlin_locations": ["Lichtenberg"],
+    "schedule_str": None,
+    "activities": ["Tutoring"],
+    "languages": [],
+    "skills": [],
+    "vo_information": "The kids speak German, we don’t know anything about their ages or grades. They would need help with various subjects.",
 }

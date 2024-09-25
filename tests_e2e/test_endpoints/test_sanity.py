@@ -25,4 +25,4 @@ def test_sanity_x_requested_from():
     sanity_request = requests.get(url=SANITY_URL, headers=headers)
     sanity_response = SanityResponse(**sanity_request.json())
     assert sanity_response.x_requested_from == "Wayne Manor"
-    assert sanity_response.last_commit == "I'm the last"
+    assert isinstance(sanity_response.last_commit, str)

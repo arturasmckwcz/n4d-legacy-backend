@@ -12,12 +12,15 @@ services:
         AWS_SES_FROM_EMAIL: ${AWS_SES_FROM_EMAIL}
         DOMAIN: ${DOMAIN}
         SITE_NAME: ${SITE_NAME}
-        ALLOWED_HOSTS: ${ALLOWED_HOSTS}
-        POSTGRES_HOST: "postgresdb"
+        POSTGRES_HOST: ${POSTGRES_HOST} # "postgresdb"
+        NOTION_SECRET: ${NOTION_SECRET}
+        NOTION_DB_ID: ${NOTION_DB_ID}
+        CELERY_BROKER_URL: ${CELERY_BROKER_URL} # "redis://valkey:6379"
+        CELERY_RESULT_BACKEND: ${CELERY_RESULT_BACKEND} # "redis://valkey:6379"
+        ALFRED_LAST_COMMIT_HASH: ${ALFRED_LAST_COMMIT_HASH} # "not local hashes"
+        ENVIRONMENT: ${ENVIRONMENT}
     entrypoint: ["./entrypoint.sh"]
     image: alfred:dev
-    env_file:
-      - .env
     volumes:
       - .:/app
     ports:
@@ -25,8 +28,20 @@ services:
     depends_on:
       postgresdb:
         condition: service_healthy
+      valkey:
+        condition: service_started
     expose:
       - "8000"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/sanity/"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+  valkey:
+    image: valkey/valkey:alpine
+    container_name: valkey
 
   postgresdb:
     image: postgres
@@ -40,3 +55,27 @@ services:
       interval: 2s
       timeout: 5s
       retries: 5
+
+  celery_worker:
+    image: alfred:dev
+    entrypoint: []
+    command: celery -A alfred worker --loglevel=DEBUG
+    volumes:
+      - .:/app
+    env_file:
+      - .env
+    depends_on:
+      alfred:
+        condition: service_healthy
+
+  celery_beat:
+    image: alfred:dev
+    entrypoint: []
+    command: celery -A alfred beat --loglevel=DEBUG --scheduler django_celery_beat.schedulers:DatabaseScheduler
+    volumes:
+      - .:/app
+    env_file:
+      - .env
+    depends_on:
+      alfred:
+        condition: service_healthy

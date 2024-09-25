@@ -86,7 +86,7 @@ class ApiOpportunity(BaseModel):
     title: str
     organization: ApiOrganization
     target_groups: List[ApiTargetGroup]
-    locations: List[ApiLocation]
+    berlin_locations: List[ApiLocation]
     timeslots: List[ApiTimeslot]
     activities: List[ApiActivity]
     languages: List[ApiLanguage]
@@ -95,14 +95,16 @@ class ApiOpportunity(BaseModel):
 
 
 class ApiOpportunityFlattered(BaseModel):
+    id: int
     title: str
     status: str
-    target_groups: list
-    locations: list
-    timeslots: list
-    activities: list
-    languages: list
+    target_groups: Optional[list]
+    berlin_locations: Optional[list]
+    schedule_str: Optional[str]
+    activities: Optional[list]
+    languages: Optional[list]
     skills: Optional[list]
+    vo_information: Optional[str]
 
 
 ScheduleItem: TypeAlias = tuple[int, str]
@@ -129,3 +131,42 @@ class VolunteerFormData(BaseModel):
     lead_from_comments: Optional[str] = None
     translate_languages: Optional[list[LanguageItem]] = None
     origin_opportunity_id: Optional[str] = None
+
+
+class TargetGroup(BaseModel):
+    title: str
+    description: Optional[str] = None
+
+
+class Organization(BaseModel):
+    name: str
+
+
+class BerlinLocation(BaseModel):
+    name: str
+
+
+class Timeslot(BaseModel):
+    title: str
+    start: Optional[str] = None
+    end: Optional[str] = None
+    recurrence: Optional[str] = None
+
+
+class Activity(BaseModel):
+    title: str
+    description: Optional[str] = None
+
+
+class Opportunity(BaseModel):
+    title: str
+    target_groups: List[TargetGroup]
+    organization: Organization
+    berlin_locations: List[BerlinLocation]
+    timeslots: List[Timeslot]
+    activities: List[Activity]
+    languages: List[str] = []
+    skills: List[str] = []
+    status: str
+    vo_information: str
+    opportunity_type: str

@@ -1,5 +1,4 @@
 import json
-from http import HTTPStatus
 
 import structlog
 from django.utils.datastructures import MultiValueDictKeyError
@@ -64,14 +63,3 @@ class DataOpportunityListView(ListAPIView):
 class VolunteerFormCreateView(CreateAPIView):
     permission_classes = (AllowAny,)
     serializer_class = VolunteerFormSerialiser
-
-
-class DataOpportunityFlush(APIView):
-    permission_classes = (AllowAny,)
-
-    def delete(self, request):
-        logger.info("Flushing opportunities...")
-        Opportunity.objects.all().delete()
-        return Response(
-            {"message": "Opportunities has been flushed."}, status=HTTPStatus.NO_CONTENT
-        )
