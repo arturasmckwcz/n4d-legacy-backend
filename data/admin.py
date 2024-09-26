@@ -24,7 +24,7 @@ class LocationAdmin(admin.ModelAdmin):
 
 @admin.register(Language)
 class LanguageAdmin(admin.ModelAdmin):
-    pass
+    search_fields = ("iso_code", "title")
 
 
 @admin.register(Avatar)

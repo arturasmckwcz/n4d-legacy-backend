@@ -31,47 +31,38 @@ languages = [
     {
         "title": "German",
         "iso_code": "de",
-        "level": "fluent",
     },
     {
         "title": "English",
         "iso_code": "en",
-        "level": "fluent",
     },
     {
         "title": "French",
         "iso_code": "fr",
-        "level": "fluent",
     },
     {
         "title": "Arabic",
         "iso_code": "ar",
-        "level": "fluent",
     },
     {
         "title": "Farsi",
         "iso_code": "fa",
-        "level": "fluent",
     },
     {
         "title": "Ukrainian",
         "iso_code": "uk",
-        "level": "fluent",
     },
     {
         "title": "Russian",
         "iso_code": "ru",
-        "level": "fluent",
     },
     {
         "title": "Italian",
         "iso_code": "it",
-        "level": "fluent",
     },
     {
         "title": "Spanish",
         "iso_code": "es",
-        "level": "fluent",
     },
 ]
 

@@ -12,7 +12,7 @@ from data.models import Opportunity
 from data.serializers import (
     OpportunitySerializer,
     PersonSerializer,
-    VolunteerFormSerialiser,
+    VolunteerFormSerializer,
 )
 from data.utils import filter_queryset
 
@@ -62,4 +62,4 @@ class DataOpportunityListView(ListAPIView):
 
 class VolunteerFormCreateView(CreateAPIView):
     permission_classes = (AllowAny,)
-    serializer_class = VolunteerFormSerialiser
+    serializer_class = VolunteerFormSerializer

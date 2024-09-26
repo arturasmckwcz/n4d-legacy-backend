@@ -40,8 +40,7 @@ class Languages:
     OTHER = "ot", "Other"
 
 
-other_fields = {
-    "level": "fluent",
+timestamp_fields = {
     "created_at": datetime.now().strftime("%Y-%m-%dT%H:%M:%S"),
     "updated_at": datetime.now().strftime("%Y-%m-%dT%H:%M:%S"),
 }
@@ -52,9 +51,12 @@ def getLanguagesFromClass():
         {
             "model": "data.Language",
             "fields": {
-                "iso_code": getattr(Languages, attr)[0],
-                "title": getattr(Languages, attr)[1],
-            }.update(other_fields),
+                **{
+                    "iso_code": getattr(Languages, attr)[0],
+                    "title": getattr(Languages, attr)[1],
+                },
+                **timestamp_fields,
+            },
         }
         for attr in dir(Languages)
         if attr.isupper()
@@ -76,7 +78,7 @@ def getLanguagesFromFile():
                             "title": parts[6],
                             "iso_code": parts[3] if parts[3] else parts[0],
                         },
-                        **other_fields,
+                        **timestamp_fields,
                     },
                 }
             )

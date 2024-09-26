@@ -4,7 +4,6 @@ from django.db import models
 
 from data.enums import (
     BerlinLocations,
-    LangLevels,
     Need4DeedTimeSlots,
 )
 from data.utils import validate_latitude, validate_longitude
@@ -76,15 +75,9 @@ class Skill(ModelWithTimestamps):
 class Language(ModelWithTimestamps):
     title = models.CharField(max_length=128)
     iso_code = models.CharField(max_length=3)
-    level = models.CharField(
-        choices=LangLevels.choices, max_length=16, default=LangLevels.FLUENT
-    )
-
-    class Meta:
-        unique_together = ["iso_code", "level"]
 
     def __str__(self):
-        return f"{self.iso_code} {self.level}"
+        return f"{self.iso_code} | {self.title}"
 
 
 class Contact(ModelWithTimestamps):

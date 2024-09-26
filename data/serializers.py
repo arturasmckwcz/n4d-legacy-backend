@@ -85,7 +85,6 @@ class LanguageSerializer(serializers.ModelSerializer):
         fields = [
             "title",
             "iso_code",
-            "level",
         ]
 
 
@@ -251,7 +250,7 @@ class OpportunitySerializer(serializers.ModelSerializer):
         return flatten_dict(response, primary_keys)
 
 
-class VolunteerFormSerialiser(serializers.ModelSerializer):
+class VolunteerFormSerializer(serializers.ModelSerializer):
     schedule = serializers.ListField(
         child=serializers.ListField(child=serializers.CharField()), write_only=True
     )
@@ -259,13 +258,15 @@ class VolunteerFormSerialiser(serializers.ModelSerializer):
         child=serializers.CharField(), write_only=True
     )
     languages = serializers.ListField(
-        child=serializers.ListField(child=serializers.CharField()), write_only=True
+        child=serializers.CharField(),
+        write_only=True,
+    )
+    translate_languages = serializers.ListField(
+        child=serializers.CharField(),
+        write_only=True,
     )
     activities = serializers.ListField(child=serializers.CharField(), write_only=True)
     skills = serializers.ListField(child=serializers.CharField(), write_only=True)
-    translate_languages = serializers.ListField(
-        child=serializers.ListField(child=serializers.CharField()), write_only=True
-    )
 
     class Meta:
         model = VolunteerForm
@@ -299,12 +300,18 @@ class VolunteerFormSerialiser(serializers.ModelSerializer):
             location_objects.append(location)
 
         language_objects = []
-        for iso_code, level in languages_data:
+        for iso_code in languages_data:
             language, _ = Language.objects.get_or_create(
                 iso_code=iso_code,
-                level=level,
             )
             language_objects.append(language)
+
+        translate_language_objects = []
+        for iso_code in translate_languages_data:
+            language, _ = Language.objects.get_or_create(
+                iso_code=iso_code,
+            )
+            translate_language_objects.append(language)
 
         activity_objects = []
         for activity_name in activities_data:
@@ -315,14 +322,6 @@ class VolunteerFormSerialiser(serializers.ModelSerializer):
         for skill_name in skills_data:
             skill, _ = Skill.objects.get_or_create(title=skill_name)
             skill_objects.append(skill)
-
-        translate_language_objects = []
-        for iso_code, level in translate_languages_data:
-            language, _ = Language.objects.get_or_create(
-                iso_code=iso_code,
-                level=level,
-            )
-            translate_language_objects.append(language)
 
         volunteer_form = VolunteerForm.objects.create(**validated_data)
         volunteer_form.schedule.set(schedule_objects)

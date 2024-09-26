@@ -22,11 +22,6 @@ class Statuses(models.TextChoices):
     INACTIVE = "Inactive"
 
 
-class LangLevels(models.TextChoices):
-    BEGINNER = "beginner", "Beginer"
-    FLUENT = "fluent", "Fluent"
-
-
 class BerlinLocations(models.TextChoices):
     CHARLOTTENBURG = "Charlottenburg", "Charlottenburg"
     FRIEDRICHSHAIN = "Friedrichshain", "Friedrichshain"
