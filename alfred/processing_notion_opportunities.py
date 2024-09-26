@@ -2,13 +2,7 @@ import structlog
 from django.db import transaction
 
 from alfred.notion_handler import notion_handler
-from data.models import (
-    Activity,
-    BerlinLocation,
-    Language,
-    Opportunity,
-    TargetGroup,
-)
+from data.models import Activity, BerlinLocation, Language, Opportunity, TargetGroup
 
 logger = structlog.get_logger(__name__)
 
@@ -123,10 +117,36 @@ def create_opportunity_from_notion(notion_record: dict):
         )
 
 
+def remove_deleted_records(notion_results: list[dict]) -> None:
+    if not notion_results or len(notion_results) == 0:
+        logger.info("Notion table is empty")
+        return
+
+    for_deletion = Opportunity.objects.none()
+    for record in notion_results:
+        try:
+            notion_id = record["id"]
+            for_deletion |= Opportunity.objects.filter(notion_id=notion_id)
+        except (KeyError, TypeError) as e:
+            logger.error(f"Error {str(e)} in Notion record {record=}")
+            return
+
+    try:
+        count = for_deletion.delete()
+        logger.info(f"Deleted {count} of opportunities")
+    except Exception as e:
+        logger.error(
+            f"An exception {e} occured while trying to delete Notion table deleted records"
+        )
+
+
 def execute_opportunities_pipeline():
     notion_data = notion_handler.get_database_data()
     notion_results = notion_data["results"]  # type: ignore
     logger.info(f"Got {len(notion_results)} results")
+
+    remove_deleted_records(notion_results)
+
     try:
         for record in notion_results:
             notion_id = record["id"]
