@@ -8,6 +8,9 @@ if [ -f .env ]; then
     set +a
 fi
 
+export ENV="TEST"
+export DEBUG="True"
+
 docker compose -p batman -f docker-compose.dev.yaml up --force-recreate -V &
 
 sleep 15

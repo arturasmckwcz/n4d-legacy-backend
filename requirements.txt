@@ -68,6 +68,7 @@ django==5.1.1
     #   django-silk
     #   django-structlog
     #   django-timezone-field
+    #   django-valkey
     #   djangorestframework
     #   djangorestframework-simplejwt
     #   djoser
@@ -85,6 +86,7 @@ django-templated-mail==1.1.1
     # via djoser
 django-timezone-field==7.0
     # via django-celery-beat
+django-valkey==0.1.5
 djangorestframework==3.15.2
     # via
     #   djangorestframework-simplejwt
@@ -205,6 +207,7 @@ urllib3==2.2.3
     #   requests
     #   sentry-sdk
 valkey==6.0.2
+    # via django-valkey
 vine==5.1.0
     # via
     #   amqp

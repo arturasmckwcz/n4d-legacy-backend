@@ -240,6 +240,21 @@ SPECTACULAR_SETTINGS = {
     "COMPONENT_SPLIT_REQUEST": True,
 }
 
+ENV = read_env_var("ENVIRONMENT")
+if ENV == "PRODUCTION":
+    CACHES = {
+        "default": {
+            "BACKEND": "django_valkey.cache.ValkeyCache",
+            "LOCATION": read_env_var("CELERY_BROKER_URL"),
+        }
+    }
+else:
+    CACHES = {  # type: ignore
+        "default": {
+            "BACKEND": "django.core.cache.backends.dummy.DummyCache",
+        }
+    }
+
 LOGGING = {
     "version": 1,
     "disable_existing_loggers": False,

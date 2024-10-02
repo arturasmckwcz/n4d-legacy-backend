@@ -2,6 +2,8 @@ import json
 
 import structlog
 from django.utils.datastructures import MultiValueDictKeyError
+from django.utils.decorators import method_decorator
+from django.views.decorators.cache import cache_page
 from rest_framework.generics import CreateAPIView, ListAPIView
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
@@ -33,6 +35,10 @@ class DataPersonView(APIView):
 class DataOpportunityListView(ListAPIView):
     permission_classes = (AllowAny,)
     serializer_class = OpportunitySerializer
+
+    @method_decorator(cache_page(60 * 45))
+    def dispatch(self, *args, **kwargs):
+        return super().dispatch(*args, **kwargs)
 
     @silk_profile(name="Post Profiling")
     def get_queryset(self):  # type: ignore (askinkg for return type Never which is nonsense)
