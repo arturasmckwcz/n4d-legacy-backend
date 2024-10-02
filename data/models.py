@@ -73,8 +73,8 @@ class Skill(ModelWithTimestamps):
 
 
 class Language(ModelWithTimestamps):
-    title = models.CharField(max_length=128)
-    iso_code = models.CharField(max_length=3)
+    title = models.CharField(max_length=128, db_index=True)
+    iso_code = models.CharField(max_length=3, db_index=True)
 
     def __str__(self):
         return f"{self.iso_code} | {self.title}"
@@ -158,7 +158,7 @@ class Opportunity(ModelWithTimestamps):
     notion_id = models.UUIDField(
         default=uuid.uuid4, editable=False, unique=True, blank=True, null=True
     )
-    status = models.CharField(max_length=128)
+    status = models.CharField(max_length=128, db_index=True)
     vo_information = models.TextField(blank=True, null=True)
     last_edited_time_notion = models.DateTimeField(null=True)
     schedule_str = models.CharField(max_length=1024, null=True, blank=True)
