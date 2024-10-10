@@ -1,6 +1,7 @@
 import json
 
 import structlog
+from django.db.models import Subquery
 from django.utils.datastructures import MultiValueDictKeyError
 from django.utils.decorators import method_decorator
 from django.views.decorators.cache import cache_page
@@ -10,7 +11,15 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from silk.profiling.profiler import silk_profile
 
-from data.models import Opportunity
+from data.enums import OptionsList
+from data.models import (
+    Activity,
+    BerlinLocation,
+    FormLeadFrom,
+    Language,
+    Opportunity,
+    Skill,
+)
 from data.serializers import (
     OpportunitySerializer,
     PersonSerializer,
@@ -36,12 +45,12 @@ class DataOpportunityListView(ListAPIView):
     permission_classes = (AllowAny,)
     serializer_class = OpportunitySerializer
 
-    @method_decorator(cache_page(60 * 45))
+    @method_decorator(cache_page(60 * 45))  # 45 mins
     def dispatch(self, *args, **kwargs):
         return super().dispatch(*args, **kwargs)
 
     @silk_profile(name="Post Profiling")
-    def get_queryset(self):  # type: ignore (askinkg for return type Never which is nonsense)
+    def get_queryset(self):  # type: ignore (asking for return type Never which is nonsense)
         try:
             filter_dict = json.loads(self.request.GET["search"])
         except json.JSONDecodeError:
@@ -66,6 +75,47 @@ class DataOpportunityListView(ListAPIView):
         return context
 
 
+def get_options_list(queryset, field):
+    return [option[field] for option in queryset.values(field)]
+
+
+def get_options_used_in_opportunities(model, field_name):
+    objects = model.objects.filter(
+        id__in=Subquery(Opportunity.objects.values(field_name))
+    )
+
+    return get_options_list(objects, "title")
+
+
 class VolunteerFormCreateView(CreateAPIView):
     permission_classes = (AllowAny,)
     serializer_class = VolunteerFormSerializer
+
+    @method_decorator(cache_page(60 * 60 * 48))  # bi-daily
+    def get_options_lists(self, request):
+        languages = get_options_used_in_opportunities(Language, "languages")
+        locations = get_options_list(BerlinLocation.objects.all(), "name")
+        activities = get_options_list(Activity.objects.all(), "title")
+        skills = get_options_list(Skill.objects.all(), "title")
+        leads = get_options_list(FormLeadFrom.objects.all(), "title")
+
+        return {
+            "lists": {
+                OptionsList.LANGUAGES: languages,
+                OptionsList.LOCATIONS: locations,
+                OptionsList.ACTIVITIES: activities,
+                OptionsList.SKILLS: skills,
+                OptionsList.LEADS: leads,
+            }
+        }
+
+    def options(self, request, *args, **kwargs):
+        original_response = super().options(request, *args, **kwargs)
+
+        cached_options = self.get_options_lists(request)
+
+        if isinstance(original_response.data, dict):
+            original_response.data.update(
+                cached_options if isinstance(cached_options, dict) else {}
+            )
+        return original_response

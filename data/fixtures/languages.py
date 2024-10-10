@@ -1,6 +1,5 @@
 import json
 import sys
-from datetime import datetime
 
 
 class Languages:
@@ -40,22 +39,13 @@ class Languages:
     OTHER = "ot", "Other"
 
 
-timestamp_fields = {
-    "created_at": datetime.now().strftime("%Y-%m-%dT%H:%M:%S"),
-    "updated_at": datetime.now().strftime("%Y-%m-%dT%H:%M:%S"),
-}
-
-
 def getLanguagesFromClass():
     return [
         {
             "model": "data.Language",
             "fields": {
-                **{
-                    "iso_code": getattr(Languages, attr)[0],
-                    "title": getattr(Languages, attr)[1],
-                },
-                **timestamp_fields,
+                "iso_code": getattr(Languages, attr)[0],
+                "title": getattr(Languages, attr)[1],
             },
         }
         for attr in dir(Languages)
@@ -74,11 +64,8 @@ def getLanguagesFromFile():
                 {
                     "model": "data.Language",
                     "fields": {
-                        **{
-                            "title": parts[6],
-                            "iso_code": parts[3] if parts[3] else parts[0],
-                        },
-                        **timestamp_fields,
+                        "title": parts[6],
+                        "iso_code": parts[3] if parts[3] else parts[0],
                     },
                 }
             )

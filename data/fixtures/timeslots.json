@@ -1,804 +1,670 @@
 [
   {
     "fields": {
-      "created_at": "2024-09-19T16:24:10.298Z",
       "end": null,
       "recurrence": null,
       "start": null,
-      "title": "Monday",
-      "updated_at": "2024-09-19T16:24:10.298Z"
+      "title": "Monday"
     },
     "model": "data.timeslot",
     "pk": 1
   },
   {
     "fields": {
-      "created_at": "2024-09-19T16:24:10.300Z",
       "end": null,
       "recurrence": null,
       "start": null,
-      "title": "Tuesday",
-      "updated_at": "2024-09-19T16:24:10.300Z"
+      "title": "Tuesday"
     },
     "model": "data.timeslot",
     "pk": 2
   },
   {
     "fields": {
-      "created_at": "2024-09-19T16:24:10.302Z",
       "end": null,
       "recurrence": null,
       "start": null,
-      "title": "Wednesday",
-      "updated_at": "2024-09-19T16:24:10.302Z"
+      "title": "Wednesday"
     },
     "model": "data.timeslot",
     "pk": 3
   },
   {
     "fields": {
-      "created_at": "2024-09-19T16:24:10.303Z",
       "end": null,
       "recurrence": null,
       "start": null,
-      "title": "Thursday",
-      "updated_at": "2024-09-19T16:24:10.303Z"
+      "title": "Thursday"
     },
     "model": "data.timeslot",
     "pk": 4
   },
   {
     "fields": {
-      "created_at": "2024-09-19T16:24:10.304Z",
       "end": null,
       "recurrence": null,
       "start": null,
-      "title": "Friday",
-      "updated_at": "2024-09-19T16:24:10.304Z"
+      "title": "Friday"
     },
     "model": "data.timeslot",
     "pk": 5
   },
   {
     "fields": {
-      "created_at": "2024-09-19T16:24:10.305Z",
       "end": null,
       "recurrence": null,
       "start": null,
-      "title": "14:00-17:00",
-      "updated_at": "2024-09-19T16:24:10.305Z"
+      "title": "14:00-17:00"
     },
     "model": "data.timeslot",
     "pk": 6
   },
   {
     "fields": {
-      "created_at": "2024-09-19T16:24:10.316Z",
       "end": null,
       "recurrence": null,
       "start": null,
-      "title": "14-17",
-      "updated_at": "2024-09-19T16:24:10.316Z"
+      "title": "14-17"
     },
     "model": "data.timeslot",
     "pk": 7
   },
   {
     "fields": {
-      "created_at": "2024-09-19T16:24:10.321Z",
       "end": null,
       "recurrence": null,
       "start": null,
-      "title": "13.06.24",
-      "updated_at": "2024-09-19T16:24:10.321Z"
+      "title": "13.06.24"
     },
     "model": "data.timeslot",
     "pk": 8
   },
   {
     "fields": {
-      "created_at": "2024-09-19T16:24:10.325Z",
       "end": null,
       "recurrence": null,
       "start": null,
-      "title": "20-22:30",
-      "updated_at": "2024-09-19T16:24:10.325Z"
+      "title": "20-22:30"
     },
     "model": "data.timeslot",
     "pk": 9
   },
   {
     "fields": {
-      "created_at": "2024-09-19T16:24:10.329Z",
       "end": null,
       "recurrence": null,
       "start": null,
-      "title": "15:30-17:00",
-      "updated_at": "2024-09-19T16:24:10.329Z"
+      "title": "15:30-17:00"
     },
     "model": "data.timeslot",
     "pk": 10
   },
   {
     "fields": {
-      "created_at": "2024-09-19T16:24:10.333Z",
       "end": null,
       "recurrence": null,
       "start": null,
-      "title": "Flexible",
-      "updated_at": "2024-09-19T16:24:10.333Z"
+      "title": "Flexible"
     },
     "model": "data.timeslot",
     "pk": 11
   },
   {
     "fields": {
-      "created_at": "2024-09-19T16:24:10.340Z",
       "end": null,
       "recurrence": null,
       "start": null,
-      "title": "May 28th",
-      "updated_at": "2024-09-19T16:24:10.340Z"
+      "title": "May 28th"
     },
     "model": "data.timeslot",
     "pk": 12
   },
   {
     "fields": {
-      "created_at": "2024-09-19T16:24:10.340Z",
       "end": null,
       "recurrence": null,
       "start": null,
-      "title": "13:30",
-      "updated_at": "2024-09-19T16:24:10.340Z"
+      "title": "13:30"
     },
     "model": "data.timeslot",
     "pk": 13
   },
   {
     "fields": {
-      "created_at": "2024-09-19T16:24:10.346Z",
       "end": null,
       "recurrence": null,
       "start": null,
-      "title": "August 22nd",
-      "updated_at": "2024-09-19T16:24:10.346Z"
+      "title": "August 22nd"
     },
     "model": "data.timeslot",
     "pk": 14
   },
   {
     "fields": {
-      "created_at": "2024-09-19T16:24:10.346Z",
       "end": null,
       "recurrence": null,
       "start": null,
-      "title": "13-16",
-      "updated_at": "2024-09-19T16:24:10.346Z"
+      "title": "13-16"
     },
     "model": "data.timeslot",
     "pk": 15
   },
   {
     "fields": {
-      "created_at": "2024-09-19T16:24:10.352Z",
       "end": null,
       "recurrence": null,
       "start": null,
-      "title": "11-18",
-      "updated_at": "2024-09-19T16:24:10.352Z"
+      "title": "11-18"
     },
     "model": "data.timeslot",
     "pk": 16
   },
   {
     "fields": {
-      "created_at": "2024-09-19T16:24:10.356Z",
       "end": null,
       "recurrence": null,
       "start": null,
-      "title": "August 20th",
-      "updated_at": "2024-09-19T16:24:10.356Z"
+      "title": "August 20th"
     },
     "model": "data.timeslot",
     "pk": 17
   },
   {
     "fields": {
-      "created_at": "2024-09-19T16:24:10.357Z",
       "end": null,
       "recurrence": null,
       "start": null,
-      "title": "9:00",
-      "updated_at": "2024-09-19T16:24:10.357Z"
+      "title": "9:00"
     },
     "model": "data.timeslot",
     "pk": 18
   },
   {
     "fields": {
-      "created_at": "2024-09-19T16:24:10.360Z",
       "end": null,
       "recurrence": null,
       "start": null,
-      "title": "12.06.24",
-      "updated_at": "2024-09-19T16:24:10.360Z"
+      "title": "12.06.24"
     },
     "model": "data.timeslot",
     "pk": 19
   },
   {
     "fields": {
-      "created_at": "2024-09-19T16:24:10.363Z",
       "end": null,
       "recurrence": null,
       "start": null,
-      "title": "24.06.24",
-      "updated_at": "2024-09-19T16:24:10.363Z"
+      "title": "24.06.24"
     },
     "model": "data.timeslot",
     "pk": 20
   },
   {
     "fields": {
-      "created_at": "2024-09-19T16:24:10.372Z",
       "end": null,
       "recurrence": null,
       "start": null,
-      "title": "17-18",
-      "updated_at": "2024-09-19T16:24:10.372Z"
+      "title": "17-18"
     },
     "model": "data.timeslot",
     "pk": 21
   },
   {
     "fields": {
-      "created_at": "2024-09-19T16:24:10.376Z",
       "end": null,
       "recurrence": null,
       "start": null,
-      "title": "9-18",
-      "updated_at": "2024-09-19T16:24:10.376Z"
+      "title": "9-18"
     },
     "model": "data.timeslot",
     "pk": 22
   },
   {
     "fields": {
-      "created_at": "2024-09-19T16:24:10.383Z",
       "end": null,
       "recurrence": null,
       "start": null,
-      "title": "Short notice",
-      "updated_at": "2024-09-19T16:24:10.383Z"
+      "title": "Short notice"
     },
     "model": "data.timeslot",
     "pk": 23
   },
   {
     "fields": {
-      "created_at": "2024-09-19T16:24:10.387Z",
       "end": null,
       "recurrence": null,
       "start": null,
-      "title": "July 1st",
-      "updated_at": "2024-09-19T16:24:10.387Z"
+      "title": "July 1st"
     },
     "model": "data.timeslot",
     "pk": 24
   },
   {
     "fields": {
-      "created_at": "2024-09-19T16:24:10.390Z",
       "end": null,
       "recurrence": null,
       "start": null,
-      "title": "15-17",
-      "updated_at": "2024-09-19T16:24:10.390Z"
+      "title": "15-17"
     },
     "model": "data.timeslot",
     "pk": 25
   },
   {
     "fields": {
-      "created_at": "2024-09-19T16:24:10.395Z",
       "end": null,
       "recurrence": null,
       "start": null,
-      "title": "12:30-16:30",
-      "updated_at": "2024-09-19T16:24:10.395Z"
+      "title": "12:30-16:30"
     },
     "model": "data.timeslot",
     "pk": 26
   },
   {
     "fields": {
-      "created_at": "2024-09-19T16:24:10.399Z",
       "end": null,
       "recurrence": null,
       "start": null,
-      "title": "May 23rd",
-      "updated_at": "2024-09-19T16:24:10.399Z"
+      "title": "May 23rd"
     },
     "model": "data.timeslot",
     "pk": 27
   },
   {
     "fields": {
-      "created_at": "2024-09-19T16:24:10.399Z",
       "end": null,
       "recurrence": null,
       "start": null,
-      "title": "8:30",
-      "updated_at": "2024-09-19T16:24:10.399Z"
+      "title": "8:30"
     },
     "model": "data.timeslot",
     "pk": 28
   },
   {
     "fields": {
-      "created_at": "2024-09-19T16:24:10.418Z",
       "end": null,
       "recurrence": null,
       "start": null,
-      "title": "July 18th",
-      "updated_at": "2024-09-19T16:24:10.418Z"
+      "title": "July 18th"
     },
     "model": "data.timeslot",
     "pk": 29
   },
   {
     "fields": {
-      "created_at": "2024-09-19T16:24:10.421Z",
       "end": null,
       "recurrence": null,
       "start": null,
-      "title": "May 31st",
-      "updated_at": "2024-09-19T16:24:10.421Z"
+      "title": "May 31st"
     },
     "model": "data.timeslot",
     "pk": 30
   },
   {
     "fields": {
-      "created_at": "2024-09-19T16:24:10.427Z",
       "end": null,
       "recurrence": null,
       "start": null,
-      "title": "May 29th",
-      "updated_at": "2024-09-19T16:24:10.427Z"
+      "title": "May 29th"
     },
     "model": "data.timeslot",
     "pk": 31
   },
   {
     "fields": {
-      "created_at": "2024-09-19T16:24:10.428Z",
       "end": null,
       "recurrence": null,
       "start": null,
-      "title": "10:30",
-      "updated_at": "2024-09-19T16:24:10.428Z"
+      "title": "10:30"
     },
     "model": "data.timeslot",
     "pk": 32
   },
   {
     "fields": {
-      "created_at": "2024-09-19T16:24:10.439Z",
       "end": null,
       "recurrence": null,
       "start": null,
-      "title": "9-17",
-      "updated_at": "2024-09-19T16:24:10.439Z"
+      "title": "9-17"
     },
     "model": "data.timeslot",
     "pk": 33
   },
   {
     "fields": {
-      "created_at": "2024-09-19T16:24:10.446Z",
       "end": null,
       "recurrence": null,
       "start": null,
-      "title": "June 17th",
-      "updated_at": "2024-09-19T16:24:10.446Z"
+      "title": "June 17th"
     },
     "model": "data.timeslot",
     "pk": 34
   },
   {
     "fields": {
-      "created_at": "2024-09-19T16:24:10.446Z",
       "end": null,
       "recurrence": null,
       "start": null,
-      "title": "10:40",
-      "updated_at": "2024-09-19T16:24:10.446Z"
+      "title": "10:40"
     },
     "model": "data.timeslot",
     "pk": 35
   },
   {
     "fields": {
-      "created_at": "2024-09-19T16:24:10.462Z",
       "end": null,
       "recurrence": null,
       "start": null,
-      "title": "17-19",
-      "updated_at": "2024-09-19T16:24:10.462Z"
+      "title": "17-19"
     },
     "model": "data.timeslot",
     "pk": 36
   },
   {
     "fields": {
-      "created_at": "2024-09-19T16:24:10.468Z",
       "end": null,
       "recurrence": null,
       "start": null,
-      "title": "9-19",
-      "updated_at": "2024-09-19T16:24:10.468Z"
+      "title": "9-19"
     },
     "model": "data.timeslot",
     "pk": 37
   },
   {
     "fields": {
-      "created_at": "2024-09-19T16:24:10.471Z",
       "end": null,
       "recurrence": null,
       "start": null,
-      "title": "9-11",
-      "updated_at": "2024-09-19T16:24:10.471Z"
+      "title": "9-11"
     },
     "model": "data.timeslot",
     "pk": 38
   },
   {
     "fields": {
-      "created_at": "2024-09-19T16:24:10.481Z",
       "end": null,
       "recurrence": null,
       "start": null,
-      "title": "May 30th",
-      "updated_at": "2024-09-19T16:24:10.481Z"
+      "title": "May 30th"
     },
     "model": "data.timeslot",
     "pk": 39
   },
   {
     "fields": {
-      "created_at": "2024-09-19T16:24:10.481Z",
       "end": null,
       "recurrence": null,
       "start": null,
-      "title": "10:45",
-      "updated_at": "2024-09-19T16:24:10.481Z"
+      "title": "10:45"
     },
     "model": "data.timeslot",
     "pk": 40
   },
   {
     "fields": {
-      "created_at": "2024-09-19T16:24:10.489Z",
       "end": null,
       "recurrence": null,
       "start": null,
-      "title": "Once",
-      "updated_at": "2024-09-19T16:24:10.489Z"
+      "title": "Once"
     },
     "model": "data.timeslot",
     "pk": 41
   },
   {
     "fields": {
-      "created_at": "2024-09-19T16:24:10.502Z",
       "end": null,
       "recurrence": null,
       "start": null,
-      "title": "Saturday",
-      "updated_at": "2024-09-19T16:24:10.502Z"
+      "title": "Saturday"
     },
     "model": "data.timeslot",
     "pk": 42
   },
   {
     "fields": {
-      "created_at": "2024-09-19T16:24:10.502Z",
       "end": null,
       "recurrence": null,
       "start": null,
-      "title": "Sunday",
-      "updated_at": "2024-09-19T16:24:10.502Z"
+      "title": "Sunday"
     },
     "model": "data.timeslot",
     "pk": 43
   },
   {
     "fields": {
-      "created_at": "2024-09-19T16:24:10.506Z",
       "end": null,
       "recurrence": null,
       "start": null,
-      "title": "August 26th",
-      "updated_at": "2024-09-19T16:24:10.506Z"
+      "title": "August 26th"
     },
     "model": "data.timeslot",
     "pk": 44
   },
   {
     "fields": {
-      "created_at": "2024-09-19T16:24:10.506Z",
       "end": null,
       "recurrence": null,
       "start": null,
-      "title": "11-16",
-      "updated_at": "2024-09-19T16:24:10.506Z"
+      "title": "11-16"
     },
     "model": "data.timeslot",
     "pk": 45
   },
   {
     "fields": {
-      "created_at": "2024-09-19T16:24:10.513Z",
       "end": null,
       "recurrence": null,
       "start": null,
-      "title": "12-14",
-      "updated_at": "2024-09-19T16:24:10.513Z"
+      "title": "12-14"
     },
     "model": "data.timeslot",
     "pk": 46
   },
   {
     "fields": {
-      "created_at": "2024-09-19T16:24:10.525Z",
       "end": null,
       "recurrence": null,
       "start": null,
-      "title": "June 3rd",
-      "updated_at": "2024-09-19T16:24:10.525Z"
+      "title": "June 3rd"
     },
     "model": "data.timeslot",
     "pk": 47
   },
   {
     "fields": {
-      "created_at": "2024-09-19T16:24:10.526Z",
       "end": null,
       "recurrence": null,
       "start": null,
-      "title": "7:00",
-      "updated_at": "2024-09-19T16:24:10.526Z"
+      "title": "7:00"
     },
     "model": "data.timeslot",
     "pk": 48
   },
   {
     "fields": {
-      "created_at": "2024-09-19T16:24:10.529Z",
       "end": null,
       "recurrence": null,
       "start": null,
-      "title": "19-20",
-      "updated_at": "2024-09-19T16:24:10.529Z"
+      "title": "19-20"
     },
     "model": "data.timeslot",
     "pk": 49
   },
   {
     "fields": {
-      "created_at": "2024-09-19T16:24:10.549Z",
       "end": null,
       "recurrence": null,
       "start": null,
-      "title": "Every other Tuesday",
-      "updated_at": "2024-09-19T16:24:10.549Z"
+      "title": "Every other Tuesday"
     },
     "model": "data.timeslot",
     "pk": 50
   },
   {
     "fields": {
-      "created_at": "2024-09-19T16:24:10.552Z",
       "end": null,
       "recurrence": null,
       "start": null,
-      "title": "September 13th",
-      "updated_at": "2024-09-19T16:24:10.552Z"
+      "title": "September 13th"
     },
     "model": "data.timeslot",
     "pk": 51
   },
   {
     "fields": {
-      "created_at": "2024-09-19T16:24:10.564Z",
       "end": null,
       "recurrence": null,
       "start": null,
-      "title": "27.06.24",
-      "updated_at": "2024-09-19T16:24:10.564Z"
+      "title": "27.06.24"
     },
     "model": "data.timeslot",
     "pk": 52
   },
   {
     "fields": {
-      "created_at": "2024-09-19T16:24:10.576Z",
       "end": null,
       "recurrence": null,
       "start": null,
-      "title": "10-11",
-      "updated_at": "2024-09-19T16:24:10.576Z"
+      "title": "10-11"
     },
     "model": "data.timeslot",
     "pk": 53
   },
   {
     "fields": {
-      "created_at": "2024-09-19T16:24:10.577Z",
       "end": null,
       "recurrence": null,
       "start": null,
-      "title": "14-15",
-      "updated_at": "2024-09-19T16:24:10.577Z"
+      "title": "14-15"
     },
     "model": "data.timeslot",
     "pk": 54
   },
   {
     "fields": {
-      "created_at": "2024-09-19T16:24:10.584Z",
       "end": null,
       "recurrence": null,
       "start": null,
-      "title": "11-13",
-      "updated_at": "2024-09-19T16:24:10.584Z"
+      "title": "11-13"
     },
     "model": "data.timeslot",
     "pk": 55
   },
   {
     "fields": {
-      "created_at": "2024-09-19T16:24:10.592Z",
       "end": null,
       "recurrence": null,
       "start": null,
-      "title": "10-12",
-      "updated_at": "2024-09-19T16:24:10.592Z"
+      "title": "10-12"
     },
     "model": "data.timeslot",
     "pk": 56
   },
   {
     "fields": {
-      "created_at": "2024-09-19T16:24:10.604Z",
       "end": null,
       "recurrence": null,
       "start": null,
-      "title": "May 21st",
-      "updated_at": "2024-09-19T16:24:10.604Z"
+      "title": "May 21st"
     },
     "model": "data.timeslot",
     "pk": 57
   },
   {
     "fields": {
-      "created_at": "2024-09-19T16:24:10.605Z",
       "end": null,
       "recurrence": null,
       "start": null,
-      "title": "12:00",
-      "updated_at": "2024-09-19T16:24:10.605Z"
+      "title": "12:00"
     },
     "model": "data.timeslot",
     "pk": 58
   },
   {
     "fields": {
-      "created_at": "2024-09-19T16:24:10.628Z",
       "end": null,
       "recurrence": null,
       "start": null,
-      "title": "14:30-17:00",
-      "updated_at": "2024-09-19T16:24:10.628Z"
+      "title": "14:30-17:00"
     },
     "model": "data.timeslot",
     "pk": 59
   },
   {
     "fields": {
-      "created_at": "2024-09-19T16:24:10.631Z",
       "end": null,
       "recurrence": null,
       "start": null,
-      "title": "May 17th",
-      "updated_at": "2024-09-19T16:24:10.631Z"
+      "title": "May 17th"
     },
     "model": "data.timeslot",
     "pk": 60
   },
   {
     "fields": {
-      "created_at": "2024-09-19T16:24:10.631Z",
       "end": null,
       "recurrence": null,
       "start": null,
-      "title": "10:00",
-      "updated_at": "2024-09-19T16:24:10.631Z"
+      "title": "10:00"
     },
     "model": "data.timeslot",
     "pk": 61
   },
   {
     "fields": {
-      "created_at": "2024-09-19T16:24:10.649Z",
       "end": null,
       "recurrence": null,
       "start": null,
-      "title": "19-20:30",
-      "updated_at": "2024-09-19T16:24:10.649Z"
+      "title": "19-20:30"
     },
     "model": "data.timeslot",
     "pk": 62
   },
   {
     "fields": {
-      "created_at": "2024-09-19T16:24:10.656Z",
       "end": null,
       "recurrence": null,
       "start": null,
-      "title": "July 12th",
-      "updated_at": "2024-09-19T16:24:10.656Z"
+      "title": "July 12th"
     },
     "model": "data.timeslot",
     "pk": 63
   },
   {
     "fields": {
-      "created_at": "2024-09-19T16:24:10.657Z",
       "end": null,
       "recurrence": null,
       "start": null,
-      "title": "14-18",
-      "updated_at": "2024-09-19T16:24:10.657Z"
+      "title": "14-18"
     },
     "model": "data.timeslot",
     "pk": 64
   },
   {
     "fields": {
-      "created_at": "2024-09-19T16:24:10.669Z",
       "end": null,
       "recurrence": null,
       "start": null,
-      "title": "21.05.24",
-      "updated_at": "2024-09-19T16:24:10.669Z"
+      "title": "21.05.24"
     },
     "model": "data.timeslot",
     "pk": 65
   },
   {
     "fields": {
-      "created_at": "2024-09-19T16:24:10.675Z",
       "end": null,
       "recurrence": null,
       "start": null,
-      "title": "October",
-      "updated_at": "2024-09-19T16:24:10.675Z"
+      "title": "October"
     },
     "model": "data.timeslot",
     "pk": 66
   },
   {
     "fields": {
-      "created_at": "2024-09-19T16:24:10.681Z",
       "end": null,
       "recurrence": null,
       "start": null,
-      "title": "10.06.24",
-      "updated_at": "2024-09-19T16:24:10.681Z"
+      "title": "10.06.24"
     },
     "model": "data.timeslot",
     "pk": 67

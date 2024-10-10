@@ -1,0 +1,233 @@
+[
+  {
+    "model": "data.skill",
+    "fields": {
+      "title": "Woodworking",
+      "description": null
+    }
+  },
+  {
+    "model": "data.skill",
+    "fields": {
+      "title": "Drawing",
+      "description": null
+    }
+  },
+  {
+    "model": "data.skill",
+    "fields": {
+      "title": "Painting",
+      "description": null
+    }
+  },
+  {
+    "model": "data.skill",
+    "fields": {
+      "title": "Sewing",
+      "description": null
+    }
+  },
+  {
+    "model": "data.skill",
+    "fields": {
+      "title": "Knitting",
+      "description": null
+    }
+  },
+  {
+    "model": "data.skill",
+    "fields": {
+      "title": "Repairs",
+      "description": null
+    }
+  },
+  {
+    "model": "data.skill",
+    "fields": {
+      "title": "Cooking",
+      "description": null
+    }
+  },
+  {
+    "model": "data.skill",
+    "fields": {
+      "title": "Teaching",
+      "description": null
+    }
+  },
+  {
+    "model": "data.skill",
+    "fields": {
+      "title": "Programming",
+      "description": null
+    }
+  },
+  {
+    "model": "data.skill",
+    "fields": {
+      "title": "Public speaking",
+      "description": null
+    }
+  },
+  {
+    "model": "data.skill",
+    "fields": {
+      "title": "Gardening",
+      "description": null
+    }
+  },
+  {
+    "model": "data.skill",
+    "fields": {
+      "title": "Landscaping",
+      "description": null
+    }
+  },
+  {
+    "model": "data.skill",
+    "fields": {
+      "title": "Carpentry",
+      "description": null
+    }
+  },
+  {
+    "model": "data.skill",
+    "fields": {
+      "title": "Decorating",
+      "description": null
+    }
+  },
+  {
+    "model": "data.skill",
+    "fields": {
+      "title": "Bike repairs",
+      "description": null
+    }
+  },
+  {
+    "model": "data.skill",
+    "fields": {
+      "title": "Photography",
+      "description": null
+    }
+  },
+  {
+    "model": "data.skill",
+    "fields": {
+      "title": "Videography",
+      "description": null
+    }
+  },
+  {
+    "model": "data.skill",
+    "fields": {
+      "title": "Makeup",
+      "description": null
+    }
+  },
+  {
+    "model": "data.skill",
+    "fields": {
+      "title": "Copywriting",
+      "description": null
+    }
+  },
+  {
+    "model": "data.skill",
+    "fields": {
+      "title": "Yoga",
+      "description": null
+    }
+  },
+  {
+    "model": "data.skill",
+    "fields": {
+      "title": "Fitness",
+      "description": null
+    }
+  },
+  {
+    "model": "data.skill",
+    "fields": {
+      "title": "Football",
+      "description": null
+    }
+  },
+  {
+    "model": "data.skill",
+    "fields": {
+      "title": "Basketball",
+      "description": null
+    }
+  },
+  {
+    "model": "data.skill",
+    "fields": {
+      "title": "Dance",
+      "description": null
+    }
+  },
+  {
+    "model": "data.skill",
+    "fields": {
+      "title": "Chess",
+      "description": null
+    }
+  },
+  {
+    "model": "data.skill",
+    "fields": {
+      "title": "Management",
+      "description": null
+    }
+  },
+  {
+    "model": "data.skill",
+    "fields": {
+      "title": "SMM",
+      "description": null
+    }
+  },
+  {
+    "model": "data.skill",
+    "fields": {
+      "title": "Mediation",
+      "description": null
+    }
+  },
+  {
+    "model": "data.skill",
+    "fields": {
+      "title": "Event planning",
+      "description": null
+    }
+  },
+  {
+    "model": "data.skill",
+    "fields": {
+      "title": "Coaching",
+      "description": null
+    }
+  },
+  {
+    "model": "data.skill",
+    "fields": {
+      "title": "Guitar",
+      "description": null
+    }
+  },
+  {
+    "model": "data.skill",
+    "fields": {
+      "title": "Piano",
+      "description": null
+    }
+  },
+  {
+    "model": "data.skill",
+    "fields": {
+      "title": "Singing",
+      "description": null
+    }
+  }
+]

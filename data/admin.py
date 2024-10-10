@@ -1,13 +1,17 @@
 from django.contrib import admin
 
 from data.models import (
+    Activity,
     Avatar,
+    BerlinLocation,
     Contact,
+    FormLeadFrom,
     Language,
     Location,
     Opportunity,
     Organization,
     Person,
+    Skill,
     VolunteerForm,
 )
 
@@ -32,6 +36,26 @@ class AvatarAdmin(admin.ModelAdmin):
     pass
 
 
+@admin.register(FormLeadFrom)
+class LeadAdmin(admin.ModelAdmin):
+    pass
+
+
+@admin.register(Skill)
+class SkillAdmin(admin.ModelAdmin):
+    pass
+
+
+@admin.register(Activity)
+class ActivityAdmin(admin.ModelAdmin):
+    pass
+
+
+@admin.register(BerlinLocation)
+class BerlinLocationAdmin(admin.ModelAdmin):
+    pass
+
+
 @admin.register(Person)
 class PersonAdmin(admin.ModelAdmin):
     pass
@@ -44,7 +68,7 @@ class OrganizationAdmin(admin.ModelAdmin):
 
 @admin.register(Opportunity)
 class OpportunityAdmin(admin.ModelAdmin):
-    pass
+    search_fields = ("title", "status")
 
 
 @admin.register(VolunteerForm)

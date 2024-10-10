@@ -84,36 +84,34 @@ class ApiTimeslot(BaseModel):
 class ApiOpportunity(BaseModel):
     title: str
     organization: ApiOrganization
-    target_groups: List[ApiTargetGroup]
     berlin_locations: List[ApiLocation]
     timeslots: List[ApiTimeslot]
     activities: List[ApiActivity]
     languages: List[ApiLanguage]
     skills: Optional[List[ApiSkill]]
     status: str
+    opportunity_type: str
 
 
 class ApiOpportunityFlattered(BaseModel):
     id: int
     title: str
     status: str
-    target_groups: Optional[list]
     berlin_locations: Optional[list]
     schedule_str: Optional[str]
     activities: Optional[list]
     languages: Optional[list]
     skills: Optional[list]
     vo_information: Optional[str]
+    opportunity_type: str
 
 
 ScheduleItem: TypeAlias = tuple[int, str]
-LanguageItem: TypeAlias = tuple[str, str]
 
 
 class VolunteerFormData(BaseModel):
     schedule: list[ScheduleItem]
-    preffered_berlin_locations: list[str]
-    languages: list[LanguageItem]
+    preferred_berlin_locations: list[str]
     activities: list[str]
     full_name: str
     phone: str
@@ -121,15 +119,13 @@ class VolunteerFormData(BaseModel):
     postal_code: int
     if_good_conduct_certificate: bool
     if_measles_vaccination: bool
-    lead_from: str
     skills: list[str]
-
-    schedule_comments: Optional[str] = None
-    languages_comments: Optional[str] = None
-    activities_comments: Optional[str] = None
-    lead_from_comments: Optional[str] = None
-    translate_languages: Optional[list[LanguageItem]] = None
+    comments: Optional[str] = None
+    native_languages: list[str]
+    fluent_languages: Optional[list[str]] = None
+    intermediate_languages: Optional[list[str]]
     origin_opportunity_id: Optional[str] = None
+    lead_from: str
 
 
 class TargetGroup(BaseModel):
@@ -159,7 +155,6 @@ class Activity(BaseModel):
 
 class Opportunity(BaseModel):
     title: str
-    target_groups: List[TargetGroup]
     organization: Organization
     berlin_locations: List[BerlinLocation]
     timeslots: List[Timeslot]

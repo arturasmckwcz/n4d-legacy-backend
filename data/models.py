@@ -4,7 +4,9 @@ from django.db import models
 
 from data.enums import (
     BerlinLocations,
+    LanguageLevel,
     Need4DeedTimeSlots,
+    OpportunityType,
 )
 from data.utils import validate_latitude, validate_longitude
 from users.models import AlfredUser
@@ -18,7 +20,7 @@ class ModelWithTimestamps(models.Model):
         abstract = True
 
 
-class Timeslot(ModelWithTimestamps):
+class Timeslot(models.Model):
     title = models.CharField(max_length=128, unique=True)
     start = models.DateTimeField(null=True)
     end = models.DateTimeField(null=True)
@@ -48,7 +50,7 @@ class Location(ModelWithTimestamps):
         )
 
 
-class Activity(ModelWithTimestamps):
+class Activity(models.Model):
     title = models.CharField(max_length=128, unique=True)
     description = models.CharField(max_length=128, null=True)
 
@@ -56,7 +58,7 @@ class Activity(ModelWithTimestamps):
         return self.title
 
 
-class TargetGroup(ModelWithTimestamps):
+class Skill(models.Model):
     title = models.CharField(max_length=128, unique=True)
     description = models.CharField(max_length=128, null=True)
 
@@ -64,7 +66,7 @@ class TargetGroup(ModelWithTimestamps):
         return self.title
 
 
-class Skill(ModelWithTimestamps):
+class FormLeadFrom(models.Model):
     title = models.CharField(max_length=128, unique=True)
     description = models.CharField(max_length=128, null=True)
 
@@ -72,7 +74,7 @@ class Skill(ModelWithTimestamps):
         return self.title
 
 
-class Language(ModelWithTimestamps):
+class Language(models.Model):
     title = models.CharField(max_length=128, db_index=True)
     iso_code = models.CharField(max_length=3, db_index=True)
 
@@ -140,19 +142,34 @@ class Organization(ModelWithTimestamps):
         return f"{self.name}"
 
 
+class LanguageM2M(models.Model):
+    language = models.ForeignKey(Language, on_delete=models.CASCADE)
+
+    class Meta:
+        abstract = True
+
+
+class OpportunityLanguageM2M(LanguageM2M):
+    opportunity = models.ForeignKey("data.opportunity", on_delete=models.CASCADE)
+
+
 class Opportunity(ModelWithTimestamps):
     title = models.CharField(max_length=128, default="Good Samaritan")
+    opportunity_type = models.CharField(
+        choices=OpportunityType.choices, default=OpportunityType.GENERAL
+    )
     organization = models.ForeignKey(
         Organization, on_delete=models.CASCADE, null=True, blank=True
     )
     volunteers_number = models.IntegerField(default=1)
-    target_groups = models.ManyToManyField(TargetGroup, blank=True)
+    datetime_str = models.CharField(max_length=128, null=True, blank=True)
     timeslots = models.ManyToManyField(Timeslot, blank=True)
     activities = models.ManyToManyField(Activity, blank=True)
     berlin_locations = models.ManyToManyField(BerlinLocation)
-    languages = models.ManyToManyField(Language)
-    translate_languages = models.ManyToManyField(
-        Language, related_name="opportunity_translate_languages", blank=True
+    languages = models.ManyToManyField(
+        Language,
+        through=OpportunityLanguageM2M,
+        blank=True,
     )
     skills = models.ManyToManyField(Skill, blank=True)
     notion_id = models.UUIDField(
@@ -169,6 +186,7 @@ class Opportunity(ModelWithTimestamps):
 
 class Need4DeedDaySchedule(models.Model):
     DAY_CHOICES = [
+        (0, "Occasional"),
         (1, "Monday"),
         (2, "Tuesday"),
         (3, "Wednesday"),
@@ -186,7 +204,12 @@ class Need4DeedDaySchedule(models.Model):
         unique_together = ["day", "time_slot"]
 
     def __str__(self):
-        return f"{self.get_day_display()} - {self.time_slot}"
+        return f"{self.DAY_CHOICES[self.day][1]} - {self.time_slot}"
+
+
+class VolunteerLanguageM2M(LanguageM2M):
+    volunteerform = models.ForeignKey("data.volunteerform", on_delete=models.CASCADE)
+    level = models.CharField(choices=LanguageLevel.choices, null=True)
 
 
 class VolunteerForm(ModelWithTimestamps):
@@ -195,21 +218,15 @@ class VolunteerForm(ModelWithTimestamps):
     phone = models.CharField(max_length=64, null=True, unique=True)
     email = models.EmailField(null=False, unique=True)
     schedule = models.ManyToManyField(Need4DeedDaySchedule)
-    schedule_comments = models.CharField(max_length=1024, null=True, blank=True)
     postal_code = models.IntegerField()
-    preffered_berlin_locations = models.ManyToManyField(BerlinLocation)
-    languages = models.ManyToManyField(Language)
-    languages_comments = models.CharField(max_length=1024, null=True, blank=True)
+    preferred_berlin_locations = models.ManyToManyField(BerlinLocation)
+    languages = models.ManyToManyField(Language, through=VolunteerLanguageM2M)
     if_good_conduct_certificate = models.BooleanField(null=True)
     if_measles_vaccination = models.BooleanField(null=True)
     activities = models.ManyToManyField(Activity)
-    activities_comments = models.CharField(max_length=2048, null=True, blank=True)
     lead_from = models.CharField(max_length=1024, null=True, blank=True)
-    lead_from_comments = models.CharField(max_length=1024, null=True, blank=True)
-    translate_languages = models.ManyToManyField(
-        Language, related_name="volunteerform_translate_languages", blank=True
-    )
     skills = models.ManyToManyField(Skill, blank=True)
+    comments = models.CharField(max_length=1024, null=True, blank=True)
     notion_id = models.UUIDField(
         default=uuid.uuid4, editable=False, unique=True, blank=True, null=True
     )

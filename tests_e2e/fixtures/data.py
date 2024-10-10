@@ -122,4 +122,5 @@ lichtenberg_opportunity_flattered = {
     "languages": [],
     "skills": [],
     "vo_information": "The kids speak German, we don’t know anything about their ages or grades. They would need help with various subjects.",
+    "opportunity_type": "Volunteering",
 }

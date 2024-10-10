@@ -1,11 +1,13 @@
+import structlog
 from rest_framework import serializers
 
-from data.enums import OpportunityType
+from data.enums import LanguageLevel
 from data.models import (
     Activity,
     Avatar,
     BerlinLocation,
     Contact,
+    FormLeadFrom,
     Language,
     Location,
     Need4DeedDaySchedule,
@@ -13,12 +15,14 @@ from data.models import (
     Organization,
     Person,
     Skill,
-    TargetGroup,
     Timeslot,
     VolunteerForm,
+    VolunteerLanguageM2M,
 )
 from data.utils import flatten_dict
 from users.serializers import AlfredUserSerializer
+
+logger = structlog.get_logger(__name__)
 
 
 class PersonSerializer(serializers.ModelSerializer):
@@ -83,6 +87,7 @@ class LanguageSerializer(serializers.ModelSerializer):
     class Meta:
         model = Language
         fields = [
+            "id",
             "title",
             "iso_code",
         ]
@@ -97,9 +102,9 @@ class ActivitySerializer(serializers.ModelSerializer):
         ]
 
 
-class TargetGroupSerializer(serializers.ModelSerializer):
+class FormLeadFromSerializer(serializers.ModelSerializer):
     class Meta:
-        model = TargetGroup
+        model = FormLeadFrom
         fields = [
             "title",
             "description",
@@ -180,21 +185,20 @@ class OrganizationSerializer(serializers.ModelSerializer):
 
 
 class OpportunitySerializer(serializers.ModelSerializer):
-    target_groups = serializers.SerializerMethodField(read_only=True)
     berlin_locations = serializers.SerializerMethodField(read_only=True)
     activities = serializers.SerializerMethodField(read_only=True)
     languages = serializers.SerializerMethodField(read_only=True)
     skills = serializers.SerializerMethodField(read_only=True)
-    opportunity_type = serializers.SerializerMethodField(read_only=True)
 
     class Meta:
         model = Opportunity
         fields = [
             "id",
             "title",
-            "target_groups",
+            "opportunity_type",
             "berlin_locations",
             "schedule_str",
+            "datetime_str",
             "activities",
             "languages",
             "skills",
@@ -202,13 +206,6 @@ class OpportunitySerializer(serializers.ModelSerializer):
             "vo_information",
             "opportunity_type",
         ]
-
-    def get_target_groups(self, obj):
-        target_groups_details = [
-            TargetGroupSerializer(target_group).data
-            for target_group in obj.target_groups.all()
-        ]
-        return target_groups_details
 
     def get_berlin_locations(self, obj):
         berlin_locations_details = [
@@ -227,22 +224,11 @@ class OpportunitySerializer(serializers.ModelSerializer):
         languages_details = [
             LanguageSerializer(language).data for language in obj.languages.all()
         ]
-        translate_language_details = [
-            LanguageSerializer(language).data
-            for language in obj.translate_languages.all()
-        ]
-        return languages_details + translate_language_details
+        return languages_details
 
     def get_skills(self, obj):
         skills_details = [SkillSerializer(skill).data for skill in obj.skills.all()]
         return skills_details
-
-    def get_opportunity_type(self, obj):
-        return (
-            OpportunityType.GENERAL
-            if len(obj.translate_languages.all()) == 0
-            else OpportunityType.ACCOMPANYING
-        )
 
     def to_representation(self, instance):
         primary_keys = self.context.get("primary_keys", None)
@@ -254,37 +240,52 @@ class VolunteerFormSerializer(serializers.ModelSerializer):
     schedule = serializers.ListField(
         child=serializers.ListField(child=serializers.CharField()), write_only=True
     )
-    preffered_berlin_locations = serializers.ListField(
+    preferred_berlin_locations = serializers.ListField(
         child=serializers.CharField(), write_only=True
     )
-    languages = serializers.ListField(
+    native_languages = serializers.ListField(
         child=serializers.CharField(),
         write_only=True,
     )
-    translate_languages = serializers.ListField(
+    fluent_languages = serializers.ListField(
         child=serializers.CharField(),
         write_only=True,
+        required=False,
+    )
+    intermediate_languages = serializers.ListField(
+        child=serializers.CharField(),
+        write_only=True,
+        required=False,
     )
     activities = serializers.ListField(child=serializers.CharField(), write_only=True)
-    skills = serializers.ListField(child=serializers.CharField(), write_only=True)
+    skills = serializers.ListField(
+        child=serializers.CharField(),
+        write_only=True,
+        required=False,
+    )
 
     class Meta:
         model = VolunteerForm
-        exclude = ["notion_id"]
+        exclude = ["notion_id", "last_edited_time_notion"]
         read_only_fields = ["form_id"]
 
-    def validate_postal_code(self, value):
-        if len(str(value)) != 5:
-            raise serializers.ValidationError("Postal code should have five digits")
+    def validate_postal_code(
+        self, value
+    ):  # 01001-95999 range for Deutschland and 10115-14199 for Berlin
+        if value < 1001 or value > 95999:
+            raise serializers.ValidationError(
+                "Postal code should be between 1001 and 95999"
+            )
         return value
 
     def create(self, validated_data):
         schedule_data = validated_data.pop("schedule", [])
-        locations_data = validated_data.pop("preffered_berlin_locations", [])
-        languages_data = validated_data.pop("languages", [])
+        locations_data = validated_data.pop("preferred_berlin_locations", [])
         activities_data = validated_data.pop("activities", [])
         skills_data = validated_data.pop("skills", [])
-        translate_languages_data = validated_data.pop("translate_languages", [])
+        native_languages_data = validated_data.pop("native_languages", [])
+        fluent_languages_data = validated_data.pop("fluent_languages", [])
+        intermediate_languages_data = validated_data.pop("intermediate_languages", [])
 
         schedule_objects = []
         for day, time_slot in schedule_data:
@@ -299,36 +300,90 @@ class VolunteerFormSerializer(serializers.ModelSerializer):
             location, _ = BerlinLocation.objects.get_or_create(name=location_name)
             location_objects.append(location)
 
-        language_objects = []
-        for iso_code in languages_data:
-            language, _ = Language.objects.get_or_create(
-                iso_code=iso_code,
-            )
-            language_objects.append(language)
+        native_language_objects = []
+        for title in native_languages_data:
+            try:
+                language = Language.objects.get(
+                    title=title,
+                )
+                native_language_objects.append(language)
+            except Exception as e:
+                logger.error(
+                    f"Error {e} occurred while parsing native language {title}"
+                )
 
-        translate_language_objects = []
-        for iso_code in translate_languages_data:
-            language, _ = Language.objects.get_or_create(
-                iso_code=iso_code,
-            )
-            translate_language_objects.append(language)
+        fluent_language_objects = []
+        for title in fluent_languages_data:
+            try:
+                language = Language.objects.get(
+                    title=title,
+                )
+                fluent_language_objects.append(language)
+            except Exception as e:
+                logger.error(
+                    f"Error {e} occurred while parsing fluent language {title}"
+                )
+
+        intermediate_language_objects = []
+        for title in intermediate_languages_data:
+            try:
+                language = Language.objects.get(
+                    title=title,
+                )
+                intermediate_language_objects.append(language)
+            except Exception as e:
+                logger.error(
+                    f"Error {e} occurred while parsing intermediate language {title}"
+                )
 
         activity_objects = []
         for activity_name in activities_data:
-            activity, _ = Activity.objects.get_or_create(title=activity_name)
-            activity_objects.append(activity)
+            try:
+                activity = Activity.objects.get(title=activity_name)
+                activity_objects.append(activity)
+            except Exception as e:
+                logger.error(
+                    f"Error {e} occurred while parsing activity {activity_name}"
+                )
 
         skill_objects = []
         for skill_name in skills_data:
-            skill, _ = Skill.objects.get_or_create(title=skill_name)
-            skill_objects.append(skill)
+            try:
+                skill = Skill.objects.get(title=skill_name)
+                skill_objects.append(skill)
+            except Exception as e:
+                logger.error(f"Error {e} occurred while parsing activity {skill_name}")
 
         volunteer_form = VolunteerForm.objects.create(**validated_data)
         volunteer_form.schedule.set(schedule_objects)
-        volunteer_form.preffered_berlin_locations.set(location_objects)
-        volunteer_form.languages.set(language_objects)
+        volunteer_form.preferred_berlin_locations.set(location_objects)
+        VolunteerLanguageM2M.objects.bulk_create(
+            [
+                VolunteerLanguageM2M(
+                    volunteerform=volunteer_form,
+                    language=language,
+                    level=LanguageLevel.NATIVE,
+                )
+                for language in native_language_objects
+            ]
+            + [
+                VolunteerLanguageM2M(
+                    volunteerform=volunteer_form,
+                    language=language,
+                    level=LanguageLevel.FLUENT,
+                )
+                for language in fluent_language_objects
+            ]
+            + [
+                VolunteerLanguageM2M(
+                    volunteerform=volunteer_form,
+                    language=language,
+                    level=LanguageLevel.INTERMEDIATE,
+                )
+                for language in intermediate_language_objects
+            ]
+        )
         volunteer_form.activities.set(activity_objects)
         volunteer_form.skills.set(skill_objects)
-        volunteer_form.translate_languages.set(translate_language_objects)
 
         return volunteer_form

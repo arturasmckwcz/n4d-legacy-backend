@@ -52,10 +52,29 @@ class BerlinLocations(models.TextChoices):
 
 class Need4DeedTimeSlots(models.TextChoices):
     MORNING = "morning", "Morning"
+    NOON = "noon", "Noon"
     AFTERNOON = "afternoon", "Afternoon"
     EVENING = "evening", "Evening"
+    WEEKDAYS = "weekdays", "Weekdays"
+    WEEKENDS = "weekends", "Weekends"
 
 
-class OpportunityType:
-    GENERAL = "general"
-    ACCOMPANYING = "accompanying"
+class OpportunityType(models.TextChoices):
+    GENERAL = "Volunteering Opportunity"
+    ACCOMPANYING = "Accompanying Appointment"
+
+
+class OptionsList:
+    LOCATIONS = "locations"
+    LANGUAGES = "languages"
+    ACTIVITIES = "activities"
+    SKILLS = "skills"
+    LEADS = "leads"
+
+
+class LanguageLevel(models.TextChoices):
+    BEGINNER = "beginner"
+    INTERMEDIATE = "intermediate"
+    ADVANCED = "advanced"
+    FLUENT = "fluent"
+    NATIVE = "native"
