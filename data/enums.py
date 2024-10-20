@@ -60,8 +60,8 @@ class Need4DeedTimeSlots(models.TextChoices):
 
 
 class OpportunityType(models.TextChoices):
-    GENERAL = "Volunteering Opportunity"
-    ACCOMPANYING = "Accompanying Appointment"
+    GENERAL = "Volunteering"
+    ACCOMPANYING = "Accompanying"
 
 
 class OptionsList:
