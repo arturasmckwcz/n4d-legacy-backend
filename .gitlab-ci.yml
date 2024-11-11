@@ -19,12 +19,15 @@ variables:
   CELERY_BROKER_URL: redis://localhost:6379
   ENVIRONMENT: "PRODUCTION"
   BRANCH_NAME_FOR_TF: ${CI_COMMIT_SHORT_SHA}
+  UV_VERSION: 0.5
+  PYTHON_VERSION: 3.12
+  BASE_LAYER: bookworm-slim
+
 
 .pre_commit_before:
+  stage: code-check
+  image: ghcr.io/astral-sh/uv:$UV_VERSION-python$PYTHON_VERSION-$BASE_LAYER
   before_script:
-    - apt update && apt install -y curl bash git
-    - curl -LsSf https://astral.sh/uv/install.sh | sh
-    - export PATH=$PATH:/root/.cargo/bin
     - uv venv
     - source .venv/bin/activate
     - uv pip install -r requirements.txt -r dev-requirements.txt
@@ -32,8 +35,9 @@ variables:
 pre-commit:
   extends: .pre_commit_before
   stage: code-check
-  image: python:3.12-slim
   script:
+    - apt-get update && apt-get upgrade -y
+    - apt install git -y
     - pre-commit run --all-files
   rules:
     - when: always
@@ -41,7 +45,6 @@ pre-commit:
 pyright:
   stage: code-check
   extends: .pre_commit_before
-  image: python:3.12-slim
   script:
     - pyright -p pyrightconfig-ci.json
   rules:
@@ -50,7 +53,6 @@ pyright:
 unit-tests:
   stage: code-check
   extends: .pre_commit_before
-  image: python:3.12-slim
   script:
     - pytest -vvv
   rules:
@@ -60,7 +62,6 @@ code-coverage:
   stage: code-check
   coverage: '/TOTAL.*? (100(?:\.0+)?\%\|[1-9]?\d(?:\.\d+)?\%)$/'
   extends: .pre_commit_before
-  image: python:3.12-slim
   script:
     - pytest --cov --cov-report term --cov-report xml:coverage.xml
   rules:
