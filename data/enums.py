@@ -57,6 +57,24 @@ class Need4DeedTimeSlots(models.TextChoices):
     EVENING = "evening", "Evening"
     WEEKDAYS = "weekdays", "Weekdays"
     WEEKENDS = "weekends", "Weekends"
+    GFORM_0810 = "8.00 - 10.00", "08:10"
+    GFORM_1012 = "10.00 - 12.00", "10:12"
+    GFORM_1214 = "12.00 - 14.00", "12:14"
+    GFORM_1416 = "14.00 - 16.00", "14:16"
+    GFORM_1618 = "16.00 - 18.00", "16:18"
+    GFORM_1820 = "18.00 - 20.00", "18:20"
+
+
+DAY_CHOICES = [
+    (0, "Occasional"),
+    (1, "Monday"),
+    (2, "Tuesday"),
+    (3, "Wednesday"),
+    (4, "Thursday"),
+    (5, "Friday"),
+    (6, "Saturday"),
+    (7, "Sunday"),
+]
 
 
 class OpportunityType(models.TextChoices):

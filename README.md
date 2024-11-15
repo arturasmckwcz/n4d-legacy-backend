@@ -64,7 +64,7 @@ Then execute
 
 DJANGO_SECRET_KEY="any random string for dev only, keep it in `.local.env`"
 
-DEBUG="`true` for dev keep it in `.local.env` othervise defaults to `false`"
+DEBUG="`true` for dev keep it in `.local.env` otherwise defaults to `false`"
 
 AWS_SES_ACCESS_KEY_ID=
 
@@ -175,6 +175,7 @@ Each object should correspond to the following OTD:
 ```
 
 #### How to create test data:
+
 Go to a working pod and dump data
 python manage.py dumpdata data.Opportunity > opportunities.json
 python manage.py dumpdata data.TargetGroup > targetgroup.json

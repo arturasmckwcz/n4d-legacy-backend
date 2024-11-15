@@ -73,4 +73,4 @@ class OpportunityAdmin(admin.ModelAdmin):
 
 @admin.register(VolunteerForm)
 class VolunteerFormAdmin(admin.ModelAdmin):
-    pass
+    search_fields = ("email", "full_name")

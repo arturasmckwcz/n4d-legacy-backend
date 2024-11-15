@@ -1,7 +1,8 @@
 import structlog
 from django.db import transaction
 
-from alfred.notion_handler import notion_handler
+from alfred.notion_handler import NotionHandler
+from alfred.utils import read_env_var
 from data.models import (
     Activity,
     BerlinLocation,
@@ -12,6 +13,9 @@ from data.models import (
 )
 
 logger = structlog.get_logger(__name__)
+
+notion_database_id = read_env_var("NOTION_OPPORTUNITIES_ID")
+notion_handler = NotionHandler(notion_database_id)
 
 
 def opportunity_not_exists(notion_id: str) -> bool | None:
@@ -179,8 +183,7 @@ def remove_deleted_records(notion_results: list[dict]) -> None:
 
 
 def execute_opportunities_pipeline():
-    notion_data = notion_handler.get_database_data()
-    notion_results = notion_data["results"]  # type: ignore
+    notion_results = notion_handler.get_database_data()
     logger.info(f"Got {len(notion_results)} results")
 
     remove_deleted_records(notion_results)

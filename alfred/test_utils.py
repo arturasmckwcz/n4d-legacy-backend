@@ -11,7 +11,10 @@ from alfred.utils import (
     AlfredRequest,
     AlfredResponse,
     flatten_list,
+    get_key_value,
+    get_yes_no,
     itemize_str,
+    parse_yes_no,
     read_env_var,
 )
 
@@ -171,3 +174,66 @@ def test_get_data_attr(response_data, key, expected_value):
     value = alfred_response.get_data_attr(key)
 
     assert value == expected_value
+
+
+@pytest.mark.parametrize(
+    "source_dict, keys, null, expected_value",
+    [
+        ({"a": {"b": "value"}}, ["a", "b"], None, "value"),
+        ({"a": "value"}, ["a"], None, "value"),
+        ({"a": "value"}, ["a", "b"], "custom_null", "custom_null"),
+    ],
+)
+def test_get_key_value_should_not_raise(source_dict, keys, null, expected_value):
+    assert get_key_value(source_dict, keys, null=null) == expected_value
+
+
+@pytest.mark.parametrize(
+    "source_dict, keys, expected_value",
+    [({"a": {"b": "value"}}, ["a", "b"], "value")],
+)
+def test_get_key_value_should_raise_but_okay(source_dict, keys, expected_value):
+    assert get_key_value(source_dict, keys, should_raise=True) == expected_value
+
+
+@pytest.mark.parametrize(
+    "source_dict, keys, expected_exception",
+    [
+        ({"a": "value"}, ["a", "too_many_keys"], TypeError),
+        ({"a": {"b": "value"}}, ["a", "wrong_key"], KeyError),
+    ],
+)
+def test_get_key_value_should_raise(source_dict, keys, expected_exception):
+    with pytest.raises(expected_exception):
+        get_key_value(source_dict, keys, should_raise=True)
+
+
+@pytest.mark.parametrize(
+    "flag, expected_value",
+    [
+        (True, "Yes"),
+        (False, "No"),
+        (None, None),
+        ("some_truthy_value", "Yes"),
+        ([], "No"),
+    ],
+)
+def test_get_yes_no(flag, expected_value):
+    assert get_yes_no(flag) == expected_value
+
+
+@pytest.mark.parametrize(
+    "value, expected_value",
+    [
+        ("Yes", True),
+        ("yes", True),
+        ("YES", True),
+        ("No", False),
+        ("no", False),
+        ("NO", False),
+        ("any_other_string", None),
+        ("", None),
+    ],
+)
+def test_parse_yes_no(value, expected_value):
+    assert parse_yes_no(value) == expected_value

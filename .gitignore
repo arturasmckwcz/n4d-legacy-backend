@@ -9,6 +9,10 @@ logs
 coverage.xml
 .coverage
 static
+.ruff_cache
+.pytest_cache
+.vscode
+
 
 # data files for manual upload to the database
 data_for_upload

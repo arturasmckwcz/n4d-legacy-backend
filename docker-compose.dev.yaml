@@ -14,7 +14,8 @@ services:
         SITE_NAME: ${SITE_NAME}
         POSTGRES_HOST: ${POSTGRES_HOST} # "postgresdb"
         NOTION_SECRET: ${NOTION_SECRET}
-        NOTION_DB_ID: ${NOTION_DB_ID}
+        NOTION_OPPORTUNITIES_ID: ${NOTION_OPPORTUNITIES_ID}
+        NOTION_VOLUNTEERS_ID: ${NOTION_VOLUNTEERS_ID}
         CELERY_BROKER_URL: ${CELERY_BROKER_URL} # "redis://valkey:6379"
         CELERY_RESULT_BACKEND: ${CELERY_RESULT_BACKEND} # "redis://valkey:6379"
         ALFRED_LAST_COMMIT_HASH: ${ALFRED_LAST_COMMIT_HASH} # "not local hashes"
@@ -52,8 +53,8 @@ services:
       - POSTGRES_PASSWORD=test_password
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U test_user -d test_name"]
-      interval: 2s
-      timeout: 5s
+      interval: 3s
+      timeout: 6s
       retries: 5
 
   celery_worker:
@@ -64,6 +65,7 @@ services:
       - .:/app
     env_file:
       - .env
+    restart: always
     depends_on:
       alfred:
         condition: service_healthy

@@ -278,6 +278,11 @@ class VolunteerFormSerializer(serializers.ModelSerializer):
             )
         return value
 
+    def get_language_title(self, title: str) -> str:
+        if title == "Farsi":
+            return "Persian"
+        return title
+
     def create(self, validated_data):
         schedule_data = validated_data.pop("schedule", [])
         locations_data = validated_data.pop("preferred_berlin_locations", [])
@@ -304,7 +309,7 @@ class VolunteerFormSerializer(serializers.ModelSerializer):
         for title in native_languages_data:
             try:
                 language = Language.objects.get(
-                    title=title,
+                    title=self.get_language_title(title),
                 )
                 native_language_objects.append(language)
             except Exception as e:
@@ -316,7 +321,7 @@ class VolunteerFormSerializer(serializers.ModelSerializer):
         for title in fluent_languages_data:
             try:
                 language = Language.objects.get(
-                    title=title,
+                    title=self.get_language_title(title),
                 )
                 fluent_language_objects.append(language)
             except Exception as e:
@@ -328,7 +333,7 @@ class VolunteerFormSerializer(serializers.ModelSerializer):
         for title in intermediate_languages_data:
             try:
                 language = Language.objects.get(
-                    title=title,
+                    title=self.get_language_title(title),
                 )
                 intermediate_language_objects.append(language)
             except Exception as e:
@@ -357,7 +362,7 @@ class VolunteerFormSerializer(serializers.ModelSerializer):
         volunteer_form = VolunteerForm.objects.create(**validated_data)
         volunteer_form.schedule.set(schedule_objects)
         volunteer_form.preferred_berlin_locations.set(location_objects)
-        VolunteerLanguageM2M.objects.bulk_create(
+        languages_for_m2m = (
             [
                 VolunteerLanguageM2M(
                     volunteerform=volunteer_form,
@@ -383,6 +388,7 @@ class VolunteerFormSerializer(serializers.ModelSerializer):
                 for language in intermediate_language_objects
             ]
         )
+        VolunteerLanguageM2M.objects.bulk_create(languages_for_m2m)
         volunteer_form.activities.set(activity_objects)
         volunteer_form.skills.set(skill_objects)
 

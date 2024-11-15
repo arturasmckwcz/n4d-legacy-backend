@@ -3,6 +3,7 @@ import uuid
 from django.db import models
 
 from data.enums import (
+    DAY_CHOICES,
     BerlinLocations,
     LanguageLevel,
     Need4DeedTimeSlots,
@@ -185,16 +186,6 @@ class Opportunity(ModelWithTimestamps):
 
 
 class Need4DeedDaySchedule(models.Model):
-    DAY_CHOICES = [
-        (0, "Occasional"),
-        (1, "Monday"),
-        (2, "Tuesday"),
-        (3, "Wednesday"),
-        (4, "Thursday"),
-        (5, "Friday"),
-        (6, "Saturday"),
-        (7, "Sunday"),
-    ]
     day = models.IntegerField(choices=DAY_CHOICES)
     time_slot = models.CharField(
         max_length=20, choices=Need4DeedTimeSlots.choices, default=None
@@ -204,12 +195,17 @@ class Need4DeedDaySchedule(models.Model):
         unique_together = ["day", "time_slot"]
 
     def __str__(self):
-        return f"{self.DAY_CHOICES[self.day][1]} - {self.time_slot}"
+        return f"{DAY_CHOICES[self.day][1]} - {self.time_slot}"
 
 
 class VolunteerLanguageM2M(LanguageM2M):
     volunteerform = models.ForeignKey("data.volunteerform", on_delete=models.CASCADE)
     level = models.CharField(choices=LanguageLevel.choices, null=True)
+
+    def __str__(self):
+        return (
+            f"form:{self.volunteerform}, language:{self.language}, level:{self.level}"
+        )
 
 
 class VolunteerForm(ModelWithTimestamps):
@@ -221,16 +217,18 @@ class VolunteerForm(ModelWithTimestamps):
     postal_code = models.IntegerField()
     preferred_berlin_locations = models.ManyToManyField(BerlinLocation)
     languages = models.ManyToManyField(Language, through=VolunteerLanguageM2M)
-    if_good_conduct_certificate = models.BooleanField(null=True)
+    good_conduct_certificate = models.CharField(max_length=64, null=True)
     if_measles_vaccination = models.BooleanField(null=True)
     activities = models.ManyToManyField(Activity)
     lead_from = models.CharField(max_length=1024, null=True, blank=True)
     skills = models.ManyToManyField(Skill, blank=True)
     comments = models.CharField(max_length=1024, null=True, blank=True)
-    notion_id = models.UUIDField(
-        default=uuid.uuid4, editable=False, unique=True, blank=True, null=True
-    )
+    comments_workflow = models.CharField(max_length=1024, null=True, blank=True)
+    notion_id = models.UUIDField(editable=False, unique=True, blank=True, null=True)
     origin_opportunity_id = models.ForeignKey(
         Opportunity, on_delete=models.SET_NULL, null=True, blank=True
     )
     last_edited_time_notion = models.DateTimeField(null=True)
+
+    def __str__(self):
+        return f"{self.full_name} | email: {self.email}"

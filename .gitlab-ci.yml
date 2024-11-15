@@ -76,16 +76,15 @@ code-coverage:
 
 .docker_before_script:
   image:
-    name: docker:27.2
+    name: docker:27.3.1
   services:
-    - docker:27.2-dind
+    - docker:27.3.1-dind
   variables:
     ECR_URI: $ECR_REGISTRY/$ECR_REPOSITORY
   before_script:
-    - echo "http://dl-cdn.alpinelinux.org/alpine/edge/main" >> /etc/apk/repositories
-    - echo "http://dl-cdn.alpinelinux.org/alpine/edge/community" >> /etc/apk/repositories
     - apk update
-    - apk add --no-cache curl jq unzip aws-cli aws-session-manager-plugin
+    - apk add --no-cache curl jq unzip
+    - apk add --repository=http://dl-cdn.alpinelinux.org/alpine/edge/community aws-cli aws-session-manager-plugin
     - echo "Installing OpenTofu (tofu fork)"
     - curl -L -o tofu.apk https://github.com/opentofu/opentofu/releases/download/v1.8.2/tofu_1.8.2_amd64.apk
     - apk add --allow-untrusted tofu.apk
@@ -112,7 +111,8 @@ build-and-push-alfred:
       --build-arg CORS_ALLOW_HEADERS=${CORS_ALLOW_HEADERS}
       --build-arg POSTGRES_HOST=${POSTGRES_HOST}
       --build-arg NOTION_SECRET=${NOTION_SECRET}
-      --build-arg NOTION_DB_ID=${NOTION_DB_ID}
+      --build-arg NOTION_OPPORTUNITIES_ID=${NOTION_OPPORTUNITIES_ID}
+      --build-arg NOTION_VOLUNTEERS_ID=${NOTION_VOLUNTEERS_ID}
       --build-arg GLITCHTIP_DSN=${GLITCHTIP_DSN}
       --build-arg CELERY_BROKER_URL=${CELERY_BROKER_URL}
       --build-arg CELERY_RESULT_BACKEND=${CELERY_RESULT_BACKEND}

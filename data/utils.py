@@ -5,6 +5,8 @@ import structlog
 from django.core.exceptions import ValidationError
 from django.db.models import Q
 
+from data.enums import DAY_CHOICES
+
 logger = structlog.get_logger(__name__)
 
 
@@ -151,3 +153,14 @@ def filter_queryset(queryset, filter_dict):
     logger.debug(f"filters: {filters}")
 
     return queryset.filter(reduce(lambda x, y: x & y, filters))
+
+
+def is_in_DAY_CHOICES(day: str) -> bool:
+    return day in [day_choice[1] for day_choice in DAY_CHOICES]
+
+
+def get_day_number_from_DAY_CHOICES(day: str) -> int | None:
+    for day_choice_number, day_choice_day in DAY_CHOICES:
+        if day == day_choice_day:
+            return day_choice_number
+    return None

@@ -1,5 +1,8 @@
 import ast
+from datetime import datetime
+from enum import StrEnum, auto
 from os import getenv
+from typing import Any, List
 
 import structlog
 from rest_framework.request import Request
@@ -69,6 +72,124 @@ def read_env_var(
         raise BaseException(f"Environment var {name} has to be set!")
 
     return None
+
+
+class YesNo(StrEnum):
+    YES = auto()
+    NO = auto()
+
+
+def get_yes_no(flag: bool | None) -> str | None:
+    """Gets a capitalized "Yes" or "No" string based on a boolean flag.
+
+    Args:
+        flag (bool): The boolean flag to convert.
+
+    Returns:
+        str | None: A capitalized "Yes" or "No" string, or None if `flag` is None.
+
+    Raises:
+        (This function raises no exceptions)
+    """
+    if flag is None:
+        return None
+    return YesNo.YES.capitalize() if flag else YesNo.NO.capitalize()
+
+
+def parse_yes_no(value: str | None) -> bool | None:
+    """Parses a string into a boolean value representing a yes or no answer.
+
+    Args:
+        value (str | None, optional): The string to parse. Defaults to None.
+
+    Returns:
+        bool | None: A boolean representing "yes" (True), "no" (False), or None if the input couldn't be parsed.
+
+    Raises:
+        (This function raises no exceptions)
+    """
+    if isinstance(value, str):
+        value = value.lower()
+
+    if value == YesNo.YES:
+        return True
+    elif value == YesNo.NO:
+        return False
+    return None
+
+
+def is_later_than(dt1: datetime, dt2: datetime) -> bool:
+    """Checks if the first datetime object is later than the second, ignoring their time zones.
+
+    Args:
+        dt1 (datetime): The first datetime object.
+        dt2 (datetime): The second datetime object.
+
+    Returns:
+        bool: `True` if `dt1` is later than `dt2`, `False` otherwise.
+    """
+    dt1_naive = dt1.replace(tzinfo=None)
+    dt2_naive = dt2.replace(tzinfo=None)
+    return dt1_naive > dt2_naive
+
+
+def get_the_first(maybe_list, should_raise=False):
+    """Gets the first element of a list, handling potential errors.
+
+    Args:
+        maybe_list: The list to extract the first element from.
+        should_raise (bool, optional): Whether to raise an exception if the list is empty. Defaults to False.
+
+    Returns:
+        The first element of the list, or None if the list is empty and `should_raise` is False.
+
+    Raises:
+        IndexError: If the list is empty and `should_raise` is True.
+    """
+    if should_raise:
+        return maybe_list[0]
+    else:
+        try:
+            return maybe_list[0]
+        except Exception:
+            return None
+
+
+def get_key_value(
+    source_dict: Any, keys: List[str], should_raise=False, null=None
+) -> Any:
+    """Recursively retrieves a value from a nested dictionary using a list of keys.
+
+    Args:
+        source_dict (Any): The source dictionary to extract the value from.
+        keys (List[str]): A list of keys to follow to reach the desired value.
+        should_raise (bool, optional): Whether to raise an exception if the value cannot be retrieved.
+                                       Defaults to False.
+        null (Any, optional): The default value to return if the value cannot be retrieved
+                              and `should_raise` is False. Defaults to None.
+
+    Returns:
+        Any: The retrieved value, or value of `null` if the value cannot be retrieved and
+            `should_raise` is False.
+
+    Raises:
+        KeyError: If a key is not found and `should_raise` is True.
+        TypeError: If a value is not a dictionary and a key is used to access it.
+    """
+
+    def get_value():
+        result = source_dict[keys[0]]
+        for idx in range(1, len(keys)):
+            result = result[keys[idx]]
+        return result
+
+    if should_raise:
+        return get_value()
+    else:
+        try:
+            return get_value()
+        except Exception:
+            return null
 
 
 class AlfredRequest(Request):

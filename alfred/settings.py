@@ -321,3 +321,7 @@ structlog.configure(
 
 # ensure that json logs have their output
 os.makedirs(os.path.join(BASE_DIR, "logs"), exist_ok=True)
+
+
+# Feature flags
+FF_VOLUNTEER_CONNECTOR = False if ENV == "PRODUCTION" else True

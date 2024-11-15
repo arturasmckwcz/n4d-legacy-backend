@@ -9,6 +9,8 @@ from data.utils import (
     filter_queryset,
     flatten_dict,
     generate_square_pattern_svg,
+    get_day_number_from_DAY_CHOICES,
+    is_in_DAY_CHOICES,
     validate_latitude,
     validate_longitude,
 )
@@ -41,6 +43,44 @@ def test_generate_square_pattern_svg(size, granularity, color, expected_result):
 )
 def test_validate_latitude(latitude, expected_exception):
     assert validate_latitude(latitude) is expected_exception
+
+
+@pytest.mark.parametrize(
+    "day, expected_result",
+    [
+        ("Occasional", True),
+        ("Monday", True),
+        ("Tuesday", True),
+        ("Wednesday", True),
+        ("Thursday", True),
+        ("Friday", True),
+        ("Saturday", True),
+        ("Sunday", True),
+        ("something_else", False),
+        (None, False),
+    ],
+)
+def test_is_in_DAY_CHOICES(day, expected_result):
+    assert is_in_DAY_CHOICES(day) is expected_result
+
+
+@pytest.mark.parametrize(
+    "day, expected_result",
+    [
+        ("Occasional", 0),
+        ("Monday", 1),
+        ("Tuesday", 2),
+        ("Wednesday", 3),
+        ("Thursday", 4),
+        ("Friday", 5),
+        ("Saturday", 6),
+        ("Sunday", 7),
+        ("something_else", None),
+        (None, None),
+    ],
+)
+def test_get_day_number_from_DAY_CHOICES(day, expected_result):
+    assert get_day_number_from_DAY_CHOICES(day) is expected_result
 
 
 @pytest.mark.parametrize(
