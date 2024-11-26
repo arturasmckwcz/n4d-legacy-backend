@@ -7,6 +7,7 @@ from django.db import transaction
 from alfred.notion_handler import NotionHandler
 from alfred.utils import (
     YesNo,
+    get_clean_select_for_notion,
     get_key_value,
     get_the_first,
     get_yes_no,
@@ -261,11 +262,12 @@ def write_or_update_page_to_db(
         return
 
     volunteer_form_data, m2m_data = data
+    print(f"DEBUG:write_or_update_page_to_db:{volunteer_form_data=}, {m2m_data=}")
 
     try:
         with transaction.atomic():
             if update_object:
-                update_object.delete()
+                success, deleted_dict = update_object.delete()
 
             volunteerform_object = VolunteerForm(**volunteer_form_data)
             volunteerform_object.save()
@@ -275,12 +277,12 @@ def write_or_update_page_to_db(
             for location in m2m_data["locations"]:
                 try:
                     location_object, _ = BerlinLocation.objects.get_or_create(
-                        name=location["name"]
+                        name=location
                     )
                     location_objects.append(location_object)
                 except Exception as e:
                     logger.error(
-                        f"Error {e} occurred while processing location {location['name']=}"
+                        f"Error {e} occurred while processing location {location=}"
                     )
             volunteerform_object.preferred_berlin_locations.set(location_objects)
 
@@ -383,14 +385,16 @@ def write_volunteerform_to_notion(volunteerform: VolunteerForm):
     properties["E-mail"] = {
         "title": [{"text": {"content": volunteerform.email, "link": None}}]
     }
-    properties["Name"] = {"select": {"name": volunteerform.full_name}}
+    properties["Name"] = {
+        "select": {"name": get_clean_select_for_notion(volunteerform.full_name)}
+    }
     properties["Phone Number"] = {
         "rich_text": [{"text": {"content": volunteerform.phone}}]
     }
     properties["Post code"] = {"number": volunteerform.postal_code}
     properties["Preferred Volunteering Locations"] = {
         "multi_select": [
-            {"name": location}
+            {"name": get_clean_select_for_notion(location)}
             for location in get_list(
                 volunteerform.preferred_berlin_locations.all(), "name"
             )
@@ -398,33 +402,44 @@ def write_volunteerform_to_notion(volunteerform: VolunteerForm):
     }
     properties["Languages"] = {
         "multi_select": [
-            {"name": language} for language in get_language_list(volunteerform)
+            {"name": get_clean_select_for_notion(language)}
+            for language in get_language_list(volunteerform)
         ]
     }
     properties["Days"] = {
-        "multi_select": [{"name": day} for day in get_schedule_list(volunteerform)]
+        "multi_select": [
+            {"name": get_clean_select_for_notion(day)}
+            for day in get_schedule_list(volunteerform)
+        ]
     }
     properties["Schedule okay"] = {"select": {"name": "Yes"}}
     properties["Activities"] = {
         "multi_select": [
-            {"name": activity}
+            {"name": get_clean_select_for_notion(activity)}
             for activity in get_list(volunteerform.activities.all(), "title")
         ]
     }
     properties["Skills"] = {
         "multi_select": [
-            {"name": skill} for skill in get_list(volunteerform.skills.all(), "title")
+            {"name": get_clean_select_for_notion(skill)}
+            for skill in get_list(volunteerform.skills.all(), "title")
         ]
     }
     properties["Certificate of good conduct"] = {
-        "select": {"name": volunteerform.good_conduct_certificate or YesNo.NO}
+        "select": {
+            "name": get_clean_select_for_notion(volunteerform.good_conduct_certificate)
+            or YesNo.NO
+        }
     }
     properties["Measles vacc"] = {
         "select": {"name": get_yes_no(volunteerform.if_measles_vaccination)}
     }
     properties["Where did you hear"] = {
         "multi_select": (
-            [{"name": source} for source in volunteerform.lead_from.split(", ")]
+            [
+                {"name": get_clean_select_for_notion(source)}
+                for source in volunteerform.lead_from.split(", ")
+            ]
             if volunteerform.lead_from
             else []
         )
@@ -432,10 +447,14 @@ def write_volunteerform_to_notion(volunteerform: VolunteerForm):
     properties["Comments"] = {
         "rich_text": [{"text": {"content": volunteerform.comments}}]
     }
+    properties["Timestamp"] = {
+        "date": {"start": datetime.now().strftime("%Y-%m-%d %H:%M:%S")}
+    }
 
     page = notion_handler.add_page(properties=properties)
 
     volunteerform.notion_id = get_key_value(page, ["id"])
+    print(f"DEBUG:write_volunteerform_to_notion:{volunteerform.notion_id=}")
     volunteerform.save()
 
 

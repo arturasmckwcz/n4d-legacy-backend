@@ -16,3 +16,6 @@ static
 
 # data files for manual upload to the database
 data_for_upload
+
+# local dev stuff
+dev.*

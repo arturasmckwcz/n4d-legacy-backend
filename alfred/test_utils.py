@@ -11,6 +11,7 @@ from alfred.utils import (
     AlfredRequest,
     AlfredResponse,
     flatten_list,
+    get_clean_select_for_notion,
     get_key_value,
     get_yes_no,
     itemize_str,
@@ -201,6 +202,7 @@ def test_get_key_value_should_raise_but_okay(source_dict, keys, expected_value):
     [
         ({"a": "value"}, ["a", "too_many_keys"], TypeError),
         ({"a": {"b": "value"}}, ["a", "wrong_key"], KeyError),
+        ({"a": {"b": "value"}}, ["a", "b", "extra_key"], TypeError),
     ],
 )
 def test_get_key_value_should_raise(source_dict, keys, expected_exception):
@@ -237,3 +239,17 @@ def test_get_yes_no(flag, expected_value):
 )
 def test_parse_yes_no(value, expected_value):
     assert parse_yes_no(value) == expected_value
+
+
+@pytest.mark.parametrize(
+    "value, expected_value",
+    [
+        ("value", "value"),
+        (
+            "value, another, and yet another,and no space and double  space",
+            "value another and yet another and no space and double space",
+        ),
+    ],
+)
+def test_get_clean_select_for_notion(value, expected_value):
+    assert get_clean_select_for_notion(value) == expected_value

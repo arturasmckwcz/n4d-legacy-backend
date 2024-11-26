@@ -192,6 +192,19 @@ def get_key_value(
             return null
 
 
+def get_clean_select_for_notion(content: str | None) -> str | None:
+    if not content:
+        return None
+
+    select = content.strip()
+    # notion doesn't let select fields to contain a comma
+    select = select.replace(",", " ")
+    select = select.replace("  ", " ")
+    if len(select) > 100:
+        select = select[:100]
+    return select
+
+
 class AlfredRequest(Request):
     def __init__(self, request: Request):
         self.__dict__.update(request.__dict__)
