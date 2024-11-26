@@ -55438,5 +55438,12 @@
             "title": "Zuojiang Zhuang",
             "iso_code": "zzj"
         }
+    },
+    {
+        "model": "data.Language",
+        "fields": {
+            "title": "Other",
+            "iso_code": "zzz"
+        }
     }
 ]

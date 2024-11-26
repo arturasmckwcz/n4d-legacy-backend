@@ -344,7 +344,7 @@ class VolunteerFormSerializer(serializers.ModelSerializer):
         activity_objects = []
         for activity_name in activities_data:
             try:
-                activity = Activity.objects.get(title=activity_name)
+                activity, _ = Activity.objects.get_or_create(title=activity_name)
                 activity_objects.append(activity)
             except Exception as e:
                 logger.error(
@@ -354,7 +354,7 @@ class VolunteerFormSerializer(serializers.ModelSerializer):
         skill_objects = []
         for skill_name in skills_data:
             try:
-                skill = Skill.objects.get(title=skill_name)
+                skill, _ = Skill.objects.get_or_create(title=skill_name)
                 skill_objects.append(skill)
             except Exception as e:
                 logger.error(f"Error {e} occurred while parsing activity {skill_name}")

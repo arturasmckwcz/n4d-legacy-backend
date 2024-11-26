@@ -44,7 +44,7 @@ def execute_volunteerform_seed_pipeline():
     logger.info(f"Found {len(volunteers_from_notion)} rows in Volunteers")
 
     for volunteer_page in volunteers_from_notion:
-        write_page_to_db(volunteer_page)
+        write_or_update_page_to_db(volunteer_page=volunteer_page)
 
 
 def execute_volunteerform_pipeline():
@@ -58,7 +58,9 @@ def execute_volunteerform_pipeline():
             datetime.fromisoformat(volunteer_page["last_edited_time"]),
             volunteerform_object.updated_at,
         ):
-            update_volunteerform_object(volunteerform_object, volunteer_page)
+            write_or_update_page_to_db(
+                update_object=volunteerform_object, volunteer_page=volunteer_page
+            )
 
     # 2. notion pages to be deleted from db
     notion_ids = [volunteer_page["id"] for volunteer_page in volunteers_from_notion]
@@ -79,35 +81,35 @@ def execute_volunteerform_pipeline():
         write_volunteerform_to_notion(new_volunteerform)
 
 
-def write_page_to_db(volunteer_page):
-    # 1 prepare data for VolunteerForm object
+def prepare_page_data_for_db(volunteer_page: dict) -> tuple | None:
+    volunteer_form_data = {}
     try:
-        notion_id = volunteer_page["id"]
+        volunteer_form_data["notion_id"] = volunteer_page["id"]
 
         email = get_the_first(
             volunteer_page["properties"]["E-mail"]["title"], should_raise=True
         )
-        email = get_key_value(email, ["text", "content"])
+        volunteer_form_data["email"] = get_key_value(email, ["text", "content"])
 
         full_name = volunteer_page["properties"]["Name"]["select"]
         full_name = get_key_value(full_name, ["name"])
-        full_name = full_name or full_name_placeholder
+        volunteer_form_data["full_name"] = full_name or full_name_placeholder
 
         phone = get_the_first(volunteer_page["properties"]["Phone Number"]["rich_text"])
         phone = get_key_value(phone, ["plain_text"])
-        phone = phone or None
+        volunteer_form_data["phone"] = phone or None
 
         postal_code = get_key_value(
             volunteer_page, ["properties", "Post code", "number"]
         )
-        postal_code = postal_code or 0
+        volunteer_form_data["postal_code"] = postal_code or 0
 
-        good_conduct_certificate = get_key_value(
+        volunteer_form_data["good_conduct_certificate"] = get_key_value(
             volunteer_page,
             ["properties", "Certificate of good conduct", "select", "name"],
         )
 
-        if_measles_vaccination = parse_yes_no(
+        volunteer_form_data["if_measles_vaccination"] = parse_yes_no(
             get_key_value(
                 volunteer_page, ["properties", "Measles vacc", "select", "name"]
             )
@@ -119,7 +121,7 @@ def write_page_to_db(volunteer_page):
             null=[],
         )
         lead_from = ", ".join([lead["name"] for lead in lead_from])
-        lead_from = lead_from or None
+        volunteer_form_data["lead_from"] = lead_from or None
 
         comments_delimiter = "<|>"
         comments_none = "NONE"
@@ -146,7 +148,7 @@ def write_page_to_db(volunteer_page):
         comments_languages = (
             get_key_value(comments_languages, ["plain_text"]) or comments_none
         )
-        comments = (
+        volunteer_form_data["comments"] = (
             comments_just
             + comments_delimiter
             + comments_schedule
@@ -154,7 +156,7 @@ def write_page_to_db(volunteer_page):
             + comments_activities
             + comments_delimiter
             + comments_languages
-        )
+        )[:1024]
 
         # the order: "Status","Coordinator Comments","VO contacted","VO active","Days"
         comments_status = get_the_first(
@@ -191,7 +193,7 @@ def write_page_to_db(volunteer_page):
             if comments_days
             else comments_none
         )
-        comments_workflow = (
+        volunteer_form_data["comments_workflow"] = (
             comments_coordinator
             + comments_delimiter
             + comments_status
@@ -199,54 +201,91 @@ def write_page_to_db(volunteer_page):
             + comments_vo_contacted
             + comments_delimiter
             + comments_days
-        )
+        )[:1024]
 
     except Exception as e:
         logger.error(
             f"Error {repr(e)} occurred while processing Notion page id={volunteer_page['id']} structure. Skipping."
         )
+        return None
+
+    m2m_data = {}
+
+    # 2 add add locations
+    locations = []
+    for location_in_page in volunteer_page["properties"][
+        "Preferred Volunteering Locations"
+    ]["multi_select"]:
+        locations.append(location_in_page["name"])
+    m2m_data["locations"] = locations
+
+    # 3 add languages
+    languages = []
+    for language_in_page in volunteer_page["properties"]["Languages"]["multi_select"]:
+        language = language_in_page["name"].split(" ")
+        if len(language) != 2:
+            continue
+        languages.append(language)
+    m2m_data["languages"] = languages
+
+    # 4 add schedule
+    schedule = [
+        get_key_value(day, ["name"])
+        for day in (
+            get_key_value(volunteer_page, ["properties", "Days", "multi_select"]) or []
+        )
+    ]
+    m2m_data["schedule"] = schedule
+
+    # 5 add activities and skills
+    activities = []
+    for activity_in_page in volunteer_page["properties"]["Activities"]["multi_select"]:
+        activities.append(activity_in_page["name"])
+    m2m_data["activities"] = activities
+
+    skills = []
+    for skill_in_page in volunteer_page["properties"]["Skills"]["multi_select"]:
+        skills.append(skill_in_page["name"])
+    m2m_data["skills"] = skills
+
+    return (volunteer_form_data, m2m_data)
+
+
+# PostgresQL doesn't support nested transactions, so we needed combining update/create
+# in order to roll back deletion if creation fails
+def write_or_update_page_to_db(
+    volunteer_page: dict, update_object: VolunteerForm | None = None
+):
+    data = prepare_page_data_for_db(volunteer_page)
+    if not data:
         return
+
+    volunteer_form_data, m2m_data = data
 
     try:
         with transaction.atomic():
-            volunteerform_object = VolunteerForm(
-                notion_id=notion_id,
-                full_name=full_name,
-                email=email,
-                phone=phone,
-                postal_code=postal_code,
-                good_conduct_certificate=good_conduct_certificate,
-                if_measles_vaccination=if_measles_vaccination,
-                lead_from=lead_from,
-                comments=comments[:1024],
-                comments_workflow=comments_workflow[:1024],
-            )
+            if update_object:
+                update_object.delete()
+
+            volunteerform_object = VolunteerForm(**volunteer_form_data)
             volunteerform_object.save()
 
             # 2 add add locations
-            locations = []
-            for location_in_page in volunteer_page["properties"][
-                "Preferred Volunteering Locations"
-            ]["multi_select"]:
+            location_objects = []
+            for location in m2m_data["locations"]:
                 try:
-                    location, _ = BerlinLocation.objects.get_or_create(
-                        name=location_in_page["name"]
+                    location_object, _ = BerlinLocation.objects.get_or_create(
+                        name=location["name"]
                     )
-                    locations.append(location)
+                    location_objects.append(location_object)
                 except Exception as e:
                     logger.error(
-                        f"Error {e} occurred while processing location {location_in_page['name']=}"
+                        f"Error {e} occurred while processing location {location['name']=}"
                     )
-            volunteerform_object.preferred_berlin_locations.set(locations)
+            volunteerform_object.preferred_berlin_locations.set(location_objects)
 
             # 3 add languages
-            for language_in_page in volunteer_page["properties"]["Languages"][
-                "multi_select"
-            ]:
-                language = language_in_page["name"].split(" ")
-                if len(language) != 2:
-                    continue
-
+            for language in m2m_data["languages"]:
                 title, level = language
 
                 if title == "Farsi/Dari" or title == "Farsi":
@@ -261,16 +300,7 @@ def write_page_to_db(volunteer_page):
                     )
 
             # 4 add schedule
-            days = [
-                get_key_value(day, ["name"])
-                for day in (
-                    get_key_value(
-                        volunteer_page, ["properties", "Days", "multi_select"]
-                    )
-                    or []
-                )
-            ]
-            schedule_objects = parse_days(days)
+            schedule_objects = parse_days(m2m_data["schedule"])
             if schedule_objects is None:
                 update_notion_page(
                     handler=notion_handler,
@@ -285,31 +315,24 @@ def write_page_to_db(volunteer_page):
                 volunteerform_object.schedule.set(schedule_objects)
 
             # 5 add activities and skills
-            activities = []
-            for activity_in_page in volunteer_page["properties"]["Activities"][
-                "multi_select"
-            ]:
+            activity_objects = []
+            for activity in m2m_data["activities"]:
                 try:
-                    activity, _ = Activity.objects.get_or_create(
-                        title=activity_in_page["name"]
-                    )
-                    activities.append(activity)
+                    activity_object, _ = Activity.objects.get_or_create(title=activity)
+                    activity_objects.append(activity_object)
                 except Exception as e:
                     logger.error(
-                        f"Error {e} occurred while processing activity {activity_in_page['name']=}"
+                        f"Error {e} occurred while processing activity {activity=}"
                     )
-            volunteerform_object.activities.set(activities)
-            skills = []
-            for skill_in_page in volunteer_page["properties"]["Skills"]["multi_select"]:
+            volunteerform_object.activities.set(activity_objects)
+            skill_objects = []
+            for skill in m2m_data["skills"]:
                 try:
-                    skill, _ = Skill.objects.get_or_create(title=skill_in_page["name"])
-                    skills.append(skill)
+                    skill_object, _ = Skill.objects.get_or_create(title=skill)
+                    skill_objects.append(skill_object)
                 except Exception as e:
-                    logger.error(
-                        f"Error {e} occurred while processing skill {skill_in_page['name']=}"
-                    )
-            volunteerform_object.skills.set(skills)
-        return 0
+                    logger.error(f"Error {e} occurred while processing skill {skill=}")
+            volunteerform_object.skills.set(skill_objects)
     except Exception as e:
         logger.error(
             f"Error {repr(e)} occurred while writing Notion page id={volunteer_page['id']} to database. Skipping."
@@ -345,7 +368,7 @@ def update_volunteerform_object(
 ):
     logger.info(f"Attempting to update Notion page id={volunteer_page['id']}")
     volunteerform_object.delete()
-    write_page_to_db(volunteer_page)
+    write_or_update_page_to_db(volunteer_page)
 
 
 def get_database_object(volunteer_page: dict) -> VolunteerForm | None:
@@ -394,7 +417,7 @@ def write_volunteerform_to_notion(volunteerform: VolunteerForm):
         ]
     }
     properties["Certificate of good conduct"] = {
-        "select": {"name": volunteerform.good_conduct_certificate}
+        "select": {"name": volunteerform.good_conduct_certificate or YesNo.NO}
     }
     properties["Measles vacc"] = {
         "select": {"name": get_yes_no(volunteerform.if_measles_vaccination)}
@@ -420,12 +443,13 @@ def get_language_list(volunteer: VolunteerForm) -> list[str]:
     languages_and_levels = []
     for language in volunteer.languages.all():
         try:
-            language_level = VolunteerLanguageM2M.objects.get(
+            language_level = VolunteerLanguageM2M.objects.filter(
                 language=language, volunteerform=volunteer
-            )
-            languages_and_levels.append(
-                f"{language.title.capitalize()} {language_level.level.capitalize() if language_level.level else None}"
-            )
+            ).first()
+            if language_level:
+                languages_and_levels.append(
+                    f"{language.title.capitalize()} {language_level.level.capitalize() if language_level.level else None}"
+                )
         except VolunteerLanguageM2M.DoesNotExist:
             logger.error(
                 f"VolunteerLanguageM2M.DoesNotExist raised for language {language}"
