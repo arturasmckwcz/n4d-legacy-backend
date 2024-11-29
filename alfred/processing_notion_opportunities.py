@@ -101,8 +101,7 @@ def create_opportunity_from_notion(notion_record: dict):
                 properties.get("Opp Type", {})
                 .get("select", {})
                 .get("name", OpportunityType.GENERAL)
-            )
-
+            ).lower()
             opportunity = Opportunity(
                 title=properties["Name"]["title"][0]["text"]["content"],
                 notion_id=notion_record["id"],

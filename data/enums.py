@@ -78,8 +78,8 @@ DAY_CHOICES = [
 
 
 class OpportunityType(models.TextChoices):
-    GENERAL = "Volunteering"
-    ACCOMPANYING = "Accompanying"
+    GENERAL = "volunteering"
+    ACCOMPANYING = "accompanying"
 
 
 class OptionsList:

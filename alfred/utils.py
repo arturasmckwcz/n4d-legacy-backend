@@ -193,6 +193,17 @@ def get_key_value(
 
 
 def get_clean_select_for_notion(content: str | None) -> str | None:
+    """Cleans a given string for use as a Notion select option.
+
+    This function sanitizes the input string to ensure compatibility with Notion's
+    select field limitations
+
+    Args:
+        content: The input string to be cleaned.
+
+    Returns:
+        The cleaned string, or `None` if the input is `None`.
+    """
     if not content:
         return None
 
