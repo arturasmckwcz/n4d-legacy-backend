@@ -59,6 +59,7 @@ services:
 
   celery_worker:
     image: alfred:dev
+    container_name: celery_worker
     entrypoint: []
     command: celery -A alfred worker --loglevel=DEBUG
     volumes:
@@ -72,6 +73,7 @@ services:
 
   celery_beat:
     image: alfred:dev
+    container_name: celery_beat
     entrypoint: []
     command: celery -A alfred beat --loglevel=DEBUG --scheduler django_celery_beat.schedulers:DatabaseScheduler
     volumes:

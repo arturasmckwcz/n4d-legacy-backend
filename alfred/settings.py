@@ -287,17 +287,17 @@ LOGGING = {
         "django_structlog": {
             "handlers": ["console", "json_file"],
             "level": "DEBUG",
-            "propagate": True,
+            "propagate": False,
         },
         "celery": {
             "handlers": ["console", "json_file"],
             "level": "DEBUG",
-            "propagate": True,
+            "propagate": False,
         },
         "alfred": {
             "handlers": ["console", "json_file"],
             "level": "DEBUG",
-            "propagate": True,
+            "propagate": False,
         },
     },
 }

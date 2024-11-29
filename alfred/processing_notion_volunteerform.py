@@ -52,16 +52,19 @@ def execute_volunteerform_pipeline():
     volunteers_from_notion = notion_handler.get_database_data()
     logger.info(f"Found {len(volunteers_from_notion)} rows in Volunteers")
 
-    # 1. select updated and new records in the Notion table and update db
+    # 1. select updated in the Notion table and update db
+    count = 0
     for volunteer_page in volunteers_from_notion:
         volunteerform_object = get_database_object(volunteer_page)
         if volunteerform_object and is_later_than(
             datetime.fromisoformat(volunteer_page["last_edited_time"]),
             volunteerform_object.updated_at,
         ):
+            count += 1
             write_or_update_page_to_db(
                 update_object=volunteerform_object, volunteer_page=volunteer_page
             )
+    logger.info(f"Updated {count} VolunteerForm objects")
 
     # 2. notion pages to be deleted from db
     notion_ids = [volunteer_page["id"] for volunteer_page in volunteers_from_notion]
@@ -262,7 +265,6 @@ def write_or_update_page_to_db(
         return
 
     volunteer_form_data, m2m_data = data
-    print(f"DEBUG:write_or_update_page_to_db:{volunteer_form_data=}, {m2m_data=}")
 
     try:
         with transaction.atomic():
@@ -365,14 +367,6 @@ def parse_days(days: List[str] | None) -> List[Need4DeedDaySchedule] | None:
     return schedule_objects or None
 
 
-def update_volunteerform_object(
-    volunteerform_object: VolunteerForm, volunteer_page: dict
-):
-    logger.info(f"Attempting to update Notion page id={volunteer_page['id']}")
-    volunteerform_object.delete()
-    write_or_update_page_to_db(volunteer_page)
-
-
 def get_database_object(volunteer_page: dict) -> VolunteerForm | None:
     try:
         return VolunteerForm.objects.get(notion_id=volunteer_page["id"])
@@ -447,14 +441,22 @@ def write_volunteerform_to_notion(volunteerform: VolunteerForm):
     properties["Comments"] = {
         "rich_text": [{"text": {"content": volunteerform.comments}}]
     }
-    properties["Timestamp"] = {
-        "date": {"start": datetime.now().strftime("%Y-%m-%d %H:%M:%S")}
-    }
+    opportunity_page_id = (
+        str(volunteerform.origin_opportunity.notion_id)
+        if volunteerform.origin_opportunity
+        else None
+    )
+    if opportunity_page_id:
+        properties["Opportunity link"] = {"relation": [{"id": opportunity_page_id}]}
+    if not volunteerform.notion_id:
+        properties["Timestamp"] = {
+            "date": {"start": datetime.now().strftime("%Y-%m-%d %H:%M:%S")}
+        }
 
     page = notion_handler.add_page(properties=properties)
 
     volunteerform.notion_id = get_key_value(page, ["id"])
-    print(f"DEBUG:write_volunteerform_to_notion:{volunteerform.notion_id=}")
+    logger.debug(f"Page: {volunteerform.notion_id=} is written.")
     volunteerform.save()
 
 
@@ -477,7 +479,7 @@ def get_language_list(volunteer: VolunteerForm) -> list[str]:
     return languages_and_levels
 
 
-def get_schedule_list(volunteer: VolunteerForm) -> list[str]:
+def get_schedule_list(volunteer: VolunteerForm, delimiter=" | ") -> list[str]:
     days = [
         "Occasional",
         "Monday",
@@ -497,7 +499,7 @@ def get_schedule_list(volunteer: VolunteerForm) -> list[str]:
             schedule[day].append(time_slot)
         else:
             schedule[day] = [time_slot]
-    delimiter = " | "
+
     return [f"{days[day]} {delimiter.join(schedule[day])}" for day in schedule.keys()]
 
 

@@ -51,10 +51,10 @@ class BerlinLocations(models.TextChoices):
 
 
 class Need4DeedTimeSlots(models.TextChoices):
-    MORNING = "morning", "Morning"
-    NOON = "noon", "Noon"
-    AFTERNOON = "afternoon", "Afternoon"
-    EVENING = "evening", "Evening"
+    MORNING = "08-11", "Morning"
+    NOON = "11-14", "Noon"
+    AFTERNOON = "14-17", "Afternoon"
+    EVENING = "17-20", "Evening"
     WEEKDAYS = "weekdays", "Weekdays"
     WEEKENDS = "weekends", "Weekends"
     GFORM_0810 = "8.00 - 10.00", "08:10"

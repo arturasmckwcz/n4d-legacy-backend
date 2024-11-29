@@ -225,7 +225,7 @@ class VolunteerForm(ModelWithTimestamps):
     comments = models.CharField(max_length=1024, null=True, blank=True)
     comments_workflow = models.CharField(max_length=1024, null=True, blank=True)
     notion_id = models.UUIDField(editable=False, unique=True, blank=True, null=True)
-    origin_opportunity_id = models.ForeignKey(
+    origin_opportunity = models.ForeignKey(
         Opportunity, on_delete=models.SET_NULL, null=True, blank=True
     )
     last_edited_time_notion = models.DateTimeField(null=True)

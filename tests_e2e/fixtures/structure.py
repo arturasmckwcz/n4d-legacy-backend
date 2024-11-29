@@ -124,7 +124,7 @@ class VolunteerFormData(BaseModel):
     native_languages: list[str]
     fluent_languages: Optional[list[str]] = None
     intermediate_languages: Optional[list[str]]
-    origin_opportunity_id: Optional[str] = None
+    origin_opportunity: Optional[str] = None
     lead_from: str
 
 
