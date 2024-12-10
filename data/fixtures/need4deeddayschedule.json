@@ -1,0 +1,242 @@
+[
+  {
+    "fields": {
+      "day": 0,
+      "time_slot": "weekends"
+    },
+    "model": "data.need4deeddayschedule",
+    "pk": 1
+  },
+  {
+    "fields": {
+      "day": 0,
+      "time_slot": "workdays"
+    },
+    "model": "data.need4deeddayschedule",
+    "pk": 2
+  },
+  {
+    "fields": {
+      "day": 1,
+      "time_slot": "08-11"
+    },
+    "model": "data.need4deeddayschedule",
+    "pk": 3
+  },
+  {
+    "fields": {
+      "day": 1,
+      "time_slot": "11-14"
+    },
+    "model": "data.need4deeddayschedule",
+    "pk": 4
+  },
+  {
+    "fields": {
+      "day": 1,
+      "time_slot": "14-17"
+    },
+    "model": "data.need4deeddayschedule",
+    "pk": 5
+  },
+  {
+    "fields": {
+      "day": 1,
+      "time_slot": "17-20"
+    },
+    "model": "data.need4deeddayschedule",
+    "pk": 6
+  },
+  {
+    "fields": {
+      "day": 2,
+      "time_slot": "08-11"
+    },
+    "model": "data.need4deeddayschedule",
+    "pk": 7
+  },
+  {
+    "fields": {
+      "day": 2,
+      "time_slot": "11-14"
+    },
+    "model": "data.need4deeddayschedule",
+    "pk": 8
+  },
+  {
+    "fields": {
+      "day": 2,
+      "time_slot": "14-17"
+    },
+    "model": "data.need4deeddayschedule",
+    "pk": 9
+  },
+  {
+    "fields": {
+      "day": 2,
+      "time_slot": "17-20"
+    },
+    "model": "data.need4deeddayschedule",
+    "pk": 10
+  },
+  {
+    "fields": {
+      "day": 3,
+      "time_slot": "08-11"
+    },
+    "model": "data.need4deeddayschedule",
+    "pk": 11
+  },
+  {
+    "fields": {
+      "day": 3,
+      "time_slot": "11-14"
+    },
+    "model": "data.need4deeddayschedule",
+    "pk": 12
+  },
+  {
+    "fields": {
+      "day": 3,
+      "time_slot": "14-17"
+    },
+    "model": "data.need4deeddayschedule",
+    "pk": 13
+  },
+  {
+    "fields": {
+      "day": 3,
+      "time_slot": "17-20"
+    },
+    "model": "data.need4deeddayschedule",
+    "pk": 14
+  },
+  {
+    "fields": {
+      "day": 4,
+      "time_slot": "08-11"
+    },
+    "model": "data.need4deeddayschedule",
+    "pk": 15
+  },
+  {
+    "fields": {
+      "day": 4,
+      "time_slot": "11-14"
+    },
+    "model": "data.need4deeddayschedule",
+    "pk": 16
+  },
+  {
+    "fields": {
+      "day": 4,
+      "time_slot": "14-17"
+    },
+    "model": "data.need4deeddayschedule",
+    "pk": 17
+  },
+  {
+    "fields": {
+      "day": 4,
+      "time_slot": "17-20"
+    },
+    "model": "data.need4deeddayschedule",
+    "pk": 18
+  },
+  {
+    "fields": {
+      "day": 5,
+      "time_slot": "08-11"
+    },
+    "model": "data.need4deeddayschedule",
+    "pk": 19
+  },
+  {
+    "fields": {
+      "day": 5,
+      "time_slot": "11-14"
+    },
+    "model": "data.need4deeddayschedule",
+    "pk": 20
+  },
+  {
+    "fields": {
+      "day": 5,
+      "time_slot": "14-17"
+    },
+    "model": "data.need4deeddayschedule",
+    "pk": 21
+  },
+  {
+    "fields": {
+      "day": 5,
+      "time_slot": "17-20"
+    },
+    "model": "data.need4deeddayschedule",
+    "pk": 22
+  },
+  {
+    "fields": {
+      "day": 6,
+      "time_slot": "08-11"
+    },
+    "model": "data.need4deeddayschedule",
+    "pk": 23
+  },
+  {
+    "fields": {
+      "day": 6,
+      "time_slot": "11-14"
+    },
+    "model": "data.need4deeddayschedule",
+    "pk": 24
+  },
+  {
+    "fields": {
+      "day": 6,
+      "time_slot": "14-17"
+    },
+    "model": "data.need4deeddayschedule",
+    "pk": 25
+  },
+  {
+    "fields": {
+      "day": 6,
+      "time_slot": "17-20"
+    },
+    "model": "data.need4deeddayschedule",
+    "pk": 26
+  },
+  {
+    "fields": {
+      "day": 7,
+      "time_slot": "08-11"
+    },
+    "model": "data.need4deeddayschedule",
+    "pk": 27
+  },
+  {
+    "fields": {
+      "day": 7,
+      "time_slot": "11-14"
+    },
+    "model": "data.need4deeddayschedule",
+    "pk": 28
+  },
+  {
+    "fields": {
+      "day": 7,
+      "time_slot": "14-17"
+    },
+    "model": "data.need4deeddayschedule",
+    "pk": 29
+  },
+  {
+    "fields": {
+      "day": 7,
+      "time_slot": "17-20"
+    },
+    "model": "data.need4deeddayschedule",
+    "pk": 30
+  }
+]

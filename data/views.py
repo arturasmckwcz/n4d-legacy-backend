@@ -5,6 +5,7 @@ from django.db.models import Subquery
 from django.utils.datastructures import MultiValueDictKeyError
 from django.utils.decorators import method_decorator
 from django.views.decorators.cache import cache_page
+from rest_framework import mixins
 from rest_framework.generics import CreateAPIView, ListAPIView
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
@@ -21,6 +22,7 @@ from data.models import (
     Skill,
 )
 from data.serializers import (
+    OpportunityCreateSerializer,
     OpportunitySerializer,
     PersonSerializer,
     VolunteerFormSerializer,
@@ -41,9 +43,8 @@ class DataPersonView(APIView):
         return response
 
 
-class DataOpportunityListView(ListAPIView):
+class DataOpportunityListView(mixins.CreateModelMixin, ListAPIView):
     permission_classes = (AllowAny,)
-    serializer_class = OpportunitySerializer
 
     @method_decorator(cache_page(60 * 45))  # 45 mins
     def dispatch(self, *args, **kwargs):
@@ -73,6 +74,14 @@ class DataOpportunityListView(ListAPIView):
             primary_keys = []
         context["primary_keys"] = primary_keys
         return context
+
+    def get_serializer_class(self):  # type: ignore
+        if self.request.method == "POST":
+            return OpportunityCreateSerializer
+        return OpportunitySerializer
+
+    def post(self, request, *args, **kwargs):
+        return self.create(request, *args, **kwargs)
 
 
 def get_options_list(queryset, field):

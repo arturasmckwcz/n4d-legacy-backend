@@ -4,6 +4,7 @@ from django.db import models
 
 from data.enums import (
     DAY_CHOICES,
+    DEFAULTS,
     BerlinLocations,
     LanguageLevel,
     Need4DeedTimeSlots,
@@ -77,7 +78,7 @@ class FormLeadFrom(models.Model):
 
 class Language(models.Model):
     title = models.CharField(max_length=128, db_index=True)
-    iso_code = models.CharField(max_length=3, db_index=True)
+    iso_code = models.CharField(max_length=3, unique=True, db_index=True)
 
     def __str__(self):
         return f"{self.iso_code} | {self.title}"
@@ -143,6 +144,19 @@ class Organization(ModelWithTimestamps):
         return f"{self.name}"
 
 
+class Need4DeedDaySchedule(models.Model):
+    day = models.IntegerField(choices=DAY_CHOICES)
+    time_slot = models.CharField(
+        max_length=20, choices=Need4DeedTimeSlots.choices, default=None
+    )
+
+    class Meta:
+        unique_together = ["day", "time_slot"]
+
+    def __str__(self):
+        return f"{DAY_CHOICES[self.day][1]} - {self.time_slot}"
+
+
 class LanguageM2M(models.Model):
     language = models.ForeignKey(Language, on_delete=models.CASCADE)
 
@@ -156,6 +170,10 @@ class OpportunityLanguageM2M(LanguageM2M):
 
 class Opportunity(ModelWithTimestamps):
     title = models.CharField(max_length=128, default="Good Samaritan")
+    rac_email = models.EmailField(null=True)
+    rac_full_name = models.CharField(max_length=128, null=True)
+    rac_plz = models.IntegerField(null=True)
+    rac_phone = models.CharField(max_length=64, null=True)
     opportunity_type = models.CharField(
         choices=OpportunityType.choices, default=OpportunityType.GENERAL
     )
@@ -164,9 +182,15 @@ class Opportunity(ModelWithTimestamps):
     )
     volunteers_number = models.IntegerField(default=1)
     datetime_str = models.CharField(max_length=128, null=True, blank=True)
-    timeslots = models.ManyToManyField(Timeslot, blank=True)
+    timeslots = models.ManyToManyField(Need4DeedDaySchedule, blank=True)
     activities = models.ManyToManyField(Activity, blank=True)
     berlin_locations = models.ManyToManyField(BerlinLocation)
+    accomp_address = models.CharField(max_length=128, null=True, blank=True)
+    accomp_datetime = models.DateTimeField(null=True)
+    accomp_name = models.CharField(max_length=128, null=True, blank=True)
+    accomp_phone = models.CharField(max_length=64, null=True, blank=True)
+    accomp_information = models.TextField(blank=True, null=True)
+    accomp_if_translation_english = models.BooleanField(null=True)
     languages = models.ManyToManyField(
         Language,
         through=OpportunityLanguageM2M,
@@ -174,28 +198,17 @@ class Opportunity(ModelWithTimestamps):
     )
     skills = models.ManyToManyField(Skill, blank=True)
     notion_id = models.UUIDField(
-        default=uuid.uuid4, editable=False, unique=True, blank=True, null=True
+        default=None, editable=False, unique=True, blank=True, null=True
     )
-    status = models.CharField(max_length=128, db_index=True)
+    status = models.CharField(
+        max_length=128, default=DEFAULTS.OPPORTUNITY_STATUS, db_index=True
+    )
     vo_information = models.TextField(blank=True, null=True)
     last_edited_time_notion = models.DateTimeField(null=True)
     schedule_str = models.CharField(max_length=1024, null=True, blank=True)
 
     def __str__(self):
-        return self.title
-
-
-class Need4DeedDaySchedule(models.Model):
-    day = models.IntegerField(choices=DAY_CHOICES)
-    time_slot = models.CharField(
-        max_length=20, choices=Need4DeedTimeSlots.choices, default=None
-    )
-
-    class Meta:
-        unique_together = ["day", "time_slot"]
-
-    def __str__(self):
-        return f"{DAY_CHOICES[self.day][1]} - {self.time_slot}"
+        return f"{self.title} | {self.rac_email}"
 
 
 class VolunteerLanguageM2M(LanguageM2M):

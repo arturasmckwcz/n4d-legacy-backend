@@ -60,11 +60,6 @@ class ApiActivity(BaseModel):
     description: Optional[str | None]
 
 
-class ApiTargetGroup(BaseModel):
-    title: str
-    description: Optional[str | None]
-
-
 class ApiSkill(BaseModel):
     title: str
     description: Optional[str | None]
@@ -126,11 +121,6 @@ class VolunteerFormData(BaseModel):
     intermediate_languages: Optional[list[str]]
     origin_opportunity: Optional[str] = None
     lead_from: str
-
-
-class TargetGroup(BaseModel):
-    title: str
-    description: Optional[str] = None
 
 
 class Organization(BaseModel):

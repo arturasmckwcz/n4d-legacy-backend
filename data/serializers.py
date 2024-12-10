@@ -1,7 +1,7 @@
 import structlog
 from rest_framework import serializers
 
-from data.enums import LanguageLevel
+from data.enums import AUTHORIZED_DOMAINS, LanguageLevel
 from data.models import (
     Activity,
     Avatar,
@@ -236,6 +236,80 @@ class OpportunitySerializer(serializers.ModelSerializer):
         return flatten_dict(response, primary_keys)
 
 
+class OpportunityCreateSerializer(serializers.ModelSerializer):
+    berlin_locations = serializers.ListField(
+        child=serializers.CharField(), write_only=True
+    )
+    languages = serializers.ListField(child=serializers.CharField(), write_only=True)
+    activities = serializers.ListField(child=serializers.CharField(), write_only=True)
+    skills = serializers.ListField(child=serializers.CharField(), write_only=True)
+    timeslots = serializers.ListField(
+        child=serializers.ListField(child=serializers.CharField()), write_only=True
+    )
+
+    def validate_rac_email(self, value):
+        _, domain = value.split("@")
+        if domain.lower() not in AUTHORIZED_DOMAINS:
+            raise serializers.ValidationError("Attempt of unauthorized access.")
+        return value
+
+    def validate_rac_postal_code(
+        self, value
+    ):  # 01001-95999 range for Deutschland and 10115-14199 for Berlin
+        if value < 1001 or value > 95999:
+            raise serializers.ValidationError(
+                "Postal code should be between 01001 and 95999"
+            )
+        return value
+
+    def create(self, validated_data):
+        berlin_locations_data = validated_data.pop("berlin_locations", [])
+        berlin_locations = []
+        for location_name in berlin_locations_data:
+            location, _ = BerlinLocation.objects.get_or_create(name=location_name)
+            berlin_locations.append(location)
+
+        activities_data = validated_data.pop("activities", [])
+        activities = []
+        for activity_name in activities_data:
+            activity, _ = Activity.objects.get_or_create(title=activity_name)
+            activities.append(activity)
+
+        skills_data = validated_data.pop("skills", [])
+        skills = []
+        for skill_name in skills_data:
+            skill, _ = Skill.objects.get_or_create(title=skill_name)
+            skills.append(skill)
+
+        languages_data = validated_data.pop("languages", [])
+        languages = []
+        for language_name in languages_data:
+            language = Language.objects.get(title=language_name)
+            languages.append(language)
+
+        timeslots_data = validated_data.pop("timeslots", [])
+        timeslots = []
+        for day, time_slot in timeslots_data:
+            logger.debug(f"{day=}, {time_slot=}")
+            day_number = int(day)
+            timeslot_object, _ = Need4DeedDaySchedule.objects.get_or_create(
+                day=day_number, time_slot=time_slot
+            )
+            timeslots.append(timeslot_object)
+
+        oppotunity_object = Opportunity.objects.create(**validated_data)
+        oppotunity_object.berlin_locations.set(berlin_locations)
+        oppotunity_object.activities.set(activities)
+        oppotunity_object.skills.set(skills)
+        oppotunity_object.languages.set(languages)
+        oppotunity_object.timeslots.set(timeslots)
+        return oppotunity_object
+
+    class Meta:
+        model = Opportunity
+        fields = "__all__"
+
+
 class VolunteerFormSerializer(serializers.ModelSerializer):
     schedule = serializers.ListField(
         child=serializers.ListField(child=serializers.CharField()), write_only=True
@@ -274,7 +348,7 @@ class VolunteerFormSerializer(serializers.ModelSerializer):
     ):  # 01001-95999 range for Deutschland and 10115-14199 for Berlin
         if value < 1001 or value > 95999:
             raise serializers.ValidationError(
-                "Postal code should be between 1001 and 95999"
+                "Postal code should be between 01001 and 95999"
             )
         return value
 

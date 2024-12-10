@@ -244,10 +244,9 @@ run-test-e2e:
         --container alfred-container-${ENV_SUFFIX} \
         --command "/bin/sh -c '
           python3 manage.py seed_data && \
-          python3 manage.py loaddata data/fixtures/languages.json && \
           python3 manage.py loaddata data/fixtures/activities.json && \
           python3 manage.py loaddata data/fixtures/berlinlocations.json && \
-          python3 manage.py loaddata data/fixtures/timeslots.json && \
+          python3 manage.py loaddata data/fixtures/need4deeddayschedule.json && \
           python3 manage.py loaddata data/fixtures/skills.json && \
           python3 manage.py loaddata data/fixtures/opportunities.json
         '" \

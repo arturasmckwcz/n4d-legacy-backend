@@ -1,0 +1,85 @@
+services:
+  alfred:
+    container_name: alfred
+    build:
+      context: .
+      args:
+        DJANGO_SECRET_KEY: ${DJANGO_SECRET_KEY}
+        DEBUG: ${DEBUG}
+        AWS_SES_ACCESS_KEY_ID: ${AWS_SES_ACCESS_KEY_ID}
+        AWS_SES_SECRET_ACCESS_KEY: ${AWS_SES_SECRET_ACCESS_KEY}
+        AWS_SES_REGION_NAME: ${AWS_SES_REGION_NAME}
+        AWS_SES_FROM_EMAIL: ${AWS_SES_FROM_EMAIL}
+        DOMAIN: ${DOMAIN}
+        SITE_NAME: ${SITE_NAME}
+        POSTGRES_HOST: ${POSTGRES_HOST} # "postgresdb"
+        NOTION_SECRET: ${NOTION_SECRET}
+        NOTION_OPPORTUNITIES_ID: ${NOTION_OPPORTUNITIES_ID}
+        NOTION_VOLUNTEERS_ID: ${NOTION_VOLUNTEERS_ID}
+        CELERY_BROKER_URL: ${CELERY_BROKER_URL} # "redis://valkey:6379"
+        CELERY_RESULT_BACKEND: ${CELERY_RESULT_BACKEND} # "redis://valkey:6379"
+        ALFRED_LAST_COMMIT_HASH: ${ALFRED_LAST_COMMIT_HASH} # "not local hashes"
+        ENVIRONMENT: ${ENVIRONMENT}
+    entrypoint: ["./entrypoint.sh"]
+    image: alfred:dev
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"
+    depends_on:
+      postgresdb:
+        condition: service_healthy
+      valkey:
+        condition: service_started
+    expose:
+      - "8000"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/sanity/"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+  valkey:
+    image: valkey/valkey:alpine
+    container_name: valkey
+
+  postgresdb:
+    image: postgres
+    container_name: pgdb
+    environment:
+      - POSTGRES_DB=test_name
+      - POSTGRES_USER=test_user
+      - POSTGRES_PASSWORD=test_password
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U test_user -d test_name"]
+      interval: 3s
+      timeout: 6s
+      retries: 5
+
+  celery_worker:
+    image: alfred:dev
+    container_name: celery_worker
+    entrypoint: []
+    command: celery -A alfred worker --loglevel=DEBUG
+    volumes:
+      - .:/app
+    env_file:
+      - .env
+    restart: always
+    depends_on:
+      alfred:
+        condition: service_healthy
+
+  celery_beat:
+    image: alfred:dev
+    container_name: celery_beat
+    entrypoint: []
+    command: celery -A alfred beat --loglevel=DEBUG --scheduler django_celery_beat.schedulers:DatabaseScheduler
+    volumes:
+      - .:/app
+    env_file:
+      - .env
+    depends_on:
+      alfred:
+        condition: service_healthy

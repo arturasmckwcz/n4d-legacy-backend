@@ -96,3 +96,34 @@ class LanguageLevel(models.TextChoices):
     ADVANCED = "advanced"
     FLUENT = "fluent"
     NATIVE = "native"
+
+
+class DEFAULTS:
+    OPPORTUNITY_STATUS = "Not started"
+
+
+AUTHORIZED_DOMAINS = [
+    "lfg-b.de",
+    "berliner-stadtmission.de",
+    "awo-mitte.de",
+    "prisod-wohnen.de",
+    "albatrosggmbh.de",
+    "gu-oberhafen.de",
+    "heroeurope.com",
+    "tamaja-gu.de",
+    "volkssolidaritaet.de",
+    "unionhilfswerk.de",
+    "cjd.de",
+    "centro-hotels.de",
+    "stephanus.org",
+    "city54.de",
+    "milaa-berlin.de",
+    "stk118.de",
+    "drk-mueggelspree.de",
+    "laf.berlin.de",
+    "ejf.de",
+    "diakonie-stadtmitte.de",
+    "tamaja.de",
+    "pgssoziales.de",
+    "caritas-berlin.de",
+]
