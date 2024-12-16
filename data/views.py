@@ -10,7 +10,6 @@ from rest_framework.generics import CreateAPIView, ListAPIView
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from silk.profiling.profiler import silk_profile
 
 from data.enums import OptionsList
 from data.models import (
@@ -50,7 +49,6 @@ class DataOpportunityListView(mixins.CreateModelMixin, ListAPIView):
     def dispatch(self, *args, **kwargs):
         return super().dispatch(*args, **kwargs)
 
-    @silk_profile(name="Post Profiling")
     def get_queryset(self):  # type: ignore (asking for return type Never which is nonsense)
         try:
             filter_dict = json.loads(self.request.GET["search"])

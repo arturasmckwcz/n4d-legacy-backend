@@ -58,13 +58,11 @@ INSTALLED_APPS = [
     "data",
     "drf_spectacular",
     "recurrence",
-    "silk",
     "django_celery_beat",
     "gunicorn",
 ]
 
 MIDDLEWARE = [
-    "silk.middleware.SilkyMiddleware",  # it has be on the top
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "corsheaders.middleware.CorsMiddleware",
@@ -77,12 +75,6 @@ MIDDLEWARE = [
     "django_structlog.middlewares.RequestMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",
 ]
-
-SILKY_AUTHENTICATION = True  # User must login to silk
-SILKY_AUTHORISATION = True  # User must have permissions to login to silk
-SILKY_META = True  # trace silk's impact on the code
-SILKY_INTERCEPT_PERCENT = 100  # log only N% of requests
-SILKY_PYTHON_PROFILER = True  # turn on cprofile
 
 CELERY_BROKER_URL = read_env_var("CELERY_BROKER_URL")
 CELERY_RESULT_BACKEND = read_env_var("CELERY_RESULT_BACKEND")
