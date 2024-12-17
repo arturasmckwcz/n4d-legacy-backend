@@ -32,11 +32,28 @@ else:
 
 app.conf.beat_schedule = {
     "pull_opportunities": {
-        "task": "alfred.tasks.process_opportunities",
+        "task": "alfred.tasks.process_pull_opportunities",
+        "one_off": True,
+        "enabled": False,
+        "schedule": schedule,
+    },
+    "sync_opportunities": {
+        "task": "alfred.tasks.process_sync_opportunities",
+        "schedule": schedule,
+    },
+    "pull_volunteerform": {
+        "task": "alfred.tasks.process_pull_volunteerform",
+        "one_off": True,
+        "enabled": False,
         "schedule": schedule,
     },
     "sync_volunteerform": {
-        "task": "alfred.tasks.process_volunteerform",
+        "task": "alfred.tasks.process_sync_volunteerform",
+        "schedule": schedule,
+    },
+    "old_pull_opportunities": {
+        "task": "alfred.tasks.process_opportunities",
+        "enabled": False,
         "schedule": schedule,
     },
 }

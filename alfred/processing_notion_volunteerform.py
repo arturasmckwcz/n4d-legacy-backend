@@ -4,16 +4,21 @@ from typing import List
 import structlog
 from django.db import transaction
 
+from alfred.config.globals import comments_delimiter, comments_none
 from alfred.notion_handler import NotionHandler
 from alfred.utils import (
     YesNo,
     get_clean_select_for_notion,
+    get_database_object,
     get_key_value,
+    get_list,
+    get_schedule_list,
     get_the_first,
     get_yes_no,
     is_later_than,
     parse_yes_no,
     read_env_var,
+    update_notion_page,
 )
 from data.enums import Need4DeedTimeSlots
 from data.models import (
@@ -36,10 +41,6 @@ notion_handler = NotionHandler(notion_database_id)
 full_name_placeholder = "NAME PLACEHOLDER"
 
 
-def update_notion_page(handler, page_id, properties):
-    return handler.update_page(page_id, properties)
-
-
 def execute_volunteerform_seed_pipeline():
     volunteers_from_notion = notion_handler.get_database_data()
     logger.info(f"Found {len(volunteers_from_notion)} rows in Volunteers")
@@ -55,7 +56,7 @@ def execute_volunteerform_pipeline():
     # 1. select updated in the Notion table and update db
     count = 0
     for volunteer_page in volunteers_from_notion:
-        volunteerform_object = get_database_object(volunteer_page)
+        volunteerform_object = get_database_object(volunteer_page, VolunteerForm)
         if volunteerform_object and is_later_than(
             datetime.fromisoformat(volunteer_page["last_edited_time"]),
             volunteerform_object.updated_at,
@@ -127,8 +128,6 @@ def prepare_page_data_for_db(volunteer_page: dict) -> tuple | None:
         lead_from = ", ".join([lead["name"] for lead in lead_from])
         volunteer_form_data["lead_from"] = lead_from or None
 
-        comments_delimiter = "<|>"
-        comments_none = "NONE"
         # the order: "Comments","Other comments on schedule","Other activities","Other languages"
         comments_just = get_the_first(
             volunteer_page["properties"]["Comments"]["rich_text"]
@@ -367,13 +366,6 @@ def parse_days(days: List[str] | None) -> List[Need4DeedDaySchedule] | None:
     return schedule_objects or None
 
 
-def get_database_object(volunteer_page: dict) -> VolunteerForm | None:
-    try:
-        return VolunteerForm.objects.get(notion_id=volunteer_page["id"])
-    except VolunteerForm.DoesNotExist:
-        return None
-
-
 def write_volunteerform_to_notion(volunteerform: VolunteerForm):
     properties = {}
     properties["E-mail"] = {
@@ -477,31 +469,3 @@ def get_language_list(volunteer: VolunteerForm) -> list[str]:
             )
 
     return languages_and_levels
-
-
-def get_schedule_list(volunteer: VolunteerForm, delimiter=" | ") -> list[str]:
-    days = [
-        "Occasional",
-        "Monday",
-        "Tuesday",
-        "Wednesday",
-        "Thursday",
-        "Friday",
-        "Saturday",
-        "Sunday",
-    ]
-
-    schedule = {}
-    for item in volunteer.schedule.all():
-        day = item.day
-        time_slot = item.time_slot
-        if day in schedule:
-            schedule[day].append(time_slot)
-        else:
-            schedule[day] = [time_slot]
-
-    return [f"{days[day]} {delimiter.join(schedule[day])}" for day in schedule.keys()]
-
-
-def get_list(items, key: str) -> list[str]:
-    return [getattr(item, key) for item in items]

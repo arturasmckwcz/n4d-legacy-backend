@@ -2,15 +2,22 @@ import ast
 from datetime import datetime
 from enum import StrEnum, auto
 from os import getenv
-from typing import Any, List
+from typing import TYPE_CHECKING, Any, List, Type, TypeVar, Union
 
 import structlog
 from rest_framework.request import Request
 from rest_framework.response import Response
 
+if TYPE_CHECKING:
+    from alfred.notion_handler import NotionHandler
+    from data.models import Opportunity, VolunteerForm
+
 from .config.defaults import defaults
 
 logger = structlog.get_logger(__name__)
+
+U = Union["VolunteerForm", "Opportunity"]
+T = TypeVar("T", bound=U)
 
 
 def itemize_str(list_string) -> list[str] | str | None:
@@ -214,6 +221,98 @@ def get_clean_select_for_notion(content: str | None) -> str | None:
     if len(select) > 100:
         select = select[:100]
     return select
+
+
+def update_notion_page(handler: "NotionHandler", page_id: str, properties: dict):
+    """Updates a page in Notion.
+
+    Args:
+        handler: Notion handler instance.
+        page_id: ID of the Notion page.
+        properties: Dictionary of properties to update.
+    Returns:
+        Awaitable: An awaitable object representing the asynchronous operation.
+    """
+    return handler.update_page(page_id, properties)
+
+
+def get_list(items, key: str) -> list[str]:
+    """Get attributes from objects.
+
+    Args:
+        items: List of objects.
+        key: Attribute name.
+
+    Returns:
+        list[str]: List of attribute values.
+    """
+    return [getattr(item, key) for item in items]
+
+
+def get_schedule_list(obj: U, delimiter=" | ") -> list[str]:
+    """Formats a schedule list from a VolunteerForm or Opportunity object.
+
+    Args:
+        obj: VolunteerForm or Opportunity object.
+        delimiter: Delimiter for time slots.
+
+    Returns:
+        List[str]: Formatted list of schedule strings.
+    """
+    days = [
+        "Occasional",
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
+        "Saturday",
+        "Sunday",
+    ]
+
+    schedule = {}
+
+    from data.models import Opportunity, VolunteerForm
+
+    if isinstance(obj, VolunteerForm):
+        items = obj.schedule.all()
+    elif isinstance(obj, Opportunity):
+        items = obj.timeslots.all()
+    else:
+        return []
+
+    for item in items:
+        day = item.day
+        time_slot = item.time_slot
+        if day in schedule:
+            schedule[day].append(time_slot)
+        else:
+            schedule[day] = [time_slot]
+
+    return [f"{days[day]} {delimiter.join(schedule[day])}" for day in schedule.keys()]
+
+
+def get_database_object(page: dict, model: Type[T]) -> T | None:
+    """Retrieves a database object from a given model and Notion page ID.
+
+    Args:
+        page: Dictionary representing a Notion page.
+        model: A Django model (VolunteerForm or Opportunity)
+
+    Returns:
+        A database object or None if not found or if multiple objects with the same notion_id are found.
+
+    Raises:
+        MultipleObjectsReturned: If more than one record with the same notion_id are found, this will be logged to the console.
+    """
+    notion_id = page["id"]
+    try:
+        return model.objects.get(notion_id=notion_id)
+    except model.DoesNotExist:
+        return None
+    except model.MultipleObjectsReturned:
+        logger.error(f"More than 1 record has got {notion_id=}")
+        return None
 
 
 class AlfredRequest(Request):

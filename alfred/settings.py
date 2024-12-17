@@ -316,5 +316,3 @@ os.makedirs(os.path.join(BASE_DIR, "logs"), exist_ok=True)
 
 
 # Feature flags
-FF_VOLUNTEER_CONNECTOR = True if ENV == "PRODUCTION" else False
-FF_OPPORTUNITY_CONNECTOR = False if ENV == "PRODUCTION" else True

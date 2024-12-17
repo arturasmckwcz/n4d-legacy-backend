@@ -172,6 +172,7 @@ class Opportunity(ModelWithTimestamps):
     title = models.CharField(max_length=128, default="Good Samaritan")
     rac_email = models.EmailField(null=True)
     rac_full_name = models.CharField(max_length=128, null=True)
+    rac_address = models.CharField(max_length=128, null=True)
     rac_plz = models.IntegerField(null=True)
     rac_phone = models.CharField(max_length=64, null=True)
     opportunity_type = models.CharField(
@@ -189,8 +190,9 @@ class Opportunity(ModelWithTimestamps):
     accomp_datetime = models.DateTimeField(null=True)
     accomp_name = models.CharField(max_length=128, null=True, blank=True)
     accomp_phone = models.CharField(max_length=64, null=True, blank=True)
+    accomp_postcode = models.CharField(null=True, blank=True)
     accomp_information = models.TextField(blank=True, null=True)
-    accomp_if_translation_english = models.BooleanField(null=True)
+    accomp_translation = models.CharField(max_length=64, null=True, blank=True)
     languages = models.ManyToManyField(
         Language,
         through=OpportunityLanguageM2M,
