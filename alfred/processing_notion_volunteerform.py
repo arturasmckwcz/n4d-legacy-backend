@@ -1,5 +1,4 @@
 from datetime import datetime
-from typing import List
 
 import structlog
 from django.db import transaction
@@ -16,21 +15,19 @@ from alfred.utils import (
     get_the_first,
     get_yes_no,
     is_later_than,
+    parse_days,
     parse_yes_no,
     read_env_var,
     update_notion_page,
 )
-from data.enums import Need4DeedTimeSlots
 from data.models import (
     Activity,
     BerlinLocation,
     Language,
-    Need4DeedDaySchedule,
     Skill,
     VolunteerForm,
     VolunteerLanguageM2M,
 )
-from data.utils import get_day_number_from_DAY_CHOICES, is_in_DAY_CHOICES
 
 logger = structlog.get_logger(__name__)
 
@@ -301,6 +298,8 @@ def write_or_update_page_to_db(
                         volunteerform=volunteerform_object,
                         level=level,
                     )
+                else:
+                    logger.error(f"Error: {language=} not found.")
 
             # 4 add schedule
             schedule_objects = parse_days(m2m_data["schedule"])
@@ -341,29 +340,6 @@ def write_or_update_page_to_db(
             f"Error {repr(e)} occurred while writing Notion page id={volunteer_page['id']} to database. Skipping."
         )
         return
-
-
-def parse_days(days: List[str] | None) -> List[Need4DeedDaySchedule] | None:
-    if (days is None) and (not isinstance(days, list)):
-        return None
-
-    schedule_objects = []
-
-    for day in days:
-        day, *timeframes = day.split(" ")
-        if not is_in_DAY_CHOICES(day):
-            continue
-
-        timeframes = " ".join(timeframes)
-        for form_timeframe, _ in Need4DeedTimeSlots.choices:
-            if form_timeframe in timeframes:
-                schedule_object, _ = Need4DeedDaySchedule.objects.get_or_create(
-                    day=get_day_number_from_DAY_CHOICES(day),
-                    time_slot=form_timeframe,
-                )
-                schedule_objects.append(schedule_object)
-
-    return schedule_objects or None
 
 
 def write_volunteerform_to_notion(volunteerform: VolunteerForm):

@@ -8,9 +8,12 @@ import structlog
 from rest_framework.request import Request
 from rest_framework.response import Response
 
+from data.enums import Need4DeedTimeSlots
+from data.utils import get_day_number_from_DAY_CHOICES, is_in_DAY_CHOICES
+
 if TYPE_CHECKING:
     from alfred.notion_handler import NotionHandler
-    from data.models import Opportunity, VolunteerForm
+    from data.models import Need4DeedDaySchedule, Opportunity, VolunteerForm
 
 from .config.defaults import defaults
 
@@ -247,6 +250,31 @@ def get_list(items, key: str) -> list[str]:
         list[str]: List of attribute values.
     """
     return [getattr(item, key) for item in items]
+
+
+def parse_days(days: List[str] | None) -> List["Need4DeedDaySchedule"] | None:
+    if (days is None) and (not isinstance(days, list)):
+        return None
+
+    schedule_objects = []
+
+    for day in days:
+        day, *timeframes = day.split(" ")
+        if not is_in_DAY_CHOICES(day):
+            continue
+
+        timeframes = " ".join(timeframes)
+        from data.models import Need4DeedDaySchedule
+
+        for form_timeframe, _ in Need4DeedTimeSlots.choices:
+            if form_timeframe in timeframes:
+                schedule_object, _ = Need4DeedDaySchedule.objects.get_or_create(
+                    day=get_day_number_from_DAY_CHOICES(day),
+                    time_slot=form_timeframe,
+                )
+                schedule_objects.append(schedule_object)
+
+    return schedule_objects or None
 
 
 def get_schedule_list(obj: U, delimiter=" | ") -> list[str]:

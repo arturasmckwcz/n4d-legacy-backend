@@ -6,6 +6,7 @@ from django.db import transaction
 from alfred.config.globals import comments_delimiter, comments_none
 from alfred.notion_handler import NotionHandler
 from alfred.utils import (
+    YesNo,
     get_clean_select_for_notion,
     get_database_object,
     get_key_value,
@@ -13,7 +14,9 @@ from alfred.utils import (
     get_schedule_list,
     get_the_first,
     is_later_than,
+    parse_days,
     read_env_var,
+    update_notion_page,
 )
 from data.models import (
     Activity,
@@ -22,6 +25,7 @@ from data.models import (
     Opportunity,
     OpportunityLanguageM2M,
     OpportunityType,
+    Skill,
 )
 
 logger = structlog.get_logger(__name__)
@@ -235,7 +239,8 @@ def execute_opportunities_pipeline():
 def prepare_opportunity_data_for_db(opportunity_page: dict) -> tuple | None:
     opportunity_data = {}
     try:
-        opportunity_data["notion_id"] = opportunity_page["id"]
+        notion_id = opportunity_page["id"]
+        opportunity_data["notion_id"] = notion_id
 
         title = get_the_first(
             opportunity_page["properties"]["Name"]["title"], should_raise=True
@@ -289,20 +294,22 @@ def prepare_opportunity_data_for_db(opportunity_page: dict) -> tuple | None:
             opportunity_page,
             ["properties", "Number of volunteers needed", "select", "name"],
         )
-        opportunity_data["volunteers_number"] = int(volunteers_number) or 1
+        opportunity_data["volunteers_number"] = volunteers_number or 1
 
         voInfo = get_the_first(
             opportunity_page["properties"]["VO information"]["rich_text"]
         )
         opportunity_data["vo_information"] = get_key_value(voInfo, ["plain_text"])
 
-        racInfo = get_the_first(
+        rac_info = get_the_first(
             opportunity_page["properties"]["RAC Contact"]["rich_text"]
         )
-        racInfo = get_key_value(racInfo, ["plain_text"])
-        racInfo = racInfo.split(comments_delimiter)
-        if len(racInfo) == 5:
-            rac_full_name, rac_email, rac_phone, rac_address, rac_plz = racInfo
+        rac_info = get_key_value(rac_info, ["plain_text"])
+        rac_info = (
+            rac_info.split(comments_delimiter) if isinstance(rac_info, str) else []
+        )
+        if len(rac_info) == 5:
+            rac_full_name, rac_email, rac_phone, rac_address, rac_plz = rac_info
             opportunity_data["rac_full_name"] = rac_full_name
             opportunity_data["rac_email"] = rac_email
             opportunity_data["rac_phone"] = rac_phone
@@ -311,10 +318,31 @@ def prepare_opportunity_data_for_db(opportunity_page: dict) -> tuple | None:
 
     except Exception as e:
         logger.error(
-            f"Error {repr(e)} occurred while processing Notion page id={opportunity_page['id']} structure. Skipping."
+            f"Error {repr(e)} occurred while preparing model fields by Notion page id={opportunity_page['id']}. Skipping."
         )
         return None
-    return (opportunity_data, {})  # returning m2m for consistency purposes
+
+    def get_multi_select_from_page(key: str, should_raise=False) -> list:
+        items = get_key_value(opportunity_page, ["properties", key, "multi_select"])
+        if isinstance(items, list):
+            return [item["name"] for item in items]
+        elif should_raise:
+            raise ValueError(f'Value of "{key}" column is not a list {notion_id=}')
+        else:
+            return []
+
+    m2m_data = {}
+
+    for field, column in [
+        ("languages", "Refugee Languages"),
+        ("activities", "Type"),
+        ("berlin_locations", "District VO"),
+        ("skills", "Skills"),
+        ("timeslots", "VO Schedule"),
+    ]:
+        m2m_data[field] = get_multi_select_from_page(column)
+
+    return (opportunity_data, m2m_data)  # returning m2m for consistency purposes
 
 
 def write_or_update_opportunity_to_db(
@@ -332,8 +360,71 @@ def write_or_update_opportunity_to_db(
             if update_object:
                 success, deleted_dict = update_object.delete()
 
+            # 1. create model
             opportunity_object = Opportunity(**opportunity_data)
             opportunity_object.save()
+
+            # 2. add M2Ms
+            for language in m2m_data["languages"]:
+                if language == "Farsi/Dari" or language == "Farsi":
+                    language = "Persian"
+
+                language_object = Language.objects.filter(title=language).first()
+                if language_object:
+                    OpportunityLanguageM2M.objects.create(
+                        language=language_object,
+                        opportunity=opportunity_object,
+                    )
+                else:
+                    logger.error(f"Error: {language=} not found.")
+
+            berlin_location_objects = []
+            for location in m2m_data["berlin_locations"]:
+                try:
+                    location_object, _ = BerlinLocation.objects.get_or_create(
+                        name=location
+                    )
+                    berlin_location_objects.append(location_object)
+                except Exception as e:
+                    logger.error(
+                        f"Error {e} occurred while processing berlin_location {location=}"
+                    )
+            opportunity_object.berlin_locations.set(berlin_location_objects)
+
+            activity_objects = []
+            for activity in m2m_data["activities"]:
+                try:
+                    activity_object, _ = Activity.objects.get_or_create(title=activity)
+                    activity_objects.append(activity_object)
+                except Exception as e:
+                    logger.error(
+                        f"Error {e} occurred while processing activity {activity=}"
+                    )
+            opportunity_object.activities.set(activity_objects)
+
+            skill_objects = []
+            for skill in m2m_data["skills"]:
+                try:
+                    skill_object, _ = Skill.objects.get_or_create(title=skill)
+                    skill_objects.append(skill_object)
+                except Exception as e:
+                    logger.error(f"Error {e} occurred while processing skill {skill=}")
+            opportunity_object.skills.set(skill_objects)
+
+            timeslot_objects = parse_days(m2m_data["timeslots"])
+            if timeslot_objects is None:
+                update_notion_page(
+                    handler=notion_handler,
+                    page_id=opportunity_page["id"],
+                    properties={
+                        "Schedule okay": {
+                            "select": {"name": YesNo.NO.capitalize()},
+                        },
+                    },
+                )
+            else:
+                opportunity_object.timeslots.set(timeslot_objects)
+
     except Exception as e:
         logger.error(
             f"Error {repr(e)} occurred while writing Notion page id={opportunity_page['id']} to database. Skipping."
