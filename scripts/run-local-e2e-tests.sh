@@ -21,7 +21,8 @@ docker exec alfred python3 manage.py loaddata data/fixtures/berlinlocations.json
 docker exec alfred python3 manage.py loaddata data/fixtures/need4deeddayschedule.json
 docker exec alfred python3 manage.py loaddata data/fixtures/skills.json
 docker exec alfred python3 manage.py loaddata data/fixtures/opportunities.json
+docker exec alfred python3 manage.py loaddata data/fixtures/opportunity_translations.json
 
-PYTEST_DISABLE_PLUGIN_AUTOLOAD=True ALFRED_API_URL=http://localhost:8000 python3 -m pytest tests_e2e/test_endpoints/test_api_opportunity.py
+PYTEST_DISABLE_PLUGIN_AUTOLOAD=True ALFRED_API_URL=http://localhost:8000 python3 -m pytest tests_e2e
 
 docker compose -p batman -f docker-compose.dev.yaml down

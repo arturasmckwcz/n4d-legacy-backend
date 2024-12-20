@@ -143,12 +143,13 @@ def is_later_than(dt1: datetime, dt2: datetime) -> bool:
     return dt1_naive > dt2_naive
 
 
-def get_the_first(maybe_list, should_raise=False):
+def get_the_first(maybe_list, should_raise=False, list_name=None):
     """Gets the first element of a list, handling potential errors.
 
     Args:
         maybe_list: The list to extract the first element from.
         should_raise (bool, optional): Whether to raise an exception if the list is empty. Defaults to False.
+        list_name (str, optional): List name for debug print purposes
 
     Returns:
         The first element of the list, or None if the list is empty and `should_raise` is False.
@@ -161,7 +162,8 @@ def get_the_first(maybe_list, should_raise=False):
     else:
         try:
             return maybe_list[0]
-        except Exception:
+        except Exception as e:
+            logger.error(f"{e} Not raising the error on purpose, {list_name=}")
             return None
 
 

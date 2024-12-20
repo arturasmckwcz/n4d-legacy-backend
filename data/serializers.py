@@ -189,6 +189,8 @@ class OpportunitySerializer(serializers.ModelSerializer):
     activities = serializers.SerializerMethodField(read_only=True)
     languages = serializers.SerializerMethodField(read_only=True)
     skills = serializers.SerializerMethodField(read_only=True)
+    title = serializers.SerializerMethodField()
+    vo_information = serializers.SerializerMethodField()
 
     class Meta:
         model = Opportunity
@@ -205,6 +207,7 @@ class OpportunitySerializer(serializers.ModelSerializer):
             "status",
             "vo_information",
             "opportunity_type",
+            "accomp_datetime",
         ]
 
     def get_berlin_locations(self, obj):
@@ -229,6 +232,14 @@ class OpportunitySerializer(serializers.ModelSerializer):
     def get_skills(self, obj):
         skills_details = [SkillSerializer(skill).data for skill in obj.skills.all()]
         return skills_details
+
+    def get_title(self, obj):
+        language_code = self.context.get("language", "de")
+        return obj.get_title(language_code)
+
+    def get_vo_information(self, obj):
+        language_code = self.context.get("language", "de")
+        return obj.get_vo_information(language_code)
 
     def to_representation(self, instance):
         primary_keys = self.context.get("primary_keys", None)

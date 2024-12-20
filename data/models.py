@@ -1,6 +1,7 @@
 import uuid
 
-from django.db import models
+from django.core.exceptions import ValidationError
+from django.db import models, transaction
 
 from data.enums import (
     DAY_CHOICES,
@@ -169,7 +170,6 @@ class OpportunityLanguageM2M(LanguageM2M):
 
 
 class Opportunity(ModelWithTimestamps):
-    title = models.CharField(max_length=128, default="Good Samaritan")
     rac_email = models.EmailField(null=True)
     rac_full_name = models.CharField(max_length=128, null=True)
     rac_address = models.CharField(max_length=128, null=True)
@@ -191,8 +191,8 @@ class Opportunity(ModelWithTimestamps):
     accomp_name = models.CharField(max_length=128, null=True, blank=True)
     accomp_phone = models.CharField(max_length=64, null=True, blank=True)
     accomp_postcode = models.CharField(null=True, blank=True)
-    accomp_information = models.TextField(blank=True, null=True)
-    accomp_translation = models.CharField(max_length=64, null=True, blank=True)
+    accomp_information = models.TextField(blank=True, null=True, max_length=512)
+    accomp_translation = models.CharField(max_length=256, null=True, blank=True)
     languages = models.ManyToManyField(
         Language,
         through=OpportunityLanguageM2M,
@@ -205,12 +205,63 @@ class Opportunity(ModelWithTimestamps):
     status = models.CharField(
         max_length=128, default=DEFAULTS.OPPORTUNITY_STATUS, db_index=True
     )
-    vo_information = models.TextField(blank=True, null=True)
     last_edited_time_notion = models.DateTimeField(null=True)
     schedule_str = models.CharField(max_length=1024, null=True, blank=True)
 
     def __str__(self):
-        return f"{self.title} | {self.rac_email}"
+        german = self.translations.filter(language__iso_code="de").first()
+        return f"{german.title if german else 'No title'} | {self.rac_email}"
+
+    def get_title(self, language_code="de"):
+        translation = self.translations.filter(language__iso_code=language_code).first()
+        return translation.title if translation else None
+
+    def get_vo_information(self, language_code="de"):
+        translation = self.translations.filter(language__iso_code=language_code).first()
+        return translation.vo_information if translation else None
+
+    @classmethod
+    def create_with_translation(
+        cls, german_title, german_vo_information, **opportunity_fields
+    ):
+        """
+        Creates an Opportunity instance together with its mandatory German translation.
+        This method ensures that every Opportunity is created with a German title and description,
+        maintaining data integrity by using a database transaction.
+
+        Args:
+            german_title (str): The German title of the opportunity (required)
+            german_vo_information (str): The German description/information (required)
+            **opportunity_fields: Additional fields for the Opportunity model (e.g., rac_email, status)
+
+        Returns:
+            Opportunity: The created Opportunity instance with its German translation
+
+        Example:
+            opportunity = Opportunity.create_with_translation(
+                german_title="Neue Gelegenheit",
+                german_vo_information="Beschreibung",
+                rac_email="example@email.com"
+            )
+
+        Raises:
+            IntegrityError: If the German language doesn't exist in the database
+            ValidationError: If required fields are missing
+        """
+        with transaction.atomic():
+            opportunity = cls.objects.create(**opportunity_fields)
+            OpportunityTranslation.objects.create(
+                opportunity=opportunity,
+                language=Language.objects.get(iso_code="de"),
+                title=german_title,
+                vo_information=german_vo_information,
+            )
+            return opportunity
+
+    def save(self, *args, **kwargs):
+        if not self.pk:
+            super().save(*args, **kwargs)
+            return
 
 
 class VolunteerLanguageM2M(LanguageM2M):
@@ -221,6 +272,31 @@ class VolunteerLanguageM2M(LanguageM2M):
         return (
             f"form:{self.volunteerform}, language:{self.language}, level:{self.level}"
         )
+
+
+class OpportunityTranslation(models.Model):
+    opportunity = models.ForeignKey(
+        Opportunity, on_delete=models.CASCADE, related_name="translations"
+    )
+    language = models.ForeignKey(Language, on_delete=models.CASCADE)
+    title = models.CharField(max_length=128)
+    vo_information = models.TextField(blank=True, null=True)
+
+    class Meta:
+        unique_together = ("opportunity", "language")
+
+    def save(self, *args, **kwargs):
+        if (
+            self.language.iso_code != "de"
+            and not self.opportunity.translations.filter(
+                language__iso_code="de"
+            ).exists()
+        ):
+            raise ValidationError("German translation must be created first")
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        return f"{self.opportunity.pk} | {self.language.iso_code}"
 
 
 class VolunteerForm(ModelWithTimestamps):

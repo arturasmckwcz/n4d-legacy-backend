@@ -1,3 +1,4 @@
+import traceback
 from datetime import datetime
 
 import structlog
@@ -24,6 +25,7 @@ from data.models import (
     Language,
     Opportunity,
     OpportunityLanguageM2M,
+    OpportunityTranslation,
     OpportunityType,
     Skill,
 )
@@ -47,6 +49,7 @@ def opportunity_not_exists(notion_id: str) -> bool | None:
 
     except Exception as e:
         logger.error(f"Error checking opportunity: {str(e)}")
+        raise
 
 
 def delete_opportunity(notion_id: str) -> None:
@@ -70,6 +73,7 @@ def opportunity_last_edited_time_changed(
 
     except Exception as e:
         logger.error(f"Error checking opportunity: {str(e)} {notion_id=}")
+        raise
 
 
 def should_be_processed(notion_record: dict) -> bool | None:
@@ -98,7 +102,7 @@ def create_or_update_opportunity_from_notion(
     try:
         with transaction.atomic():
             if update_object:
-                success, deleted_dict = update_object.delete()
+                success, _ = update_object.delete()
 
             properties = notion_record["properties"]
 
@@ -123,17 +127,28 @@ def create_or_update_opportunity_from_notion(
                 .get("select", {})
                 .get("name", OpportunityType.GENERAL)
             ).lower()
+            logger.debug(f"{opportunity_type=}")
+
+            if not opportunity_type:
+                logger.error("No opporturnity type")
+                return
+
             opportunity = Opportunity(
-                title=properties["Name"]["title"][0]["text"]["content"],
                 notion_id=notion_record["id"],
                 last_edited_time_notion=notion_record["last_edited_time"],
                 opportunity_type=opportunity_type,
                 status=properties["Status"]["status"]["name"],
                 datetime_str=datetime_str,
                 volunteers_number=volunteers_number,
-                vo_information=vo_information,
             )
             opportunity.save()
+
+            OpportunityTranslation.objects.create(
+                opportunity=opportunity,
+                language=Language.objects.get(iso_code="de"),
+                title=properties["Name"]["title"][0]["text"]["content"],
+                vo_information=vo_information,
+            )
 
             schedules = properties["VO Schedule"]["multi_select"]
             schedule_str = ""
@@ -169,6 +184,7 @@ def create_or_update_opportunity_from_notion(
         logger.error(
             f"Notion record number {notion_record["properties"]["ID"]["unique_id"]["number"]} || Error processing opportunity: at {str(e)} url {notion_record['url']}"
         )
+        raise
 
 
 def remove_deleted_records(notion_results: list[dict]) -> None:
@@ -200,6 +216,7 @@ def remove_deleted_records(notion_results: list[dict]) -> None:
         logger.error(
             f"An exception {e} occurred while trying to delete objects that have been removed from Notion table"
         )
+        raise
 
 
 def execute_opportunities_pipeline():
@@ -208,9 +225,10 @@ def execute_opportunities_pipeline():
 
     remove_deleted_records(notion_results)
 
-    try:
-        for record in notion_results:
+    for record in notion_results:
+        try:
             notion_id = record["id"]
+            logger.info(f"Starting to process opportunity {notion_id=}")
             last_edited_time_notion = record["last_edited_time"]
 
             if opportunity_not_exists(notion_id=notion_id):
@@ -230,24 +248,23 @@ def execute_opportunities_pipeline():
                 create_or_update_opportunity_from_notion(
                     notion_record=record, update_object=opportunity_object
                 )
-
-    except Exception as e:
-        logger.error(f"Error processing opportunity: {str(e)}")
-        raise
+        except Exception as e:
+            logger.error(f"Error processing opportunity: {str(e)}")
 
 
 def prepare_opportunity_data_for_db(opportunity_page: dict) -> tuple | None:
     opportunity_data = {}
     try:
+        opportunity_data["notion_id"] = opportunity_page["id"]
         notion_id = opportunity_page["id"]
         opportunity_data["notion_id"] = notion_id
 
-        title = get_the_first(
-            opportunity_page["properties"]["Name"]["title"], should_raise=True
+        title_from_notion = get_the_first(
+            opportunity_page["properties"]["Name"]["title"],
+            should_raise=True,
+            list_name="Name title",
         )
-        opportunity_data["title"] = get_key_value(
-            title, ["text", "content"], should_raise=True
-        )
+        title = get_key_value(title_from_notion, ["text", "content"], should_raise=True)
 
         address = get_the_first(opportunity_page["properties"]["Address"]["rich_text"])
         opportunity_data["accomp_address"] = get_key_value(address, ["plain_text"])
@@ -277,14 +294,24 @@ def prepare_opportunity_data_for_db(opportunity_page: dict) -> tuple | None:
         aaPLZ = get_the_first(opportunity_page["properties"]["Postcode"]["rich_text"])
         opportunity_data["accomp_postcode"] = get_key_value(aaPLZ, ["plain_text"])
 
-        aaTranslate = get_the_first(
-            opportunity_page["properties"]["Translation"]["multi_select"]
-        )
-        opportunity_data["accomp_translation"] = get_key_value(aaTranslate, ["name"])
+        if opportunity_page["properties"].get("Translation"):
+            aaTranslate = get_the_first(
+                opportunity_page["properties"]["Translation"]["multi_select"]
+            )
+            opportunity_data["accomp_translation"] = get_key_value(
+                aaTranslate, ["name"]
+            )
 
-        opportunity_data["opportunity_type"] = get_key_value(
+        opportunity_type = get_key_value(
             opportunity_page, ["properties", "Opp Type", "select", "name"]
         )
+        if opportunity_type == "":
+            logger.error(
+                f"Opportunity {notion_id=} has incorrect opportunity type {opportunity_type=}"
+            )
+            raise ValueError
+
+        opportunity_data["opportunity_type"] = opportunity_type
 
         opportunity_data["status"] = get_key_value(
             opportunity_page, ["properties", "Status", "status", "name"]
@@ -294,33 +321,37 @@ def prepare_opportunity_data_for_db(opportunity_page: dict) -> tuple | None:
             opportunity_page,
             ["properties", "Number of volunteers needed", "select", "name"],
         )
-        opportunity_data["volunteers_number"] = volunteers_number or 1
+        if volunteers_number:
+            opportunity_data["volunteers_number"] = int(volunteers_number)
+        else:
+            opportunity_data["volunteers_number"] = 0
 
         voInfo = get_the_first(
             opportunity_page["properties"]["VO information"]["rich_text"]
         )
-        opportunity_data["vo_information"] = get_key_value(voInfo, ["plain_text"])
+        vo_information = get_key_value(voInfo, ["plain_text"])
 
         rac_info = get_the_first(
             opportunity_page["properties"]["RAC Contact"]["rich_text"]
         )
-        rac_info = get_key_value(rac_info, ["plain_text"])
-        rac_info = (
-            rac_info.split(comments_delimiter) if isinstance(rac_info, str) else []
-        )
-        if len(rac_info) == 5:
-            rac_full_name, rac_email, rac_phone, rac_address, rac_plz = rac_info
-            opportunity_data["rac_full_name"] = rac_full_name
-            opportunity_data["rac_email"] = rac_email
-            opportunity_data["rac_phone"] = rac_phone
-            opportunity_data["rac_address"] = rac_address
-            opportunity_data["rac_plz"] = rac_plz
-
+        if isinstance(rac_info, str):
+            rac_info = get_key_value(rac_info, ["plain_text"])
+            rac_info = (
+                rac_info.split(comments_delimiter) if isinstance(rac_info, str) else []
+            )
+            if len(rac_info) == 5:
+                rac_full_name, rac_email, rac_phone, rac_address, rac_plz = rac_info
+                opportunity_data["rac_full_name"] = rac_full_name
+                opportunity_data["rac_email"] = rac_email
+                opportunity_data["rac_phone"] = rac_phone
+                opportunity_data["rac_address"] = rac_address
+                opportunity_data["rac_plz"] = rac_plz
     except Exception as e:
+        tb = traceback.format_exc()
         logger.error(
-            f"Error {repr(e)} occurred while preparing model fields by Notion page id={opportunity_page['id']}. Skipping."
+            f"Error {repr(e)} occurred while preparing model fields by Notion page id={notion_id}. Skipping. \n{tb}"
         )
-        return None
+        raise
 
     def get_multi_select_from_page(key: str, should_raise=False) -> list:
         items = get_key_value(opportunity_page, ["properties", key, "multi_select"])
@@ -342,7 +373,11 @@ def prepare_opportunity_data_for_db(opportunity_page: dict) -> tuple | None:
     ]:
         m2m_data[field] = get_multi_select_from_page(column)
 
-    return (opportunity_data, m2m_data)  # returning m2m for consistency purposes
+    return (
+        opportunity_data,
+        m2m_data,
+        (title, vo_information),
+    )
 
 
 def write_or_update_opportunity_to_db(
@@ -353,21 +388,31 @@ def write_or_update_opportunity_to_db(
     if not data:
         return
 
-    opportunity_data, m2m_data = data
+    opportunity_data, m2m_data, translation = data
 
+    logger.info(
+        f"Attempting to write or update opportunity to db {opportunity_data['notion_id']=}"
+    )
     try:
         with transaction.atomic():
             if update_object:
-                success, deleted_dict = update_object.delete()
-
+                _, _ = update_object.delete()
             # 1. create model
             opportunity_object = Opportunity(**opportunity_data)
             opportunity_object.save()
 
+            if not m2m_data:
+                logger.info(f"No m2m data for {opportunity_data['notion_id']=}")
+                return
+
             # 2. add M2Ms
+
             for language in m2m_data["languages"]:
                 if language == "Farsi/Dari" or language == "Farsi":
                     language = "Persian"
+
+                if language == "No specific language needed" or language == "Any":
+                    continue
 
                 language_object = Language.objects.filter(title=language).first()
                 if language_object:
@@ -425,30 +470,46 @@ def write_or_update_opportunity_to_db(
             else:
                 opportunity_object.timeslots.set(timeslot_objects)
 
+            title_de, vo_infomation_de = translation
+
+            OpportunityTranslation.objects.create(
+                opportunity=opportunity_object,
+                language=Language.objects.get(iso_code="de"),
+                title=title_de,
+                vo_information=vo_infomation_de,
+            )
     except Exception as e:
+        tb = traceback.format_exc()
         logger.error(
-            f"Error {repr(e)} occurred while writing Notion page id={opportunity_page['id']} to database. Skipping."
+            f"Error {repr(e)} occurred while writing Notion page id={opportunity_page['id']} to database. Skipping.\n{tb}"
         )
+        raise
 
 
 def execute_opportunities_seed_pipeline():
     # 1. fetch opportunities from Notion
     opportunities_from_notion = notion_handler.get_database_data()
-
+    logger.info("Executing opportunities seed pipeline")
     logger.info(
         f"Found {len(opportunities_from_notion)} rows in Opportunities from Notion"
     )
 
     # 2. write Notion pages to the database
     for opportunity_page in opportunities_from_notion:
-        write_or_update_opportunity_to_db(opportunity_page=opportunity_page)
+        try:
+            write_or_update_opportunity_to_db(opportunity_page=opportunity_page)
+        except Exception as e:
+            logger.error(f"Error error write or update opportunity: {str(e)}")
 
 
 def execute_opportunities_sync_pipeline():
+    logger.info("Executing opportunities sync pipeline")
     notion_database_id = read_env_var("NOTION_OPPORTUNITIES_ID")
     notion_handler = NotionHandler(notion_database_id)
     opportunities_from_notion = notion_handler.get_database_data()
-    logger.info(f"Found {len(opportunities_from_notion)} rows in Opportunities")
+    logger.info(
+        f"Found {len(opportunities_from_notion)} rows in Opportunities in Notion"
+    )
     # 1. select updated in the Notion table and update db
     count = 0
     for opportunity_page in opportunities_from_notion:
@@ -477,7 +538,10 @@ def execute_opportunities_sync_pipeline():
 
     # 3. select new records in the DB and create new rows in the Notion table
     new_opportunity_objects = Opportunity.objects.filter(notion_id=None).all()
-    logger.info(f"Found {len(new_opportunity_objects)} new Opportunity objects.")
+    logger.info(
+        f"Found trough filtering {len(new_opportunity_objects)} new Opportunity objects."
+    )
+    logger.info("Attempting to write opportunities to Notion")
     for new_opportunity in new_opportunity_objects:
         write_opportunity_to_notion(new_opportunity)
 
@@ -485,7 +549,7 @@ def execute_opportunities_sync_pipeline():
 def write_opportunity_to_notion(opportunity: Opportunity):
     properties = {}
     properties["Name"] = {
-        "title": [{"text": {"content": opportunity.title, "link": None}}]
+        "title": [{"text": {"content": opportunity.get_title(), "link": None}}]
     }
     if opportunity.accomp_address is not None:
         properties["Address"] = {
@@ -509,9 +573,9 @@ def write_opportunity_to_notion(opportunity: Opportunity):
         properties["Postcode"] = {
             "rich_text": [{"text": {"content": f"{opportunity.accomp_postcode:05}"}}]
         }
-    if opportunity.vo_information is not None:
+    if opportunity.get_vo_information() is not None:
         properties["VO information"] = {
-            "rich_text": [{"text": {"content": opportunity.vo_information}}]
+            "rich_text": [{"text": {"content": opportunity.get_vo_information()}}]
         }
     if opportunity.accomp_datetime is not None and isinstance(
         opportunity.accomp_datetime, datetime

@@ -12,7 +12,9 @@ docker compose -p batman down -v --remove-orphans
 
 docker volume prune -f
 
-docker builder prune -af
+if [[ "$1" == "--full" ]]; then
+    docker builder prune -af
+fi
 
 docker images | grep -E 'alfred|<none>' | awk '{print $3}' | xargs -r docker rmi -f
 

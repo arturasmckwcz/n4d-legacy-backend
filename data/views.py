@@ -63,6 +63,7 @@ class DataOpportunityListView(mixins.CreateModelMixin, ListAPIView):
 
     def get_serializer_context(self):
         context = super().get_serializer_context()
+        context["language"] = self.request.query_params.get("language", "de")
         try:
             primary_keys = json.loads(self.request.GET["primary_keys"])
         except json.JSONDecodeError:

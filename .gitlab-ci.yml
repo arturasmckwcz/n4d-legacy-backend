@@ -248,7 +248,8 @@ run-test-e2e:
           python3 manage.py loaddata data/fixtures/berlinlocations.json && \
           python3 manage.py loaddata data/fixtures/need4deeddayschedule.json && \
           python3 manage.py loaddata data/fixtures/skills.json && \
-          python3 manage.py loaddata data/fixtures/opportunities.json
+          python3 manage.py loaddata data/fixtures/opportunities.json && \
+          python3 manage.py loaddata data/fixtures/opportunity_translations.json
         '" \
         --interactive
     # run the tests in the cloud

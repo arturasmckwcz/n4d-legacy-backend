@@ -177,9 +177,13 @@ Each object should correspond to the following OTD:
 #### How to create test data:
 
 Go to a working pod and dump data
-python manage.py dumpdata data.Opportunity > opportunities.json
+python manage.py dumpdata --format json --indent 4 data.Opportunity > opportunities.json
+python manage.py dumpdata --format json --indent 4 data.OpportunityTranslation > opportunity_translations.json
 python manage.py dumpdata data.TargetGroup > targetgroup.json
 python manage.py dumpdata data.TimeSlot > timeslots.json
 python manage.py dumpdata data.BerlinLocation > berlinlocations.json
 python manage.py dumpdata data.Activity > activities.json
 Copy to fixtures folder
+
+Script to quickly export .env in the current shell
+grep -v '^#' .env | while IFS='=' read -r key value; do export "$key"="$value"; done

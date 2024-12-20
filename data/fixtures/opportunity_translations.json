@@ -1,0 +1,432 @@
+[
+{
+    "model": "data.opportunitytranslation",
+    "pk": 1,
+    "fields": {
+        "opportunity": 1,
+        "language": 1548,
+        "title": "Support with homework in Lichtenberg",
+        "vo_information": "The kids speak German, we don’t know anything about their ages or grades. They would need help with various subjects."
+    }
+},
+{
+    "model": "data.opportunitytranslation",
+    "pk": 2,
+    "fields": {
+        "opportunity": 2,
+        "language": 1548,
+        "title": "Sports - Help for preschool teachers",
+        "vo_information": null
+    }
+},
+{
+    "model": "data.opportunitytranslation",
+    "pk": 3,
+    "fields": {
+        "opportunity": 3,
+        "language": 1548,
+        "title": "Multi Translation Buchholtz ",
+        "vo_information": null
+    }
+},
+{
+    "model": "data.opportunitytranslation",
+    "pk": 4,
+    "fields": {
+        "opportunity": 4,
+        "language": 1548,
+        "title": "Gardening in Neukölln",
+        "vo_information": "The schedule is flexible and can be discussed with volunteers. The idea is to build new raised beds and plant them with whatever the residents would like to have there."
+    }
+},
+{
+    "model": "data.opportunitytranslation",
+    "pk": 5,
+    "fields": {
+        "opportunity": 5,
+        "language": 1548,
+        "title": "Accompany residents to a FreiluftKino in Prenzlauerberg",
+        "vo_information": "Könnte ich über euch Ehrenamtlichen finden, die Lust hätten einige Bewohner aus der Unterkunft abzuholen und mit denen zur Filmveranstaltung zu kommen? (20 min. zu fuß) Die Veranstaltung ist kostenlos, die Ehrenamtlichen + Bewohner bekommen die Getränke umsonst  \n\n21. August 2024, 20:30 – 22:30 Uhr\n28. August 2024, 20:30 – 22:30 Uhr\n4. September 2024, 20:15 – 22:15 Uhr\n11. September 2024, 20:00 – 22:00 Uhr\n\nContact person: Hend Reffky Mobil: +49 (0)159 043 61 513 Email: "
+    }
+},
+{
+    "model": "data.opportunitytranslation",
+    "pk": 6,
+    "fields": {
+        "opportunity": 6,
+        "language": 1548,
+        "title": "Support with daycare during summer break in Hellersdorf",
+        "vo_information": "Bis Ende August \nKinder"
+    }
+},
+{
+    "model": "data.opportunitytranslation",
+    "pk": 7,
+    "fields": {
+        "opportunity": 7,
+        "language": 1548,
+        "title": "Accompanying - Doctor’s appointment",
+        "vo_information": null
+    }
+},
+{
+    "model": "data.opportunitytranslation",
+    "pk": 8,
+    "fields": {
+        "opportunity": 8,
+        "language": 1548,
+        "title": "Sorting and giving out donations from Tafel in Pankow",
+        "vo_information": "Wir suchen noch Leute, die uns bei der  Sortierung  und Ausgabe von den Spenden der Tafel e. V. am Montag und/oder  Freitag  zwischen 14 und 17 Uhr helfen.\nBerliner Tafel is organising food donations, more info here "
+    }
+},
+{
+    "model": "data.opportunitytranslation",
+    "pk": 9,
+    "fields": {
+        "opportunity": 9,
+        "language": 1548,
+        "title": "Support a clothing bank in Pankow",
+        "vo_information": "They need new volunteers. The schedule can be discussed with the volunteer coordinator. "
+    }
+},
+{
+    "model": "data.opportunitytranslation",
+    "pk": 10,
+    "fields": {
+        "opportunity": 10,
+        "language": 1548,
+        "title": "Play with kids and organise activities for the during a summer festival in Wilmersdorf",
+        "vo_information": "They are looking for volunteers who can organise activities for kids (face painting, games, sports, pop-corn etc.). \n\nVolunteers can just come by at 1 pm. We don’t need to introduce them before hand.\n\nContact person: Young-Sun Song"
+    }
+},
+{
+    "model": "data.opportunitytranslation",
+    "pk": 11,
+    "fields": {
+        "opportunity": 11,
+        "language": 1548,
+        "title": "Going for walks with a resident of a refugee acommodation centre",
+        "vo_information": null
+    }
+},
+{
+    "model": "data.opportunitytranslation",
+    "pk": 12,
+    "fields": {
+        "opportunity": 12,
+        "language": 1548,
+        "title": "Accompany children to external events around Berlin",
+        "vo_information": "Gleich schon beginnen die Sommerferien. Damit unsere lieben Kinder sich aber nicht langweilen müssen, haben wir ihnen ein buntes Programm mit zahlreichen Aktivitäten und Ausflügen zusammengestellt.\n \nEben für diese Ausflüge benötigen wir noch die ein oder andere erwachsene Begleitperson, damit möglichst viele Kinder daran teilnehmen können (Pro Erwachsenen 5 Kinder).Folgendes ist geplant:\n \n• 02.08. – Lobecksportplatz, 10 -13:30 Uhr\n• 05.08. – Treptower Park, Insel der Jugend, 14 – 17 Uhr\n• 06.08. – Kino: Garfield, Cubix Alexanderplatz, 9:30 – 13 Uhr\n• 12.08. – Plantsche, Volkspark Friedrichshain, 10:30 – 16:30 Uhr\n• 13.08. – Naturkundemuseum, 9:30 -14 Uhr\n• 19.08. – Gleisdreieckpark, 10 – 16:30 Uhr\n• 23.08. – Britzer Garten, 9:30 – 13:30 Uhr\n• 26.08. – Spielplatz Ritterburg, 14 – 16:30 Uhr\n• 28.08. – Holzbauworkshop Kreativhaus Mitte, 10 – 13 Uhr\n• 29.08. – Haus der Natur, Wuhlheide, 10 – 17:00 Uhr\n \nEs handelt sich größtenteils um Halbtagsausflüge. Treffpunkt ist immer hier bei uns in der Unterkunft. Natürlich müssen die Kinder hierhin auch wieder zurück.\nWer also Zeit und Lust hat (oder jemanden kennt, der Zeit und Lust hat) bei einer oder mehreren Aktivitäten zu unterstützen, melde sich für nähere Informationen bitte bei uns unter "
+    }
+},
+{
+    "model": "data.opportunitytranslation",
+    "pk": 13,
+    "fields": {
+        "opportunity": 13,
+        "language": 1548,
+        "title": "Going to appointments with a ",
+        "vo_information": null
+    }
+},
+{
+    "model": "data.opportunitytranslation",
+    "pk": 14,
+    "fields": {
+        "opportunity": 14,
+        "language": 1548,
+        "title": "vietnamesisches Greifswalderstr ",
+        "vo_information": null
+    }
+},
+{
+    "model": "data.opportunitytranslation",
+    "pk": 15,
+    "fields": {
+        "opportunity": 15,
+        "language": 1548,
+        "title": "Teach German in a language café",
+        "vo_information": null
+    }
+},
+{
+    "model": "data.opportunitytranslation",
+    "pk": 16,
+    "fields": {
+        "opportunity": 16,
+        "language": 1548,
+        "title": "Doctor’s Appointment: Kid",
+        "vo_information": null
+    }
+},
+{
+    "model": "data.opportunitytranslation",
+    "pk": 17,
+    "fields": {
+        "opportunity": 17,
+        "language": 1548,
+        "title": "Action day asked for by Aprilsix volunteers",
+        "vo_information": " Freiwilligenarbeit für ein Team von LucaNet (30 Personen) in Berlin für Montag, den 24.06., am Nachmittag (ab circa 14:00 Uhr).\nKönnen wir euch mit kleinen Teams aus 2-5 Personen bei bestimmten Aktionen unterstützen?"
+    }
+},
+{
+    "model": "data.opportunitytranslation",
+    "pk": 18,
+    "fields": {
+        "opportunity": 18,
+        "language": 1548,
+        "title": "Accompanying to administrative offices",
+        "vo_information": "Needed everywhere."
+    }
+},
+{
+    "model": "data.opportunitytranslation",
+    "pk": 19,
+    "fields": {
+        "opportunity": 19,
+        "language": 1548,
+        "title": "Sorting Papers for Residents",
+        "vo_information": null
+    }
+},
+{
+    "model": "data.opportunitytranslation",
+    "pk": 20,
+    "fields": {
+        "opportunity": 20,
+        "language": 1548,
+        "title": "Supporting with daycare",
+        "vo_information": "Most of the children are from Syria. The daycare coordinator speaks only German. They need an independent person with daycare experience.\nThey also would like to find volunteers who can play football with kids."
+    }
+},
+{
+    "model": "data.opportunitytranslation",
+    "pk": 21,
+    "fields": {
+        "opportunity": 21,
+        "language": 1548,
+        "title": " artz Myocardszintigraphie",
+        "vo_information": null
+    }
+},
+{
+    "model": "data.opportunitytranslation",
+    "pk": 22,
+    "fields": {
+        "opportunity": 22,
+        "language": 1548,
+        "title": "Opening bank accounts",
+        "vo_information": null
+    }
+},
+{
+    "model": "data.opportunitytranslation",
+    "pk": 23,
+    "fields": {
+        "opportunity": 23,
+        "language": 1548,
+        "title": "Organise fun activities for kids and teens in Marzahn - IB",
+        "vo_information": "Anything volunteers can do as their own activities. preferably with kids teens is welcome mainly until 18.00 but after some familiarity also during after work hours. Additionally sometimes soft accompanying to the LEA or court as"
+    }
+},
+{
+    "model": "data.opportunitytranslation",
+    "pk": 24,
+    "fields": {
+        "opportunity": 24,
+        "language": 1548,
+        "title": "Group of volunteers to help the Volunteer Coordinators of Hangars",
+        "vo_information": "coordinator contacted all volunteers "
+    }
+},
+{
+    "model": "data.opportunitytranslation",
+    "pk": 25,
+    "fields": {
+        "opportunity": 25,
+        "language": 1548,
+        "title": "Sewing or Knitting with Women in Treptow-Köpenick",
+        "vo_information": "There are sewing machines and materials for knitting in the accommodation centre. They are looking for a volunteer who could knit/sew with the women twice a month."
+    }
+},
+{
+    "model": "data.opportunitytranslation",
+    "pk": 26,
+    "fields": {
+        "opportunity": 26,
+        "language": 1548,
+        "title": "Support with daycare in Tempelhof",
+        "vo_information": "Support the daycare staff with organising games and activities for chidlren.\nThey would be happy to get volunteers who can come regularly and organise creative activities for the kids between 12:30 and 16:30. "
+    }
+},
+{
+    "model": "data.opportunitytranslation",
+    "pk": 27,
+    "fields": {
+        "opportunity": 27,
+        "language": 1548,
+        "title": "Support with the community garden",
+        "vo_information": "Starting spring"
+    }
+},
+{
+    "model": "data.opportunitytranslation",
+    "pk": 28,
+    "fields": {
+        "opportunity": 28,
+        "language": 1548,
+        "title": "Sprachmittlung Farsi",
+        "vo_information": null
+    }
+},
+{
+    "model": "data.opportunitytranslation",
+    "pk": 29,
+    "fields": {
+        "opportunity": 29,
+        "language": 1548,
+        "title": "Organise activites for teenagers in Pankow",
+        "vo_information": "Volunteers are needed for a so-called Jungstreff where teenagers meet and do fun things together. We don’t have any specific information about this activity."
+    }
+},
+{
+    "model": "data.opportunitytranslation",
+    "pk": 30,
+    "fields": {
+        "opportunity": 30,
+        "language": 1548,
+        "title": "Accompanying of a pregnant person to Charite",
+        "vo_information": null
+    }
+},
+{
+    "model": "data.opportunitytranslation",
+    "pk": 31,
+    "fields": {
+        "opportunity": 31,
+        "language": 1548,
+        "title": "Support during a Summer Festival",
+        "vo_information": "Volunteers are needed for serving food and drinks, organising activities for children and teenagers"
+    }
+},
+{
+    "model": "data.opportunitytranslation",
+    "pk": 32,
+    "fields": {
+        "opportunity": 32,
+        "language": 1548,
+        "title": "Sommerfest Refugium ",
+        "vo_information": " Auf-Abbau, Kinderschminken, Getränke/Snacks Ausgabe, Spielangebote, Hüpfburg Betreuung"
+    }
+},
+{
+    "model": "data.opportunitytranslation",
+    "pk": 33,
+    "fields": {
+        "opportunity": 33,
+        "language": 1548,
+        "title": "Support a German language support for women in Hellersdorf",
+        "vo_information": "There is a group of women in the RAC that would love to have someone to practice their German with.\nThe volunteer should preferably be a woman."
+    }
+},
+{
+    "model": "data.opportunitytranslation",
+    "pk": 34,
+    "fields": {
+        "opportunity": 34,
+        "language": 1548,
+        "title": "Support with gardening (Vegetable Garden) in Treptow-Köpenick",
+        "vo_information": "There is a small vegetable garden in the yard, and the staff would be happy to have some support with it from a volunteer who knows how to garden.\nThe gardening season would be over around mid-October."
+    }
+},
+{
+    "model": "data.opportunitytranslation",
+    "pk": 35,
+    "fields": {
+        "opportunity": 35,
+        "language": 1548,
+        "title": "Supporting a French speaking mother",
+        "vo_information": "Ideally a volunteer would come to the reception centre once a week"
+    }
+},
+{
+    "model": "data.opportunitytranslation",
+    "pk": 36,
+    "fields": {
+        "opportunity": 36,
+        "language": 1548,
+        "title": "Sorting letters and papers with the refugees",
+        "vo_information": null
+    }
+},
+{
+    "model": "data.opportunitytranslation",
+    "pk": 37,
+    "fields": {
+        "opportunity": 37,
+        "language": 1548,
+        "title": "Read books for kids in Renickendorf",
+        "vo_information": "There is a small library in the refugee accommodation centre with books in different languages. They need volunteers who enjoy reading books for or with the children.\nThe schedule is flexible and can be discussed individually."
+    }
+},
+{
+    "model": "data.opportunitytranslation",
+    "pk": 38,
+    "fields": {
+        "opportunity": 38,
+        "language": 1548,
+        "title": "Workshops on different topics (dance, painting, make up etc.)",
+        "vo_information": null
+    }
+},
+{
+    "model": "data.opportunitytranslation",
+    "pk": 39,
+    "fields": {
+        "opportunity": 39,
+        "language": 1548,
+        "title": "Help an older Ukrainian woman learn and practice German ",
+        "vo_information": "She takes care of her husband and has very little free time to practice German. It would be great to have someone for a German-Russian/German-Ukrainian."
+    }
+},
+{
+    "model": "data.opportunitytranslation",
+    "pk": 40,
+    "fields": {
+        "opportunity": 40,
+        "language": 1548,
+        "title": "Accompanying to Agentur für Arbeit Tempelhof-Schöneberg",
+        "vo_information": null
+    }
+},
+{
+    "model": "data.opportunitytranslation",
+    "pk": 41,
+    "fields": {
+        "opportunity": 41,
+        "language": 1548,
+        "title": "Doctor’s Appointment: Kid",
+        "vo_information": null
+    }
+},
+{
+    "model": "data.opportunitytranslation",
+    "pk": 42,
+    "fields": {
+        "opportunity": 42,
+        "language": 1548,
+        "title": "Play table tennis with residents of a refugee accommodation centre in Treptow-Köpenick",
+        "vo_information": "There is table tennis in the yard. They need a volunteer to come by and play with the residents. Times can be flexible and discussed with the RAC staff."
+    }
+},
+{
+    "model": "data.opportunitytranslation",
+    "pk": 43,
+    "fields": {
+        "opportunity": 43,
+        "language": 1548,
+        "title": "Support with accompanying kids around in the neighborhood in Zehlendorf",
+        "vo_information": "Accompany children around the neighbourhood to different activities, e.g. football etc."
+    }
+}
+]

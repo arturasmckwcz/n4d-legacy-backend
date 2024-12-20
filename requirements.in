@@ -15,3 +15,4 @@ sentry-sdk
 whitenoise
 gunicorn[gevent]
 django-valkey
+boto3
