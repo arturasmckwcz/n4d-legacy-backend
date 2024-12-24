@@ -169,6 +169,11 @@ class OpportunityLanguageM2M(LanguageM2M):
     opportunity = models.ForeignKey("data.opportunity", on_delete=models.CASCADE)
 
 
+"""
+SELECT o.id, o.rac_email, l.title, t.title FROM data_opportunity o JOIN data_opportunitytranslation t ON t.opportunity_id=o.id JOIN data_language l ON l.id=t.language_id;
+"""
+
+
 class Opportunity(ModelWithTimestamps):
     rac_email = models.EmailField(null=True)
     rac_full_name = models.CharField(max_length=128, null=True)
@@ -258,10 +263,10 @@ class Opportunity(ModelWithTimestamps):
             )
             return opportunity
 
-    def save(self, *args, **kwargs):
-        if not self.pk:
-            super().save(*args, **kwargs)
-            return
+    # def save(self, *args, **kwargs):
+    #     if not self.pk:
+    #         super().save(*args, **kwargs)
+    #         return
 
 
 class VolunteerLanguageM2M(LanguageM2M):

@@ -12,6 +12,7 @@ from data.models import (
     Location,
     Need4DeedDaySchedule,
     Opportunity,
+    OpportunityTranslation,
     Organization,
     Person,
     Skill,
@@ -155,6 +156,15 @@ class BerlinLocationSerializer(serializers.ModelSerializer):
         ]
 
 
+class Need4DeedDayScheduleSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Need4DeedDaySchedule
+        fields = [
+            "day",
+            "time_slot",
+        ]
+
+
 class OrganizationSerializer(serializers.ModelSerializer):
     contact = serializers.SerializerMethodField(read_only=True)
     location = serializers.SerializerMethodField(read_only=True)
@@ -189,6 +199,7 @@ class OpportunitySerializer(serializers.ModelSerializer):
     activities = serializers.SerializerMethodField(read_only=True)
     languages = serializers.SerializerMethodField(read_only=True)
     skills = serializers.SerializerMethodField(read_only=True)
+    timeslots = serializers.SerializerMethodField(read_only=True)
     title = serializers.SerializerMethodField()
     vo_information = serializers.SerializerMethodField()
 
@@ -201,6 +212,7 @@ class OpportunitySerializer(serializers.ModelSerializer):
             "berlin_locations",
             "schedule_str",
             "datetime_str",
+            "timeslots",
             "activities",
             "languages",
             "skills",
@@ -209,6 +221,13 @@ class OpportunitySerializer(serializers.ModelSerializer):
             "opportunity_type",
             "accomp_datetime",
         ]
+
+    def get_timeslots(self, obj):
+        timeslots = [
+            Need4DeedDayScheduleSerializer(timeslot).data
+            for timeslot in obj.timeslots.all()
+        ]
+        return timeslots
 
     def get_berlin_locations(self, obj):
         berlin_locations_details = [
@@ -257,6 +276,8 @@ class OpportunityCreateSerializer(serializers.ModelSerializer):
     timeslots = serializers.ListField(
         child=serializers.ListField(child=serializers.CharField()), write_only=True
     )
+    title = serializers.CharField(write_only=True)
+    vo_information = serializers.CharField(write_only=True, allow_blank=True)
 
     def validate_rac_email(self, value):
         _, domain = value.split("@")
@@ -273,32 +294,34 @@ class OpportunityCreateSerializer(serializers.ModelSerializer):
             )
         return value
 
-    def create(self, validated_data):
-        berlin_locations_data = validated_data.pop("berlin_locations", [])
+    def create(self, data_from_post_request):
+        title = data_from_post_request.pop("title")
+        vo_information = data_from_post_request.pop("vo_information", "")
+        berlin_locations_data = data_from_post_request.pop("berlin_locations", [])
         berlin_locations = []
         for location_name in berlin_locations_data:
             location, _ = BerlinLocation.objects.get_or_create(name=location_name)
             berlin_locations.append(location)
 
-        activities_data = validated_data.pop("activities", [])
+        activities_data = data_from_post_request.pop("activities", [])
         activities = []
         for activity_name in activities_data:
             activity, _ = Activity.objects.get_or_create(title=activity_name)
             activities.append(activity)
 
-        skills_data = validated_data.pop("skills", [])
+        skills_data = data_from_post_request.pop("skills", [])
         skills = []
         for skill_name in skills_data:
             skill, _ = Skill.objects.get_or_create(title=skill_name)
             skills.append(skill)
 
-        languages_data = validated_data.pop("languages", [])
+        languages_data = data_from_post_request.pop("languages", [])
         languages = []
         for language_name in languages_data:
             language = Language.objects.get(title=language_name)
             languages.append(language)
 
-        timeslots_data = validated_data.pop("timeslots", [])
+        timeslots_data = data_from_post_request.pop("timeslots", [])
         timeslots = []
         for day, time_slot in timeslots_data:
             logger.debug(f"{day=}, {time_slot=}")
@@ -307,18 +330,46 @@ class OpportunityCreateSerializer(serializers.ModelSerializer):
                 day=day_number, time_slot=time_slot
             )
             timeslots.append(timeslot_object)
-
-        oppotunity_object = Opportunity.objects.create(**validated_data)
-        oppotunity_object.berlin_locations.set(berlin_locations)
-        oppotunity_object.activities.set(activities)
-        oppotunity_object.skills.set(skills)
-        oppotunity_object.languages.set(languages)
-        oppotunity_object.timeslots.set(timeslots)
-        return oppotunity_object
+        opportunity_object = Opportunity.objects.create(**data_from_post_request)
+        opportunity_object.berlin_locations.set(berlin_locations)
+        opportunity_object.activities.set(activities)
+        opportunity_object.skills.set(skills)
+        opportunity_object.languages.set(languages)
+        opportunity_object.timeslots.set(timeslots)
+        OpportunityTranslation.objects.create(
+            opportunity=opportunity_object,
+            # temporary assuming that all objects are "de"
+            language=Language.objects.get(iso_code="de"),
+            title=title,
+            vo_information=vo_information,
+        )
+        return opportunity_object
 
     class Meta:
         model = Opportunity
-        fields = "__all__"
+        fields = (
+            "title",
+            "opportunity_type",
+            "vo_information",
+            "accomp_address",
+            "accomp_postcode",
+            "accomp_name",
+            "accomp_phone",
+            "accomp_information",
+            "rac_email",
+            "rac_full_name",
+            "rac_phone",
+            "rac_address",
+            "rac_plz",
+            "volunteers_number",
+            "berlin_locations",
+            "languages",
+            "activities",
+            "skills",
+            "timeslots",
+            "id",
+            "created_at",
+        )
 
 
 class VolunteerFormSerializer(serializers.ModelSerializer):
@@ -368,14 +419,16 @@ class VolunteerFormSerializer(serializers.ModelSerializer):
             return "Persian"
         return title
 
-    def create(self, validated_data):
-        schedule_data = validated_data.pop("schedule", [])
-        locations_data = validated_data.pop("preferred_berlin_locations", [])
-        activities_data = validated_data.pop("activities", [])
-        skills_data = validated_data.pop("skills", [])
-        native_languages_data = validated_data.pop("native_languages", [])
-        fluent_languages_data = validated_data.pop("fluent_languages", [])
-        intermediate_languages_data = validated_data.pop("intermediate_languages", [])
+    def create(self, data_from_post_request):
+        schedule_data = data_from_post_request.pop("schedule", [])
+        locations_data = data_from_post_request.pop("preferred_berlin_locations", [])
+        activities_data = data_from_post_request.pop("activities", [])
+        skills_data = data_from_post_request.pop("skills", [])
+        native_languages_data = data_from_post_request.pop("native_languages", [])
+        fluent_languages_data = data_from_post_request.pop("fluent_languages", [])
+        intermediate_languages_data = data_from_post_request.pop(
+            "intermediate_languages", []
+        )
 
         schedule_objects = []
         for day, time_slot in schedule_data:
@@ -444,7 +497,7 @@ class VolunteerFormSerializer(serializers.ModelSerializer):
             except Exception as e:
                 logger.error(f"Error {e} occurred while parsing activity {skill_name}")
 
-        volunteer_form = VolunteerForm.objects.create(**validated_data)
+        volunteer_form = VolunteerForm.objects.create(**data_from_post_request)
         volunteer_form.schedule.set(schedule_objects)
         volunteer_form.preferred_berlin_locations.set(location_objects)
         languages_for_m2m = (

@@ -255,7 +255,6 @@ def execute_opportunities_pipeline():
 def prepare_opportunity_data_for_db(opportunity_page: dict) -> tuple | None:
     opportunity_data = {}
     try:
-        opportunity_data["notion_id"] = opportunity_page["id"]
         notion_id = opportunity_page["id"]
         opportunity_data["notion_id"] = notion_id
 
@@ -325,6 +324,15 @@ def prepare_opportunity_data_for_db(opportunity_page: dict) -> tuple | None:
             opportunity_data["volunteers_number"] = int(volunteers_number)
         else:
             opportunity_data["volunteers_number"] = 0
+
+        opportunity_data["schedule_str"] = ", ".join(
+            [
+                get_key_value(timeslot, ["name"])
+                for timeslot in get_key_value(
+                    opportunity_page, ["properties", "VO Schedule", "multi_select"]
+                )
+            ]
+        )
 
         voInfo = get_the_first(
             opportunity_page["properties"]["VO information"]["rich_text"]
@@ -396,16 +404,25 @@ def write_or_update_opportunity_to_db(
     try:
         with transaction.atomic():
             if update_object:
-                _, _ = update_object.delete()
+                deleted = update_object.delete()
+            else:
+                deleted = None
+
+            logger.debug(f"Attempting to delete objects: {deleted=}")
+
             # 1. create model
+
             opportunity_object = Opportunity(**opportunity_data)
             opportunity_object.save()
+            logger.debug(
+                f"{opportunity_object.rac_email=}, {opportunity_object.notion_id=}"
+            )
+
+            # 2. add M2Ms
 
             if not m2m_data:
                 logger.info(f"No m2m data for {opportunity_data['notion_id']=}")
                 return
-
-            # 2. add M2Ms
 
             for language in m2m_data["languages"]:
                 if language == "Farsi/Dari" or language == "Farsi":
@@ -511,18 +528,40 @@ def execute_opportunities_sync_pipeline():
         f"Found {len(opportunities_from_notion)} rows in Opportunities in Notion"
     )
     # 1. select updated in the Notion table and update db
-    count = 0
+    count_updated = 0
+    count_created = 0
     for opportunity_page in opportunities_from_notion:
-        opportunity_object = get_database_object(opportunity_page, Opportunity)
-        if opportunity_object and is_later_than(
-            datetime.fromisoformat(opportunity_page["last_edited_time"]),
-            opportunity_object.updated_at,
-        ):
-            count += 1
-            write_or_update_opportunity_to_db(
-                update_object=opportunity_object, opportunity_page=opportunity_page
+        try:
+            opportunity_object = get_database_object(opportunity_page, Opportunity)
+            if not opportunity_object:
+                # if not an opportunity_object it means that it's not in the DB yet but it exists in notion
+                logger.info(
+                    f"Notion record {opportunity_page['id']} does not exist in django"
+                )
+                count_created += 1
+                write_or_update_opportunity_to_db(
+                    update_object=opportunity_object, opportunity_page=opportunity_page
+                )
+                continue
+
+            if opportunity_object and is_later_than(
+                datetime.fromisoformat(opportunity_page["last_edited_time"]),
+                opportunity_object.updated_at,
+            ):
+                # if opportunity_object it means that it exists in the DB and in Notion
+                count_updated += 1
+                write_or_update_opportunity_to_db(
+                    update_object=opportunity_object, opportunity_page=opportunity_page
+                )
+        except Exception as e:
+            tb = traceback.format_exc()
+            logger.error(
+                f"Notion record {opportunity_page['id']} resulted in {e} \n{tb}"
             )
-    logger.info(f"Updated {count} Opportunity objects")
+
+    logger.info(
+        f"Updated {count_updated} and created {count_created} Opportunity objects"
+    )
 
     # 2. notion pages to be deleted from db
     notion_ids = [
@@ -655,7 +694,9 @@ def write_opportunity_to_notion(opportunity: Opportunity):
         }
 
     page = notion_handler.add_page(properties=properties)
+    notion_id = get_key_value(page, ["id"])
 
-    opportunity.notion_id = get_key_value(page, ["id"])
-    logger.debug(f"Page: {opportunity.notion_id=} is written.")
+    opportunity.notion_id = notion_id
     opportunity.save()
+
+    logger.debug(f"Page {notion_id=} is written.")

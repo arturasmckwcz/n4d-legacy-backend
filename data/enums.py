@@ -126,4 +126,5 @@ AUTHORIZED_DOMAINS = [
     "tamaja.de",
     "pgssoziales.de",
     "caritas-berlin.de",
+    "need4deed.org",
 ]
