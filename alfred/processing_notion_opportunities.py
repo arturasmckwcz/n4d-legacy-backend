@@ -254,8 +254,9 @@ def execute_opportunities_pipeline():
 
 def prepare_opportunity_data_for_db(opportunity_page: dict) -> tuple | None:
     opportunity_data = {}
+    translation_data = {}
+    notion_id = get_key_value(opportunity_page, ["id"])
     try:
-        notion_id = opportunity_page["id"]
         opportunity_data["notion_id"] = notion_id
 
         title_from_notion = get_the_first(
@@ -263,7 +264,14 @@ def prepare_opportunity_data_for_db(opportunity_page: dict) -> tuple | None:
             should_raise=True,
             list_name="Name title",
         )
-        title = get_key_value(title_from_notion, ["text", "content"], should_raise=True)
+        translation_data["title"] = get_key_value(
+            title_from_notion, ["text", "content"], should_raise=True
+        )
+
+        voInfo = get_the_first(
+            opportunity_page["properties"]["VO information"]["rich_text"]
+        )
+        translation_data["vo_information"] = get_key_value(voInfo, ["plain_text"])
 
         address = get_the_first(opportunity_page["properties"]["Address"]["rich_text"])
         opportunity_data["accomp_address"] = get_key_value(address, ["plain_text"])
@@ -278,7 +286,7 @@ def prepare_opportunity_data_for_db(opportunity_page: dict) -> tuple | None:
         aaInfo = get_the_first(
             opportunity_page["properties"]["AA Information"]["rich_text"]
         )
-        opportunity_data["accomp_information"] = get_key_value(aaInfo, ["plain_text"])
+        translation_data["accomp_information"] = get_key_value(aaInfo, ["plain_text"])
 
         aaName = get_the_first(
             opportunity_page["properties"]["Refugee Name"]["rich_text"]
@@ -334,16 +342,11 @@ def prepare_opportunity_data_for_db(opportunity_page: dict) -> tuple | None:
             ]
         )
 
-        voInfo = get_the_first(
-            opportunity_page["properties"]["VO information"]["rich_text"]
-        )
-        vo_information = get_key_value(voInfo, ["plain_text"])
-
         rac_info = get_the_first(
             opportunity_page["properties"]["RAC Contact"]["rich_text"]
         )
+        rac_info = get_key_value(rac_info, ["plain_text"])
         if isinstance(rac_info, str):
-            rac_info = get_key_value(rac_info, ["plain_text"])
             rac_info = (
                 rac_info.split(comments_delimiter) if isinstance(rac_info, str) else []
             )
@@ -357,7 +360,7 @@ def prepare_opportunity_data_for_db(opportunity_page: dict) -> tuple | None:
     except Exception as e:
         tb = traceback.format_exc()
         logger.error(
-            f"Error {repr(e)} occurred while preparing model fields by Notion page id={notion_id}. Skipping. \n{tb}"
+            f"Error {repr(e)} occurred while preparing model fields by Notion page {notion_id=}. Skipping. \n{tb}"
         )
         raise
 
@@ -384,7 +387,7 @@ def prepare_opportunity_data_for_db(opportunity_page: dict) -> tuple | None:
     return (
         opportunity_data,
         m2m_data,
-        (title, vo_information),
+        translation_data,
     )
 
 
@@ -396,7 +399,7 @@ def write_or_update_opportunity_to_db(
     if not data:
         return
 
-    opportunity_data, m2m_data, translation = data
+    opportunity_data, m2m_data, translation_data = data
 
     logger.info(
         f"Attempting to write or update opportunity to db {opportunity_data['notion_id']=}"
@@ -487,13 +490,16 @@ def write_or_update_opportunity_to_db(
             else:
                 opportunity_object.timeslots.set(timeslot_objects)
 
-            title_de, vo_infomation_de = translation
+            title_de = translation_data["title"]
+            vo_information_de = translation_data["vo_information"]
+            accomp_information_de = translation_data["accomp_information"]
 
             OpportunityTranslation.objects.create(
                 opportunity=opportunity_object,
                 language=Language.objects.get(iso_code="de"),
                 title=title_de,
-                vo_information=vo_infomation_de,
+                vo_information=vo_information_de,
+                accomp_information=accomp_information_de,
             )
     except Exception as e:
         tb = traceback.format_exc()
@@ -512,11 +518,17 @@ def execute_opportunities_seed_pipeline():
     )
 
     # 2. write Notion pages to the database
+    count_created = 0
     for opportunity_page in opportunities_from_notion:
         try:
             write_or_update_opportunity_to_db(opportunity_page=opportunity_page)
+            count_created += 1
         except Exception as e:
-            logger.error(f"Error error write or update opportunity: {str(e)}")
+            logger.error(
+                f"Error writing opportunity {opportunity_page["id"]}: {str(e)}"
+            )
+
+    logger.info(f"Created {count_created} Opportunity objects")
 
 
 def execute_opportunities_sync_pipeline():
@@ -529,39 +541,25 @@ def execute_opportunities_sync_pipeline():
     )
     # 1. select updated in the Notion table and update db
     count_updated = 0
-    count_created = 0
     for opportunity_page in opportunities_from_notion:
         try:
             opportunity_object = get_database_object(opportunity_page, Opportunity)
-            if not opportunity_object:
-                # if not an opportunity_object it means that it's not in the DB yet but it exists in notion
-                logger.info(
-                    f"Notion record {opportunity_page['id']} does not exist in django"
-                )
-                count_created += 1
-                write_or_update_opportunity_to_db(
-                    update_object=opportunity_object, opportunity_page=opportunity_page
-                )
-                continue
-
             if opportunity_object and is_later_than(
                 datetime.fromisoformat(opportunity_page["last_edited_time"]),
                 opportunity_object.updated_at,
             ):
                 # if opportunity_object it means that it exists in the DB and in Notion
-                count_updated += 1
                 write_or_update_opportunity_to_db(
                     update_object=opportunity_object, opportunity_page=opportunity_page
                 )
+                count_updated += 1
         except Exception as e:
             tb = traceback.format_exc()
             logger.error(
                 f"Notion record {opportunity_page['id']} resulted in {e} \n{tb}"
             )
 
-    logger.info(
-        f"Updated {count_updated} and created {count_created} Opportunity objects"
-    )
+    logger.info(f"Updated {count_updated} Opportunity objects")
 
     # 2. notion pages to be deleted from db
     notion_ids = [
@@ -590,13 +588,20 @@ def write_opportunity_to_notion(opportunity: Opportunity):
     properties["Name"] = {
         "title": [{"text": {"content": opportunity.get_title(), "link": None}}]
     }
+    vo_information = opportunity.get_vo_information()
+    if vo_information is not None:
+        properties["VO information"] = {
+            "rich_text": [{"text": {"content": vo_information}}]
+        }
+    accomp_information = opportunity.get_accomp_information()
+    if accomp_information is not None:
+        properties["AA Information"] = {
+            "rich_text": [{"text": {"content": accomp_information}}]
+        }
+
     if opportunity.accomp_address is not None:
         properties["Address"] = {
             "rich_text": [{"text": {"content": opportunity.accomp_address}}]
-        }
-    if opportunity.accomp_information is not None:
-        properties["AA Information"] = {
-            "rich_text": [{"text": {"content": opportunity.accomp_information}}]
         }
     if opportunity.accomp_name is not None:
         properties["Refugee Name"] = {
@@ -611,10 +616,6 @@ def write_opportunity_to_notion(opportunity: Opportunity):
     ):
         properties["Postcode"] = {
             "rich_text": [{"text": {"content": f"{opportunity.accomp_postcode:05}"}}]
-        }
-    if opportunity.get_vo_information() is not None:
-        properties["VO information"] = {
-            "rich_text": [{"text": {"content": opportunity.get_vo_information()}}]
         }
     if opportunity.accomp_datetime is not None and isinstance(
         opportunity.accomp_datetime, datetime

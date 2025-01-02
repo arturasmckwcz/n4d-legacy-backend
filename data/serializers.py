@@ -202,12 +202,15 @@ class OpportunitySerializer(serializers.ModelSerializer):
     timeslots = serializers.SerializerMethodField(read_only=True)
     title = serializers.SerializerMethodField()
     vo_information = serializers.SerializerMethodField()
+    accomp_information = serializers.SerializerMethodField()
 
     class Meta:
         model = Opportunity
         fields = [
             "id",
             "title",
+            "vo_information",
+            "accomp_information",
             "opportunity_type",
             "berlin_locations",
             "schedule_str",
@@ -217,7 +220,6 @@ class OpportunitySerializer(serializers.ModelSerializer):
             "languages",
             "skills",
             "status",
-            "vo_information",
             "opportunity_type",
             "accomp_datetime",
         ]
@@ -260,6 +262,10 @@ class OpportunitySerializer(serializers.ModelSerializer):
         language_code = self.context.get("language", "de")
         return obj.get_vo_information(language_code)
 
+    def get_accomp_information(self, obj):
+        language_code = self.context.get("language", "de")
+        return obj.get_accomp_information(language_code)
+
     def to_representation(self, instance):
         primary_keys = self.context.get("primary_keys", None)
         response = super().to_representation(instance)
@@ -278,6 +284,7 @@ class OpportunityCreateSerializer(serializers.ModelSerializer):
     )
     title = serializers.CharField(write_only=True)
     vo_information = serializers.CharField(write_only=True, allow_blank=True)
+    accomp_information = serializers.CharField(write_only=True, allow_blank=True)
 
     def validate_rac_email(self, value):
         _, domain = value.split("@")
@@ -297,6 +304,7 @@ class OpportunityCreateSerializer(serializers.ModelSerializer):
     def create(self, data_from_post_request):
         title = data_from_post_request.pop("title")
         vo_information = data_from_post_request.pop("vo_information", "")
+        accomp_information = data_from_post_request.pop("accomp_information", "")
         berlin_locations_data = data_from_post_request.pop("berlin_locations", [])
         berlin_locations = []
         for location_name in berlin_locations_data:
@@ -342,6 +350,7 @@ class OpportunityCreateSerializer(serializers.ModelSerializer):
             language=Language.objects.get(iso_code="de"),
             title=title,
             vo_information=vo_information,
+            accomp_information=accomp_information,
         )
         return opportunity_object
 
@@ -349,13 +358,14 @@ class OpportunityCreateSerializer(serializers.ModelSerializer):
         model = Opportunity
         fields = (
             "title",
-            "opportunity_type",
             "vo_information",
+            "accomp_information",
+            "opportunity_type",
+            "accomp_datetime",
             "accomp_address",
             "accomp_postcode",
             "accomp_name",
             "accomp_phone",
-            "accomp_information",
             "rac_email",
             "rac_full_name",
             "rac_phone",

@@ -1,1559 +1,843 @@
 [
-{
-    "model": "data.opportunity",
+  {
     "pk": 1,
-    "fields": {
-        "created_at": "2024-12-20T19:12:55.496Z",
-        "updated_at": "2024-12-20T19:12:55.496Z",
-        "rac_email": null,
-        "rac_full_name": null,
-        "rac_address": null,
-        "rac_plz": null,
-        "rac_phone": null,
-        "opportunity_type": "Volunteering",
-        "organization": null,
-        "volunteers_number": 2,
-        "datetime_str": null,
-        "accomp_address": null,
-        "accomp_datetime": null,
-        "accomp_name": null,
-        "accomp_phone": null,
-        "accomp_postcode": null,
-        "accomp_information": null,
-        "accomp_translation": null,
-        "notion_id": "15f8d880-f474-8193-b304-f624ab19e000",
-        "status": "Volunteers Needed",
-        "last_edited_time_notion": null,
-        "schedule_str": null,
-        "timeslots": [],
-        "activities": [
-            1
-        ],
-        "berlin_locations": [
-            6
-        ],
-        "skills": []
-    }
-},
-{
     "model": "data.opportunity",
+    "fields": {
+      "created_at": "2025-01-02T07:58:30.893325+00:00",
+      "updated_at": "2025-01-02T07:58:30.893351+00:00",
+      "opportunity_type": "volunteering",
+      "schedule_str": "Monday, Tuesday, Wednesday, Thursday, Friday, 14:00-17:00",
+      "datetime_str": null,
+      "status": "Volunteers Needed",
+      "accomp_datetime": null,
+      "berlin_locations": [6],
+      "timeslots": [],
+      "activities": [1],
+      "languages": [1540, 345, 1910],
+      "skills": []
+    }
+  },
+  {
+    "pk": 1,
+    "model": "data.opportunitytranslation",
+    "fields": {
+      "title": "Support with homework in Lichtenberg",
+      "accomp_information": null,
+      "vo_information": "The kids speak German, we don\u2019t know anything about their ages or grades. They would need help with various subjects.",
+      "opportunity": 1,
+      "language": 1540
+    }
+  },
+  {
     "pk": 2,
-    "fields": {
-        "created_at": "2024-12-20T19:12:56.069Z",
-        "updated_at": "2024-12-20T19:12:56.069Z",
-        "rac_email": null,
-        "rac_full_name": null,
-        "rac_address": null,
-        "rac_plz": null,
-        "rac_phone": null,
-        "opportunity_type": "Volunteering",
-        "organization": null,
-        "volunteers_number": 0,
-        "datetime_str": null,
-        "accomp_address": null,
-        "accomp_datetime": null,
-        "accomp_name": null,
-        "accomp_phone": null,
-        "accomp_postcode": null,
-        "accomp_information": null,
-        "accomp_translation": null,
-        "notion_id": "15f8d880-f474-8162-a6ce-c21f9153a05b",
-        "status": "Inactive",
-        "last_edited_time_notion": null,
-        "schedule_str": null,
-        "timeslots": [],
-        "activities": [
-            2
-        ],
-        "berlin_locations": [
-            3
-        ],
-        "skills": []
-    }
-},
-{
     "model": "data.opportunity",
+    "fields": {
+      "created_at": "2025-01-02T07:58:30.893965+00:00",
+      "updated_at": "2025-01-02T07:58:30.893969+00:00",
+      "opportunity_type": "volunteering",
+      "schedule_str": "Flexible",
+      "datetime_str": null,
+      "status": "Inactive",
+      "accomp_datetime": null,
+      "berlin_locations": [10],
+      "timeslots": [],
+      "activities": [5],
+      "languages": [1833, 1540],
+      "skills": []
+    }
+  },
+  {
+    "pk": 2,
+    "model": "data.opportunitytranslation",
+    "fields": {
+      "title": "Gardening in Neuk\u00f6lln",
+      "accomp_information": null,
+      "vo_information": "The schedule is flexible and can be discussed with volunteers. The idea is to build new raised beds and plant them with whatever the residents would like to have there.",
+      "opportunity": 2,
+      "language": 1540
+    }
+  },
+  {
     "pk": 3,
-    "fields": {
-        "created_at": "2024-12-20T19:12:59.947Z",
-        "updated_at": "2024-12-20T19:12:59.947Z",
-        "rac_email": null,
-        "rac_full_name": null,
-        "rac_address": null,
-        "rac_plz": null,
-        "rac_phone": null,
-        "opportunity_type": "Accompanying",
-        "organization": null,
-        "volunteers_number": 0,
-        "datetime_str": null,
-        "accomp_address": null,
-        "accomp_datetime": null,
-        "accomp_name": null,
-        "accomp_phone": null,
-        "accomp_postcode": null,
-        "accomp_information": "Wohnungssuche\n\nIn Zusammenarbeit mit dem SozialTeam Bieten wir eine kleines Seminar an über das Wohnungssuche in Berlin an.\nFolgende Fragen wird beantwortet:\n- Was ist WBS und wer hat Anspruch?\n- wie findet man eine Wohnung überhaupt?\n- Was ist zu beachten?\n\nDatum: 13.06.2024\nZeit:\n\n14:30 - Arabisch\n16:00 - Türkisch\nOrt: Buchholzer Str 110-140 13159 Berlin",
-        "accomp_translation": null,
-        "notion_id": "15f8d880-f474-81e8-8d31-d92ab126e039",
-        "status": "Done",
-        "last_edited_time_notion": null,
-        "schedule_str": null,
-        "timeslots": [],
-        "activities": [
-            3
-        ],
-        "berlin_locations": [
-            11
-        ],
-        "skills": []
-    }
-},
-{
     "model": "data.opportunity",
+    "fields": {
+      "created_at": "2025-01-02T07:58:30.894497+00:00",
+      "updated_at": "2025-01-02T07:58:30.894501+00:00",
+      "opportunity_type": "volunteering",
+      "schedule_str": "Monday, Tuesday, Thursday, Wednesday, Friday, 14-17",
+      "datetime_str": null,
+      "status": "Inactive",
+      "accomp_datetime": null,
+      "berlin_locations": [3],
+      "timeslots": [],
+      "activities": [2],
+      "languages": [1540, 1833, 1910, 345, 5676],
+      "skills": []
+    }
+  },
+  {
+    "pk": 3,
+    "model": "data.opportunitytranslation",
+    "fields": {
+      "title": "Support with daycare during summer break in Hellersdorf",
+      "accomp_information": null,
+      "vo_information": "Bis Ende August \nKinder",
+      "opportunity": 3,
+      "language": 1540
+    }
+  },
+  {
     "pk": 4,
-    "fields": {
-        "created_at": "2024-12-20T19:13:01.651Z",
-        "updated_at": "2024-12-20T19:13:01.651Z",
-        "rac_email": null,
-        "rac_full_name": null,
-        "rac_address": null,
-        "rac_plz": null,
-        "rac_phone": null,
-        "opportunity_type": "Volunteering",
-        "organization": null,
-        "volunteers_number": 1,
-        "datetime_str": null,
-        "accomp_address": null,
-        "accomp_datetime": null,
-        "accomp_name": null,
-        "accomp_phone": null,
-        "accomp_postcode": null,
-        "accomp_information": null,
-        "accomp_translation": null,
-        "notion_id": "15f8d880-f474-81ed-bb98-d74c6dd0305e",
-        "status": "Inactive",
-        "last_edited_time_notion": null,
-        "schedule_str": null,
-        "timeslots": [],
-        "activities": [
-            5
-        ],
-        "berlin_locations": [
-            10
-        ],
-        "skills": []
-    }
-},
-{
     "model": "data.opportunity",
+    "fields": {
+      "created_at": "2025-01-02T07:58:30.896246+00:00",
+      "updated_at": "2025-01-02T07:58:30.896251+00:00",
+      "opportunity_type": "volunteering",
+      "schedule_str": "15:30-17:00",
+      "datetime_str": null,
+      "status": "Inactive",
+      "accomp_datetime": null,
+      "berlin_locations": [3],
+      "timeslots": [],
+      "activities": [2],
+      "languages": [],
+      "skills": []
+    }
+  },
+  {
+    "pk": 4,
+    "model": "data.opportunitytranslation",
+    "fields": {
+      "title": "Sports - Help for preschool teachers",
+      "accomp_information": null,
+      "vo_information": null,
+      "opportunity": 4,
+      "language": 1540
+    }
+  },
+  {
     "pk": 5,
-    "fields": {
-        "created_at": "2024-12-20T19:13:02.857Z",
-        "updated_at": "2024-12-20T19:13:02.857Z",
-        "rac_email": null,
-        "rac_full_name": null,
-        "rac_address": null,
-        "rac_plz": null,
-        "rac_phone": null,
-        "opportunity_type": "Volunteering",
-        "organization": null,
-        "volunteers_number": 3,
-        "datetime_str": null,
-        "accomp_address": null,
-        "accomp_datetime": null,
-        "accomp_name": null,
-        "accomp_phone": null,
-        "accomp_postcode": null,
-        "accomp_information": null,
-        "accomp_translation": null,
-        "notion_id": "15f8d880-f474-813c-9bf7-ed8004a5aecc",
-        "status": "Inactive",
-        "last_edited_time_notion": null,
-        "schedule_str": null,
-        "timeslots": [],
-        "activities": [
-            4
-        ],
-        "berlin_locations": [
-            12
-        ],
-        "skills": []
-    }
-},
-{
     "model": "data.opportunity",
+    "fields": {
+      "created_at": "2025-01-02T07:58:30.896263+00:00",
+      "updated_at": "2025-01-02T07:58:30.896266+00:00",
+      "opportunity_type": "accompanying",
+      "schedule_str": "13.06.24",
+      "datetime_str": null,
+      "status": "Done",
+      "accomp_datetime": null,
+      "berlin_locations": [11],
+      "timeslots": [],
+      "activities": [3],
+      "languages": [1540, 6643, 345],
+      "skills": []
+    }
+  },
+  {
+    "pk": 5,
+    "model": "data.opportunitytranslation",
+    "fields": {
+      "title": "Multi Translation Buchholtz ",
+      "accomp_information": "Wohnungssuche\n\nIn Zusammenarbeit mit dem SozialTeam Bieten wir eine kleines Seminar an \u00fcber das Wohnungssuche in Berlin an.\nFolgende Fragen wird beantwortet:\n- Was ist WBS und wer hat Anspruch?\n- wie findet man eine Wohnung \u00fcberhaupt?\n- Was ist zu beachten?\n\nDatum: 13.06.2024\nZeit:\n\n14:30 - Arabisch\n16:00 - T\u00fcrkisch\nOrt: Buchholzer Str 110-140 13159 Berlin",
+      "vo_information": null,
+      "opportunity": 5,
+      "language": 1540
+    }
+  },
+  {
     "pk": 6,
-    "fields": {
-        "created_at": "2024-12-20T19:13:03.914Z",
-        "updated_at": "2024-12-20T19:13:03.914Z",
-        "rac_email": null,
-        "rac_full_name": null,
-        "rac_address": null,
-        "rac_plz": null,
-        "rac_phone": null,
-        "opportunity_type": "Volunteering",
-        "organization": null,
-        "volunteers_number": 3,
-        "datetime_str": null,
-        "accomp_address": null,
-        "accomp_datetime": null,
-        "accomp_name": null,
-        "accomp_phone": null,
-        "accomp_postcode": null,
-        "accomp_information": null,
-        "accomp_translation": null,
-        "notion_id": "15f8d880-f474-81e1-9dfe-dd6bc9c7d790",
-        "status": "Inactive",
-        "last_edited_time_notion": null,
-        "schedule_str": null,
-        "timeslots": [],
-        "activities": [
-            2
-        ],
-        "berlin_locations": [
-            3
-        ],
-        "skills": []
-    }
-},
-{
     "model": "data.opportunity",
+    "fields": {
+      "created_at": "2025-01-02T07:58:30.897573+00:00",
+      "updated_at": "2025-01-02T07:58:30.897578+00:00",
+      "opportunity_type": "volunteering",
+      "schedule_str": "Monday, Tuesday, Wednesday, Thursday, Friday, 11-18",
+      "datetime_str": null,
+      "status": "Volunteers Needed",
+      "accomp_datetime": null,
+      "berlin_locations": [11],
+      "timeslots": [],
+      "activities": [10],
+      "languages": [1833, 1540],
+      "skills": []
+    }
+  },
+  {
+    "pk": 6,
+    "model": "data.opportunitytranslation",
+    "fields": {
+      "title": "Support a clothing bank in Pankow",
+      "accomp_information": null,
+      "vo_information": "They need new volunteers. The schedule can be discussed with the volunteer coordinator. ",
+      "opportunity": 6,
+      "language": 1540
+    }
+  },
+  {
     "pk": 7,
-    "fields": {
-        "created_at": "2024-12-20T19:13:04.980Z",
-        "updated_at": "2024-12-20T19:13:04.980Z",
-        "rac_email": null,
-        "rac_full_name": null,
-        "rac_address": null,
-        "rac_plz": null,
-        "rac_phone": null,
-        "opportunity_type": "Accompanying",
-        "organization": null,
-        "volunteers_number": 1,
-        "datetime_str": null,
-        "accomp_address": null,
-        "accomp_datetime": null,
-        "accomp_name": null,
-        "accomp_phone": null,
-        "accomp_postcode": null,
-        "accomp_information": "Der Arzttermin ist am 28.05.24 um 13:30 Uhr im Sana Klinikum Haus F Zimmer F041.\nEs geht um den Sohn von Frau Nino Letodiani, Gabrieli, er ist 7 Jahre alt. Die Familie spricht nur georgisch, ich würde einen anderen Bewohner bitten zu begleiten, dieser spricht sowohl russisch als auch georgisch.\n \nHier noch die genauen Kontaktdaten von der Ärztin:\nKatja Nietz / Beate Scheibel / Franziska Klemm\nAufnahme Bereich Neuropädiatrie/Adipositas\n \nSana Klinikum Lichtenberg\nSozialpädiatrisches Zentrum \nFanningerstr. 32\n10365 Berlin\nTelefon: 030 / 55185245\nFax:          030 / 55185288\nMail: ",
-        "accomp_translation": null,
-        "notion_id": "15f8d880-f474-8137-95d9-cf80607c7873",
-        "status": "Done",
-        "last_edited_time_notion": null,
-        "schedule_str": null,
-        "timeslots": [],
-        "activities": [
-            4
-        ],
-        "berlin_locations": [
-            6
-        ],
-        "skills": []
-    }
-},
-{
     "model": "data.opportunity",
+    "fields": {
+      "created_at": "2025-01-02T07:58:30.898106+00:00",
+      "updated_at": "2025-01-02T07:58:30.898110+00:00",
+      "opportunity_type": "volunteering",
+      "schedule_str": "Wednesday, 20-22:30",
+      "datetime_str": null,
+      "status": "Inactive",
+      "accomp_datetime": null,
+      "berlin_locations": [12],
+      "timeslots": [],
+      "activities": [4],
+      "languages": [1540, 1833, 6643],
+      "skills": []
+    }
+  },
+  {
+    "pk": 7,
+    "model": "data.opportunitytranslation",
+    "fields": {
+      "title": "Accompany residents to a FreiluftKino in Prenzlauerberg",
+      "accomp_information": null,
+      "vo_information": "K\u00f6nnte ich \u00fcber euch Ehrenamtlichen finden, die Lust h\u00e4tten einige Bewohner aus der Unterkunft abzuholen und mit denen zur Filmveranstaltung zu kommen? (20 min. zu fu\u00df) Die Veranstaltung ist kostenlos, die Ehrenamtlichen + Bewohner bekommen die Getr\u00e4nke umsonst  \n\n21. August 2024, 20:30 \u2013 22:30 Uhr\n28. August 2024, 20:30 \u2013 22:30 Uhr\n4. September 2024, 20:15 \u2013 22:15 Uhr\n11. September 2024, 20:00 \u2013 22:00 Uhr\n\nContact person: Hend Reffky Mobil: +49 (0)159 043 61 513 Email: ",
+      "opportunity": 7,
+      "language": 1540
+    }
+  },
+  {
     "pk": 8,
-    "fields": {
-        "created_at": "2024-12-20T19:13:07.761Z",
-        "updated_at": "2024-12-20T19:13:07.761Z",
-        "rac_email": null,
-        "rac_full_name": null,
-        "rac_address": null,
-        "rac_plz": null,
-        "rac_phone": null,
-        "opportunity_type": "Volunteering",
-        "organization": null,
-        "volunteers_number": 2,
-        "datetime_str": null,
-        "accomp_address": null,
-        "accomp_datetime": null,
-        "accomp_name": null,
-        "accomp_phone": null,
-        "accomp_postcode": null,
-        "accomp_information": null,
-        "accomp_translation": null,
-        "notion_id": "15f8d880-f474-8156-9576-ddd11683ef2e",
-        "status": "No Volunteers Needed",
-        "last_edited_time_notion": null,
-        "schedule_str": null,
-        "timeslots": [],
-        "activities": [
-            6
-        ],
-        "berlin_locations": [
-            12
-        ],
-        "skills": []
-    }
-},
-{
     "model": "data.opportunity",
+    "fields": {
+      "created_at": "2025-01-02T07:58:30.899638+00:00",
+      "updated_at": "2025-01-02T07:58:30.899642+00:00",
+      "opportunity_type": "volunteering",
+      "schedule_str": "Monday, Friday, 14-17",
+      "datetime_str": null,
+      "status": "No Volunteers Needed",
+      "accomp_datetime": null,
+      "berlin_locations": [12],
+      "timeslots": [],
+      "activities": [6],
+      "languages": [1540, 1833],
+      "skills": []
+    }
+  },
+  {
+    "pk": 8,
+    "model": "data.opportunitytranslation",
+    "fields": {
+      "title": "Sorting and giving out donations from Tafel in Pankow",
+      "accomp_information": null,
+      "vo_information": "Wir suchen noch Leute, die uns bei der  Sortierung  und Ausgabe von den Spenden der Tafel e. V. am Montag und/oder  Freitag  zwischen 14 und 17 Uhr helfen.\nBerliner Tafel is organising food donations, more info here ",
+      "opportunity": 8,
+      "language": 1540
+    }
+  },
+  {
     "pk": 9,
-    "fields": {
-        "created_at": "2024-12-20T19:13:11.274Z",
-        "updated_at": "2024-12-20T19:13:11.274Z",
-        "rac_email": null,
-        "rac_full_name": null,
-        "rac_address": null,
-        "rac_plz": null,
-        "rac_phone": null,
-        "opportunity_type": "Volunteering",
-        "organization": null,
-        "volunteers_number": 2,
-        "datetime_str": null,
-        "accomp_address": null,
-        "accomp_datetime": null,
-        "accomp_name": null,
-        "accomp_phone": null,
-        "accomp_postcode": null,
-        "accomp_information": null,
-        "accomp_translation": null,
-        "notion_id": "15f8d880-f474-8169-bbcd-d395e27a343c",
-        "status": "Volunteers Needed",
-        "last_edited_time_notion": null,
-        "schedule_str": null,
-        "timeslots": [],
-        "activities": [
-            10
-        ],
-        "berlin_locations": [
-            11
-        ],
-        "skills": []
-    }
-},
-{
     "model": "data.opportunity",
+    "fields": {
+      "created_at": "2025-01-02T07:58:30.900155+00:00",
+      "updated_at": "2025-01-02T07:58:30.900158+00:00",
+      "opportunity_type": "accompanying",
+      "schedule_str": "May 28th, 13:30",
+      "datetime_str": null,
+      "status": "Done",
+      "accomp_datetime": null,
+      "berlin_locations": [6],
+      "timeslots": [],
+      "activities": [4],
+      "languages": [2854, 5676, 1540],
+      "skills": []
+    }
+  },
+  {
+    "pk": 9,
+    "model": "data.opportunitytranslation",
+    "fields": {
+      "title": "Accompanying - Doctor\u2019s appointment",
+      "accomp_information": "Der Arzttermin ist am 28.05.24 um 13:30 Uhr im Sana Klinikum Haus F Zimmer F041.\nEs geht um den Sohn von Frau Nino Letodiani, Gabrieli, er ist 7 Jahre alt. Die Familie spricht nur georgisch, ich w\u00fcrde einen anderen Bewohner bitten zu begleiten, dieser spricht sowohl russisch als auch georgisch.\n \nHier noch die genauen Kontaktdaten von der \u00c4rztin:\nKatja Nietz / Beate Scheibel / Franziska Klemm\nAufnahme Bereich Neurop\u00e4diatrie/Adipositas\n \nSana Klinikum Lichtenberg\nSozialp\u00e4diatrisches Zentrum \nFanningerstr. 32\n10365 Berlin\nTelefon: 030 / 55185245\nFax:          030 / 55185288\nMail: ",
+      "vo_information": null,
+      "opportunity": 9,
+      "language": 1540
+    }
+  },
+  {
     "pk": 10,
-    "fields": {
-        "created_at": "2024-12-20T19:13:11.850Z",
-        "updated_at": "2024-12-20T19:13:11.850Z",
-        "rac_email": null,
-        "rac_full_name": null,
-        "rac_address": null,
-        "rac_plz": null,
-        "rac_phone": null,
-        "opportunity_type": "Volunteering",
-        "organization": null,
-        "volunteers_number": 2,
-        "datetime_str": null,
-        "accomp_address": null,
-        "accomp_datetime": null,
-        "accomp_name": null,
-        "accomp_phone": null,
-        "accomp_postcode": null,
-        "accomp_information": null,
-        "accomp_translation": null,
-        "notion_id": "15f8d880-f474-813c-ae28-c989d64bef54",
-        "status": "Done",
-        "last_edited_time_notion": null,
-        "schedule_str": null,
-        "timeslots": [],
-        "activities": [
-            8,
-            9
-        ],
-        "berlin_locations": [
-            23
-        ],
-        "skills": []
-    }
-},
-{
     "model": "data.opportunity",
+    "fields": {
+      "created_at": "2025-01-02T07:58:30.901645+00:00",
+      "updated_at": "2025-01-02T07:58:30.901649+00:00",
+      "opportunity_type": "volunteering",
+      "schedule_str": "August 22nd, 13-16",
+      "datetime_str": null,
+      "status": "Done",
+      "accomp_datetime": null,
+      "berlin_locations": [23],
+      "timeslots": [],
+      "activities": [8, 9],
+      "languages": [1540, 1833],
+      "skills": []
+    }
+  },
+  {
+    "pk": 10,
+    "model": "data.opportunitytranslation",
+    "fields": {
+      "title": "Play with kids and organise activities for the during a summer festival in Wilmersdorf",
+      "accomp_information": null,
+      "vo_information": "They are looking for volunteers who can organise activities for kids (face painting, games, sports, pop-corn etc.). \n\nVolunteers can just come by at 1 pm. We don\u2019t need to introduce them before hand.\n\nContact person: Young-Sun Song",
+      "opportunity": 10,
+      "language": 1540
+    }
+  },
+  {
     "pk": 11,
-    "fields": {
-        "created_at": "2024-12-20T19:13:12.370Z",
-        "updated_at": "2024-12-20T19:13:12.370Z",
-        "rac_email": null,
-        "rac_full_name": null,
-        "rac_address": null,
-        "rac_plz": null,
-        "rac_phone": null,
-        "opportunity_type": "Volunteering",
-        "organization": null,
-        "volunteers_number": 1,
-        "datetime_str": null,
-        "accomp_address": null,
-        "accomp_datetime": null,
-        "accomp_name": null,
-        "accomp_phone": null,
-        "accomp_postcode": null,
-        "accomp_information": null,
-        "accomp_translation": null,
-        "notion_id": "15f8d880-f474-8165-8453-ffcd75b88069",
-        "status": "Done",
-        "last_edited_time_notion": null,
-        "schedule_str": null,
-        "timeslots": [],
-        "activities": [
-            7
-        ],
-        "berlin_locations": [
-            6
-        ],
-        "skills": []
-    }
-},
-{
     "model": "data.opportunity",
+    "fields": {
+      "created_at": "2025-01-02T07:58:30.902170+00:00",
+      "updated_at": "2025-01-02T07:58:30.902173+00:00",
+      "opportunity_type": "volunteering",
+      "schedule_str": "Flexible",
+      "datetime_str": null,
+      "status": "Done",
+      "accomp_datetime": null,
+      "berlin_locations": [6],
+      "timeslots": [],
+      "activities": [7],
+      "languages": [1833, 1540],
+      "skills": []
+    }
+  },
+  {
+    "pk": 11,
+    "model": "data.opportunitytranslation",
+    "fields": {
+      "title": "Going for walks with a resident of a refugee acommodation centre",
+      "accomp_information": null,
+      "vo_information": null,
+      "opportunity": 11,
+      "language": 1540
+    }
+  },
+  {
     "pk": 12,
-    "fields": {
-        "created_at": "2024-12-20T19:13:16.848Z",
-        "updated_at": "2024-12-20T19:13:16.848Z",
-        "rac_email": null,
-        "rac_full_name": null,
-        "rac_address": null,
-        "rac_plz": null,
-        "rac_phone": null,
-        "opportunity_type": "Volunteering",
-        "organization": null,
-        "volunteers_number": 6,
-        "datetime_str": null,
-        "accomp_address": null,
-        "accomp_datetime": null,
-        "accomp_name": null,
-        "accomp_phone": null,
-        "accomp_postcode": null,
-        "accomp_information": null,
-        "accomp_translation": null,
-        "notion_id": "15f8d880-f474-8129-b50d-cbb8f350a131",
-        "status": "Done",
-        "last_edited_time_notion": null,
-        "schedule_str": null,
-        "timeslots": [],
-        "activities": [
-            4
-        ],
-        "berlin_locations": [
-            26
-        ],
-        "skills": []
-    }
-},
-{
     "model": "data.opportunity",
+    "fields": {
+      "created_at": "2025-01-02T07:58:30.902728+00:00",
+      "updated_at": "2025-01-02T07:58:30.902732+00:00",
+      "opportunity_type": "accompanying",
+      "schedule_str": "Flexible",
+      "datetime_str": null,
+      "status": "Inactive",
+      "accomp_datetime": null,
+      "berlin_locations": [6],
+      "timeslots": [],
+      "activities": [4],
+      "languages": [1833, 1540],
+      "skills": []
+    }
+  },
+  {
+    "pk": 12,
+    "model": "data.opportunitytranslation",
+    "fields": {
+      "title": "Going to appointments with a ",
+      "accomp_information": "Konkret bin ich auf der Suche nach eine Person, die unser Bewohner(mit Seheinschr\u00e4kung)f\u00fcr Begleitung zu den beh\u00f6rdlichen oder \u00e4rztliche Termine ,gemeinsame Spazierg\u00e4nge.\nSo 1 oder 2 Mal in der Woche w\u00e4re sch\u00f6n, er ist spricht gut Englisch. W\u00e4re super Jemand ,der auch Englisch spricht.\nHabt ihr gerade Leute, die sie uns vermitteln k\u00f6nnen?",
+      "vo_information": null,
+      "opportunity": 12,
+      "language": 1540
+    }
+  },
+  {
     "pk": 13,
-    "fields": {
-        "created_at": "2024-12-20T19:13:17.983Z",
-        "updated_at": "2024-12-20T19:13:17.983Z",
-        "rac_email": null,
-        "rac_full_name": null,
-        "rac_address": null,
-        "rac_plz": null,
-        "rac_phone": null,
-        "opportunity_type": "Accompanying",
-        "organization": null,
-        "volunteers_number": 1,
-        "datetime_str": null,
-        "accomp_address": null,
-        "accomp_datetime": null,
-        "accomp_name": null,
-        "accomp_phone": null,
-        "accomp_postcode": null,
-        "accomp_information": "Konkret bin ich auf der Suche nach eine Person, die unser Bewohner(mit Seheinschräkung)für Begleitung zu den behördlichen oder ärztliche Termine ,gemeinsame Spaziergänge.\nSo 1 oder 2 Mal in der Woche wäre schön, er ist spricht gut Englisch. Wäre super Jemand ,der auch Englisch spricht.\nHabt ihr gerade Leute, die sie uns vermitteln können?",
-        "accomp_translation": null,
-        "notion_id": "15f8d880-f474-8171-9478-d4d352190798",
-        "status": "Inactive",
-        "last_edited_time_notion": null,
-        "schedule_str": null,
-        "timeslots": [],
-        "activities": [
-            4
-        ],
-        "berlin_locations": [
-            6
-        ],
-        "skills": []
-    }
-},
-{
     "model": "data.opportunity",
+    "fields": {
+      "created_at": "2025-01-02T07:58:30.903248+00:00",
+      "updated_at": "2025-01-02T07:58:30.903251+00:00",
+      "opportunity_type": "volunteering",
+      "schedule_str": "Monday, 17-18",
+      "datetime_str": null,
+      "status": "Inactive",
+      "accomp_datetime": null,
+      "berlin_locations": [20],
+      "timeslots": [],
+      "activities": [11],
+      "languages": [1910, 6643, 1540],
+      "skills": []
+    }
+  },
+  {
+    "pk": 13,
+    "model": "data.opportunitytranslation",
+    "fields": {
+      "title": "Teach German in a language caf\u00e9",
+      "accomp_information": null,
+      "vo_information": null,
+      "opportunity": 13,
+      "language": 1540
+    }
+  },
+  {
     "pk": 14,
-    "fields": {
-        "created_at": "2024-12-20T19:13:18.481Z",
-        "updated_at": "2024-12-20T19:13:18.481Z",
-        "rac_email": null,
-        "rac_full_name": null,
-        "rac_address": null,
-        "rac_plz": null,
-        "rac_phone": null,
-        "opportunity_type": "Accompanying",
-        "organization": null,
-        "volunteers_number": 1,
-        "datetime_str": null,
-        "accomp_address": null,
-        "accomp_datetime": null,
-        "accomp_name": null,
-        "accomp_phone": null,
-        "accomp_postcode": null,
-        "accomp_information": "vietnamesisches Dolmetschen. Sie hat einen Termin am 12.06.2024 um 9:30 Uhr in der MVZ-Caritas in Greifswalder Str.139 Berlin.",
-        "accomp_translation": null,
-        "notion_id": "15f8d880-f474-8172-bbf5-c58e9504e433",
-        "status": "Inactive",
-        "last_edited_time_notion": null,
-        "schedule_str": null,
-        "timeslots": [],
-        "activities": [
-            3
-        ],
-        "berlin_locations": [
-            11
-        ],
-        "skills": []
-    }
-},
-{
     "model": "data.opportunity",
+    "fields": {
+      "created_at": "2025-01-02T07:58:30.904777+00:00",
+      "updated_at": "2025-01-02T07:58:30.904781+00:00",
+      "opportunity_type": "accompanying",
+      "schedule_str": "August 20th, 9:00",
+      "datetime_str": null,
+      "status": "Inactive",
+      "accomp_datetime": null,
+      "berlin_locations": [8],
+      "timeslots": [],
+      "activities": [4],
+      "languages": [5676, 1540],
+      "skills": []
+    }
+  },
+  {
+    "pk": 14,
+    "model": "data.opportunitytranslation",
+    "fields": {
+      "title": "Doctor\u2019s Appointment: Kid",
+      "accomp_information": "Arian Stoian hatte den folgenden Termin:\nDienstag, 20. August 2024 um 09:00 Uhr\nOrt: Hautklinik, Charit\u00e9 Campus Mitte, Luisenstr. 2-5, 10117 Berlin\nArian is a son of Frau Stojan, they speak Russian and Romanian",
+      "vo_information": null,
+      "opportunity": 14,
+      "language": 1540
+    }
+  },
+  {
     "pk": 15,
-    "fields": {
-        "created_at": "2024-12-20T19:13:19.368Z",
-        "updated_at": "2024-12-20T19:13:19.368Z",
-        "rac_email": null,
-        "rac_full_name": null,
-        "rac_address": null,
-        "rac_plz": null,
-        "rac_phone": null,
-        "opportunity_type": "Volunteering",
-        "organization": null,
-        "volunteers_number": 1,
-        "datetime_str": null,
-        "accomp_address": null,
-        "accomp_datetime": null,
-        "accomp_name": null,
-        "accomp_phone": null,
-        "accomp_postcode": null,
-        "accomp_information": null,
-        "accomp_translation": null,
-        "notion_id": "15f8d880-f474-8197-b5cf-fdd75d69ec2a",
-        "status": "Inactive",
-        "last_edited_time_notion": null,
-        "schedule_str": null,
-        "timeslots": [],
-        "activities": [
-            11
-        ],
-        "berlin_locations": [
-            20
-        ],
-        "skills": []
-    }
-},
-{
     "model": "data.opportunity",
+    "fields": {
+      "created_at": "2025-01-02T07:58:30.905857+00:00",
+      "updated_at": "2025-01-02T07:58:30.905861+00:00",
+      "opportunity_type": "volunteering",
+      "schedule_str": "24.06.24",
+      "datetime_str": null,
+      "status": "Inactive",
+      "accomp_datetime": null,
+      "berlin_locations": [],
+      "timeslots": [],
+      "activities": [10],
+      "languages": [],
+      "skills": []
+    }
+  },
+  {
+    "pk": 15,
+    "model": "data.opportunitytranslation",
+    "fields": {
+      "title": "Action day asked for by Aprilsix volunteers",
+      "accomp_information": null,
+      "vo_information": " Freiwilligenarbeit f\u00fcr ein Team von LucaNet (30 Personen) in Berlin f\u00fcr Montag, den 24.06., am Nachmittag (ab circa 14:00 Uhr).\nK\u00f6nnen wir euch mit kleinen Teams aus 2-5 Personen bei bestimmten Aktionen unterst\u00fctzen?",
+      "opportunity": 15,
+      "language": 1540
+    }
+  },
+  {
     "pk": 16,
-    "fields": {
-        "created_at": "2024-12-20T19:13:19.820Z",
-        "updated_at": "2024-12-20T19:13:19.820Z",
-        "rac_email": null,
-        "rac_full_name": null,
-        "rac_address": null,
-        "rac_plz": null,
-        "rac_phone": null,
-        "opportunity_type": "Accompanying",
-        "organization": null,
-        "volunteers_number": 1,
-        "datetime_str": null,
-        "accomp_address": null,
-        "accomp_datetime": null,
-        "accomp_name": null,
-        "accomp_phone": null,
-        "accomp_postcode": null,
-        "accomp_information": "Arian Stoian hatte den folgenden Termin:\nDienstag, 20. August 2024 um 09:00 Uhr\nOrt: Hautklinik, Charité Campus Mitte, Luisenstr. 2-5, 10117 Berlin\nArian is a son of Frau Stojan, they speak Russian and Romanian",
-        "accomp_translation": null,
-        "notion_id": "15f8d880-f474-81da-b014-f78ff81d48bc",
-        "status": "Inactive",
-        "last_edited_time_notion": null,
-        "schedule_str": null,
-        "timeslots": [],
-        "activities": [
-            4
-        ],
-        "berlin_locations": [
-            8
-        ],
-        "skills": []
-    }
-},
-{
     "model": "data.opportunity",
+    "fields": {
+      "created_at": "2025-01-02T07:58:30.905871+00:00",
+      "updated_at": "2025-01-02T07:58:30.905874+00:00",
+      "opportunity_type": "accompanying",
+      "schedule_str": "12.06.24",
+      "datetime_str": null,
+      "status": "Inactive",
+      "accomp_datetime": null,
+      "berlin_locations": [11],
+      "timeslots": [],
+      "activities": [3],
+      "languages": [6893],
+      "skills": []
+    }
+  },
+  {
+    "pk": 16,
+    "model": "data.opportunitytranslation",
+    "fields": {
+      "title": "vietnamesisches Greifswalderstr ",
+      "accomp_information": "vietnamesisches Dolmetschen. Sie hat einen Termin am 12.06.2024 um 9:30 Uhr in der MVZ-Caritas in Greifswalder Str.139 Berlin.",
+      "vo_information": null,
+      "opportunity": 16,
+      "language": 1540
+    }
+  },
+  {
     "pk": 17,
-    "fields": {
-        "created_at": "2024-12-20T19:13:21.274Z",
-        "updated_at": "2024-12-20T19:13:21.274Z",
-        "rac_email": null,
-        "rac_full_name": null,
-        "rac_address": null,
-        "rac_plz": null,
-        "rac_phone": null,
-        "opportunity_type": "Volunteering",
-        "organization": null,
-        "volunteers_number": 30,
-        "datetime_str": null,
-        "accomp_address": null,
-        "accomp_datetime": null,
-        "accomp_name": null,
-        "accomp_phone": null,
-        "accomp_postcode": null,
-        "accomp_information": null,
-        "accomp_translation": null,
-        "notion_id": "15f8d880-f474-81e7-8eab-c1c4a3cc16a3",
-        "status": "Inactive",
-        "last_edited_time_notion": null,
-        "schedule_str": null,
-        "timeslots": [],
-        "activities": [
-            10
-        ],
-        "berlin_locations": [],
-        "skills": []
-    }
-},
-{
     "model": "data.opportunity",
+    "fields": {
+      "created_at": "2025-01-02T07:58:30.906905+00:00",
+      "updated_at": "2025-01-02T07:58:30.906910+00:00",
+      "opportunity_type": "volunteering",
+      "schedule_str": "",
+      "datetime_str": null,
+      "status": "Done",
+      "accomp_datetime": null,
+      "berlin_locations": [26],
+      "timeslots": [],
+      "activities": [4],
+      "languages": [1833, 1540],
+      "skills": []
+    }
+  },
+  {
+    "pk": 17,
+    "model": "data.opportunitytranslation",
+    "fields": {
+      "title": "Accompany children to external events around Berlin",
+      "accomp_information": null,
+      "vo_information": "Gleich schon beginnen die Sommerferien. Damit unsere lieben Kinder sich aber nicht langweilen m\u00fcssen, haben wir ihnen ein buntes Programm mit zahlreichen Aktivit\u00e4ten und Ausfl\u00fcgen zusammengestellt.\n \nEben f\u00fcr diese Ausfl\u00fcge ben\u00f6tigen wir noch die ein oder andere erwachsene Begleitperson, damit m\u00f6glichst viele Kinder daran teilnehmen k\u00f6nnen (Pro Erwachsenen 5 Kinder).Folgendes ist geplant:\n \n\u2022 02.08. \u2013 Lobecksportplatz, 10 -13:30 Uhr\n\u2022 05.08. \u2013 Treptower Park, Insel der Jugend, 14 \u2013 17 Uhr\n\u2022 06.08. \u2013 Kino: Garfield, Cubix Alexanderplatz, 9:30 \u2013 13 Uhr\n\u2022 12.08. \u2013 Plantsche, Volkspark Friedrichshain, 10:30 \u2013 16:30 Uhr\n\u2022 13.08. \u2013 Naturkundemuseum, 9:30 -14 Uhr\n\u2022 19.08. \u2013 Gleisdreieckpark, 10 \u2013 16:30 Uhr\n\u2022 23.08. \u2013 Britzer Garten, 9:30 \u2013 13:30 Uhr\n\u2022 26.08. \u2013 Spielplatz Ritterburg, 14 \u2013 16:30 Uhr\n\u2022 28.08. \u2013 Holzbauworkshop Kreativhaus Mitte, 10 \u2013 13 Uhr\n\u2022 29.08. \u2013 Haus der Natur, Wuhlheide, 10 \u2013 17:00 Uhr\n \nEs handelt sich gr\u00f6\u00dftenteils um Halbtagsausfl\u00fcge. Treffpunkt ist immer hier bei uns in der Unterkunft. Nat\u00fcrlich m\u00fcssen die Kinder hierhin auch wieder zur\u00fcck.\nWer also Zeit und Lust hat (oder jemanden kennt, der Zeit und Lust hat) bei einer oder mehreren Aktivit\u00e4ten zu unterst\u00fctzen, melde sich f\u00fcr n\u00e4here Informationen bitte bei uns unter ",
+      "opportunity": 17,
+      "language": 1540
+    }
+  },
+  {
     "pk": 18,
-    "fields": {
-        "created_at": "2024-12-20T19:13:22.077Z",
-        "updated_at": "2024-12-20T19:13:22.077Z",
-        "rac_email": null,
-        "rac_full_name": null,
-        "rac_address": null,
-        "rac_plz": null,
-        "rac_phone": null,
-        "opportunity_type": "Accompanying",
-        "organization": null,
-        "volunteers_number": 10,
-        "datetime_str": null,
-        "accomp_address": null,
-        "accomp_datetime": null,
-        "accomp_name": null,
-        "accomp_phone": null,
-        "accomp_postcode": null,
-        "accomp_information": null,
-        "accomp_translation": null,
-        "notion_id": "15f8d880-f474-8131-ae9f-e92457f8ff99",
-        "status": "Inactive",
-        "last_edited_time_notion": null,
-        "schedule_str": null,
-        "timeslots": [],
-        "activities": [
-            3,
-            4
-        ],
-        "berlin_locations": [
-            26
-        ],
-        "skills": []
-    }
-},
-{
     "model": "data.opportunity",
+    "fields": {
+      "created_at": "2025-01-02T07:58:30.907446+00:00",
+      "updated_at": "2025-01-02T07:58:30.907450+00:00",
+      "opportunity_type": "volunteering",
+      "schedule_str": "Wednesday, 14-17, 15-17",
+      "datetime_str": null,
+      "status": "No Volunteers Needed",
+      "accomp_datetime": null,
+      "berlin_locations": [10],
+      "timeslots": [],
+      "activities": [2],
+      "languages": [1540, 345],
+      "skills": []
+    }
+  },
+  {
+    "pk": 18,
+    "model": "data.opportunitytranslation",
+    "fields": {
+      "title": "Supporting with daycare",
+      "accomp_information": null,
+      "vo_information": "Most of the children are from Syria. The daycare coordinator speaks only German. They need an independent person with daycare experience.\nThey also would like to find volunteers who can play football with kids.",
+      "opportunity": 18,
+      "language": 1540
+    }
+  },
+  {
     "pk": 19,
-    "fields": {
-        "created_at": "2024-12-20T19:13:22.543Z",
-        "updated_at": "2024-12-20T19:13:22.543Z",
-        "rac_email": null,
-        "rac_full_name": null,
-        "rac_address": null,
-        "rac_plz": null,
-        "rac_phone": null,
-        "opportunity_type": "Accompanying",
-        "organization": null,
-        "volunteers_number": 1,
-        "datetime_str": null,
-        "accomp_address": null,
-        "accomp_datetime": null,
-        "accomp_name": null,
-        "accomp_phone": null,
-        "accomp_postcode": null,
-        "accomp_information": "wir wollen hier im Hagenower Ring am 01.07. 15-18 Uhr ein Event machen,bei welchem wir Bewohner*innen dabei helfen ihre Unterlagen/Dokumente zusortieren und abzuheften.",
-        "accomp_translation": null,
-        "notion_id": "15f8d880-f474-81a2-abb0-c7bd0fbe546f",
-        "status": "Done",
-        "last_edited_time_notion": null,
-        "schedule_str": null,
-        "timeslots": [],
-        "activities": [
-            3
-        ],
-        "berlin_locations": [
-            6
-        ],
-        "skills": []
-    }
-},
-{
     "model": "data.opportunity",
+    "fields": {
+      "created_at": "2025-01-02T07:58:30.907748+00:00",
+      "updated_at": "2025-01-02T07:58:30.907755+00:00",
+      "opportunity_type": "accompanying",
+      "schedule_str": "Flexible, Short notice",
+      "datetime_str": null,
+      "status": "Inactive",
+      "accomp_datetime": null,
+      "berlin_locations": [26],
+      "timeslots": [],
+      "activities": [3, 4],
+      "languages": [1833, 1540, 345, 5676, 2854, 1910],
+      "skills": []
+    }
+  },
+  {
+    "pk": 19,
+    "model": "data.opportunitytranslation",
+    "fields": {
+      "title": "Accompanying to administrative offices",
+      "accomp_information": null,
+      "vo_information": "Needed everywhere.",
+      "opportunity": 19,
+      "language": 1540
+    }
+  },
+  {
     "pk": 20,
-    "fields": {
-        "created_at": "2024-12-20T19:13:23.926Z",
-        "updated_at": "2024-12-20T19:13:23.926Z",
-        "rac_email": null,
-        "rac_full_name": null,
-        "rac_address": null,
-        "rac_plz": null,
-        "rac_phone": null,
-        "opportunity_type": "Volunteering",
-        "organization": null,
-        "volunteers_number": 2,
-        "datetime_str": null,
-        "accomp_address": null,
-        "accomp_datetime": null,
-        "accomp_name": null,
-        "accomp_phone": null,
-        "accomp_postcode": null,
-        "accomp_information": null,
-        "accomp_translation": null,
-        "notion_id": "15f8d880-f474-81fe-8b49-f24897eae76a",
-        "status": "No Volunteers Needed",
-        "last_edited_time_notion": null,
-        "schedule_str": null,
-        "timeslots": [],
-        "activities": [
-            2
-        ],
-        "berlin_locations": [
-            10
-        ],
-        "skills": []
-    }
-},
-{
     "model": "data.opportunity",
+    "fields": {
+      "created_at": "2025-01-02T07:58:30.909804+00:00",
+      "updated_at": "2025-01-02T07:58:30.909808+00:00",
+      "opportunity_type": "accompanying",
+      "schedule_str": "July 1st",
+      "datetime_str": null,
+      "status": "Done",
+      "accomp_datetime": null,
+      "berlin_locations": [6],
+      "timeslots": [],
+      "activities": [3],
+      "languages": [5676, 1540],
+      "skills": []
+    }
+  },
+  {
+    "pk": 20,
+    "model": "data.opportunitytranslation",
+    "fields": {
+      "title": "Sorting Papers for Residents",
+      "accomp_information": "wir wollen hier im Hagenower Ring am 01.07. 15-18 Uhr ein Event machen,bei welchem wir Bewohner*innen dabei helfen ihre Unterlagen/Dokumente zusortieren und abzuheften.",
+      "vo_information": null,
+      "opportunity": 20,
+      "language": 1540
+    }
+  },
+  {
     "pk": 21,
-    "fields": {
-        "created_at": "2024-12-20T19:13:24.673Z",
-        "updated_at": "2024-12-20T19:13:24.673Z",
-        "rac_email": null,
-        "rac_full_name": null,
-        "rac_address": null,
-        "rac_plz": null,
-        "rac_phone": null,
-        "opportunity_type": "Accompanying",
-        "organization": null,
-        "volunteers_number": 1,
-        "datetime_str": null,
-        "accomp_address": null,
-        "accomp_datetime": null,
-        "accomp_name": null,
-        "accomp_phone": null,
-        "accomp_postcode": null,
-        "accomp_information": "ich hätte eine Begleitungsanfrage bei Need4Deed für Russisch/Deutsch Übersetzung (im Notfall ginge vllt. auch Englisch Russisch)\n\nEs geht um eine Myocardszintigraphie der Nuklearmedizin. Der Termin ist am 23.5. um 8:30 und soll wohl 3,5h lang gehen! Falls 3,5h nicht möglich ist, dann ist kürzer immer noch besser als gar nicht. Einsatzort  ist Die Praxis ffür Nuklearmedizin, Schönhauser Allee 82, 10439 Berlin.",
-        "accomp_translation": null,
-        "notion_id": "15f8d880-f474-8114-be9c-fed6f52ede29",
-        "status": "Done",
-        "last_edited_time_notion": null,
-        "schedule_str": null,
-        "timeslots": [],
-        "activities": [
-            4
-        ],
-        "berlin_locations": [
-            11
-        ],
-        "skills": []
-    }
-},
-{
     "model": "data.opportunity",
+    "fields": {
+      "created_at": "2025-01-02T07:58:30.910876+00:00",
+      "updated_at": "2025-01-02T07:58:30.910881+00:00",
+      "opportunity_type": "accompanying",
+      "schedule_str": "May 23rd, 8:30",
+      "datetime_str": null,
+      "status": "Done",
+      "accomp_datetime": null,
+      "berlin_locations": [11],
+      "timeslots": [],
+      "activities": [4],
+      "languages": [1540, 1833, 5676],
+      "skills": []
+    }
+  },
+  {
+    "pk": 21,
+    "model": "data.opportunitytranslation",
+    "fields": {
+      "title": " artz Myocardszintigraphie",
+      "accomp_information": "ich h\u00e4tte eine Begleitungsanfrage bei Need4Deed f\u00fcr Russisch/Deutsch \u00dcbersetzung (im Notfall ginge vllt. auch Englisch Russisch)\n\nEs geht um eine Myocardszintigraphie der Nuklearmedizin. Der Termin ist am 23.5. um 8:30 und soll wohl 3,5h lang gehen! Falls 3,5h nicht m\u00f6glich ist, dann ist k\u00fcrzer immer noch besser als gar nicht. Einsatzort  ist Die Praxis ff\u00fcr Nuklearmedizin, Sch\u00f6nhauser Allee 82, 10439 Berlin.",
+      "vo_information": null,
+      "opportunity": 21,
+      "language": 1540
+    }
+  },
+  {
     "pk": 22,
-    "fields": {
-        "created_at": "2024-12-20T19:13:25.855Z",
-        "updated_at": "2024-12-20T19:13:25.855Z",
-        "rac_email": null,
-        "rac_full_name": null,
-        "rac_address": null,
-        "rac_plz": null,
-        "rac_phone": null,
-        "opportunity_type": "Accompanying",
-        "organization": null,
-        "volunteers_number": 3,
-        "datetime_str": null,
-        "accomp_address": null,
-        "accomp_datetime": null,
-        "accomp_name": null,
-        "accomp_phone": null,
-        "accomp_postcode": null,
-        "accomp_information": null,
-        "accomp_translation": null,
-        "notion_id": "15f8d880-f474-81a8-8f28-ea1a4c48e8c4",
-        "status": "No Volunteers Needed",
-        "last_edited_time_notion": null,
-        "schedule_str": null,
-        "timeslots": [],
-        "activities": [
-            4
-        ],
-        "berlin_locations": [
-            3,
-            20
-        ],
-        "skills": []
-    }
-},
-{
     "model": "data.opportunity",
+    "fields": {
+      "created_at": "2025-01-02T07:58:30.912239+00:00",
+      "updated_at": "2025-01-02T07:58:30.912243+00:00",
+      "opportunity_type": "volunteering",
+      "schedule_str": "Flexible, 9-18",
+      "datetime_str": null,
+      "status": "Search in process",
+      "accomp_datetime": null,
+      "berlin_locations": [7],
+      "timeslots": [],
+      "activities": [12, 13, 14],
+      "languages": [1833, 1540, 6643, 345, 1910, 2854],
+      "skills": []
+    }
+  },
+  {
+    "pk": 22,
+    "model": "data.opportunitytranslation",
+    "fields": {
+      "title": "Organise fun activities for kids and teens in Marzahn - IB",
+      "accomp_information": null,
+      "vo_information": "Anything volunteers can do as their own activities. preferably with kids teens is welcome mainly until 18.00 but after some familiarity also during after work hours. Additionally sometimes soft accompanying to the LEA or court as",
+      "opportunity": 22,
+      "language": 1540
+    }
+  },
+  {
     "pk": 23,
-    "fields": {
-        "created_at": "2024-12-20T19:13:26.369Z",
-        "updated_at": "2024-12-20T19:13:26.369Z",
-        "rac_email": null,
-        "rac_full_name": null,
-        "rac_address": null,
-        "rac_plz": null,
-        "rac_phone": null,
-        "opportunity_type": "Volunteering",
-        "organization": null,
-        "volunteers_number": 5,
-        "datetime_str": null,
-        "accomp_address": null,
-        "accomp_datetime": null,
-        "accomp_name": null,
-        "accomp_phone": null,
-        "accomp_postcode": null,
-        "accomp_information": null,
-        "accomp_translation": null,
-        "notion_id": "15f8d880-f474-81ac-a464-c9072379e291",
-        "status": "Search in process",
-        "last_edited_time_notion": null,
-        "schedule_str": null,
-        "timeslots": [],
-        "activities": [
-            12,
-            13,
-            14
-        ],
-        "berlin_locations": [
-            7
-        ],
-        "skills": []
-    }
-},
-{
     "model": "data.opportunity",
+    "fields": {
+      "created_at": "2025-01-02T07:58:30.914493+00:00",
+      "updated_at": "2025-01-02T07:58:30.914497+00:00",
+      "opportunity_type": "accompanying",
+      "schedule_str": "Flexible",
+      "datetime_str": null,
+      "status": "No Volunteers Needed",
+      "accomp_datetime": null,
+      "berlin_locations": [3, 20],
+      "timeslots": [],
+      "activities": [4],
+      "languages": [1954, 1540, 345, 1910, 5676],
+      "skills": []
+    }
+  },
+  {
+    "pk": 23,
+    "model": "data.opportunitytranslation",
+    "fields": {
+      "title": "Opening bank accounts",
+      "accomp_information": null,
+      "vo_information": null,
+      "opportunity": 23,
+      "language": 1540
+    }
+  },
+  {
     "pk": 24,
-    "fields": {
-        "created_at": "2024-12-20T19:13:30.374Z",
-        "updated_at": "2024-12-20T19:13:30.374Z",
-        "rac_email": null,
-        "rac_full_name": null,
-        "rac_address": null,
-        "rac_plz": null,
-        "rac_phone": null,
-        "opportunity_type": "Volunteering",
-        "organization": null,
-        "volunteers_number": 5,
-        "datetime_str": null,
-        "accomp_address": null,
-        "accomp_datetime": null,
-        "accomp_name": null,
-        "accomp_phone": null,
-        "accomp_postcode": null,
-        "accomp_information": null,
-        "accomp_translation": null,
-        "notion_id": "15f8d880-f474-8178-8e71-d8cc0afde6e6",
-        "status": "Done",
-        "last_edited_time_notion": null,
-        "schedule_str": null,
-        "timeslots": [],
-        "activities": [
-            6
-        ],
-        "berlin_locations": [
-            19
-        ],
-        "skills": []
-    }
-},
-{
     "model": "data.opportunity",
+    "fields": {
+      "created_at": "2025-01-02T07:58:30.916250+00:00",
+      "updated_at": "2025-01-02T07:58:30.916255+00:00",
+      "opportunity_type": "volunteering",
+      "schedule_str": "Monday, Tuesday, Wednesday, Thursday, Friday, 9-18",
+      "datetime_str": null,
+      "status": "Volunteers Needed",
+      "accomp_datetime": null,
+      "berlin_locations": [20],
+      "timeslots": [],
+      "activities": [15, 16],
+      "languages": [1540, 345, 1910, 5676, 1833],
+      "skills": []
+    }
+  },
+  {
+    "pk": 24,
+    "model": "data.opportunitytranslation",
+    "fields": {
+      "title": "Sewing or Knitting with Women in Treptow-K\u00f6penick",
+      "accomp_information": null,
+      "vo_information": "There are sewing machines and materials for knitting in the accommodation centre. They are looking for a volunteer who could knit/sew with the women twice a month.",
+      "opportunity": 24,
+      "language": 1540
+    }
+  },
+  {
     "pk": 25,
-    "fields": {
-        "created_at": "2024-12-20T19:13:34.044Z",
-        "updated_at": "2024-12-20T19:13:34.044Z",
-        "rac_email": null,
-        "rac_full_name": null,
-        "rac_address": null,
-        "rac_plz": null,
-        "rac_phone": null,
-        "opportunity_type": "Volunteering",
-        "organization": null,
-        "volunteers_number": 2,
-        "datetime_str": null,
-        "accomp_address": null,
-        "accomp_datetime": null,
-        "accomp_name": null,
-        "accomp_phone": null,
-        "accomp_postcode": null,
-        "accomp_information": null,
-        "accomp_translation": null,
-        "notion_id": "15f8d880-f474-81a5-a3ef-e97c8f026d0c",
-        "status": "Volunteers Needed",
-        "last_edited_time_notion": null,
-        "schedule_str": null,
-        "timeslots": [],
-        "activities": [
-            15,
-            16
-        ],
-        "berlin_locations": [
-            20
-        ],
-        "skills": []
-    }
-},
-{
     "model": "data.opportunity",
+    "fields": {
+      "created_at": "2025-01-02T07:58:30.918071+00:00",
+      "updated_at": "2025-01-02T07:58:30.918077+00:00",
+      "opportunity_type": "volunteering",
+      "schedule_str": "Flexible",
+      "datetime_str": null,
+      "status": "Done",
+      "accomp_datetime": null,
+      "berlin_locations": [19],
+      "timeslots": [],
+      "activities": [6],
+      "languages": [1833, 1540, 345, 1910, 6643],
+      "skills": []
+    }
+  },
+  {
+    "pk": 25,
+    "model": "data.opportunitytranslation",
+    "fields": {
+      "title": "Group of volunteers to help the Volunteer Coordinators of Hangars",
+      "accomp_information": null,
+      "vo_information": "coordinator contacted all volunteers ",
+      "opportunity": 25,
+      "language": 1540
+    }
+  },
+  {
     "pk": 26,
-    "fields": {
-        "created_at": "2024-12-20T19:13:34.648Z",
-        "updated_at": "2024-12-20T19:13:34.648Z",
-        "rac_email": null,
-        "rac_full_name": null,
-        "rac_address": null,
-        "rac_plz": null,
-        "rac_phone": null,
-        "opportunity_type": "Volunteering",
-        "organization": null,
-        "volunteers_number": 2,
-        "datetime_str": null,
-        "accomp_address": null,
-        "accomp_datetime": null,
-        "accomp_name": null,
-        "accomp_phone": null,
-        "accomp_postcode": null,
-        "accomp_information": null,
-        "accomp_translation": null,
-        "notion_id": "15f8d880-f474-81d8-9af7-e6205e567bf2",
-        "status": "Volunteers Needed",
-        "last_edited_time_notion": null,
-        "schedule_str": null,
-        "timeslots": [],
-        "activities": [
-            2
-        ],
-        "berlin_locations": [
-            19
-        ],
-        "skills": []
-    }
-},
-{
     "model": "data.opportunity",
+    "fields": {
+      "created_at": "2025-01-02T07:58:30.919976+00:00",
+      "updated_at": "2025-01-02T07:58:30.919984+00:00",
+      "opportunity_type": "volunteering",
+      "schedule_str": "Monday, Tuesday, Thursday, Wednesday, Friday, 12:30-16:30",
+      "datetime_str": null,
+      "status": "Volunteers Needed",
+      "accomp_datetime": null,
+      "berlin_locations": [19],
+      "timeslots": [],
+      "activities": [2],
+      "languages": [],
+      "skills": []
+    }
+  },
+  {
+    "pk": 26,
+    "model": "data.opportunitytranslation",
+    "fields": {
+      "title": "Support with daycare in Tempelhof",
+      "accomp_information": null,
+      "vo_information": "Support the daycare staff with organising games and activities for chidlren.\nThey would be happy to get volunteers who can come regularly and organise creative activities for the kids between 12:30 and 16:30. ",
+      "opportunity": 26,
+      "language": 1540
+    }
+  },
+  {
     "pk": 27,
-    "fields": {
-        "created_at": "2024-12-20T19:13:35.259Z",
-        "updated_at": "2024-12-20T19:13:35.259Z",
-        "rac_email": null,
-        "rac_full_name": null,
-        "rac_address": null,
-        "rac_plz": null,
-        "rac_phone": null,
-        "opportunity_type": "Volunteering",
-        "organization": null,
-        "volunteers_number": 2,
-        "datetime_str": null,
-        "accomp_address": null,
-        "accomp_datetime": null,
-        "accomp_name": null,
-        "accomp_phone": null,
-        "accomp_postcode": null,
-        "accomp_information": null,
-        "accomp_translation": null,
-        "notion_id": "15f8d880-f474-8179-8e85-d46283303be8",
-        "status": "Inactive",
-        "last_edited_time_notion": null,
-        "schedule_str": null,
-        "timeslots": [],
-        "activities": [
-            5
-        ],
-        "berlin_locations": [
-            6
-        ],
-        "skills": []
-    }
-},
-{
     "model": "data.opportunity",
+    "fields": {
+      "created_at": "2025-01-02T07:58:30.920024+00:00",
+      "updated_at": "2025-01-02T07:58:30.920029+00:00",
+      "opportunity_type": "volunteering",
+      "schedule_str": "Flexible",
+      "datetime_str": null,
+      "status": "Inactive",
+      "accomp_datetime": null,
+      "berlin_locations": [6],
+      "timeslots": [],
+      "activities": [5],
+      "languages": [1540],
+      "skills": []
+    }
+  },
+  {
+    "pk": 27,
+    "model": "data.opportunitytranslation",
+    "fields": {
+      "title": "Support with the community garden",
+      "accomp_information": null,
+      "vo_information": "Starting spring",
+      "opportunity": 27,
+      "language": 1540
+    }
+  },
+  {
     "pk": 28,
-    "fields": {
-        "created_at": "2024-12-20T19:13:35.973Z",
-        "updated_at": "2024-12-20T19:13:35.973Z",
-        "rac_email": null,
-        "rac_full_name": null,
-        "rac_address": null,
-        "rac_plz": null,
-        "rac_phone": null,
-        "opportunity_type": "Accompanying",
-        "organization": null,
-        "volunteers_number": 1,
-        "datetime_str": null,
-        "accomp_address": null,
-        "accomp_datetime": null,
-        "accomp_name": null,
-        "accomp_phone": null,
-        "accomp_postcode": null,
-        "accomp_information": "Der Termin findet in der Charité ",
-        "accomp_translation": null,
-        "notion_id": "15f8d880-f474-8187-8a0b-e5bf1b27e4e2",
-        "status": "Done",
-        "last_edited_time_notion": null,
-        "schedule_str": null,
-        "timeslots": [],
-        "activities": [
-            4
-        ],
-        "berlin_locations": [
-            8
-        ],
-        "skills": []
-    }
-},
-{
     "model": "data.opportunity",
+    "fields": {
+      "created_at": "2025-01-02T07:58:30.920284+00:00",
+      "updated_at": "2025-01-02T07:58:30.920287+00:00",
+      "opportunity_type": "volunteering",
+      "schedule_str": "July 18th",
+      "datetime_str": null,
+      "status": "Done",
+      "accomp_datetime": null,
+      "berlin_locations": [10],
+      "timeslots": [],
+      "activities": [8],
+      "languages": [1833, 1540],
+      "skills": []
+    }
+  },
+  {
+    "pk": 28,
+    "model": "data.opportunitytranslation",
+    "fields": {
+      "title": "Support during a Summer Festival",
+      "accomp_information": null,
+      "vo_information": "Volunteers are needed for serving food and drinks, organising activities for children and teenagers",
+      "opportunity": 28,
+      "language": 1540
+    }
+  },
+  {
     "pk": 29,
-    "fields": {
-        "created_at": "2024-12-20T19:13:36.414Z",
-        "updated_at": "2024-12-20T19:13:36.414Z",
-        "rac_email": null,
-        "rac_full_name": null,
-        "rac_address": null,
-        "rac_plz": null,
-        "rac_phone": null,
-        "opportunity_type": "Volunteering",
-        "organization": null,
-        "volunteers_number": 1,
-        "datetime_str": null,
-        "accomp_address": null,
-        "accomp_datetime": null,
-        "accomp_name": null,
-        "accomp_phone": null,
-        "accomp_postcode": null,
-        "accomp_information": null,
-        "accomp_translation": null,
-        "notion_id": "15f8d880-f474-81e8-baf1-c4a68098992d",
-        "status": "Inactive",
-        "last_edited_time_notion": null,
-        "schedule_str": null,
-        "timeslots": [],
-        "activities": [
-            7,
-            13
-        ],
-        "berlin_locations": [
-            11
-        ],
-        "skills": []
-    }
-},
-{
     "model": "data.opportunity",
-    "pk": 30,
     "fields": {
-        "created_at": "2024-12-20T19:13:37.470Z",
-        "updated_at": "2024-12-20T19:13:37.470Z",
-        "rac_email": null,
-        "rac_full_name": null,
-        "rac_address": null,
-        "rac_plz": null,
-        "rac_phone": null,
-        "opportunity_type": "Accompanying",
-        "organization": null,
-        "volunteers_number": 1,
-        "datetime_str": null,
-        "accomp_address": null,
-        "accomp_datetime": null,
-        "accomp_name": null,
-        "accomp_phone": null,
-        "accomp_postcode": null,
-        "accomp_information": "wir suchen dringend eine Übersetzer Deutsch/Türkisch, wir haben eine schwangere Frau in Gefahr, sie hat nächste Woche 29.05.2024 um 10:30 Uhr im Charité Campus Virchow Klinikum, Augustenbursplatz1, 13353 Berlin, Mittelallee 9 Links, Schwangerenberatung, die Mutter ist Frau Yildiz .\nContact of the social worker: ",
-        "accomp_translation": null,
-        "notion_id": "15f8d880-f474-8197-9dbd-c0767849e3b5",
-        "status": "Inactive",
-        "last_edited_time_notion": null,
-        "schedule_str": null,
-        "timeslots": [],
-        "activities": [
-            4
-        ],
-        "berlin_locations": [
-            8
-        ],
-        "skills": []
+      "created_at": "2025-01-02T07:58:30.920809+00:00",
+      "updated_at": "2025-01-02T07:58:30.920813+00:00",
+      "opportunity_type": "accompanying",
+      "schedule_str": "May 29th, 10:30",
+      "datetime_str": null,
+      "status": "Inactive",
+      "accomp_datetime": null,
+      "berlin_locations": [8],
+      "timeslots": [],
+      "activities": [4],
+      "languages": [1540, 6643],
+      "skills": []
     }
-},
-{
-    "model": "data.opportunity",
-    "pk": 31,
+  },
+  {
+    "pk": 29,
+    "model": "data.opportunitytranslation",
     "fields": {
-        "created_at": "2024-12-20T19:13:37.968Z",
-        "updated_at": "2024-12-20T19:13:37.968Z",
-        "rac_email": null,
-        "rac_full_name": null,
-        "rac_address": null,
-        "rac_plz": null,
-        "rac_phone": null,
-        "opportunity_type": "Volunteering",
-        "organization": null,
-        "volunteers_number": 2,
-        "datetime_str": null,
-        "accomp_address": null,
-        "accomp_datetime": null,
-        "accomp_name": null,
-        "accomp_phone": null,
-        "accomp_postcode": null,
-        "accomp_information": null,
-        "accomp_translation": null,
-        "notion_id": "15f8d880-f474-81a7-9d6d-d21801a018fb",
-        "status": "Done",
-        "last_edited_time_notion": null,
-        "schedule_str": null,
-        "timeslots": [],
-        "activities": [
-            8
-        ],
-        "berlin_locations": [
-            10
-        ],
-        "skills": []
+      "title": "Accompanying of a pregnant person to Charite",
+      "accomp_information": "wir suchen dringend eine \u00dcbersetzer Deutsch/T\u00fcrkisch, wir haben eine schwangere Frau in Gefahr, sie hat n\u00e4chste Woche 29.05.2024 um 10:30 Uhr im Charit\u00e9 Campus Virchow Klinikum, Augustenbursplatz1, 13353 Berlin, Mittelallee 9 Links, Schwangerenberatung, die Mutter ist Frau Yildiz .\nContact of the social worker: ",
+      "vo_information": null,
+      "opportunity": 29,
+      "language": 1540
     }
-},
-{
-    "model": "data.opportunity",
-    "pk": 32,
-    "fields": {
-        "created_at": "2024-12-20T19:13:38.924Z",
-        "updated_at": "2024-12-20T19:13:38.924Z",
-        "rac_email": null,
-        "rac_full_name": null,
-        "rac_address": null,
-        "rac_plz": null,
-        "rac_phone": null,
-        "opportunity_type": "Volunteering",
-        "organization": null,
-        "volunteers_number": 2,
-        "datetime_str": null,
-        "accomp_address": null,
-        "accomp_datetime": "2024-09-24T10:10:00Z",
-        "accomp_name": null,
-        "accomp_phone": null,
-        "accomp_postcode": null,
-        "accomp_information": null,
-        "accomp_translation": null,
-        "notion_id": "15f8d880-f474-81b9-befd-ccc0e469e072",
-        "status": "Done",
-        "last_edited_time_notion": null,
-        "schedule_str": null,
-        "timeslots": [],
-        "activities": [
-            8
-        ],
-        "berlin_locations": [
-            6
-        ],
-        "skills": []
-    }
-},
-{
-    "model": "data.opportunity",
-    "pk": 33,
-    "fields": {
-        "created_at": "2024-12-20T19:13:39.403Z",
-        "updated_at": "2024-12-20T19:13:39.403Z",
-        "rac_email": null,
-        "rac_full_name": null,
-        "rac_address": null,
-        "rac_plz": null,
-        "rac_phone": null,
-        "opportunity_type": "Volunteering",
-        "organization": null,
-        "volunteers_number": 1,
-        "datetime_str": null,
-        "accomp_address": null,
-        "accomp_datetime": null,
-        "accomp_name": null,
-        "accomp_phone": null,
-        "accomp_postcode": null,
-        "accomp_information": null,
-        "accomp_translation": null,
-        "notion_id": "15f8d880-f474-8187-aed1-e85b1daa4532",
-        "status": "Search in process",
-        "last_edited_time_notion": null,
-        "schedule_str": null,
-        "timeslots": [],
-        "activities": [
-            11
-        ],
-        "berlin_locations": [
-            3
-        ],
-        "skills": []
-    }
-},
-{
-    "model": "data.opportunity",
-    "pk": 34,
-    "fields": {
-        "created_at": "2024-12-20T19:13:41.012Z",
-        "updated_at": "2024-12-20T19:13:41.012Z",
-        "rac_email": null,
-        "rac_full_name": null,
-        "rac_address": null,
-        "rac_plz": null,
-        "rac_phone": null,
-        "opportunity_type": "Volunteering",
-        "organization": null,
-        "volunteers_number": 2,
-        "datetime_str": null,
-        "accomp_address": null,
-        "accomp_datetime": null,
-        "accomp_name": null,
-        "accomp_phone": null,
-        "accomp_postcode": null,
-        "accomp_information": null,
-        "accomp_translation": null,
-        "notion_id": "15f8d880-f474-81c5-86f4-e18b97792b36",
-        "status": "Inactive",
-        "last_edited_time_notion": null,
-        "schedule_str": null,
-        "timeslots": [],
-        "activities": [
-            5
-        ],
-        "berlin_locations": [
-            20
-        ],
-        "skills": []
-    }
-},
-{
-    "model": "data.opportunity",
-    "pk": 35,
-    "fields": {
-        "created_at": "2024-12-20T19:13:41.824Z",
-        "updated_at": "2024-12-20T19:13:41.824Z",
-        "rac_email": null,
-        "rac_full_name": null,
-        "rac_address": null,
-        "rac_plz": null,
-        "rac_phone": null,
-        "opportunity_type": "Accompanying",
-        "organization": null,
-        "volunteers_number": 1,
-        "datetime_str": null,
-        "accomp_address": null,
-        "accomp_datetime": null,
-        "accomp_name": null,
-        "accomp_phone": null,
-        "accomp_postcode": null,
-        "accomp_information": null,
-        "accomp_translation": null,
-        "notion_id": "15f8d880-f474-8118-80ed-eb21295b2aad",
-        "status": "Done",
-        "last_edited_time_notion": null,
-        "schedule_str": null,
-        "timeslots": [],
-        "activities": [
-            7
-        ],
-        "berlin_locations": [
-            7
-        ],
-        "skills": []
-    }
-},
-{
-    "model": "data.opportunity",
-    "pk": 36,
-    "fields": {
-        "created_at": "2024-12-20T19:13:42.278Z",
-        "updated_at": "2024-12-20T19:13:42.278Z",
-        "rac_email": null,
-        "rac_full_name": null,
-        "rac_address": null,
-        "rac_plz": null,
-        "rac_phone": null,
-        "opportunity_type": "Accompanying",
-        "organization": null,
-        "volunteers_number": 3,
-        "datetime_str": null,
-        "accomp_address": null,
-        "accomp_datetime": null,
-        "accomp_name": null,
-        "accomp_phone": null,
-        "accomp_postcode": null,
-        "accomp_information": null,
-        "accomp_translation": null,
-        "notion_id": "15f8d880-f474-811f-aeff-e9956839e9fc",
-        "status": "Inactive",
-        "last_edited_time_notion": null,
-        "schedule_str": null,
-        "timeslots": [],
-        "activities": [
-            19
-        ],
-        "berlin_locations": [
-            3
-        ],
-        "skills": []
-    }
-},
-{
-    "model": "data.opportunity",
-    "pk": 37,
-    "fields": {
-        "created_at": "2024-12-20T19:13:43.072Z",
-        "updated_at": "2024-12-20T19:13:43.072Z",
-        "rac_email": null,
-        "rac_full_name": null,
-        "rac_address": null,
-        "rac_plz": null,
-        "rac_phone": null,
-        "opportunity_type": "Volunteering",
-        "organization": null,
-        "volunteers_number": 3,
-        "datetime_str": null,
-        "accomp_address": null,
-        "accomp_datetime": null,
-        "accomp_name": null,
-        "accomp_phone": null,
-        "accomp_postcode": null,
-        "accomp_information": null,
-        "accomp_translation": null,
-        "notion_id": "15f8d880-f474-8162-b637-cc2609f0deb6",
-        "status": "Volunteers Needed",
-        "last_edited_time_notion": null,
-        "schedule_str": null,
-        "timeslots": [],
-        "activities": [
-            18
-        ],
-        "berlin_locations": [
-            13
-        ],
-        "skills": []
-    }
-},
-{
-    "model": "data.opportunity",
-    "pk": 38,
-    "fields": {
-        "created_at": "2024-12-20T19:13:43.602Z",
-        "updated_at": "2024-12-20T19:13:43.602Z",
-        "rac_email": null,
-        "rac_full_name": null,
-        "rac_address": null,
-        "rac_plz": null,
-        "rac_phone": null,
-        "opportunity_type": "Volunteering",
-        "organization": null,
-        "volunteers_number": 0,
-        "datetime_str": null,
-        "accomp_address": null,
-        "accomp_datetime": null,
-        "accomp_name": null,
-        "accomp_phone": null,
-        "accomp_postcode": null,
-        "accomp_information": null,
-        "accomp_translation": null,
-        "notion_id": "15f8d880-f474-8193-a3e1-cf7b98d8dfeb",
-        "status": "No Volunteers Needed",
-        "last_edited_time_notion": null,
-        "schedule_str": null,
-        "timeslots": [],
-        "activities": [
-            12,
-            13,
-            14,
-            20
-        ],
-        "berlin_locations": [
-            11
-        ],
-        "skills": []
-    }
-},
-{
-    "model": "data.opportunity",
-    "pk": 39,
-    "fields": {
-        "created_at": "2024-12-20T19:13:44.190Z",
-        "updated_at": "2024-12-20T19:13:44.191Z",
-        "rac_email": null,
-        "rac_full_name": null,
-        "rac_address": null,
-        "rac_plz": null,
-        "rac_phone": null,
-        "opportunity_type": "Volunteering",
-        "organization": null,
-        "volunteers_number": 1,
-        "datetime_str": null,
-        "accomp_address": null,
-        "accomp_datetime": null,
-        "accomp_name": null,
-        "accomp_phone": null,
-        "accomp_postcode": null,
-        "accomp_information": null,
-        "accomp_translation": null,
-        "notion_id": "15f8d880-f474-819e-855c-e0754d737afb",
-        "status": "No Volunteers Needed",
-        "last_edited_time_notion": null,
-        "schedule_str": null,
-        "timeslots": [],
-        "activities": [
-            1,
-            17
-        ],
-        "berlin_locations": [
-            9
-        ],
-        "skills": []
-    }
-},
-{
-    "model": "data.opportunity",
-    "pk": 40,
-    "fields": {
-        "created_at": "2024-12-20T19:13:44.693Z",
-        "updated_at": "2024-12-20T19:13:44.693Z",
-        "rac_email": null,
-        "rac_full_name": null,
-        "rac_address": null,
-        "rac_plz": null,
-        "rac_phone": null,
-        "opportunity_type": "Accompanying",
-        "organization": null,
-        "volunteers_number": 1,
-        "datetime_str": null,
-        "accomp_address": null,
-        "accomp_datetime": null,
-        "accomp_name": null,
-        "accomp_phone": null,
-        "accomp_postcode": null,
-        "accomp_information": "Accompanying a refugee to the Agentur für Arbeit (Tempelhof-Schöneberg) - They requested more documents from him. The address: Alarichstraße 12 - 17, 12105 Berlin. \nContact of the social worker: 015116253449\n\nContact of the refugee: 01778522437 (Ihor Yakomenchuk)",
-        "accomp_translation": null,
-        "notion_id": "15f8d880-f474-8140-a4ed-efcd08cbddec",
-        "status": "Done",
-        "last_edited_time_notion": null,
-        "schedule_str": null,
-        "timeslots": [],
-        "activities": [
-            4
-        ],
-        "berlin_locations": [
-            15
-        ],
-        "skills": []
-    }
-},
-{
-    "model": "data.opportunity",
-    "pk": 41,
-    "fields": {
-        "created_at": "2024-12-20T19:13:47.212Z",
-        "updated_at": "2024-12-20T19:13:47.212Z",
-        "rac_email": null,
-        "rac_full_name": null,
-        "rac_address": null,
-        "rac_plz": null,
-        "rac_phone": null,
-        "opportunity_type": "Accompanying",
-        "organization": null,
-        "volunteers_number": 1,
-        "datetime_str": null,
-        "accomp_address": null,
-        "accomp_datetime": null,
-        "accomp_name": null,
-        "accomp_phone": null,
-        "accomp_postcode": null,
-        "accomp_information": "Termine der Kinder von Frau Stoian/Butucel.\nIsmail Butucel hat einen Termin am 17.06.24 um 10:40 Uhr\nBei Dr. med. Margrit Lock, Klosterstraße 34, 13581 Berlin. ",
-        "accomp_translation": null,
-        "notion_id": "15f8d880-f474-8156-a846-d427b4ebb1e0",
-        "status": "Done",
-        "last_edited_time_notion": null,
-        "schedule_str": null,
-        "timeslots": [],
-        "activities": [
-            4
-        ],
-        "berlin_locations": [
-            16
-        ],
-        "skills": []
-    }
-},
-{
-    "model": "data.opportunity",
-    "pk": 42,
-    "fields": {
-        "created_at": "2024-12-20T19:13:47.736Z",
-        "updated_at": "2024-12-20T19:13:47.736Z",
-        "rac_email": null,
-        "rac_full_name": null,
-        "rac_address": null,
-        "rac_plz": null,
-        "rac_phone": null,
-        "opportunity_type": "Volunteering",
-        "organization": null,
-        "volunteers_number": 1,
-        "datetime_str": null,
-        "accomp_address": null,
-        "accomp_datetime": null,
-        "accomp_name": null,
-        "accomp_phone": null,
-        "accomp_postcode": null,
-        "accomp_information": null,
-        "accomp_translation": null,
-        "notion_id": "15f8d880-f474-8130-a930-d727671b1fcf",
-        "status": "Search in process",
-        "last_edited_time_notion": null,
-        "schedule_str": null,
-        "timeslots": [],
-        "activities": [
-            21
-        ],
-        "berlin_locations": [
-            4
-        ],
-        "skills": []
-    }
-},
-{
-    "model": "data.opportunity",
-    "pk": 43,
-    "fields": {
-        "created_at": "2024-12-20T19:13:48.200Z",
-        "updated_at": "2024-12-20T19:13:48.200Z",
-        "rac_email": null,
-        "rac_full_name": null,
-        "rac_address": null,
-        "rac_plz": null,
-        "rac_phone": null,
-        "opportunity_type": "Volunteering",
-        "organization": null,
-        "volunteers_number": 2,
-        "datetime_str": null,
-        "accomp_address": null,
-        "accomp_datetime": null,
-        "accomp_name": null,
-        "accomp_phone": null,
-        "accomp_postcode": null,
-        "accomp_information": null,
-        "accomp_translation": null,
-        "notion_id": "15f8d880-f474-8175-8b8e-cda5a3b1e8a7",
-        "status": "Volunteers Needed",
-        "last_edited_time_notion": null,
-        "schedule_str": null,
-        "timeslots": [],
-        "activities": [
-            4
-        ],
-        "berlin_locations": [
-            24
-        ],
-        "skills": []
-    }
-}
+  }
 ]

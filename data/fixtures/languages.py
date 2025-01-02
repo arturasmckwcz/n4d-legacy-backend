@@ -55,13 +55,16 @@ def getLanguagesFromClass():
 
 def getLanguagesFromFile():
     languages = []
-    with open("data/fixtures/languages.txt", "r") as f:
+    pk = 0
+    with open("languages.txt", "r") as f:
         # Id	Part2b	Part2t	Part1	Scope	Language_Type	Ref_Name	Comment
         for line in f:
             parts = line.split("\t")
 
+            pk += 1
             languages.append(
                 {
+                    "pk": pk,
                     "model": "data.Language",
                     "fields": {
                         "title": parts[6],

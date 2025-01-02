@@ -1,0 +1,1152 @@
+[
+  {
+    "id": 46,
+    "title": "Support with homework in Lichtenberg",
+    "vo_information": "The kids speak German, we don’t know anything about their ages or grades. They would need help with various subjects.",
+    "accomp_information": null,
+    "opportunity_type": "volunteering",
+    "berlin_locations": [
+      {
+        "name": "Lichtenberg"
+      }
+    ],
+    "schedule_str": "Monday, Tuesday, Wednesday, Thursday, Friday, 14:00-17:00",
+    "datetime_str": null,
+    "timeslots": [],
+    "activities": [
+      {
+        "title": "Tutoring",
+        "description": null
+      }
+    ],
+    "languages": [
+      {
+        "id": 1548,
+        "title": "German",
+        "iso_code": "de"
+      },
+      {
+        "id": 353,
+        "title": "Arabic",
+        "iso_code": "ar"
+      },
+      {
+        "id": 1918,
+        "title": "Persian",
+        "iso_code": "fa"
+      }
+    ],
+    "skills": [],
+    "status": "Volunteers Needed",
+    "accomp_datetime": null
+  },
+  {
+    "id": 47,
+    "title": "Gardening in Neukölln",
+    "vo_information": "The schedule is flexible and can be discussed with volunteers. The idea is to build new raised beds and plant them with whatever the residents would like to have there.",
+    "accomp_information": null,
+    "opportunity_type": "volunteering",
+    "berlin_locations": [
+      {
+        "name": "Neukölln"
+      }
+    ],
+    "schedule_str": "Flexible",
+    "datetime_str": null,
+    "timeslots": [],
+    "activities": [
+      {
+        "title": "Gardening",
+        "description": null
+      }
+    ],
+    "languages": [
+      {
+        "id": 1841,
+        "title": "English",
+        "iso_code": "en"
+      },
+      {
+        "id": 1548,
+        "title": "German",
+        "iso_code": "de"
+      }
+    ],
+    "skills": [],
+    "status": "Inactive",
+    "accomp_datetime": null
+  },
+  {
+    "id": 48,
+    "title": "Support with daycare during summer break in Hellersdorf",
+    "vo_information": "Bis Ende August \nKinder",
+    "accomp_information": null,
+    "opportunity_type": "volunteering",
+    "berlin_locations": [
+      {
+        "name": "Hellersdorf"
+      }
+    ],
+    "schedule_str": "Monday, Tuesday, Thursday, Wednesday, Friday, 14-17",
+    "datetime_str": null,
+    "timeslots": [],
+    "activities": [
+      {
+        "title": "Daycare",
+        "description": null
+      }
+    ],
+    "languages": [
+      {
+        "id": 1548,
+        "title": "German",
+        "iso_code": "de"
+      },
+      {
+        "id": 1841,
+        "title": "English",
+        "iso_code": "en"
+      },
+      {
+        "id": 1918,
+        "title": "Persian",
+        "iso_code": "fa"
+      },
+      {
+        "id": 353,
+        "title": "Arabic",
+        "iso_code": "ar"
+      },
+      {
+        "id": 5684,
+        "title": "Russian",
+        "iso_code": "ru"
+      }
+    ],
+    "skills": [],
+    "status": "Inactive",
+    "accomp_datetime": null
+  },
+  {
+    "id": 49,
+    "title": "Sports - Help for preschool teachers",
+    "vo_information": null,
+    "accomp_information": null,
+    "opportunity_type": "volunteering",
+    "berlin_locations": [
+      {
+        "name": "Hellersdorf"
+      }
+    ],
+    "schedule_str": "15:30-17:00",
+    "datetime_str": null,
+    "timeslots": [],
+    "activities": [
+      {
+        "title": "Daycare",
+        "description": null
+      }
+    ],
+    "languages": [],
+    "skills": [],
+    "status": "Inactive",
+    "accomp_datetime": null
+  },
+  {
+    "id": 50,
+    "title": "Multi Translation Buchholtz ",
+    "vo_information": null,
+    "accomp_information": "Wohnungssuche\n\nIn Zusammenarbeit mit dem SozialTeam Bieten wir eine kleines Seminar an über das Wohnungssuche in Berlin an.\nFolgende Fragen wird beantwortet:\n- Was ist WBS und wer hat Anspruch?\n- wie findet man eine Wohnung überhaupt?\n- Was ist zu beachten?\n\nDatum: 13.06.2024\nZeit:\n\n14:30 - Arabisch\n16:00 - Türkisch\nOrt: Buchholzer Str 110-140 13159 Berlin",
+    "opportunity_type": "accompanying",
+    "berlin_locations": [
+      {
+        "name": "Pankow"
+      }
+    ],
+    "schedule_str": "13.06.24",
+    "datetime_str": null,
+    "timeslots": [],
+    "activities": [
+      {
+        "title": "Translation",
+        "description": null
+      }
+    ],
+    "languages": [
+      {
+        "id": 1548,
+        "title": "German",
+        "iso_code": "de"
+      },
+      {
+        "id": 6651,
+        "title": "Turkish",
+        "iso_code": "tr"
+      },
+      {
+        "id": 353,
+        "title": "Arabic",
+        "iso_code": "ar"
+      }
+    ],
+    "skills": [],
+    "status": "Done",
+    "accomp_datetime": null
+  },
+  {
+    "id": 51,
+    "title": "Support a clothing bank in Pankow",
+    "vo_information": "They need new volunteers. The schedule can be discussed with the volunteer coordinator. ",
+    "accomp_information": null,
+    "opportunity_type": "volunteering",
+    "berlin_locations": [
+      {
+        "name": "Pankow"
+      }
+    ],
+    "schedule_str": "Monday, Tuesday, Wednesday, Thursday, Friday, 11-18",
+    "datetime_str": null,
+    "timeslots": [],
+    "activities": [
+      {
+        "title": "Clothing Sorting",
+        "description": null
+      }
+    ],
+    "languages": [
+      {
+        "id": 1841,
+        "title": "English",
+        "iso_code": "en"
+      },
+      {
+        "id": 1548,
+        "title": "German",
+        "iso_code": "de"
+      }
+    ],
+    "skills": [],
+    "status": "Volunteers Needed",
+    "accomp_datetime": null
+  },
+  {
+    "id": 52,
+    "title": "Accompany residents to a FreiluftKino in Prenzlauerberg",
+    "vo_information": "Könnte ich über euch Ehrenamtlichen finden, die Lust hätten einige Bewohner aus der Unterkunft abzuholen und mit denen zur Filmveranstaltung zu kommen? (20 min. zu fuß) Die Veranstaltung ist kostenlos, die Ehrenamtlichen + Bewohner bekommen die Getränke umsonst  \n\n21. August 2024, 20:30 – 22:30 Uhr\n28. August 2024, 20:30 – 22:30 Uhr\n4. September 2024, 20:15 – 22:15 Uhr\n11. September 2024, 20:00 – 22:00 Uhr\n\nContact person: Hend Reffky Mobil: +49 (0)159 043 61 513 Email: ",
+    "accomp_information": null,
+    "opportunity_type": "volunteering",
+    "berlin_locations": [
+      {
+        "name": "Prenzlauer Berg"
+      }
+    ],
+    "schedule_str": "Wednesday, 20-22:30",
+    "datetime_str": null,
+    "timeslots": [],
+    "activities": [
+      {
+        "title": "Accompanying",
+        "description": null
+      }
+    ],
+    "languages": [
+      {
+        "id": 1548,
+        "title": "German",
+        "iso_code": "de"
+      },
+      {
+        "id": 1841,
+        "title": "English",
+        "iso_code": "en"
+      },
+      {
+        "id": 6651,
+        "title": "Turkish",
+        "iso_code": "tr"
+      }
+    ],
+    "skills": [],
+    "status": "Inactive",
+    "accomp_datetime": null
+  },
+  {
+    "id": 53,
+    "title": "Sorting and giving out donations from Tafel in Pankow",
+    "vo_information": "Wir suchen noch Leute, die uns bei der  Sortierung  und Ausgabe von den Spenden der Tafel e. V. am Montag und/oder  Freitag  zwischen 14 und 17 Uhr helfen.\nBerliner Tafel is organising food donations, more info here ",
+    "accomp_information": null,
+    "opportunity_type": "volunteering",
+    "berlin_locations": [
+      {
+        "name": "Prenzlauer Berg"
+      }
+    ],
+    "schedule_str": "Monday, Friday, 14-17",
+    "datetime_str": null,
+    "timeslots": [],
+    "activities": [
+      {
+        "title": "Assistance",
+        "description": null
+      }
+    ],
+    "languages": [
+      {
+        "id": 1548,
+        "title": "German",
+        "iso_code": "de"
+      },
+      {
+        "id": 1841,
+        "title": "English",
+        "iso_code": "en"
+      }
+    ],
+    "skills": [],
+    "status": "No Volunteers Needed",
+    "accomp_datetime": null
+  },
+  {
+    "id": 54,
+    "title": "Accompanying - Doctor’s appointment",
+    "vo_information": null,
+    "accomp_information": "Der Arzttermin ist am 28.05.24 um 13:30 Uhr im Sana Klinikum Haus F Zimmer F041.\nEs geht um den Sohn von Frau Nino Letodiani, Gabrieli, er ist 7 Jahre alt. Die Familie spricht nur georgisch, ich würde einen anderen Bewohner bitten zu begleiten, dieser spricht sowohl russisch als auch georgisch.\n \nHier noch die genauen Kontaktdaten von der Ärztin:\nKatja Nietz / Beate Scheibel / Franziska Klemm\nAufnahme Bereich Neuropädiatrie/Adipositas\n \nSana Klinikum Lichtenberg\nSozialpädiatrisches Zentrum \nFanningerstr. 32\n10365 Berlin\nTelefon: 030 / 55185245\nFax:          030 / 55185288\nMail: ",
+    "opportunity_type": "accompanying",
+    "berlin_locations": [
+      {
+        "name": "Lichtenberg"
+      }
+    ],
+    "schedule_str": "May 28th, 13:30",
+    "datetime_str": null,
+    "timeslots": [],
+    "activities": [
+      {
+        "title": "Accompanying",
+        "description": null
+      }
+    ],
+    "languages": [
+      {
+        "id": 2862,
+        "title": "Georgian",
+        "iso_code": "ka"
+      },
+      {
+        "id": 5684,
+        "title": "Russian",
+        "iso_code": "ru"
+      },
+      {
+        "id": 1548,
+        "title": "German",
+        "iso_code": "de"
+      }
+    ],
+    "skills": [],
+    "status": "Done",
+    "accomp_datetime": null
+  },
+  {
+    "id": 55,
+    "title": "Play with kids and organise activities for the during a summer festival in Wilmersdorf",
+    "vo_information": "They are looking for volunteers who can organise activities for kids (face painting, games, sports, pop-corn etc.). \n\nVolunteers can just come by at 1 pm. We don’t need to introduce them before hand.\n\nContact person: Young-Sun Song",
+    "accomp_information": null,
+    "opportunity_type": "volunteering",
+    "berlin_locations": [
+      {
+        "name": "Wilmersdorf"
+      }
+    ],
+    "schedule_str": "August 22nd, 13-16",
+    "datetime_str": null,
+    "timeslots": [],
+    "activities": [
+      {
+        "title": "Festival",
+        "description": null
+      },
+      {
+        "title": "One timer",
+        "description": null
+      }
+    ],
+    "languages": [
+      {
+        "id": 1548,
+        "title": "German",
+        "iso_code": "de"
+      },
+      {
+        "id": 1841,
+        "title": "English",
+        "iso_code": "en"
+      }
+    ],
+    "skills": [],
+    "status": "Done",
+    "accomp_datetime": null
+  },
+  {
+    "id": 56,
+    "title": "Going for walks with a resident of a refugee acommodation centre",
+    "vo_information": null,
+    "accomp_information": null,
+    "opportunity_type": "volunteering",
+    "berlin_locations": [
+      {
+        "name": "Lichtenberg"
+      }
+    ],
+    "schedule_str": "Flexible",
+    "datetime_str": null,
+    "timeslots": [],
+    "activities": [
+      {
+        "title": "Mentorship",
+        "description": null
+      }
+    ],
+    "languages": [
+      {
+        "id": 1841,
+        "title": "English",
+        "iso_code": "en"
+      },
+      {
+        "id": 1548,
+        "title": "German",
+        "iso_code": "de"
+      }
+    ],
+    "skills": [],
+    "status": "Done",
+    "accomp_datetime": null
+  },
+  {
+    "id": 57,
+    "title": "Going to appointments with a ",
+    "vo_information": null,
+    "accomp_information": "Konkret bin ich auf der Suche nach eine Person, die unser Bewohner(mit Seheinschräkung)für Begleitung zu den behördlichen oder ärztliche Termine ,gemeinsame Spaziergänge.\nSo 1 oder 2 Mal in der Woche wäre schön, er ist spricht gut Englisch. Wäre super Jemand ,der auch Englisch spricht.\nHabt ihr gerade Leute, die sie uns vermitteln können?",
+    "opportunity_type": "accompanying",
+    "berlin_locations": [
+      {
+        "name": "Lichtenberg"
+      }
+    ],
+    "schedule_str": "Flexible",
+    "datetime_str": null,
+    "timeslots": [],
+    "activities": [
+      {
+        "title": "Accompanying",
+        "description": null
+      }
+    ],
+    "languages": [
+      {
+        "id": 1841,
+        "title": "English",
+        "iso_code": "en"
+      },
+      {
+        "id": 1548,
+        "title": "German",
+        "iso_code": "de"
+      }
+    ],
+    "skills": [],
+    "status": "Inactive",
+    "accomp_datetime": null
+  },
+  {
+    "id": 58,
+    "title": "Teach German in a language café",
+    "vo_information": null,
+    "accomp_information": null,
+    "opportunity_type": "volunteering",
+    "berlin_locations": [
+      {
+        "name": "Treptow"
+      }
+    ],
+    "schedule_str": "Monday, 17-18",
+    "datetime_str": null,
+    "timeslots": [],
+    "activities": [
+      {
+        "title": "Language café",
+        "description": null
+      }
+    ],
+    "languages": [
+      {
+        "id": 1918,
+        "title": "Persian",
+        "iso_code": "fa"
+      },
+      {
+        "id": 6651,
+        "title": "Turkish",
+        "iso_code": "tr"
+      },
+      {
+        "id": 1548,
+        "title": "German",
+        "iso_code": "de"
+      }
+    ],
+    "skills": [],
+    "status": "Inactive",
+    "accomp_datetime": null
+  },
+  {
+    "id": 59,
+    "title": "Doctor’s Appointment: Kid",
+    "vo_information": null,
+    "accomp_information": "Arian Stoian hatte den folgenden Termin:\nDienstag, 20. August 2024 um 09:00 Uhr\nOrt: Hautklinik, Charité Campus Mitte, Luisenstr. 2-5, 10117 Berlin\nArian is a son of Frau Stojan, they speak Russian and Romanian",
+    "opportunity_type": "accompanying",
+    "berlin_locations": [
+      {
+        "name": "Mitte"
+      }
+    ],
+    "schedule_str": "August 20th, 9:00",
+    "datetime_str": null,
+    "timeslots": [],
+    "activities": [
+      {
+        "title": "Accompanying",
+        "description": null
+      }
+    ],
+    "languages": [
+      {
+        "id": 5684,
+        "title": "Russian",
+        "iso_code": "ru"
+      },
+      {
+        "id": 1548,
+        "title": "German",
+        "iso_code": "de"
+      }
+    ],
+    "skills": [],
+    "status": "Inactive",
+    "accomp_datetime": null
+  },
+  {
+    "id": 60,
+    "title": "Action day asked for by Aprilsix volunteers",
+    "vo_information": " Freiwilligenarbeit für ein Team von LucaNet (30 Personen) in Berlin für Montag, den 24.06., am Nachmittag (ab circa 14:00 Uhr).\nKönnen wir euch mit kleinen Teams aus 2-5 Personen bei bestimmten Aktionen unterstützen?",
+    "accomp_information": null,
+    "opportunity_type": "volunteering",
+    "berlin_locations": [],
+    "schedule_str": "24.06.24",
+    "datetime_str": null,
+    "timeslots": [],
+    "activities": [
+      {
+        "title": "Clothing Sorting",
+        "description": null
+      }
+    ],
+    "languages": [],
+    "skills": [],
+    "status": "Inactive",
+    "accomp_datetime": null
+  },
+  {
+    "id": 61,
+    "title": "vietnamesisches Greifswalderstr ",
+    "vo_information": null,
+    "accomp_information": "vietnamesisches Dolmetschen. Sie hat einen Termin am 12.06.2024 um 9:30 Uhr in der MVZ-Caritas in Greifswalder Str.139 Berlin.",
+    "opportunity_type": "accompanying",
+    "berlin_locations": [
+      {
+        "name": "Pankow"
+      }
+    ],
+    "schedule_str": "12.06.24",
+    "datetime_str": null,
+    "timeslots": [],
+    "activities": [
+      {
+        "title": "Translation",
+        "description": null
+      }
+    ],
+    "languages": [
+      {
+        "id": 6901,
+        "title": "Vietnamese",
+        "iso_code": "vi"
+      }
+    ],
+    "skills": [],
+    "status": "Inactive",
+    "accomp_datetime": null
+  },
+  {
+    "id": 62,
+    "title": "Accompany children to external events around Berlin",
+    "vo_information": "Gleich schon beginnen die Sommerferien. Damit unsere lieben Kinder sich aber nicht langweilen müssen, haben wir ihnen ein buntes Programm mit zahlreichen Aktivitäten und Ausflügen zusammengestellt.\n \nEben für diese Ausflüge benötigen wir noch die ein oder andere erwachsene Begleitperson, damit möglichst viele Kinder daran teilnehmen können (Pro Erwachsenen 5 Kinder).Folgendes ist geplant:\n \n• 02.08. – Lobecksportplatz, 10 -13:30 Uhr\n• 05.08. – Treptower Park, Insel der Jugend, 14 – 17 Uhr\n• 06.08. – Kino: Garfield, Cubix Alexanderplatz, 9:30 – 13 Uhr\n• 12.08. – Plantsche, Volkspark Friedrichshain, 10:30 – 16:30 Uhr\n• 13.08. – Naturkundemuseum, 9:30 -14 Uhr\n• 19.08. – Gleisdreieckpark, 10 – 16:30 Uhr\n• 23.08. – Britzer Garten, 9:30 – 13:30 Uhr\n• 26.08. – Spielplatz Ritterburg, 14 – 16:30 Uhr\n• 28.08. – Holzbauworkshop Kreativhaus Mitte, 10 – 13 Uhr\n• 29.08. – Haus der Natur, Wuhlheide, 10 – 17:00 Uhr\n \nEs handelt sich größtenteils um Halbtagsausflüge. Treffpunkt ist immer hier bei uns in der Unterkunft. Natürlich müssen die Kinder hierhin auch wieder zurück.\nWer also Zeit und Lust hat (oder jemanden kennt, der Zeit und Lust hat) bei einer oder mehreren Aktivitäten zu unterstützen, melde sich für nähere Informationen bitte bei uns unter ",
+    "accomp_information": null,
+    "opportunity_type": "volunteering",
+    "berlin_locations": [
+      {
+        "name": "Berlin"
+      }
+    ],
+    "schedule_str": "",
+    "datetime_str": null,
+    "timeslots": [],
+    "activities": [
+      {
+        "title": "Accompanying",
+        "description": null
+      }
+    ],
+    "languages": [
+      {
+        "id": 1841,
+        "title": "English",
+        "iso_code": "en"
+      },
+      {
+        "id": 1548,
+        "title": "German",
+        "iso_code": "de"
+      }
+    ],
+    "skills": [],
+    "status": "Done",
+    "accomp_datetime": null
+  },
+  {
+    "id": 63,
+    "title": "Supporting with daycare",
+    "vo_information": "Most of the children are from Syria. The daycare coordinator speaks only German. They need an independent person with daycare experience.\nThey also would like to find volunteers who can play football with kids.",
+    "accomp_information": null,
+    "opportunity_type": "volunteering",
+    "berlin_locations": [
+      {
+        "name": "Neukölln"
+      }
+    ],
+    "schedule_str": "Wednesday, 14-17, 15-17",
+    "datetime_str": null,
+    "timeslots": [],
+    "activities": [
+      {
+        "title": "Daycare",
+        "description": null
+      }
+    ],
+    "languages": [
+      {
+        "id": 1548,
+        "title": "German",
+        "iso_code": "de"
+      },
+      {
+        "id": 353,
+        "title": "Arabic",
+        "iso_code": "ar"
+      }
+    ],
+    "skills": [],
+    "status": "No Volunteers Needed",
+    "accomp_datetime": null
+  },
+  {
+    "id": 64,
+    "title": "Accompanying to administrative offices",
+    "vo_information": "Needed everywhere.",
+    "accomp_information": null,
+    "opportunity_type": "accompanying",
+    "berlin_locations": [
+      {
+        "name": "Berlin"
+      }
+    ],
+    "schedule_str": "Flexible, Short notice",
+    "datetime_str": null,
+    "timeslots": [],
+    "activities": [
+      {
+        "title": "Translation",
+        "description": null
+      },
+      {
+        "title": "Accompanying",
+        "description": null
+      }
+    ],
+    "languages": [
+      {
+        "id": 1841,
+        "title": "English",
+        "iso_code": "en"
+      },
+      {
+        "id": 1548,
+        "title": "German",
+        "iso_code": "de"
+      },
+      {
+        "id": 353,
+        "title": "Arabic",
+        "iso_code": "ar"
+      },
+      {
+        "id": 5684,
+        "title": "Russian",
+        "iso_code": "ru"
+      },
+      {
+        "id": 2862,
+        "title": "Georgian",
+        "iso_code": "ka"
+      },
+      {
+        "id": 1918,
+        "title": "Persian",
+        "iso_code": "fa"
+      }
+    ],
+    "skills": [],
+    "status": "Inactive",
+    "accomp_datetime": null
+  },
+  {
+    "id": 65,
+    "title": "Sorting Papers for Residents",
+    "vo_information": null,
+    "accomp_information": "wir wollen hier im Hagenower Ring am 01.07. 15-18 Uhr ein Event machen,bei welchem wir Bewohner*innen dabei helfen ihre Unterlagen/Dokumente zusortieren und abzuheften.",
+    "opportunity_type": "accompanying",
+    "berlin_locations": [
+      {
+        "name": "Lichtenberg"
+      }
+    ],
+    "schedule_str": "July 1st",
+    "datetime_str": null,
+    "timeslots": [],
+    "activities": [
+      {
+        "title": "Translation",
+        "description": null
+      }
+    ],
+    "languages": [
+      {
+        "id": 5684,
+        "title": "Russian",
+        "iso_code": "ru"
+      },
+      {
+        "id": 1548,
+        "title": "German",
+        "iso_code": "de"
+      }
+    ],
+    "skills": [],
+    "status": "Done",
+    "accomp_datetime": null
+  },
+  {
+    "id": 66,
+    "title": " artz Myocardszintigraphie",
+    "vo_information": null,
+    "accomp_information": "ich hätte eine Begleitungsanfrage bei Need4Deed für Russisch/Deutsch Übersetzung (im Notfall ginge vllt. auch Englisch Russisch)\n\nEs geht um eine Myocardszintigraphie der Nuklearmedizin. Der Termin ist am 23.5. um 8:30 und soll wohl 3,5h lang gehen! Falls 3,5h nicht möglich ist, dann ist kürzer immer noch besser als gar nicht. Einsatzort  ist Die Praxis ffür Nuklearmedizin, Schönhauser Allee 82, 10439 Berlin.",
+    "opportunity_type": "accompanying",
+    "berlin_locations": [
+      {
+        "name": "Pankow"
+      }
+    ],
+    "schedule_str": "May 23rd, 8:30",
+    "datetime_str": null,
+    "timeslots": [],
+    "activities": [
+      {
+        "title": "Accompanying",
+        "description": null
+      }
+    ],
+    "languages": [
+      {
+        "id": 1548,
+        "title": "German",
+        "iso_code": "de"
+      },
+      {
+        "id": 1841,
+        "title": "English",
+        "iso_code": "en"
+      },
+      {
+        "id": 5684,
+        "title": "Russian",
+        "iso_code": "ru"
+      }
+    ],
+    "skills": [],
+    "status": "Done",
+    "accomp_datetime": null
+  },
+  {
+    "id": 67,
+    "title": "Organise fun activities for kids and teens in Marzahn - IB",
+    "vo_information": "Anything volunteers can do as their own activities. preferably with kids teens is welcome mainly until 18.00 but after some familiarity also during after work hours. Additionally sometimes soft accompanying to the LEA or court as",
+    "accomp_information": null,
+    "opportunity_type": "volunteering",
+    "berlin_locations": [
+      {
+        "name": "Marzahn"
+      }
+    ],
+    "schedule_str": "Flexible, 9-18",
+    "datetime_str": null,
+    "timeslots": [],
+    "activities": [
+      {
+        "title": "Arts",
+        "description": null
+      },
+      {
+        "title": "Culture",
+        "description": null
+      },
+      {
+        "title": "Theatre",
+        "description": null
+      }
+    ],
+    "languages": [
+      {
+        "id": 1841,
+        "title": "English",
+        "iso_code": "en"
+      },
+      {
+        "id": 1548,
+        "title": "German",
+        "iso_code": "de"
+      },
+      {
+        "id": 6651,
+        "title": "Turkish",
+        "iso_code": "tr"
+      },
+      {
+        "id": 353,
+        "title": "Arabic",
+        "iso_code": "ar"
+      },
+      {
+        "id": 1918,
+        "title": "Persian",
+        "iso_code": "fa"
+      },
+      {
+        "id": 2862,
+        "title": "Georgian",
+        "iso_code": "ka"
+      }
+    ],
+    "skills": [],
+    "status": "Search in process",
+    "accomp_datetime": null
+  },
+  {
+    "id": 68,
+    "title": "Opening bank accounts",
+    "vo_information": null,
+    "accomp_information": null,
+    "opportunity_type": "accompanying",
+    "berlin_locations": [
+      {
+        "name": "Hellersdorf"
+      },
+      {
+        "name": "Treptow"
+      }
+    ],
+    "schedule_str": "Flexible",
+    "datetime_str": null,
+    "timeslots": [],
+    "activities": [
+      {
+        "title": "Accompanying",
+        "description": null
+      }
+    ],
+    "languages": [
+      {
+        "id": 1962,
+        "title": "French",
+        "iso_code": "fr"
+      },
+      {
+        "id": 1548,
+        "title": "German",
+        "iso_code": "de"
+      },
+      {
+        "id": 353,
+        "title": "Arabic",
+        "iso_code": "ar"
+      },
+      {
+        "id": 1918,
+        "title": "Persian",
+        "iso_code": "fa"
+      },
+      {
+        "id": 5684,
+        "title": "Russian",
+        "iso_code": "ru"
+      }
+    ],
+    "skills": [],
+    "status": "No Volunteers Needed",
+    "accomp_datetime": null
+  },
+  {
+    "id": 69,
+    "title": "Sewing or Knitting with Women in Treptow-Köpenick",
+    "vo_information": "There are sewing machines and materials for knitting in the accommodation centre. They are looking for a volunteer who could knit/sew with the women twice a month.",
+    "accomp_information": null,
+    "opportunity_type": "volunteering",
+    "berlin_locations": [
+      {
+        "name": "Treptow"
+      }
+    ],
+    "schedule_str": "Monday, Tuesday, Wednesday, Thursday, Friday, 9-18",
+    "datetime_str": null,
+    "timeslots": [],
+    "activities": [
+      {
+        "title": "Knitting",
+        "description": null
+      },
+      {
+        "title": "Crafts",
+        "description": null
+      }
+    ],
+    "languages": [
+      {
+        "id": 1548,
+        "title": "German",
+        "iso_code": "de"
+      },
+      {
+        "id": 353,
+        "title": "Arabic",
+        "iso_code": "ar"
+      },
+      {
+        "id": 1918,
+        "title": "Persian",
+        "iso_code": "fa"
+      },
+      {
+        "id": 5684,
+        "title": "Russian",
+        "iso_code": "ru"
+      },
+      {
+        "id": 1841,
+        "title": "English",
+        "iso_code": "en"
+      }
+    ],
+    "skills": [],
+    "status": "Volunteers Needed",
+    "accomp_datetime": null
+  },
+  {
+    "id": 70,
+    "title": "Group of volunteers to help the Volunteer Coordinators of Hangars",
+    "vo_information": "coordinator contacted all volunteers ",
+    "accomp_information": null,
+    "opportunity_type": "volunteering",
+    "berlin_locations": [
+      {
+        "name": "Tempelhof"
+      }
+    ],
+    "schedule_str": "Flexible",
+    "datetime_str": null,
+    "timeslots": [],
+    "activities": [
+      {
+        "title": "Assistance",
+        "description": null
+      }
+    ],
+    "languages": [
+      {
+        "id": 1841,
+        "title": "English",
+        "iso_code": "en"
+      },
+      {
+        "id": 1548,
+        "title": "German",
+        "iso_code": "de"
+      },
+      {
+        "id": 353,
+        "title": "Arabic",
+        "iso_code": "ar"
+      },
+      {
+        "id": 1918,
+        "title": "Persian",
+        "iso_code": "fa"
+      },
+      {
+        "id": 6651,
+        "title": "Turkish",
+        "iso_code": "tr"
+      }
+    ],
+    "skills": [],
+    "status": "Done",
+    "accomp_datetime": null
+  },
+  {
+    "id": 71,
+    "title": "Support with daycare in Tempelhof",
+    "vo_information": "Support the daycare staff with organising games and activities for chidlren.\nThey would be happy to get volunteers who can come regularly and organise creative activities for the kids between 12:30 and 16:30. ",
+    "accomp_information": null,
+    "opportunity_type": "volunteering",
+    "berlin_locations": [
+      {
+        "name": "Tempelhof"
+      }
+    ],
+    "schedule_str": "Monday, Tuesday, Thursday, Wednesday, Friday, 12:30-16:30",
+    "datetime_str": null,
+    "timeslots": [],
+    "activities": [
+      {
+        "title": "Daycare",
+        "description": null
+      }
+    ],
+    "languages": [],
+    "skills": [],
+    "status": "Volunteers Needed",
+    "accomp_datetime": null
+  },
+  {
+    "id": 72,
+    "title": "Support with the community garden",
+    "vo_information": "Starting spring",
+    "accomp_information": null,
+    "opportunity_type": "volunteering",
+    "berlin_locations": [
+      {
+        "name": "Lichtenberg"
+      }
+    ],
+    "schedule_str": "Flexible",
+    "datetime_str": null,
+    "timeslots": [],
+    "activities": [
+      {
+        "title": "Gardening",
+        "description": null
+      }
+    ],
+    "languages": [
+      {
+        "id": 1548,
+        "title": "German",
+        "iso_code": "de"
+      }
+    ],
+    "skills": [],
+    "status": "Inactive",
+    "accomp_datetime": null
+  },
+  {
+    "id": 73,
+    "title": "Support during a Summer Festival",
+    "vo_information": "Volunteers are needed for serving food and drinks, organising activities for children and teenagers",
+    "accomp_information": null,
+    "opportunity_type": "volunteering",
+    "berlin_locations": [
+      {
+        "name": "Neukölln"
+      }
+    ],
+    "schedule_str": "July 18th",
+    "datetime_str": null,
+    "timeslots": [],
+    "activities": [
+      {
+        "title": "Festival",
+        "description": null
+      }
+    ],
+    "languages": [
+      {
+        "id": 1841,
+        "title": "English",
+        "iso_code": "en"
+      },
+      {
+        "id": 1548,
+        "title": "German",
+        "iso_code": "de"
+      }
+    ],
+    "skills": [],
+    "status": "Done",
+    "accomp_datetime": null
+  },
+  {
+    "id": 74,
+    "title": "Accompanying of a pregnant person to Charite",
+    "vo_information": null,
+    "accomp_information": "wir suchen dringend eine Übersetzer Deutsch/Türkisch, wir haben eine schwangere Frau in Gefahr, sie hat nächste Woche 29.05.2024 um 10:30 Uhr im Charité Campus Virchow Klinikum, Augustenbursplatz1, 13353 Berlin, Mittelallee 9 Links, Schwangerenberatung, die Mutter ist Frau Yildiz .\nContact of the social worker: ",
+    "opportunity_type": "accompanying",
+    "berlin_locations": [
+      {
+        "name": "Mitte"
+      }
+    ],
+    "schedule_str": "May 29th, 10:30",
+    "datetime_str": null,
+    "timeslots": [],
+    "activities": [
+      {
+        "title": "Accompanying",
+        "description": null
+      }
+    ],
+    "languages": [
+      {
+        "id": 1548,
+        "title": "German",
+        "iso_code": "de"
+      },
+      {
+        "id": 6651,
+        "title": "Turkish",
+        "iso_code": "tr"
+      }
+    ],
+    "skills": [],
+    "status": "Inactive",
+    "accomp_datetime": null
+  }
+]

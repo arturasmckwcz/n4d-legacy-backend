@@ -117,10 +117,10 @@ lichtenberg_opportunity_flattered = {
     "status": "Volunteers Needed",
     "target_groups": ["Kids", "Teenagers"],
     "berlin_locations": ["Lichtenberg"],
-    "schedule_str": None,
+    "schedule_str": "Monday, Tuesday, Wednesday, Thursday, Friday, 14:00-17:00",
     "activities": ["Tutoring"],
-    "languages": [],
+    "languages": ["Arabic", "German", "Persian"],
     "skills": [],
     "vo_information": "The kids speak German, we don’t know anything about their ages or grades. They would need help with various subjects.",
-    "opportunity_type": "Volunteering",
+    "opportunity_type": "volunteering",
 }

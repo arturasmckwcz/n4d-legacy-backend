@@ -196,7 +196,6 @@ class Opportunity(ModelWithTimestamps):
     accomp_name = models.CharField(max_length=128, null=True, blank=True)
     accomp_phone = models.CharField(max_length=64, null=True, blank=True)
     accomp_postcode = models.CharField(null=True, blank=True)
-    accomp_information = models.TextField(blank=True, null=True, max_length=512)
     accomp_translation = models.CharField(max_length=256, null=True, blank=True)
     languages = models.ManyToManyField(
         Language,
@@ -214,20 +213,28 @@ class Opportunity(ModelWithTimestamps):
     schedule_str = models.CharField(max_length=1024, null=True, blank=True)
 
     def __str__(self):
-        german = self.translations.filter(language__iso_code="de").first()
+        german = self.translations.filter(language__iso_code="de").first()  # pyright: ignore[reportAttributeAccessIssue]
         return f"{german.title if german else 'No title'} | {self.rac_email}"
 
     def get_title(self, language_code="de"):
-        translation = self.translations.filter(language__iso_code=language_code).first()
+        translation = self.translations.filter(language__iso_code=language_code).first()  # pyright: ignore[reportAttributeAccessIssue]
         return translation.title if translation else None
 
     def get_vo_information(self, language_code="de"):
-        translation = self.translations.filter(language__iso_code=language_code).first()
+        translation = self.translations.filter(language__iso_code=language_code).first()  # pyright: ignore[reportAttributeAccessIssue]
         return translation.vo_information if translation else None
+
+    def get_accomp_information(self, language_code="de"):
+        translation = self.translations.filter(language__iso_code=language_code).first()  # pyright: ignore[reportAttributeAccessIssue]
+        return translation.accomp_information if translation else None
 
     @classmethod
     def create_with_translation(
-        cls, german_title, german_vo_information, **opportunity_fields
+        cls,
+        german_title,
+        german_vo_information=None,
+        german_accomp_information=None,
+        **opportunity_fields,
     ):
         """
         Creates an Opportunity instance together with its mandatory German translation.
@@ -236,7 +243,8 @@ class Opportunity(ModelWithTimestamps):
 
         Args:
             german_title (str): The German title of the opportunity (required)
-            german_vo_information (str): The German description/information (required)
+            german_vo_information (str): The German description/information (optional)
+            german_accomp_information (str): The German description/information (optional)
             **opportunity_fields: Additional fields for the Opportunity model (e.g., rac_email, status)
 
         Returns:
@@ -260,6 +268,7 @@ class Opportunity(ModelWithTimestamps):
                 language=Language.objects.get(iso_code="de"),
                 title=german_title,
                 vo_information=german_vo_information,
+                accomp_information=german_accomp_information,
             )
             return opportunity
 
@@ -286,6 +295,7 @@ class OpportunityTranslation(models.Model):
     language = models.ForeignKey(Language, on_delete=models.CASCADE)
     title = models.CharField(max_length=128)
     vo_information = models.TextField(blank=True, null=True)
+    accomp_information = models.TextField(blank=True, null=True)
 
     class Meta:
         unique_together = ("opportunity", "language")
@@ -293,7 +303,7 @@ class OpportunityTranslation(models.Model):
     def save(self, *args, **kwargs):
         if (
             self.language.iso_code != "de"
-            and not self.opportunity.translations.filter(
+            and not self.opportunity.translations.filter(  # pyright: ignore[reportAttributeAccessIssue]
                 language__iso_code="de"
             ).exists()
         ):

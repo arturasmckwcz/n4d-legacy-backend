@@ -40,6 +40,7 @@ class OpportunityTranslationInline(admin.TabularInline):
     model = OpportunityTranslation
     extra = 1
     formset = OpportunityTranslationInlineFormSet
+    fields = ["language", "title", "accomp_information", "vo_information"]
 
 
 @admin.register(Contact)
@@ -94,8 +95,8 @@ class OrganizationAdmin(admin.ModelAdmin):
 
 @admin.register(Opportunity)
 class OpportunityAdmin(admin.ModelAdmin):
-    search_fields = ("title", "status")
     inlines = [OpportunityTranslationInline]
+    search_fields = ["notion_id", "rac_email"]
 
     def title_display(self, obj):
         return obj.get_title()
