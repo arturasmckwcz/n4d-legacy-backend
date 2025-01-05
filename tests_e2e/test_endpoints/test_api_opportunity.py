@@ -74,6 +74,4 @@ def test_post_invalid_form_volunteer():
         API_OPPORTUNITY_POST_URL, json=InvalidOpportunityFormData.judas_iscariot
     )
     assert post_form_response.status_code == HTTPStatus.BAD_REQUEST
-    assert post_form_response.json() == {
-        "rac_email": ["Attempt of unauthorized access."]
-    }
+    assert post_form_response.json() == {"rac_email": ["Enter a valid email address."]}

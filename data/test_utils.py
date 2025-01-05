@@ -5,7 +5,7 @@ import pytest
 from django.core.exceptions import ValidationError
 from django.db.models import Q
 
-from data.utils import (
+from data.utils import (  # is_valid_email,
     filter_queryset,
     flatten_dict,
     generate_square_pattern_svg,

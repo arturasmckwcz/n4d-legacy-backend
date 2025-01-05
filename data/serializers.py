@@ -20,7 +20,7 @@ from data.models import (
     VolunteerForm,
     VolunteerLanguageM2M,
 )
-from data.utils import flatten_dict
+from data.utils import flatten_dict  # , is_valid_email
 from users.serializers import AlfredUserSerializer
 
 logger = structlog.get_logger(__name__)
@@ -289,7 +289,7 @@ class OpportunityCreateSerializer(serializers.ModelSerializer):
     def validate_rac_email(self, value):
         _, domain = value.split("@")
         if domain.lower() not in AUTHORIZED_DOMAINS:
-            raise serializers.ValidationError("Attempt of unauthorized access.")
+            logger.warn(f"Attempt of unauthorized access from email: {value}.")
         return value
 
     def validate_rac_postal_code(

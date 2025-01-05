@@ -60,7 +60,7 @@ class InvalidOpportunityFormData:
         "languages": ["Arabic"],
         "opportunity_type": "volunteering",
         "rac_address": "Jerusalem",
-        "rac_email": "judas@cjd.dee",
+        "rac_email": "judas@kerioth",
         "rac_full_name": "Judas Iscariot",
         "rac_phone": "+972-54-1234567",
         "rac_plz": "12345",
