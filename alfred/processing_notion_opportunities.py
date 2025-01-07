@@ -132,7 +132,6 @@ def create_or_update_opportunity_from_notion(
             if not opportunity_type:
                 logger.error("No opporturnity type")
                 return
-
             opportunity = Opportunity(
                 notion_id=notion_record["id"],
                 last_edited_time_notion=notion_record["last_edited_time"],
@@ -258,6 +257,9 @@ def prepare_opportunity_data_for_db(opportunity_page: dict) -> tuple | None:
     notion_id = get_key_value(opportunity_page, ["id"])
     try:
         opportunity_data["notion_id"] = notion_id
+        opportunity_data["last_edited_time_notion"] = opportunity_page[
+            "last_edited_time"
+        ]
 
         title_from_notion = get_the_first(
             opportunity_page["properties"]["Name"]["title"],
@@ -579,8 +581,13 @@ def execute_opportunities_sync_pipeline():
         f"Found trough filtering {len(new_opportunity_objects)} new Opportunity objects."
     )
     logger.info("Attempting to write opportunities to Notion")
+    written_opportunities_to_notion_count = 0
     for new_opportunity in new_opportunity_objects:
         write_opportunity_to_notion(new_opportunity)
+        written_opportunities_to_notion_count += 1
+    logger.info(
+        f"Should write {written_opportunities_to_notion_count} opportunities to Notion"
+    )
 
 
 def write_opportunity_to_notion(opportunity: Opportunity):

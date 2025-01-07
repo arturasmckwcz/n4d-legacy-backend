@@ -1,3 +1,4 @@
+import structlog
 from django.contrib import admin
 from django.core.exceptions import ValidationError
 from django.forms.models import BaseInlineFormSet
@@ -11,12 +12,15 @@ from data.models import (
     Language,
     Location,
     Opportunity,
+    OpportunityLanguageM2M,
     OpportunityTranslation,
     Organization,
     Person,
     Skill,
     VolunteerForm,
 )
+
+logger = structlog.get_logger(__name__)
 
 
 class OpportunityTranslationInlineFormSet(BaseInlineFormSet):
@@ -41,6 +45,11 @@ class OpportunityTranslationInline(admin.TabularInline):
     extra = 1
     formset = OpportunityTranslationInlineFormSet
     fields = ["language", "title", "accomp_information", "vo_information"]
+
+
+class OpportunityLanguageInline(admin.TabularInline):  # or admin.StackedInline
+    model = OpportunityLanguageM2M
+    extra = 1
 
 
 @admin.register(Contact)
@@ -95,14 +104,37 @@ class OrganizationAdmin(admin.ModelAdmin):
 
 @admin.register(Opportunity)
 class OpportunityAdmin(admin.ModelAdmin):
-    inlines = [OpportunityTranslationInline]
-    search_fields = ["notion_id", "rac_email"]
+    inlines = [OpportunityTranslationInline, OpportunityLanguageInline]
+    search_fields = ["notion_id", "rac_email", "translations__title"]
 
     def title_display(self, obj):
         return obj.get_title()
 
+    def created_at_display(self, obj):
+        return obj.created_at.strftime("%Y-%m-%d %H:%M")
+
+    def updated_at_display(self, obj):
+        return obj.updated_at.strftime("%Y-%m-%d %H:%M")
+
+    def last_edited_time_notion_display(self, obj):
+        return obj.last_edited_time_notion.strftime("%Y-%m-%d %H:%M")
+
     title_display.short_description = "Title"
-    list_display = ["title_display", "rac_email"]
+    title_display.admin_order_field = "translations__title"
+    created_at_display.short_description = "Created At"
+    created_at_display.admin_order_field = "created_at"
+    updated_at_display.short_description = "Updated At"
+    updated_at_display.admin_order_field = "updated_at"
+    last_edited_time_notion_display.short_desription = "L.E.T. Notion"
+    last_edited_time_notion_display.admin_order_field = "last_edited_time_notion"
+
+    list_display = [
+        "title_display",
+        "rac_email",
+        "created_at_display",
+        "updated_at_display",
+        "last_edited_time_notion",
+    ]
 
     def save_model(self, request, obj, form, change):
         """
@@ -125,10 +157,15 @@ class OpportunityAdmin(admin.ModelAdmin):
     def save_formset(self, request, form, formset, change):
         if formset.model == OpportunityTranslation:
             instances = formset.save(commit=False)
-            if not any(
+            has_german = any(
                 instance.language.iso_code == "de" and instance.title
                 for instance in instances
-            ):
+            )
+            if change and not has_german:
+                has_german = formset.instance.translations.filter(
+                    language__iso_code="de", title__isnull=False
+                ).exists()
+            if not has_german:
                 raise ValidationError("German title is required")
         formset.save()
 

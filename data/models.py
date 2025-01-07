@@ -175,11 +175,11 @@ SELECT o.id, o.rac_email, l.title, t.title FROM data_opportunity o JOIN data_opp
 
 
 class Opportunity(ModelWithTimestamps):
-    rac_email = models.EmailField(null=True)
-    rac_full_name = models.CharField(max_length=128, null=True)
-    rac_address = models.CharField(max_length=128, null=True)
-    rac_plz = models.IntegerField(null=True)
-    rac_phone = models.CharField(max_length=64, null=True)
+    rac_email = models.EmailField(null=True, blank=True)
+    rac_full_name = models.CharField(max_length=128, null=True, blank=True)
+    rac_address = models.CharField(max_length=128, null=True, blank=True)
+    rac_plz = models.IntegerField(null=True, blank=True)
+    rac_phone = models.CharField(max_length=64, null=True, blank=True)
     opportunity_type = models.CharField(
         choices=OpportunityType.choices, default=OpportunityType.GENERAL
     )
@@ -192,7 +192,7 @@ class Opportunity(ModelWithTimestamps):
     activities = models.ManyToManyField(Activity, blank=True)
     berlin_locations = models.ManyToManyField(BerlinLocation)
     accomp_address = models.CharField(max_length=128, null=True, blank=True)
-    accomp_datetime = models.DateTimeField(null=True)
+    accomp_datetime = models.DateTimeField(null=True, blank=True)
     accomp_name = models.CharField(max_length=128, null=True, blank=True)
     accomp_phone = models.CharField(max_length=64, null=True, blank=True)
     accomp_postcode = models.CharField(null=True, blank=True)
@@ -209,7 +209,7 @@ class Opportunity(ModelWithTimestamps):
     status = models.CharField(
         max_length=128, default=DEFAULTS.OPPORTUNITY_STATUS, db_index=True
     )
-    last_edited_time_notion = models.DateTimeField(null=True)
+    last_edited_time_notion = models.DateTimeField(null=True, blank=True)
     schedule_str = models.CharField(max_length=1024, null=True, blank=True)
 
     def __str__(self):
@@ -271,11 +271,6 @@ class Opportunity(ModelWithTimestamps):
                 accomp_information=german_accomp_information,
             )
             return opportunity
-
-    # def save(self, *args, **kwargs):
-    #     if not self.pk:
-    #         super().save(*args, **kwargs)
-    #         return
 
 
 class VolunteerLanguageM2M(LanguageM2M):
