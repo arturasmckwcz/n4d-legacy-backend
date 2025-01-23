@@ -15,25 +15,6 @@ class Migration(migrations.Migration):
             model_name="volunteerlanguagem2m",
             name="volunteerform",
         ),
-        migrations.RemoveField(
-            model_name="language",
-            name="title",
-        ),
-        migrations.AlterField(
-            model_name="language",
-            name="iso_code",
-            field=models.CharField(
-                choices=[
-                    ("EN", "English"),
-                    ("ES", "Spanish"),
-                    ("FR", "French"),
-                    ("DE", "German"),
-                    ("IT", "Italian"),
-                ],
-                max_length=2,
-                unique=True,
-            ),
-        ),
         migrations.AlterField(
             model_name="opportunity",
             name="accomp_datetime",

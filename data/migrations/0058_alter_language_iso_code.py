@@ -47,12 +47,6 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.AddField(
-            model_name="language",
-            name="title",
-            field=models.CharField(max_length=25, default=""),
-            preserve_default=False,
-        ),
         migrations.AlterField(
             model_name="language",
             name="iso_code",
