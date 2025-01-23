@@ -26,7 +26,7 @@ from data.models import (
     Language,
     Skill,
     VolunteerForm,
-    VolunteerLanguageM2M,
+    VolunteerLanguage,
 )
 
 logger = structlog.get_logger(__name__)
@@ -291,15 +291,19 @@ def write_or_update_page_to_db(
                 if title == "Farsi/Dari" or title == "Farsi":
                     title = "Persian"
 
-                language_object = Language.objects.filter(title=title).first()
-                if language_object:
-                    VolunteerLanguageM2M.objects.create(
-                        language=language_object,
-                        volunteerform=volunteerform_object,
-                        level=level,
+                try:
+                    language_object = Language.objects.get(title=title)
+                except Exception as e:
+                    logger.error(
+                        f"Error {e} occurred while processing language {title=}"
                     )
-                else:
-                    logger.error(f"Error: {language=} not found.")
+
+                level = level.lower()
+                VolunteerLanguage.objects.create(
+                    volunteer_form=volunteerform_object,
+                    language=language_object,
+                    level=level,
+                )
 
             # 4 add schedule
             schedule_objects = parse_days(m2m_data["schedule"])
@@ -406,9 +410,8 @@ def write_volunteerform_to_notion(volunteerform: VolunteerForm):
             else []
         )
     }
-    properties["Comments"] = {
-        "rich_text": [{"text": {"content": volunteerform.comments}}]
-    }
+    comments = volunteerform.comments or ""
+    properties["Comments"] = {"rich_text": [{"text": {"content": comments}}]}
     opportunity_page_id = (
         str(volunteerform.origin_opportunity.notion_id)
         if volunteerform.origin_opportunity
@@ -430,18 +433,12 @@ def write_volunteerform_to_notion(volunteerform: VolunteerForm):
 
 def get_language_list(volunteer: VolunteerForm) -> list[str]:
     languages_and_levels = []
-    for language in volunteer.languages.all():
+    for language in volunteer.languages.all():  # pyright: ignore[reportAttributeAccessIssue]
         try:
-            language_level = VolunteerLanguageM2M.objects.filter(
-                language=language, volunteerform=volunteer
-            ).first()
-            if language_level:
-                languages_and_levels.append(
-                    f"{language.title.capitalize()} {language_level.level.capitalize() if language_level.level else None}"
-                )
-        except VolunteerLanguageM2M.DoesNotExist:
+            languages_and_levels.append(f"{language}")
+        except VolunteerLanguage.DoesNotExist:
             logger.error(
-                f"VolunteerLanguageM2M.DoesNotExist raised for language {language}"
+                f"VolunteerLanguage.DoesNotExist raised for language {language}"
             )
 
     return languages_and_levels

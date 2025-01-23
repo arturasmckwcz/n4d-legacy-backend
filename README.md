@@ -141,49 +141,6 @@ Go to the another project -> Settings -> CI/CD -> Job token permissions
 Add this group/project to the allowlist
 Use CI_JOB_TOKEN in this project
 
-### Loading opportunities as `json` file
-
-#### Endpoit
-
-```
-/api/opportunities.json/
-```
-
-takes form field of type `file` named `json_file`
-
-#### File format
-
-Please check [the test file](./tests_e2e/fixtures/opportunities.json) as example
-It should be an array of objects
-Each object should correspond to the following OTD:
-
-```
-{
-    "Status": "opportunity.status",
-    "Name": "opportunity.title",
-    "Type": "payload.activities",
-    "District": "payload.locations",
-    "Number of volunteers needed": "opportunity.volunteers_number",
-    "Schedule": "payload.timeslots",
-    "Accommodation Centre": "opportunity.organization",
-    "Languages needed": "payload.languages",
-    "Target group": "opportunity.target_groups",
-    "VO information": "opportunity.vo_information",
-    "ID": "opportunity.notion_id",
-
-}
-```
-
-#### How to create test data:
-
-Go to a working pod and dump data
-python manage.py dumpdata --format json --indent 4 data.Opportunity > opportunities.json
-python manage.py dumpdata --format json --indent 4 data.OpportunityTranslation > opportunity_translations.json
-python manage.py dumpdata data.TargetGroup > targetgroup.json
-python manage.py dumpdata data.TimeSlot > timeslots.json
-python manage.py dumpdata data.BerlinLocation > berlinlocations.json
-python manage.py dumpdata data.Activity > activities.json
-Copy to fixtures folder
 
 Script to quickly export .env in the current shell
 grep -v '^#' .env | while IFS='=' read -r key value; do export "$key"="$value"; done

@@ -2,14 +2,37 @@ from django.db import models
 
 
 class Languages(models.TextChoices):
-    ARABIC = "ar", "العربية"
+    ARABIC = "ar", "Arabic"
+    ARMENIAN = "hy", "Armenian"
+    BELARUSIAN = "be", "Belarusian"
+    CHECHEN = "ce", "Chechen"
+    CHINESE = "zh", "Chinese"
+    CZECH = "cs", "Czech"
+    DARI = "prs", "Dari"
+    DUTCH = "nl", "Dutch"
     ENGLISH = "en", "English"
-    GERMAN = "de", "Deutsch"
-    FARSI = "fa", "فارسی"
-    RUSSIAN = "ru", "Русский"
-    TURKISH = "tr", "Türkçe"
-    UKRAINIAN = "uk", "Українська"
-    OTHER = "ot", "Other"
+    FRENCH = "fr", "French"
+    GEORGIAN = "ka", "Georgian"
+    GERMAN = "de", "German"
+    GREEK = "el", "Greek"
+    HEBREW = "he", "Hebrew"
+    HINDI = "hi", "Hindi"
+    ITALIAN = "it", "Italian"
+    KURDISH = "ku", "Kurdish"
+    PASHTO = "ps", "Pashto"
+    PERSIAN = "fa", "Persian"
+    POLISH = "pl", "Polish"
+    PUNJABI = "pa", "Punjabi"
+    ROMANY = "rom", "Romany"
+    RUSSIAN = "ru", "Russian"
+    SERBIAN = "sr", "Serbian"
+    SOMALI = "so", "Somali"
+    SPANISH = "es", "Spanish"
+    SWEDISH = "sv", "Swedish"
+    TURKISH = "tr", "Turkish"
+    UKRAINIAN = "uk", "Ukrainian"
+    URDU = "ur", "Urdu"
+    VIETNAMESE = "vi", "Vietnamese"
 
 
 class Statuses(models.TextChoices):
@@ -91,11 +114,11 @@ class OptionsList:
 
 
 class LanguageLevel(models.TextChoices):
-    BEGINNER = "beginner"
-    INTERMEDIATE = "intermediate"
-    ADVANCED = "advanced"
-    FLUENT = "fluent"
-    NATIVE = "native"
+    BEGINNER = "beginner", "Beginner"
+    INTERMEDIATE = "intermediate", "Intermediate"
+    ADVANCED = "advanced", "Advanced"
+    FLUENT = "fluent", "Fluent"
+    NATIVE = "native", "Native"
 
 
 class DEFAULTS:

@@ -1,7 +1,7 @@
 import structlog
 from rest_framework import serializers
 
-from data.enums import AUTHORIZED_DOMAINS, LanguageLevel
+from data.enums import AUTHORIZED_DOMAINS
 from data.models import (
     Activity,
     Avatar,
@@ -18,7 +18,6 @@ from data.models import (
     Skill,
     Timeslot,
     VolunteerForm,
-    VolunteerLanguageM2M,
 )
 from data.utils import flatten_dict  # , is_valid_email
 from users.serializers import AlfredUserSerializer
@@ -510,33 +509,6 @@ class VolunteerFormSerializer(serializers.ModelSerializer):
         volunteer_form = VolunteerForm.objects.create(**data_from_post_request)
         volunteer_form.schedule.set(schedule_objects)
         volunteer_form.preferred_berlin_locations.set(location_objects)
-        languages_for_m2m = (
-            [
-                VolunteerLanguageM2M(
-                    volunteerform=volunteer_form,
-                    language=language,
-                    level=LanguageLevel.NATIVE,
-                )
-                for language in native_language_objects
-            ]
-            + [
-                VolunteerLanguageM2M(
-                    volunteerform=volunteer_form,
-                    language=language,
-                    level=LanguageLevel.FLUENT,
-                )
-                for language in fluent_language_objects
-            ]
-            + [
-                VolunteerLanguageM2M(
-                    volunteerform=volunteer_form,
-                    language=language,
-                    level=LanguageLevel.INTERMEDIATE,
-                )
-                for language in intermediate_language_objects
-            ]
-        )
-        VolunteerLanguageM2M.objects.bulk_create(languages_for_m2m)
         volunteer_form.activities.set(activity_objects)
         volunteer_form.skills.set(skill_objects)
 

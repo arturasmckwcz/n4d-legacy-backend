@@ -5,7 +5,7 @@ import requests
 from pydantic import BaseModel, ConfigDict
 
 from tests_e2e.fixtures import structure, users
-from tests_e2e.fixtures.data import lichtenberg_opportunity_flattered
+from tests_e2e.fixtures.data import deutschunterricht_opportunity_flattered
 from tests_e2e.fixtures.opportunity_form_data import (
     InvalidOpportunityFormData,
     ValidOpportunityFormData,
@@ -41,7 +41,7 @@ def test_get_opportunity():
 
     assert api_opportunity_request.status_code == HTTPStatus.OK
     expected_opportunity = structure.ApiOpportunityFlattered(
-        **lichtenberg_opportunity_flattered
+        **deutschunterricht_opportunity_flattered
     )
 
     assert api_opportunity_response == expected_opportunity

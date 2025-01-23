@@ -111,16 +111,16 @@ contact_Helter_Skelter = {"title": "Helter Skelter", "phone": "+49 30 3009090"}
 
 organization_RAC_name = "Helter Skelter"
 
-lichtenberg_opportunity_flattered = {
+deutschunterricht_opportunity_flattered = {
     "id": 1,
-    "title": "Support with homework in Lichtenberg",
+    "title": "Deutschunterricht für Anfänger",
     "status": "Volunteers Needed",
-    "target_groups": ["Kids", "Teenagers"],
-    "berlin_locations": ["Lichtenberg"],
-    "schedule_str": "Monday, Tuesday, Wednesday, Thursday, Friday, 14:00-17:00",
-    "activities": ["Tutoring"],
-    "languages": ["Arabic", "German", "Persian"],
-    "skills": [],
-    "vo_information": "The kids speak German, we don’t know anything about their ages or grades. They would need help with various subjects.",
+    "target_groups": [],
+    "berlin_locations": [],
+    "schedule_str": None,
+    "activities": ["Sports"],
+    "languages": ["English", "German"],
+    "skills": ["Chess"],
+    "vo_information": "Wir suchen Freiwillige für Deutschunterricht",
     "opportunity_type": "volunteering",
 }

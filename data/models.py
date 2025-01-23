@@ -8,6 +8,7 @@ from data.enums import (
     DEFAULTS,
     BerlinLocations,
     LanguageLevel,
+    Languages,
     Need4DeedTimeSlots,
     OpportunityType,
 )
@@ -78,11 +79,15 @@ class FormLeadFrom(models.Model):
 
 
 class Language(models.Model):
-    title = models.CharField(max_length=128, db_index=True)
-    iso_code = models.CharField(max_length=3, unique=True, db_index=True)
+    iso_code = models.CharField(max_length=3, choices=Languages.choices, unique=True)
+    title = models.CharField(max_length=25)
+
+    def save(self, *args, **kwargs):
+        self.name = dict(Languages.choices)[self.iso_code]
+        super().save(*args, **kwargs)
 
     def __str__(self):
-        return f"{self.iso_code} | {self.title}"
+        return self.title
 
 
 class Contact(ModelWithTimestamps):
@@ -158,17 +163,6 @@ class Need4DeedDaySchedule(models.Model):
         return f"{DAY_CHOICES[self.day][1]} - {self.time_slot}"
 
 
-class LanguageM2M(models.Model):
-    language = models.ForeignKey(Language, on_delete=models.CASCADE)
-
-    class Meta:
-        abstract = True
-
-
-class OpportunityLanguageM2M(LanguageM2M):
-    opportunity = models.ForeignKey("data.opportunity", on_delete=models.CASCADE)
-
-
 """
 SELECT o.id, o.rac_email, l.title, t.title FROM data_opportunity o JOIN data_opportunitytranslation t ON t.opportunity_id=o.id JOIN data_language l ON l.id=t.language_id;
 """
@@ -197,11 +191,7 @@ class Opportunity(ModelWithTimestamps):
     accomp_phone = models.CharField(max_length=64, null=True, blank=True)
     accomp_postcode = models.CharField(null=True, blank=True)
     accomp_translation = models.CharField(max_length=256, null=True, blank=True)
-    languages = models.ManyToManyField(
-        Language,
-        through=OpportunityLanguageM2M,
-        blank=True,
-    )
+    languages = models.ManyToManyField(Language)
     skills = models.ManyToManyField(Skill, blank=True)
     notion_id = models.UUIDField(
         default=None, editable=False, unique=True, blank=True, null=True
@@ -273,16 +263,6 @@ class Opportunity(ModelWithTimestamps):
             return opportunity
 
 
-class VolunteerLanguageM2M(LanguageM2M):
-    volunteerform = models.ForeignKey("data.volunteerform", on_delete=models.CASCADE)
-    level = models.CharField(choices=LanguageLevel.choices, null=True)
-
-    def __str__(self):
-        return (
-            f"form:{self.volunteerform}, language:{self.language}, level:{self.level}"
-        )
-
-
 class OpportunityTranslation(models.Model):
     opportunity = models.ForeignKey(
         Opportunity, on_delete=models.CASCADE, related_name="translations"
@@ -317,7 +297,6 @@ class VolunteerForm(ModelWithTimestamps):
     schedule = models.ManyToManyField(Need4DeedDaySchedule)
     postal_code = models.IntegerField()
     preferred_berlin_locations = models.ManyToManyField(BerlinLocation)
-    languages = models.ManyToManyField(Language, through=VolunteerLanguageM2M)
     good_conduct_certificate = models.CharField(max_length=64, null=True)
     if_measles_vaccination = models.BooleanField(null=True)
     activities = models.ManyToManyField(Activity)
@@ -333,3 +312,17 @@ class VolunteerForm(ModelWithTimestamps):
 
     def __str__(self):
         return f"{self.full_name} | email: {self.email}"
+
+
+class VolunteerLanguage(models.Model):
+    volunteer_form = models.ForeignKey(
+        VolunteerForm, on_delete=models.CASCADE, related_name="languages"
+    )
+    language = models.ForeignKey(Language, on_delete=models.CASCADE)
+    level = models.CharField(max_length=12, choices=LanguageLevel.choices)
+
+    class Meta:
+        unique_together = ["volunteer_form", "language"]
+
+    def __str__(self):
+        return f"{self.language.title} {self.level}"

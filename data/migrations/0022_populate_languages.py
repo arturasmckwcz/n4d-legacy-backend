@@ -2,14 +2,9 @@
 
 from django.db import migrations
 
-from data.enums import Languages
-
 
 def populate_languages(apps, schema_editor):
-    Language = apps.get_model("data", "Language")
-
-    for lang_code, _ in Languages.choices:
-        Language.objects.get_or_create(iso_code=lang_code)
+    pass
 
 
 class Migration(migrations.Migration):

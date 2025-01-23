@@ -24,7 +24,6 @@ from data.models import (
     BerlinLocation,
     Language,
     Opportunity,
-    OpportunityLanguageM2M,
     OpportunityTranslation,
     OpportunityType,
     Skill,
@@ -82,18 +81,26 @@ def should_be_processed(notion_record: dict) -> bool | None:
 
 
 def add_languages_to_opportunity(languages, opportunity_obj):
+    if len(languages) == 0:
+        logger.warn(f"No languages to add! {languages=}")
+        return
+
+    languages_to_add = []
     for language in languages:
-        match language["name"]:
+        match language:
             case "Farsi":
-                language["name"] = "Persian"
-            case "Romanes" | "Any" | "no specific language needed":
+                language = "Persian"
+            case "Romanes":
+                language = "Romany"
+            case "Any" | "no specific language needed" | "No specific language needed":
                 continue
 
-        language_obj = Language.objects.filter(title=language["name"]).first()
-        if language_obj:
-            OpportunityLanguageM2M.objects.create(
-                language=language_obj, opportunity=opportunity_obj
-            )
+        language_obj = Language.objects.filter(title=language).first()
+        languages_to_add.append(language_obj)
+    try:
+        opportunity_obj.languages.set(languages_to_add)
+    except Exception:
+        logger.error(f"{opportunity_obj} has incompatible language")
 
 
 def create_or_update_opportunity_from_notion(
@@ -429,21 +436,7 @@ def write_or_update_opportunity_to_db(
                 logger.info(f"No m2m data for {opportunity_data['notion_id']=}")
                 return
 
-            for language in m2m_data["languages"]:
-                if language == "Farsi/Dari" or language == "Farsi":
-                    language = "Persian"
-
-                if language == "No specific language needed" or language == "Any":
-                    continue
-
-                language_object = Language.objects.filter(title=language).first()
-                if language_object:
-                    OpportunityLanguageM2M.objects.create(
-                        language=language_object,
-                        opportunity=opportunity_object,
-                    )
-                else:
-                    logger.error(f"Error: {language=} not found.")
+            add_languages_to_opportunity(m2m_data["languages"], opportunity_object)
 
             berlin_location_objects = []
             for location in m2m_data["berlin_locations"]:

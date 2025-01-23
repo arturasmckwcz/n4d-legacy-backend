@@ -12,12 +12,12 @@ from data.models import (
     Language,
     Location,
     Opportunity,
-    OpportunityLanguageM2M,
     OpportunityTranslation,
     Organization,
     Person,
     Skill,
     VolunteerForm,
+    VolunteerLanguage,
 )
 
 logger = structlog.get_logger(__name__)
@@ -45,11 +45,6 @@ class OpportunityTranslationInline(admin.TabularInline):
     extra = 1
     formset = OpportunityTranslationInlineFormSet
     fields = ["language", "title", "accomp_information", "vo_information"]
-
-
-class OpportunityLanguageInline(admin.TabularInline):  # or admin.StackedInline
-    model = OpportunityLanguageM2M
-    extra = 1
 
 
 @admin.register(Contact)
@@ -104,7 +99,7 @@ class OrganizationAdmin(admin.ModelAdmin):
 
 @admin.register(Opportunity)
 class OpportunityAdmin(admin.ModelAdmin):
-    inlines = [OpportunityTranslationInline, OpportunityLanguageInline]
+    inlines = [OpportunityTranslationInline]
     search_fields = ["notion_id", "rac_email", "translations__title"]
 
     def title_display(self, obj):
@@ -170,6 +165,49 @@ class OpportunityAdmin(admin.ModelAdmin):
         formset.save()
 
 
+class VolunteerLanguageInline(admin.TabularInline):
+    model = VolunteerLanguage
+    extra = 1
+
+
 @admin.register(VolunteerForm)
 class VolunteerFormAdmin(admin.ModelAdmin):
-    search_fields = ("email", "full_name")
+    inlines = [VolunteerLanguageInline]
+    search_fields = (
+        "email",
+        "full_name",
+        "languages__language__title",
+        "languages__language__iso_code",
+    )
+    list_display = (
+        "full_name",
+        "email",
+        "notion_id",
+        "last_edited_time_notion",
+        "get_languages_display",
+    )
+
+    def get_languages_display(self, obj):
+        languages = obj.languages.all()
+        return ", ".join([f"{lan.language.title} ({lan.level})" for lan in languages])
+
+    get_languages_display.short_description = "Languages"
+
+    def last_edited_time_notion_display(self, obj):
+        if obj.last_edited_time_notion:
+            return obj.last_edited_time_notion.strftime("%Y-%m-%d %H:%M")
+        return "-"
+
+    last_edited_time_notion_display.short_description = "L.E.T. Notion"
+    last_edited_time_notion_display.admin_order_field = "last_edited_time_notion"
+
+
+@admin.register(VolunteerLanguage)
+class VolunteerLanguageAdmin(admin.ModelAdmin):
+    list_display = ("volunteer_form", "language", "level")
+    list_filter = ("level", "language")
+    search_fields = (
+        "volunteer_form__full_name",
+        "volunteer_form__email",
+        "language__title",
+    )
