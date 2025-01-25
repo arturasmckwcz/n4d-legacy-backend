@@ -125,6 +125,12 @@ class DEFAULTS:
     OPPORTUNITY_STATUS = "Not started"
 
 
+class Environment:
+    PRODUCTION = "production"
+    TEST = "test"
+    DEVELOP = "develop"
+
+
 AUTHORIZED_DOMAINS = [
     "lfg-b.de",
     "berliner-stadtmission.de",

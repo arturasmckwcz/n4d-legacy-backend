@@ -118,6 +118,7 @@ build-and-push-alfred:
       --build-arg CELERY_RESULT_BACKEND=${CELERY_RESULT_BACKEND}
       --build-arg ALFRED_LAST_COMMIT_HASH=${ALFRED_LAST_COMMIT_HASH}
       --build-arg ENVIRONMENT=${ENVIRONMENT}
+      --build-arg SLACK_BOT_TOKEN=${SLACK_BOT_TOKEN}
       -t $ECR_URI:$BRANCH_NAME_FOR_TF .
     - echo "Pushing the Docker image to ECR..."
     - docker push $ECR_URI:$BRANCH_NAME_FOR_TF

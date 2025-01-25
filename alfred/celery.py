@@ -5,6 +5,7 @@ from celery.schedules import crontab
 from django_structlog.celery.steps import DjangoStructLogInitStep
 
 from alfred.settings import ENV
+from data.enums import Environment
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "alfred.settings")
 
@@ -24,7 +25,7 @@ def setup_periodic_tasks(sender, **kwargs):
     import alfred.tasks  # noqa
 
 
-if ENV == "PRODUCTION":
+if ENV == Environment.PRODUCTION:
     schedule = crontab(minute="0", hour="6-22", day_of_week="mon-fri")
 else:
     schedule = 60 * 60 * 24  # s = 1d

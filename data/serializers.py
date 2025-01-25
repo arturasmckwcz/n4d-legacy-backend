@@ -1,7 +1,9 @@
 import structlog
 from rest_framework import serializers
 
-from data.enums import AUTHORIZED_DOMAINS
+from alfred.settings import ENV
+from alfred.slack_handler import slack_post_message
+from data.enums import AUTHORIZED_DOMAINS, Environment
 from data.models import (
     Activity,
     Avatar,
@@ -288,7 +290,9 @@ class OpportunityCreateSerializer(serializers.ModelSerializer):
     def validate_rac_email(self, value):
         _, domain = value.split("@")
         if domain.lower() not in AUTHORIZED_DOMAINS:
-            logger.warn(f"Attempt of unauthorized access from email: {value}.")
+            warning_msg = f"Attempt of unauthorized access from email: {value}."
+            logger.warn(warning_msg)
+            slack_post_message(warning_msg, dry_run=ENV != Environment.PRODUCTION)
         return value
 
     def validate_rac_postal_code(
@@ -351,6 +355,12 @@ class OpportunityCreateSerializer(serializers.ModelSerializer):
             vo_information=vo_information,
             accomp_information=accomp_information,
         )
+
+        slack_post_message(
+            f"hey, please check the new opportunity {title} from {opportunity_object.rac_email}",
+            dry_run=ENV != Environment.PRODUCTION,
+        )
+
         return opportunity_object
 
     class Meta:
@@ -511,5 +521,10 @@ class VolunteerFormSerializer(serializers.ModelSerializer):
         volunteer_form.preferred_berlin_locations.set(location_objects)
         volunteer_form.activities.set(activity_objects)
         volunteer_form.skills.set(skill_objects)
+
+        slack_post_message(
+            f"hey, please check the new arrival to volunteers: {volunteer_form.email}",
+            dry_run=ENV != Environment.PRODUCTION,
+        )
 
         return volunteer_form

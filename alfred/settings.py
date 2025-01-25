@@ -4,6 +4,8 @@ import sentry_sdk
 import structlog
 from corsheaders.defaults import default_headers
 
+from data.enums import Environment
+
 from .config.globals import BASE_DIR
 from .utils import flatten_list, read_env_var
 
@@ -232,8 +234,8 @@ SPECTACULAR_SETTINGS = {
     "COMPONENT_SPLIT_REQUEST": True,
 }
 
-ENV = read_env_var("ENVIRONMENT")
-if ENV == "PRODUCTION":
+ENV = str(read_env_var("ENVIRONMENT")).lower()
+if ENV == Environment.PRODUCTION:
     CACHES = {
         "default": {
             "BACKEND": "django_valkey.cache.ValkeyCache",

@@ -14,11 +14,12 @@ from alfred.processing_notion_volunteerform import (
 )
 from alfred.settings import ENV
 from alfred.utils import read_env_var
+from data.enums import Environment
 
 logger = structlog.get_logger(__name__)
 
 is_debugging = read_env_var("DEBUG")
-is_production = ENV == "PRODUCTION"
+is_production = ENV == Environment.PRODUCTION
 
 
 def exec_pipeline(fn: Callable, info_msg: str):

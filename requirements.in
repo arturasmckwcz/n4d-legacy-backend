@@ -16,3 +16,4 @@ whitenoise
 gunicorn[gevent]
 django-valkey
 boto3
+slack_sdk
