@@ -3,7 +3,7 @@ from rest_framework import serializers
 
 from alfred.settings import ENV
 from alfred.slack_handler import slack_post_message
-from data.enums import AUTHORIZED_DOMAINS, Environment
+from data.enums import AUTHORIZED_DOMAINS, Environment, LanguageLevel
 from data.models import (
     Activity,
     Avatar,
@@ -20,6 +20,7 @@ from data.models import (
     Skill,
     Timeslot,
     VolunteerForm,
+    VolunteerLanguage,
 )
 from data.utils import flatten_dict  # , is_valid_email
 from users.serializers import AlfredUserSerializer
@@ -521,6 +522,34 @@ class VolunteerFormSerializer(serializers.ModelSerializer):
         volunteer_form.preferred_berlin_locations.set(location_objects)
         volunteer_form.activities.set(activity_objects)
         volunteer_form.skills.set(skill_objects)
+
+        languages_for_m2m = (
+            [
+                VolunteerLanguage(
+                    volunteer_form=volunteer_form,
+                    language=language,
+                    level=LanguageLevel.NATIVE,
+                )
+                for language in native_language_objects
+            ]
+            + [
+                VolunteerLanguage(
+                    volunteer_form=volunteer_form,
+                    language=language,
+                    level=LanguageLevel.FLUENT,
+                )
+                for language in fluent_language_objects
+            ]
+            + [
+                VolunteerLanguage(
+                    volunteer_form=volunteer_form,
+                    language=language,
+                    level=LanguageLevel.INTERMEDIATE,
+                )
+                for language in intermediate_language_objects
+            ]
+        )
+        VolunteerLanguage.objects.bulk_create(languages_for_m2m)
 
         slack_post_message(
             f"hey, please check the new arrival to volunteers: {volunteer_form.email}",
