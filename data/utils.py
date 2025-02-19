@@ -109,6 +109,8 @@ def flatten_dict(data: dict, primary_keys: list | None = None) -> dict:
                 result.append(primary_value if primary_value else flatten(item))
             elif isinstance(item, list):
                 result.append(list_value(item))
+            else:
+                result.append(item)
         return result
 
     def flatten(obj):

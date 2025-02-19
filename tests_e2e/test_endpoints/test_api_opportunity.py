@@ -12,7 +12,7 @@ from tests_e2e.fixtures.opportunity_form_data import (
 )
 from tests_e2e.test_endpoints.variables import ALFRED_API_URL
 
-url_encoded_params = "?search=%7B%22status%22:[%22Volunteers%20Needed%22]%7D&primary_keys=[%22name%22,%22title%22]"
+url_encoded_params = "?search=%7B%22status%22:[%22Volunteers%20Needed%22]%7D&primary_keys=[%22name%22,%22title%22]&language=de"
 
 API_LOGIN_URL = f"{ALFRED_API_URL}/api/jwt/create/"
 API_OPPORTUNITY_POST_URL = f"{ALFRED_API_URL}/api/opportunity/"

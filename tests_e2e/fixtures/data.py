@@ -119,7 +119,7 @@ deutschunterricht_opportunity_flattered = {
     "berlin_locations": [],
     "schedule_str": None,
     "activities": ["Sports"],
-    "languages": ["English", "German"],
+    "languages": ["Englisch", "Deutsch"],
     "skills": ["Chess"],
     "vo_information": "Wir suchen Freiwillige für Deutschunterricht",
     "opportunity_type": "volunteering",

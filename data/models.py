@@ -82,12 +82,23 @@ class Language(models.Model):
     iso_code = models.CharField(max_length=3, choices=Languages.choices, unique=True)
     title = models.CharField(max_length=25)
 
-    def save(self, *args, **kwargs):
-        self.name = dict(Languages.choices)[self.iso_code]
-        super().save(*args, **kwargs)
+    def get_title(self, language_code="de"):
+        translation = self.translations.filter(language__iso_code=language_code).first()  # pyright: ignore[reportAttributeAccessIssue]
+        return translation.title if translation else self.title
 
     def __str__(self):
-        return self.title
+        return f"{self.iso_code} {self.title}"
+
+
+class LanguageTranslation(models.Model):
+    language_obj = models.ForeignKey(
+        Language, on_delete=models.CASCADE, related_name="translations"
+    )
+    language = models.ForeignKey(Language, on_delete=models.CASCADE)
+    title = models.CharField(max_length=32)
+
+    class Meta:
+        unique_together = ("language_obj", "language")
 
 
 class Contact(ModelWithTimestamps):

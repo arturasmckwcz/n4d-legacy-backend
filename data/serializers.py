@@ -11,6 +11,7 @@ from data.models import (
     Contact,
     FormLeadFrom,
     Language,
+    LanguageTranslation,
     Location,
     Need4DeedDaySchedule,
     Opportunity,
@@ -167,6 +168,24 @@ class Need4DeedDayScheduleSerializer(serializers.ModelSerializer):
         ]
 
 
+def get_language_obj(title: str) -> Language | None:
+    def get_language_title(title: str) -> str:
+        if title == "Persian":
+            return "Farsi"
+        return title
+
+    try:
+        translation = LanguageTranslation.objects.filter(
+            title=get_language_title(title),
+        ).first()
+        if translation:
+            return translation.language_obj
+        return None
+    except Exception as e:
+        logger.error(f"Error {e} occurred while parsing language {title}")
+        return None
+
+
 class OrganizationSerializer(serializers.ModelSerializer):
     contact = serializers.SerializerMethodField(read_only=True)
     location = serializers.SerializerMethodField(read_only=True)
@@ -247,8 +266,9 @@ class OpportunitySerializer(serializers.ModelSerializer):
         return activities_details
 
     def get_languages(self, obj):
+        lang = self.context.get("language", "de")
         languages_details = [
-            LanguageSerializer(language).data for language in obj.languages.all()
+            language.get_title(lang) for language in obj.languages.all()
         ]
         return languages_details
 
@@ -306,6 +326,7 @@ class OpportunityCreateSerializer(serializers.ModelSerializer):
         return value
 
     def create(self, data_from_post_request):
+        language_obj = data_from_post_request.pop("language", "de")
         title = data_from_post_request.pop("title")
         vo_information = data_from_post_request.pop("vo_information", "")
         accomp_information = data_from_post_request.pop("accomp_information", "")
@@ -329,9 +350,10 @@ class OpportunityCreateSerializer(serializers.ModelSerializer):
 
         languages_data = data_from_post_request.pop("languages", [])
         languages = []
-        for language_name in languages_data:
-            language = Language.objects.get(title=language_name)
-            languages.append(language)
+        for language_title in languages_data:
+            language_obj = get_language_obj(language_title)
+            if language_obj:
+                languages.append(language_obj)
 
         timeslots_data = data_from_post_request.pop("timeslots", [])
         timeslots = []
@@ -434,11 +456,6 @@ class VolunteerFormSerializer(serializers.ModelSerializer):
             )
         return value
 
-    def get_language_title(self, title: str) -> str:
-        if title == "Farsi":
-            return "Persian"
-        return title
-
     def create(self, data_from_post_request):
         schedule_data = data_from_post_request.pop("schedule", [])
         locations_data = data_from_post_request.pop("preferred_berlin_locations", [])
@@ -464,40 +481,22 @@ class VolunteerFormSerializer(serializers.ModelSerializer):
             location_objects.append(location)
 
         native_language_objects = []
-        for title in native_languages_data:
-            try:
-                language = Language.objects.get(
-                    title=self.get_language_title(title),
-                )
-                native_language_objects.append(language)
-            except Exception as e:
-                logger.error(
-                    f"Error {e} occurred while parsing native language {title}"
-                )
+        for language_title in native_languages_data:
+            language_obj = get_language_obj(language_title)
+            if language_obj:
+                native_language_objects.append(language_obj)
 
         fluent_language_objects = []
-        for title in fluent_languages_data:
-            try:
-                language = Language.objects.get(
-                    title=self.get_language_title(title),
-                )
-                fluent_language_objects.append(language)
-            except Exception as e:
-                logger.error(
-                    f"Error {e} occurred while parsing fluent language {title}"
-                )
+        for language_title in fluent_languages_data:
+            language_obj = get_language_obj(language_title)
+            if language_obj:
+                fluent_language_objects.append(language_obj)
 
         intermediate_language_objects = []
-        for title in intermediate_languages_data:
-            try:
-                language = Language.objects.get(
-                    title=self.get_language_title(title),
-                )
-                intermediate_language_objects.append(language)
-            except Exception as e:
-                logger.error(
-                    f"Error {e} occurred while parsing intermediate language {title}"
-                )
+        for language_title in intermediate_languages_data:
+            language_obj = get_language_obj(language_title)
+            if language_obj:
+                intermediate_language_objects.append(language_obj)
 
         activity_objects = []
         for activity_name in activities_data:
