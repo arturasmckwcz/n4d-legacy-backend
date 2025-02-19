@@ -141,7 +141,7 @@ build-and-push-e2e-test:
     - aws configure set aws_access_key_id ${E2E_SECRET_KEY_ID}
     - aws configure set aws_secret_access_key ${E2E_SECRET_ACCESS_KEY}
     - echo "Building the test e2e Docker image..."
-    - docker build --build-arg ALFRED_API_URL="http://api.alfred-test-${BRANCHNAME_FOR_TF}.local:8000" -t $ECR_URI:$BRANCH_NAME_FOR_TF -f tests_e2e/Dockerfile .
+    - docker build --build-arg ENVIRONMENT=test --build-arg ALFRED_API_URL="http://api.alfred-test-${BRANCHNAME_FOR_TF}.local:8000" -t $ECR_URI:$BRANCH_NAME_FOR_TF -f tests_e2e/Dockerfile .
     - echo "Pushing the Docker image to ECR ecr e2e..."
     - docker push $ECR_URI:$BRANCH_NAME_FOR_TF
     - >

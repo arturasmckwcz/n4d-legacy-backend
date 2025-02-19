@@ -219,14 +219,24 @@ class Opportunity(ModelWithTimestamps):
 
     def get_title(self, language_code="de"):
         translation = self.translations.filter(language__iso_code=language_code).first()  # pyright: ignore[reportAttributeAccessIssue]
+        # this is workaround for the case when the non de translation is not available
+        if translation and translation.title:
+            return translation.title if translation else None
+        translation = self.translations.filter(language__iso_code="de").first()  # pyright: ignore[reportAttributeAccessIssue]
         return translation.title if translation else None
 
     def get_vo_information(self, language_code="de"):
         translation = self.translations.filter(language__iso_code=language_code).first()  # pyright: ignore[reportAttributeAccessIssue]
+        if translation and translation.vo_information:
+            return translation.vo_information if translation else None
+        translation = self.translations.filter(language__iso_code="de").first()  # pyright: ignore[reportAttributeAccessIssue]
         return translation.vo_information if translation else None
 
     def get_accomp_information(self, language_code="de"):
         translation = self.translations.filter(language__iso_code=language_code).first()  # pyright: ignore[reportAttributeAccessIssue]
+        if translation and translation.accomp_information:
+            return translation.accomp_information if translation else None
+        translation = self.translations.filter(language__iso_code="de").first()  # pyright: ignore[reportAttributeAccessIssue]
         return translation.accomp_information if translation else None
 
     @classmethod
