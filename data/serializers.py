@@ -260,8 +260,9 @@ class OpportunitySerializer(serializers.ModelSerializer):
         return berlin_locations_details
 
     def get_activities(self, obj):
+        lang = self.context.get("language", "de")
         activities_details = [
-            ActivitySerializer(activity).data for activity in obj.activities.all()
+            activity.get_title(lang) for activity in obj.activities.all()
         ]
         return activities_details
 
@@ -273,7 +274,8 @@ class OpportunitySerializer(serializers.ModelSerializer):
         return languages_details
 
     def get_skills(self, obj):
-        skills_details = [SkillSerializer(skill).data for skill in obj.skills.all()]
+        lang = self.context.get("language", "de")
+        skills_details = [skill.get_title(lang) for skill in obj.skills.all()]
         return skills_details
 
     def get_title(self, obj):

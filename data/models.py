@@ -1,5 +1,8 @@
 import uuid
 
+import structlog
+from django.contrib.contenttypes.fields import GenericForeignKey
+from django.contrib.contenttypes.models import ContentType
 from django.core.exceptions import ValidationError
 from django.db import models, transaction
 
@@ -14,6 +17,8 @@ from data.enums import (
 )
 from data.utils import validate_latitude, validate_longitude
 from users.models import AlfredUser
+
+logger = structlog.get_logger(__name__)
 
 
 class ModelWithTimestamps(models.Model):
@@ -54,9 +59,27 @@ class Location(ModelWithTimestamps):
         )
 
 
+def get_title_translation(obj, language_iso_code):
+    try:
+        content_type = ContentType.objects.get_for_model(obj)
+    except ContentType.DoesNotExist:
+        logger.error(f"Model {obj} happens to be missing in ContentType")
+        return obj.title
+
+    translation = TitleTranslation.objects.filter(
+        content_type=content_type,
+        object_id=obj.pk,
+        language__iso_code=language_iso_code,
+    ).first()
+    return translation.translation if translation else obj.title
+
+
 class Activity(models.Model):
     title = models.CharField(max_length=128, unique=True)
     description = models.CharField(max_length=128, null=True)
+
+    def get_title(self, language_code="de"):
+        return get_title_translation(self, language_code)
 
     def __str__(self):
         return self.title
@@ -66,6 +89,9 @@ class Skill(models.Model):
     title = models.CharField(max_length=128, unique=True)
     description = models.CharField(max_length=128, null=True)
 
+    def get_title(self, language_code="de"):
+        return get_title_translation(self, language_code)
+
     def __str__(self):
         return self.title
 
@@ -73,6 +99,9 @@ class Skill(models.Model):
 class FormLeadFrom(models.Model):
     title = models.CharField(max_length=128, unique=True)
     description = models.CharField(max_length=128, null=True)
+
+    def get_title(self, language_code="de"):
+        return get_title_translation(self, language_code)
 
     def __str__(self):
         return self.title
@@ -99,6 +128,22 @@ class LanguageTranslation(models.Model):
 
     class Meta:
         unique_together = ("language_obj", "language")
+
+
+class TitleTranslation(models.Model):
+    language = models.ForeignKey(Language, on_delete=models.CASCADE)
+    translation = models.CharField(max_length=128)
+    content_type = models.ForeignKey(
+        ContentType, on_delete=models.CASCADE, related_name="translations"
+    )
+    object_id = models.PositiveIntegerField()
+    content_object = GenericForeignKey("content_type", "object_id")
+
+    class Meta:
+        unique_together = ("language", "content_type", "object_id")
+
+    def __str__(self):
+        return f"{self.translation} ({self.language.iso_code})"
 
 
 class Contact(ModelWithTimestamps):
@@ -172,11 +217,6 @@ class Need4DeedDaySchedule(models.Model):
 
     def __str__(self):
         return f"{DAY_CHOICES[self.day][1]} - {self.time_slot}"
-
-
-"""
-SELECT o.id, o.rac_email, l.title, t.title FROM data_opportunity o JOIN data_opportunitytranslation t ON t.opportunity_id=o.id JOIN data_language l ON l.id=t.language_id;
-"""
 
 
 class Opportunity(ModelWithTimestamps):
