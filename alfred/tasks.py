@@ -5,6 +5,7 @@ from celery import shared_task
 
 from alfred.processing_notion_opportunities import (
     execute_opportunities_pipeline,
+    execute_opportunities_seed_original_language,
     execute_opportunities_seed_pipeline,
     execute_opportunities_sync_pipeline,
 )
@@ -68,4 +69,12 @@ def process_pull_volunteerform():
     exec_pipeline(
         fn=execute_volunteerform_seed_pipeline,
         info_msg="Attempting to pull volunteerform",
+    )
+
+
+@shared_task
+def process_opportunities_seed_original_language():
+    exec_pipeline(
+        fn=execute_opportunities_seed_original_language,
+        info_msg="Attempting to pull seed original_language",
     )

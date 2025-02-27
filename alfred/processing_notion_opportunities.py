@@ -701,3 +701,25 @@ def write_opportunity_to_notion(opportunity: Opportunity):
     opportunity.save()
 
     logger.debug(f"Page {notion_id=} is written.")
+
+
+def execute_opportunities_seed_original_language():
+    de = Language.objects.filter(iso_code="de").first()
+    if not de:
+        logger.error("German language is missing. Skipping the task.")
+        return
+
+    opportunities_with_no_original_language = Opportunity.objects.filter(
+        original_language=None
+    )
+
+    for opportunity in opportunities_with_no_original_language:
+        translation_de = OpportunityTranslation.objects.filter(
+            opportunity=opportunity, language=de
+        ).first()
+        if translation_de:
+            opportunity.original_language = de
+
+    Opportunity.objects.bulk_update(
+        opportunities_with_no_original_language, fields=["original_language"]
+    )
