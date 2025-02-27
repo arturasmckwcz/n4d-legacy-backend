@@ -17,7 +17,7 @@ def validate_latitude(latitude: float):
         latitude (float): latitude value
 
     Returns:
-        None: None if latidude is okay otherwise raises ValidationError
+        None: None if latitude is okay otherwise raises ValidationError
     """
 
     if latitude < -90 or latitude > 90:
@@ -43,7 +43,7 @@ def generate_square_pattern_svg(size: int, granularity: int, color: str) -> str 
 
     Args:
         size (int): square size in px
-        granularity (int): patern element size in px
+        granularity (int): pattern element size in px
         color (str): The color of the squares (e.g., "#FF0000" for red).
 
     Returns:

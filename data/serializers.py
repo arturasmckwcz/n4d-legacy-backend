@@ -168,21 +168,49 @@ class Need4DeedDayScheduleSerializer(serializers.ModelSerializer):
         ]
 
 
-def get_language_obj(title: str) -> Language | None:
+def get_language_obj(language: str) -> Language | None:
+    """
+    Retrieves a Language object based on the provided language identifier.
+
+    This function attempts to find a Language object using either an ISO 639-1 (2-letter)
+    or ISO 639-2/3 (3-letter) code, or by matching the language's title (or its translation).
+
+    Args:
+        language: The language identifier. It can be an ISO code (2 or 3 letters) or
+                  the language's title (e.g., "English", "French", "Persian").
+
+    Returns:
+        The corresponding Language object if found, otherwise None.
+
+    Raises:
+        Exceptions during database queries are caught and logged, returning None.
+
+    Note:
+        The function handles a specific case where "Persian" is mapped to "Farsi"
+        when searching by title.
+    """
+
     def get_language_title(title: str) -> str:
         if title == "Persian":
             return "Farsi"
         return title
 
+    if len(language) == 2 or len(language) == 3:
+        try:
+            return Language.objects.filter(iso_code=language).first()
+        except Exception as e:
+            logger.error(f"Error {e} occurred while parsing language {language}")
+            return None
+
     try:
         translation = LanguageTranslation.objects.filter(
-            title=get_language_title(title),
+            title=get_language_title(language),
         ).first()
         if translation:
             return translation.language_obj
         return None
     except Exception as e:
-        logger.error(f"Error {e} occurred while parsing language {title}")
+        logger.error(f"Error {e} occurred while parsing language {language}")
         return None
 
 
@@ -297,6 +325,7 @@ class OpportunitySerializer(serializers.ModelSerializer):
 
 
 class OpportunityCreateSerializer(serializers.ModelSerializer):
+    language = serializers.CharField(write_only=True)
     berlin_locations = serializers.ListField(
         child=serializers.CharField(), write_only=True
     )
@@ -327,37 +356,43 @@ class OpportunityCreateSerializer(serializers.ModelSerializer):
             )
         return value
 
-    def create(self, data_from_post_request):
-        language_obj = data_from_post_request.pop("language", "de")
-        title = data_from_post_request.pop("title")
-        vo_information = data_from_post_request.pop("vo_information", "")
-        accomp_information = data_from_post_request.pop("accomp_information", "")
-        berlin_locations_data = data_from_post_request.pop("berlin_locations", [])
+    def create(self, validated_data):
+        logger.debug(f"DEBUG: {validated_data=}")
+        language_iso_code = validated_data.pop("language", None)
+        logger.debug(f"DEBUG: {language_iso_code=}")
+        title = validated_data.pop("title")
+        vo_information = validated_data.pop("vo_information", "")
+        accomp_information = validated_data.pop("accomp_information", "")
+        berlin_locations_data = validated_data.pop("berlin_locations", [])
+
+        original_language = Language.objects.filter(iso_code=language_iso_code).first()
+        logger.debug(f"DEBUG: {original_language=}")
+
         berlin_locations = []
         for location_name in berlin_locations_data:
             location, _ = BerlinLocation.objects.get_or_create(name=location_name)
             berlin_locations.append(location)
 
-        activities_data = data_from_post_request.pop("activities", [])
+        activities_data = validated_data.pop("activities", [])
         activities = []
         for activity_name in activities_data:
             activity, _ = Activity.objects.get_or_create(title=activity_name)
             activities.append(activity)
 
-        skills_data = data_from_post_request.pop("skills", [])
+        skills_data = validated_data.pop("skills", [])
         skills = []
         for skill_name in skills_data:
             skill, _ = Skill.objects.get_or_create(title=skill_name)
             skills.append(skill)
 
-        languages_data = data_from_post_request.pop("languages", [])
+        languages_data = validated_data.pop("languages", [])
         languages = []
         for language_title in languages_data:
             language_obj = get_language_obj(language_title)
             if language_obj:
                 languages.append(language_obj)
 
-        timeslots_data = data_from_post_request.pop("timeslots", [])
+        timeslots_data = validated_data.pop("timeslots", [])
         timeslots = []
         for day, time_slot in timeslots_data:
             logger.debug(f"{day=}, {time_slot=}")
@@ -366,7 +401,12 @@ class OpportunityCreateSerializer(serializers.ModelSerializer):
                 day=day_number, time_slot=time_slot
             )
             timeslots.append(timeslot_object)
-        opportunity_object = Opportunity.objects.create(**data_from_post_request)
+
+        opportunity_object = Opportunity.objects.create(**validated_data)
+
+        opportunity_object.original_language = original_language
+        logger.debug(f"DEBUG: {opportunity_object.original_language=}")
+        opportunity_object.save()
         opportunity_object.berlin_locations.set(berlin_locations)
         opportunity_object.activities.set(activities)
         opportunity_object.skills.set(skills)
@@ -374,8 +414,7 @@ class OpportunityCreateSerializer(serializers.ModelSerializer):
         opportunity_object.timeslots.set(timeslots)
         OpportunityTranslation.objects.create(
             opportunity=opportunity_object,
-            # temporary assuming that all objects are "de"
-            language=Language.objects.get(iso_code="de"),
+            language=Language.objects.get(iso_code=language_iso_code or "zzz"),
             title=title,
             vo_information=vo_information,
             accomp_information=accomp_information,
@@ -413,6 +452,7 @@ class OpportunityCreateSerializer(serializers.ModelSerializer):
             "timeslots",
             "id",
             "created_at",
+            "language",
         )
 
 
@@ -458,16 +498,14 @@ class VolunteerFormSerializer(serializers.ModelSerializer):
             )
         return value
 
-    def create(self, data_from_post_request):
-        schedule_data = data_from_post_request.pop("schedule", [])
-        locations_data = data_from_post_request.pop("preferred_berlin_locations", [])
-        activities_data = data_from_post_request.pop("activities", [])
-        skills_data = data_from_post_request.pop("skills", [])
-        native_languages_data = data_from_post_request.pop("native_languages", [])
-        fluent_languages_data = data_from_post_request.pop("fluent_languages", [])
-        intermediate_languages_data = data_from_post_request.pop(
-            "intermediate_languages", []
-        )
+    def create(self, validated_data):
+        schedule_data = validated_data.pop("schedule", [])
+        locations_data = validated_data.pop("preferred_berlin_locations", [])
+        activities_data = validated_data.pop("activities", [])
+        skills_data = validated_data.pop("skills", [])
+        native_languages_data = validated_data.pop("native_languages", [])
+        fluent_languages_data = validated_data.pop("fluent_languages", [])
+        intermediate_languages_data = validated_data.pop("intermediate_languages", [])
 
         schedule_objects = []
         for day, time_slot in schedule_data:
@@ -518,7 +556,7 @@ class VolunteerFormSerializer(serializers.ModelSerializer):
             except Exception as e:
                 logger.error(f"Error {e} occurred while parsing activity {skill_name}")
 
-        volunteer_form = VolunteerForm.objects.create(**data_from_post_request)
+        volunteer_form = VolunteerForm.objects.create(**validated_data)
         volunteer_form.schedule.set(schedule_objects)
         volunteer_form.preferred_berlin_locations.set(location_objects)
         volunteer_form.activities.set(activity_objects)

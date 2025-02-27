@@ -3,7 +3,6 @@ import uuid
 import structlog
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
-from django.core.exceptions import ValidationError
 from django.db import models, transaction
 
 from data.enums import (
@@ -220,6 +219,13 @@ class Need4DeedDaySchedule(models.Model):
 
 
 class Opportunity(ModelWithTimestamps):
+    original_language = models.ForeignKey(
+        Language,
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name="original_language",
+    )
     rac_email = models.EmailField(null=True, blank=True)
     rac_full_name = models.CharField(max_length=128, null=True, blank=True)
     rac_address = models.CharField(max_length=128, null=True, blank=True)
@@ -257,23 +263,23 @@ class Opportunity(ModelWithTimestamps):
         german = self.translations.filter(language__iso_code="de").first()  # pyright: ignore[reportAttributeAccessIssue]
         return f"{german.title if german else 'No title'} | {self.rac_email}"
 
-    def get_title(self, language_code="de"):
-        translation = self.translations.filter(language__iso_code=language_code).first()  # pyright: ignore[reportAttributeAccessIssue]
+    def get_title(self, iso_code="de"):
+        translation = self.translations.filter(language__iso_code=iso_code).first()  # pyright: ignore[reportAttributeAccessIssue]
         # this is workaround for the case when the non de translation is not available
         if translation and translation.title:
             return translation.title if translation else None
         translation = self.translations.filter(language__iso_code="de").first()  # pyright: ignore[reportAttributeAccessIssue]
         return translation.title if translation else None
 
-    def get_vo_information(self, language_code="de"):
-        translation = self.translations.filter(language__iso_code=language_code).first()  # pyright: ignore[reportAttributeAccessIssue]
+    def get_vo_information(self, iso_code="de"):
+        translation = self.translations.filter(language__iso_code=iso_code).first()  # pyright: ignore[reportAttributeAccessIssue]
         if translation and translation.vo_information:
             return translation.vo_information if translation else None
         translation = self.translations.filter(language__iso_code="de").first()  # pyright: ignore[reportAttributeAccessIssue]
         return translation.vo_information if translation else None
 
-    def get_accomp_information(self, language_code="de"):
-        translation = self.translations.filter(language__iso_code=language_code).first()  # pyright: ignore[reportAttributeAccessIssue]
+    def get_accomp_information(self, iso_code="de"):
+        translation = self.translations.filter(language__iso_code=iso_code).first()  # pyright: ignore[reportAttributeAccessIssue]
         if translation and translation.accomp_information:
             return translation.accomp_information if translation else None
         translation = self.translations.filter(language__iso_code="de").first()  # pyright: ignore[reportAttributeAccessIssue]
@@ -282,9 +288,10 @@ class Opportunity(ModelWithTimestamps):
     @classmethod
     def create_with_translation(
         cls,
-        german_title,
-        german_vo_information=None,
-        german_accomp_information=None,
+        title,
+        original_language_iso="de",
+        vo_information=None,
+        accomp_information=None,
         **opportunity_fields,
     ):
         """
@@ -314,12 +321,15 @@ class Opportunity(ModelWithTimestamps):
         """
         with transaction.atomic():
             opportunity = cls.objects.create(**opportunity_fields)
+            original_language = Language.objects.filter(
+                iso_code=original_language_iso
+            ).first()
             OpportunityTranslation.objects.create(
                 opportunity=opportunity,
-                language=Language.objects.get(iso_code="de"),
-                title=german_title,
-                vo_information=german_vo_information,
-                accomp_information=german_accomp_information,
+                language=original_language,
+                title=title,
+                vo_information=vo_information,
+                accomp_information=accomp_information,
             )
             return opportunity
 
@@ -337,13 +347,9 @@ class OpportunityTranslation(models.Model):
         unique_together = ("opportunity", "language")
 
     def save(self, *args, **kwargs):
-        if (
-            self.language.iso_code != "de"
-            and not self.opportunity.translations.filter(  # pyright: ignore[reportAttributeAccessIssue]
-                language__iso_code="de"
-            ).exists()
-        ):
-            raise ValidationError("German translation must be created first")
+        if not self.opportunity.original_language:
+            self.opportunity.original_language = self.language
+
         super().save(*args, **kwargs)
 
     def __str__(self):

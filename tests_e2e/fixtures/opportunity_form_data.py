@@ -9,10 +9,10 @@ class ValidOpportunityFormData:
         "accomp_translatedInto": "noTranslation",
         "activities": ["Aktivitäten für Frauen*", "Aktivitäten für Männer*"],
         "berlin_locations": ["Remotely"],
-        "languages": ["Turkish"],
+        "languages": ["tr"],
         "opportunity_type": "volunteering",
         "rac_address": "Somewhere between Jerusalem and Jericho",
-        "rac_email": "goods@cjd.de",
+        "rac_email": "goods@need4deed.org",
         "rac_full_name": "Stranger",
         "rac_phone": "+972-54-1234567",
         "rac_plz": "12345",
@@ -20,6 +20,7 @@ class ValidOpportunityFormData:
         "timeslots": [[0, "Weekdays"], [0, "Weekends"]],
         "title": "Good Samaritan",
         "vo_information": "",
+        "language": "de",
     }
 
     jeremiah = {
@@ -32,10 +33,10 @@ class ValidOpportunityFormData:
         "accomp_translatedInto": "deutsche",
         "activities": [],
         "berlin_locations": [],
-        "languages": ["German", "English", "Turkish"],
+        "languages": ["de", "en", "tr"],
         "opportunity_type": "accompanying",
         "rac_address": "Jerusalem",
-        "rac_email": "jer@cjd.de",
+        "rac_email": "jer@need4deed.org.de",
         "rac_full_name": "Jeremiah",
         "rac_phone": "+972-54-1234567",
         "rac_plz": "12345",
@@ -43,6 +44,7 @@ class ValidOpportunityFormData:
         "timeslots": [],
         "title": "Help to understand what is said",
         "vo_information": "",
+        "language": "de",
     }
 
 
@@ -57,7 +59,7 @@ class InvalidOpportunityFormData:
         "accomp_translatedInto": "noTranslation",
         "activities": ["Kinderbetreuung"],
         "berlin_locations": ["Remotely"],
-        "languages": ["Arabic"],
+        "languages": ["ar"],
         "opportunity_type": "volunteering",
         "rac_address": "Jerusalem",
         "rac_email": "judas@kerioth",
@@ -68,4 +70,5 @@ class InvalidOpportunityFormData:
         "timeslots": [[0, "Weekdays"], [0, "Weekends"]],
         "title": "Kiss the leader",
         "vo_information": "Reward will come",
+        "language": "de",
     }
