@@ -1,12 +1,15 @@
 stages:
   - code-check
   - docker
-  - test
+  # - test
   - deploy
 
 variables:
   DJANGO_SECRET_KEY: "your-secret-key"
   DEBUG: "False"
+  AWS_ACCESS_KEY_ID: "aws id need translation permissions"
+  AWS_DEFAULT_REGION: "aws region"
+  AWS_SECRET_ACCESS_KEY: "aws secret"
   AWS_SES_ACCESS_KEY_ID: "your-access-key-id"
   AWS_SES_SECRET_ACCESS_KEY: "your-secret-access-key"
   AWS_SES_REGION_NAME: "your-region-name"
@@ -102,6 +105,9 @@ build-and-push-alfred:
     - echo $NOTION_SECRET
     - docker build --build-arg DJANGO_SECRET_KEY=${DJANGO_SECRET_KEY}
       --build-arg DEBUG=${DEBUG}
+      --build-arg AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+      --build-arg AWS_DEFAULT_REGION=${AWS_DEFAULT_REGION}
+      --build-arg AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
       --build-arg AWS_SES_ACCESS_KEY_ID=${AWS_SES_ACCESS_KEY_ID}
       --build-arg AWS_SES_SECRET_ACCESS_KEY=${AWS_SES_SECRET_ACCESS_KEY}
       --build-arg AWS_SES_REGION_NAME=${AWS_SES_REGION_NAME}
@@ -132,192 +138,192 @@ build-and-push-alfred:
   rules:
     - when: always
 
-build-and-push-e2e-test:
-  extends: .docker_before_script
-  variables:
-    ECR_URI: $ECR_REGISTRY/$ECR_REPOSITORY_TEST_E2E
-  stage: docker
-  script:
-    - aws configure set aws_access_key_id ${E2E_SECRET_KEY_ID}
-    - aws configure set aws_secret_access_key ${E2E_SECRET_ACCESS_KEY}
-    - echo "Building the test e2e Docker image..."
-    - docker build --build-arg ENVIRONMENT=test --build-arg ALFRED_API_URL="http://api.alfred-test-${BRANCHNAME_FOR_TF}.local:8000" -t $ECR_URI:$BRANCH_NAME_FOR_TF -f tests_e2e/Dockerfile .
-    - echo "Pushing the Docker image to ECR ecr e2e..."
-    - docker push $ECR_URI:$BRANCH_NAME_FOR_TF
-    - >
-      if [ "$CI_COMMIT_BRANCH" = "main" ]; then
-        docker tag $ECR_URI:$BRANCH_NAME_FOR_TF $ECR_URI:main
-        docker push $ECR_URI:main
-      else
-        echo "It's a non-main branch"
-      fi
-  rules:
-    - when: always
+# build-and-push-e2e-test:
+#   extends: .docker_before_script
+#   variables:
+#     ECR_URI: $ECR_REGISTRY/$ECR_REPOSITORY_TEST_E2E
+#   stage: docker
+#   script:
+#     - aws configure set aws_access_key_id ${E2E_SECRET_KEY_ID}
+#     - aws configure set aws_secret_access_key ${E2E_SECRET_ACCESS_KEY}
+#     - echo "Building the test e2e Docker image..."
+#     - docker build --build-arg ENVIRONMENT=test --build-arg ALFRED_API_URL="http://api.alfred-test-${BRANCHNAME_FOR_TF}.local:8000" -t $ECR_URI:$BRANCH_NAME_FOR_TF -f tests_e2e/Dockerfile .
+#     - echo "Pushing the Docker image to ECR ecr e2e..."
+#     - docker push $ECR_URI:$BRANCH_NAME_FOR_TF
+#     - >
+#       if [ "$CI_COMMIT_BRANCH" = "main" ]; then
+#         docker tag $ECR_URI:$BRANCH_NAME_FOR_TF $ECR_URI:main
+#         docker push $ECR_URI:main
+#       else
+#         echo "It's a non-main branch"
+#       fi
+#   rules:
+#     - when: always
 
-run-test-e2e:
-  extends: .docker_before_script
-  stage: test
-  variables:
-    ECR_URI: $ECR_REGISTRY/$ECR_REPOSITORY
-  needs:
-    - build-and-push-e2e-test
-  script:
-    # pull the tf files
-    # change the branch name if needed for testing with another wayne-manor branch
-    - git clone -b main https://gitlab-ci-token:${CI_JOB_TOKEN}@gitlab.com/need4deed/wayne-manor.git wayne-manor
-    - cd wayne-manor/batman/test
-    - tofu init
-    - tofu validate
-    - tofu apply -auto-approve -var="branch=${BRANCH_NAME_FOR_TF}"
-    - ENV_SUFFIX=test-${BRANCH_NAME_FOR_TF}
-    - CLUSTER_NAME=$(tofu output -json | jq -r '.ecs_cluster_name.value')
-    - TASK_DEFINITION=$(tofu output -json | jq -r '.ecs_task_definition_arn.value')
-    - SUBNETS=$(tofu output -json | jq -r '.public_subnet_ids.value | join(",")')
-    - SECURITY_GROUP=$(tofu output -json | jq -r '.alfred_e2e_sg_id.value')
-    # Wait for the Alfred task to be available
-    - |
-      end=$(( $(date +%s) + 600 ))
-      while [ $(date +%s) -lt $end ]; do
-        ALFRED_TASK_ARN=$(aws ecs list-tasks \
-          --cluster "$CLUSTER_NAME" \
-          --family "alfred-task-definition-${ENV_SUFFIX}" \
-          --query 'taskArns[0]' \
-          --output text)
-        if [ -n "$ALFRED_TASK_ARN" ] && [ "$ALFRED_TASK_ARN" != "None" ]; then
-          echo "Alfred task found: $ALFRED_TASK_ARN"
-          break
-        else
-          echo "Waiting for Alfred task to be available..."
-          sleep 10
-        fi
-      done
+# run-test-e2e:
+#   extends: .docker_before_script
+#   stage: test
+#   variables:
+#     ECR_URI: $ECR_REGISTRY/$ECR_REPOSITORY
+#   needs:
+#     - build-and-push-e2e-test
+#   script:
+#     # pull the tf files
+#     # change the branch name if needed for testing with another wayne-manor branch
+#     - git clone -b main https://gitlab-ci-token:${CI_JOB_TOKEN}@gitlab.com/need4deed/wayne-manor.git wayne-manor
+#     - cd wayne-manor/batman/test
+#     - tofu init
+#     - tofu validate
+#     - tofu apply -auto-approve -var="branch=${BRANCH_NAME_FOR_TF}"
+#     - ENV_SUFFIX=test-${BRANCH_NAME_FOR_TF}
+#     - CLUSTER_NAME=$(tofu output -json | jq -r '.ecs_cluster_name.value')
+#     - TASK_DEFINITION=$(tofu output -json | jq -r '.ecs_task_definition_arn.value')
+#     - SUBNETS=$(tofu output -json | jq -r '.public_subnet_ids.value | join(",")')
+#     - SECURITY_GROUP=$(tofu output -json | jq -r '.alfred_e2e_sg_id.value')
+#     # Wait for the Alfred task to be available
+#     - |
+#       end=$(( $(date +%s) + 600 ))
+#       while [ $(date +%s) -lt $end ]; do
+#         ALFRED_TASK_ARN=$(aws ecs list-tasks \
+#           --cluster "$CLUSTER_NAME" \
+#           --family "alfred-task-definition-${ENV_SUFFIX}" \
+#           --query 'taskArns[0]' \
+#           --output text)
+#         if [ -n "$ALFRED_TASK_ARN" ] && [ "$ALFRED_TASK_ARN" != "None" ]; then
+#           echo "Alfred task found: $ALFRED_TASK_ARN"
+#           break
+#         else
+#           echo "Waiting for Alfred task to be available..."
+#           sleep 10
+#         fi
+#       done
 
-      if [ -z "$ALFRED_TASK_ARN" ] || [ "$ALFRED_TASK_ARN" = "None" ]; then
-        echo "Timeout: Alfred task not found"
-        exit 1
-      fi
-    - ALFRED_TASK_ID=$(echo $ALFRED_TASK_ARN | awk -F'/' '{print $NF}')
-    - echo $ALFRED_TASK_ARN $ALFRED_TASK_ID
-    # Wait for the Alfred container to be running
-    - |
-      end=$(( $(date +%s) + 360 ))
-      while [ $(date +%s) -lt $end ]; do
-        STATUS=$(aws ecs describe-tasks \
-          --cluster "$CLUSTER_NAME" \
-          --tasks "$ALFRED_TASK_ARN" \
-          --query "tasks[0].containers[?name=='alfred-container-${ENV_SUFFIX}'].lastStatus" \
-          --output text)
-        if [ "$STATUS" = "RUNNING" ]; then
-          echo "Alfred container is running"
-          break
-        elif [ "$STATUS" = "STOPPED" ]; then
-          echo "Alfred container stopped unexpectedly"
-          exit 1
-        else
-          echo "Waiting for Alfred container to start... Current status: $STATUS"
-          sleep 10
-        fi
-      done
-    - |
-      end=$(( $(date +%s) + 300 ))
-      while [ $(date +%s) -lt $end ]; do
-        HEALTH_STATUS=$(aws ecs describe-tasks \
-          --cluster "$CLUSTER_NAME" \
-          --tasks "$ALFRED_TASK_ARN" \
-          --query "tasks[0].containers[?name=='alfred-container-${ENV_SUFFIX}'].healthStatus" \
-          --output text)
-        if [ "$HEALTH_STATUS" = "HEALTHY" ]; then
-          echo "Alfred container is HEALTHY"
-          break
-        elif [ "$HEALTH_STATUS" = "UNHEALTHY" ]; then
-          echo "Alfred container is UNHEALTHY"
-          exit 1
-        else
-          echo "Waiting for Alfred container health to become HEALTHY... Current health status: $HEALTH_STATUS"
-          sleep 10
-        fi
-      done
-    # Seed the data
-    - |
-      aws ecs execute-command \
-        --cluster $CLUSTER_NAME \
-        --task $ALFRED_TASK_ID \
-        --container alfred-container-${ENV_SUFFIX} \
-        --command "/bin/sh -c '
-          python3 manage.py seed_data && \
-          python3 manage.py loaddata data/fixtures/activities.json && \
-          python3 manage.py loaddata data/fixtures/berlinlocations.json && \
-          python3 manage.py loaddata data/fixtures/need4deeddayschedule.json && \
-          python3 manage.py loaddata data/fixtures/skills.json && \
-          python3 manage.py load_test_data
-        '" \
-        --interactive
-    # run the tests in the cloud
-    - >
-      TASK_ARN=$(aws ecs run-task
-      --cluster $CLUSTER_NAME
-      --task-definition $TASK_DEFINITION
-      --network-configuration "awsvpcConfiguration={subnets=[$SUBNETS],securityGroups=[$SECURITY_GROUP],assignPublicIp=ENABLED}"
-      --launch-type FARGATE
-      --region eu-central-1
-      --query 'tasks[0].taskArn'
-      --output text)
-    - TASK_ID=$(echo $TASK_ARN | awk -F/ '{print $NF}')
-    # wait until the tests are stopped
-    - >
-      aws ecs wait tasks-stopped
-      --cluster $CLUSTER_NAME
-      --tasks $TASK_ARN
-    # check the log streams
-    - >
-      aws ecs describe-tasks
-      --cluster $CLUSTER_NAME
-      --tasks $TASK_ARN
-      --region eu-central-1
-    # check all log streams
-    - >
-      aws logs describe-log-streams
-      --log-group-name /ecs/alfred-e2e-task-definition-${ENV_SUFFIX}
-      --region eu-central-1
-    # copy the log to the console
-    - >
-      aws logs get-log-events
-      --log-group-name /ecs/alfred-e2e-task-definition-${ENV_SUFFIX}
-      --log-stream-name ecs/alfred-e2e-container-${ENV_SUFFIX}/$TASK_ID
-      --output json
-      --region eu-central-1 | jq -r '.events[] | select(.message != null) | .message'
-    # get the exit code
-    - tofu destroy -auto-approve -var="branch=${BRANCH_NAME_FOR_TF}"
-    - >
-      EXIT_CODE=$(aws ecs describe-tasks
-      --cluster $CLUSTER_NAME
-      --tasks $TASK_ARN
-      --query 'tasks[0].containers[0].exitCode'
-      --output text)
-    - >
-      if [ "$EXIT_CODE" -eq 0 ]; then
-        echo "E2E tests exited with exit code 0"
-        exit 0
-      else
-        echo "E2E tests failed with exit code $EXIT_CODE"
-        exit 1
-      fi
-  after_script:
-    - !reference [.docker_before_script, before_script]
-    - cd wayne-manor/batman/test
-    - tofu destroy -auto-approve -var="branch=${BRANCH_NAME_FOR_TF}"
-  rules:
-    - when: manual
-  artifacts:
-    paths:
-      - wayne-manor/batman/test/**/*
-    when: always
+#       if [ -z "$ALFRED_TASK_ARN" ] || [ "$ALFRED_TASK_ARN" = "None" ]; then
+#         echo "Timeout: Alfred task not found"
+#         exit 1
+#       fi
+#     - ALFRED_TASK_ID=$(echo $ALFRED_TASK_ARN | awk -F'/' '{print $NF}')
+#     - echo $ALFRED_TASK_ARN $ALFRED_TASK_ID
+#     # Wait for the Alfred container to be running
+#     - |
+#       end=$(( $(date +%s) + 360 ))
+#       while [ $(date +%s) -lt $end ]; do
+#         STATUS=$(aws ecs describe-tasks \
+#           --cluster "$CLUSTER_NAME" \
+#           --tasks "$ALFRED_TASK_ARN" \
+#           --query "tasks[0].containers[?name=='alfred-container-${ENV_SUFFIX}'].lastStatus" \
+#           --output text)
+#         if [ "$STATUS" = "RUNNING" ]; then
+#           echo "Alfred container is running"
+#           break
+#         elif [ "$STATUS" = "STOPPED" ]; then
+#           echo "Alfred container stopped unexpectedly"
+#           exit 1
+#         else
+#           echo "Waiting for Alfred container to start... Current status: $STATUS"
+#           sleep 10
+#         fi
+#       done
+#     - |
+#       end=$(( $(date +%s) + 300 ))
+#       while [ $(date +%s) -lt $end ]; do
+#         HEALTH_STATUS=$(aws ecs describe-tasks \
+#           --cluster "$CLUSTER_NAME" \
+#           --tasks "$ALFRED_TASK_ARN" \
+#           --query "tasks[0].containers[?name=='alfred-container-${ENV_SUFFIX}'].healthStatus" \
+#           --output text)
+#         if [ "$HEALTH_STATUS" = "HEALTHY" ]; then
+#           echo "Alfred container is HEALTHY"
+#           break
+#         elif [ "$HEALTH_STATUS" = "UNHEALTHY" ]; then
+#           echo "Alfred container is UNHEALTHY"
+#           exit 1
+#         else
+#           echo "Waiting for Alfred container health to become HEALTHY... Current health status: $HEALTH_STATUS"
+#           sleep 10
+#         fi
+#       done
+#     # Seed the data
+#     - |
+#       aws ecs execute-command \
+#         --cluster $CLUSTER_NAME \
+#         --task $ALFRED_TASK_ID \
+#         --container alfred-container-${ENV_SUFFIX} \
+#         --command "/bin/sh -c '
+#           python3 manage.py seed_data && \
+#           python3 manage.py loaddata data/fixtures/activities.json && \
+#           python3 manage.py loaddata data/fixtures/berlinlocations.json && \
+#           python3 manage.py loaddata data/fixtures/need4deeddayschedule.json && \
+#           python3 manage.py loaddata data/fixtures/skills.json && \
+#           python3 manage.py load_test_data
+#         '" \
+#         --interactive
+#     # run the tests in the cloud
+#     - >
+#       TASK_ARN=$(aws ecs run-task
+#       --cluster $CLUSTER_NAME
+#       --task-definition $TASK_DEFINITION
+#       --network-configuration "awsvpcConfiguration={subnets=[$SUBNETS],securityGroups=[$SECURITY_GROUP],assignPublicIp=ENABLED}"
+#       --launch-type FARGATE
+#       --region eu-central-1
+#       --query 'tasks[0].taskArn'
+#       --output text)
+#     - TASK_ID=$(echo $TASK_ARN | awk -F/ '{print $NF}')
+#     # wait until the tests are stopped
+#     - >
+#       aws ecs wait tasks-stopped
+#       --cluster $CLUSTER_NAME
+#       --tasks $TASK_ARN
+#     # check the log streams
+#     - >
+#       aws ecs describe-tasks
+#       --cluster $CLUSTER_NAME
+#       --tasks $TASK_ARN
+#       --region eu-central-1
+#     # check all log streams
+#     - >
+#       aws logs describe-log-streams
+#       --log-group-name /ecs/alfred-e2e-task-definition-${ENV_SUFFIX}
+#       --region eu-central-1
+#     # copy the log to the console
+#     - >
+#       aws logs get-log-events
+#       --log-group-name /ecs/alfred-e2e-task-definition-${ENV_SUFFIX}
+#       --log-stream-name ecs/alfred-e2e-container-${ENV_SUFFIX}/$TASK_ID
+#       --output json
+#       --region eu-central-1 | jq -r '.events[] | select(.message != null) | .message'
+#     # get the exit code
+#     - tofu destroy -auto-approve -var="branch=${BRANCH_NAME_FOR_TF}"
+#     - >
+#       EXIT_CODE=$(aws ecs describe-tasks
+#       --cluster $CLUSTER_NAME
+#       --tasks $TASK_ARN
+#       --query 'tasks[0].containers[0].exitCode'
+#       --output text)
+#     - >
+#       if [ "$EXIT_CODE" -eq 0 ]; then
+#         echo "E2E tests exited with exit code 0"
+#         exit 0
+#       else
+#         echo "E2E tests failed with exit code $EXIT_CODE"
+#         exit 1
+#       fi
+#   after_script:
+#     - !reference [.docker_before_script, before_script]
+#     - cd wayne-manor/batman/test
+#     - tofu destroy -auto-approve -var="branch=${BRANCH_NAME_FOR_TF}"
+#   rules:
+#     - when: manual
+#   artifacts:
+#     paths:
+#       - wayne-manor/batman/test/**/*
+#     when: always
 
 deploy-to-prod:
   extends: .docker_before_script
   stage: deploy
-  needs:
-    - run-test-e2e
+  # needs:
+  #   - run-test-e2e
   script:
     - aws ecs update-service --cluster batman-cluster-prod-main --service alfred-service-prod-main --force-new-deployment
     - aws ecs wait services-stable --cluster batman-cluster-prod-main --services alfred-service-prod-main

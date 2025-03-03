@@ -1,10 +1,12 @@
 import uuid
+from typing import Literal
 
 import structlog
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 from django.db import models, transaction
 
+from alfred.translation_handler import translate
 from data.enums import (
     DAY_CHOICES,
     DEFAULTS,
@@ -218,6 +220,49 @@ class Need4DeedDaySchedule(models.Model):
         return f"{DAY_CHOICES[self.day][1]} - {self.time_slot}"
 
 
+def get_opportunity_translated_field(
+    obj: "Opportunity",
+    language_code: str,
+    field: Literal["title", "vo_information", "accomp_information"],
+) -> str | None:
+    language = Language.objects.filter(iso_code=language_code).first()
+
+    if not language:
+        raise (Exception("Unknown language"))
+
+    translation = obj.translations.filter(language=language).first()  # pyright: ignore[reportAttributeAccessIssue]
+
+    if translation:
+        translated_text = getattr(translation, field)
+        if translated_text:
+            return translated_text
+
+    original_translation = OpportunityTranslation.objects.filter(
+        opportunity=obj, language=obj.original_language
+    ).first()
+    if original_translation:
+        translated_text = translate(
+            text=getattr(original_translation, field),
+            source_language_code=getattr(obj.original_language, "iso_code"),
+            target_language_code=language_code,
+        )
+        if translation:
+            setattr(translation, field, translated_text)
+            translation.save()
+            return getattr(translation, field)
+        else:
+            translation_kwargs = {
+                field: translated_text,
+                "opportunity": obj,
+                "language": language,
+            }
+            opportunity_translation = OpportunityTranslation(**translation_kwargs)
+            opportunity_translation.save()
+            return getattr(opportunity_translation, field)
+
+    return None
+
+
 class Opportunity(ModelWithTimestamps):
     original_language = models.ForeignKey(
         Language,
@@ -264,26 +309,19 @@ class Opportunity(ModelWithTimestamps):
         return f"{german.title if german else 'No title'} | {self.rac_email}"
 
     def get_title(self, iso_code="de"):
-        translation = self.translations.filter(language__iso_code=iso_code).first()  # pyright: ignore[reportAttributeAccessIssue]
-        # this is workaround for the case when the non de translation is not available
-        if translation and translation.title:
-            return translation.title if translation else None
-        translation = self.translations.filter(language__iso_code="de").first()  # pyright: ignore[reportAttributeAccessIssue]
-        return translation.title if translation else None
+        return get_opportunity_translated_field(
+            self, language_code=iso_code, field="title"
+        )
 
     def get_vo_information(self, iso_code="de"):
-        translation = self.translations.filter(language__iso_code=iso_code).first()  # pyright: ignore[reportAttributeAccessIssue]
-        if translation and translation.vo_information:
-            return translation.vo_information if translation else None
-        translation = self.translations.filter(language__iso_code="de").first()  # pyright: ignore[reportAttributeAccessIssue]
-        return translation.vo_information if translation else None
+        return get_opportunity_translated_field(
+            self, language_code=iso_code, field="vo_information"
+        )
 
     def get_accomp_information(self, iso_code="de"):
-        translation = self.translations.filter(language__iso_code=iso_code).first()  # pyright: ignore[reportAttributeAccessIssue]
-        if translation and translation.accomp_information:
-            return translation.accomp_information if translation else None
-        translation = self.translations.filter(language__iso_code="de").first()  # pyright: ignore[reportAttributeAccessIssue]
-        return translation.accomp_information if translation else None
+        return get_opportunity_translated_field(
+            self, language_code=iso_code, field="accomp_information"
+        )
 
     @classmethod
     def create_with_translation(
@@ -339,7 +377,7 @@ class OpportunityTranslation(models.Model):
         Opportunity, on_delete=models.CASCADE, related_name="translations"
     )
     language = models.ForeignKey(Language, on_delete=models.CASCADE)
-    title = models.CharField(max_length=128)
+    title = models.CharField(max_length=128, blank=True, null=True)
     vo_information = models.TextField(blank=True, null=True)
     accomp_information = models.TextField(blank=True, null=True)
 

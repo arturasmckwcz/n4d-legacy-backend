@@ -15,6 +15,11 @@ from .utils import flatten_list, read_env_var
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = read_env_var("DJANGO_SECRET_KEY")
 
+# aws IAM credentials
+AWS_ACCESS_KEY_ID = read_env_var("AWS_ACCESS_KEY_ID")
+AWS_DEFAULT_REGION = read_env_var("AWS_DEFAULT_REGION")
+AWS_SECRET_ACCESS_KEY = read_env_var("AWS_SECRET_ACCESS_KEY")
+
 # aws SES access
 AWS_SES_ACCESS_KEY_ID = read_env_var("AWS_SES_ACCESS_KEY_ID")
 AWS_SES_SECRET_ACCESS_KEY = read_env_var("AWS_SES_SECRET_ACCESS_KEY")

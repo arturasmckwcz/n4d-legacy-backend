@@ -1,17 +1,21 @@
 import boto3
 
+from alfred.settings import AWS_ACCESS_KEY_ID, AWS_DEFAULT_REGION, AWS_SECRET_ACCESS_KEY
+
 boto_client = boto3.client(
-    service_name="translate", region_name="eu-central-1", use_ssl=True
+    service_name="translate",
+    use_ssl=True,
+    aws_access_key_id=AWS_ACCESS_KEY_ID,
+    aws_secret_access_key=AWS_SECRET_ACCESS_KEY,
+    region_name=AWS_DEFAULT_REGION,
 )
 
 
 def translate(text: str, source_language_code: str, target_language_code: str):
     result = boto_client.translate_text(
-        Text="Hello, World", SourceLanguageCode="en", TargetLanguageCode="de"
+        Text=text,
+        SourceLanguageCode=source_language_code,
+        TargetLanguageCode=target_language_code,
     )
-    print("TranslatedText: " + result.get("TranslatedText"))
-    print("SourceLanguageCode: " + result.get("SourceLanguageCode"))
-    print("TargetLanguageCode: " + result.get("TargetLanguageCode"))
 
-
-translate(text="test", source_language_code="a", target_language_code="b")
+    return result.get("TranslatedText")

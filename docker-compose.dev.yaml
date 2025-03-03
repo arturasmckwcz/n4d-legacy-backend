@@ -20,9 +20,14 @@ services:
         CELERY_BROKER_URL: ${CELERY_BROKER_URL} # "redis://valkey:6379"
         CELERY_RESULT_BACKEND: ${CELERY_RESULT_BACKEND} # "redis://valkey:6379"
         ALFRED_LAST_COMMIT_HASH: ${ALFRED_LAST_COMMIT_HASH} # "not local hashes"
+        AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}
+        AWS_DEFAULT_REGION: ${AWS_DEFAULT_REGION}
+        AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
         ENVIRONMENT: ${ENVIRONMENT}
     entrypoint: ["./entrypoint.dev.sh"]
     image: alfred:dev
+    env_file:
+      - .env
     volumes:
       - .:/app
     ports:
