@@ -1,15 +1,12 @@
 stages:
   - code-check
   - docker
-  # - test
+  - test
   - deploy
 
 variables:
   DJANGO_SECRET_KEY: "your-secret-key"
   DEBUG: "False"
-  AWS_ACCESS_KEY_ID: "aws id need translation permissions"
-  AWS_DEFAULT_REGION: "aws region"
-  AWS_SECRET_ACCESS_KEY: "aws secret"
   AWS_SES_ACCESS_KEY_ID: "your-access-key-id"
   AWS_SES_SECRET_ACCESS_KEY: "your-secret-access-key"
   AWS_SES_REGION_NAME: "your-region-name"
@@ -25,7 +22,6 @@ variables:
   UV_VERSION: 0.5
   PYTHON_VERSION: 3.12
   BASE_LAYER: bookworm-slim
-
 
 .pre_commit_before:
   stage: code-check
@@ -102,7 +98,7 @@ build-and-push-alfred:
   script:
     - echo "Building the Docker image..."
     - echo $NOTION_SECRET
-    - echo $NOTION_SECRET
+    - echo $AWS_DEFAULT_REGION
     - docker build --build-arg DJANGO_SECRET_KEY=${DJANGO_SECRET_KEY}
       --build-arg DEBUG=${DEBUG}
       --build-arg AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
@@ -130,6 +126,7 @@ build-and-push-alfred:
     - docker push $ECR_URI:$BRANCH_NAME_FOR_TF
     - >
       if [ "$CI_COMMIT_BRANCH" = "main" ]; then
+        echo "It's the main branch"
         docker tag $ECR_URI:$BRANCH_NAME_FOR_TF $ECR_URI:main
         docker push $ECR_URI:main
       else
@@ -147,11 +144,16 @@ build-and-push-alfred:
 #     - aws configure set aws_access_key_id ${E2E_SECRET_KEY_ID}
 #     - aws configure set aws_secret_access_key ${E2E_SECRET_ACCESS_KEY}
 #     - echo "Building the test e2e Docker image..."
-#     - docker build --build-arg ENVIRONMENT=test --build-arg ALFRED_API_URL="http://api.alfred-test-${BRANCHNAME_FOR_TF}.local:8000" -t $ECR_URI:$BRANCH_NAME_FOR_TF -f tests_e2e/Dockerfile .
+#     - echo $AWS_DEFAULT_REGION
+#     - docker build
+#       --build-arg ENVIRONMENT=test
+#       --build-arg ALFRED_API_URL="http://api.alfred-test-${BRANCHNAME_FOR_TF}.local:8000"
+#       -t $ECR_URI:$BRANCH_NAME_FOR_TF -f tests_e2e/Dockerfile .
 #     - echo "Pushing the Docker image to ECR ecr e2e..."
 #     - docker push $ECR_URI:$BRANCH_NAME_FOR_TF
 #     - >
 #       if [ "$CI_COMMIT_BRANCH" = "main" ]; then
+#         echo "It's the main branch"
 #         docker tag $ECR_URI:$BRANCH_NAME_FOR_TF $ECR_URI:main
 #         docker push $ECR_URI:main
 #       else
@@ -322,8 +324,6 @@ build-and-push-alfred:
 deploy-to-prod:
   extends: .docker_before_script
   stage: deploy
-  # needs:
-  #   - run-test-e2e
   script:
     - aws ecs update-service --cluster batman-cluster-prod-main --service alfred-service-prod-main --force-new-deployment
     - aws ecs wait services-stable --cluster batman-cluster-prod-main --services alfred-service-prod-main

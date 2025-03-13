@@ -362,6 +362,8 @@ class Opportunity(ModelWithTimestamps):
             original_language = Language.objects.filter(
                 iso_code=original_language_iso
             ).first()
+            opportunity.original_language = original_language
+            opportunity.save()
             OpportunityTranslation.objects.create(
                 opportunity=opportunity,
                 language=original_language,

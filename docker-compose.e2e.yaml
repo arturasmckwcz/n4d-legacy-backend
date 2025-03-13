@@ -6,6 +6,9 @@ services:
       args:
         DJANGO_SECRET_KEY: ${DJANGO_SECRET_KEY}
         DEBUG: ${DEBUG}
+        AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}
+        AWS_DEFAULT_REGION: ${AWS_DEFAULT_REGION}
+        AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
         AWS_SES_ACCESS_KEY_ID: ${AWS_SES_ACCESS_KEY_ID}
         AWS_SES_SECRET_ACCESS_KEY: ${AWS_SES_SECRET_ACCESS_KEY}
         AWS_SES_REGION_NAME: ${AWS_SES_REGION_NAME}
@@ -23,6 +26,8 @@ services:
         ENVIRONMENT: ${ENVIRONMENT}
     entrypoint: ["./entrypoint.sh"]
     image: alfred:dev
+    env_file:
+      - .env
     volumes:
       - .:/app
     ports:
