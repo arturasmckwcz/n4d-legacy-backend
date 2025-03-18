@@ -24,7 +24,6 @@ services:
         CELERY_RESULT_BACKEND: ${CELERY_RESULT_BACKEND} # "redis://valkey:6379"
         ALFRED_LAST_COMMIT_HASH: ${ALFRED_LAST_COMMIT_HASH} # "not local hashes"
         ENVIRONMENT: ${ENVIRONMENT}
-    entrypoint: ["./entrypoint.sh"]
     image: alfred:dev
     env_file:
       - .env

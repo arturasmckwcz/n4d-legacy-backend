@@ -148,6 +148,9 @@ build-and-push-e2e-test:
     - docker build
       --build-arg ENVIRONMENT=test
       --build-arg ALFRED_API_URL="http://api.alfred-test-${BRANCHNAME_FOR_TF}.local:8000"
+      --build-arg AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+      --build-arg AWS_DEFAULT_REGION=${AWS_DEFAULT_REGION}
+      --build-arg AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
       -t $ECR_URI:$BRANCH_NAME_FOR_TF -f tests_e2e/Dockerfile .
     - echo "Pushing the Docker image to ECR ecr e2e..."
     - docker push $ECR_URI:$BRANCH_NAME_FOR_TF

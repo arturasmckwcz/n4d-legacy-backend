@@ -18,17 +18,22 @@ except Exception as e:
     logger.error(f"Error {e} occurred instantiating boto3 client.")
 
 
-def translate(text: str, source_language_code: str, target_language_code: str):
-    result = (
-        boto_client.translate_text(
+def translate(
+    text: str, source_language_code: str, target_language_code: str
+) -> str | None:
+    if not boto_client or not bool(text):
+        return None
+
+    try:
+        result = boto_client.translate_text(
             Text=text,
             SourceLanguageCode=source_language_code,
             TargetLanguageCode=target_language_code,
         )
-        if boto_client
-        else {"TranslatedText": text}
-    )
+        return result.get("TranslatedText")
+    except Exception as e:
+        logger.error(
+            f'Error {e} occurred attempting to translate "{text}" to "{target_language_code}".'
+        )
 
-    logger.debug(f"{result=}")
-
-    return result.get("TranslatedText")
+    return None

@@ -246,19 +246,20 @@ def get_opportunity_translated_field(
             source_language_code=getattr(obj.original_language, "iso_code"),
             target_language_code=language_code,
         )
-        if translation:
-            setattr(translation, field, translated_text)
-            translation.save()
-            return getattr(translation, field)
-        else:
-            translation_kwargs = {
-                field: translated_text,
-                "opportunity": obj,
-                "language": language,
-            }
-            opportunity_translation = OpportunityTranslation(**translation_kwargs)
-            opportunity_translation.save()
-            return getattr(opportunity_translation, field)
+        if translated_text:
+            if translation:
+                setattr(translation, field, translated_text)
+                translation.save()
+                return getattr(translation, field)
+            else:
+                translation_kwargs = {
+                    field: translated_text,
+                    "opportunity": obj,
+                    "language": language,
+                }
+                opportunity_translation = OpportunityTranslation(**translation_kwargs)
+                opportunity_translation.save()
+                return getattr(opportunity_translation, field)
 
     return None
 
