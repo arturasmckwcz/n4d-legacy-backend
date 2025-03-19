@@ -241,8 +241,12 @@ def get_opportunity_translated_field(
         opportunity=obj, language=obj.original_language
     ).first()
     if original_translation:
+        text = getattr(original_translation, field)
+        if not text:
+            return None
+
         translated_text = translate(
-            text=getattr(original_translation, field),
+            text=text,
             source_language_code=getattr(obj.original_language, "iso_code"),
             target_language_code=language_code,
         )
