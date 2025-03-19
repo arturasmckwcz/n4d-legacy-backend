@@ -253,13 +253,17 @@ def get_opportunity_translated_field(
                 return getattr(translation, field)
             else:
                 translation_kwargs = {
-                    field: translated_text,
+                    field: translated_text[:256]
+                    if field == "title"
+                    else translated_text,
                     "opportunity": obj,
                     "language": language,
                 }
                 opportunity_translation = OpportunityTranslation(**translation_kwargs)
                 opportunity_translation.save()
                 return getattr(opportunity_translation, field)
+        else:
+            return getattr(original_translation, field)
 
     return None
 
@@ -380,7 +384,7 @@ class OpportunityTranslation(models.Model):
         Opportunity, on_delete=models.CASCADE, related_name="translations"
     )
     language = models.ForeignKey(Language, on_delete=models.CASCADE)
-    title = models.CharField(max_length=128, blank=True, null=True)
+    title = models.CharField(max_length=256, blank=True, null=True)
     vo_information = models.TextField(blank=True, null=True)
     accomp_information = models.TextField(blank=True, null=True)
 
