@@ -121,6 +121,7 @@ build-and-push-alfred:
       --build-arg ALFRED_LAST_COMMIT_HASH=${ALFRED_LAST_COMMIT_HASH}
       --build-arg ENVIRONMENT=${ENVIRONMENT}
       --build-arg SLACK_BOT_TOKEN=${SLACK_BOT_TOKEN}
+      --build-arg SLACK_CHANNEL_NEW_ARRIVALS=${SLACK_CHANNEL_NEW_ARRIVALS}
       -t $ECR_URI:$BRANCH_NAME_FOR_TF .
     - echo "Pushing the Docker image to ECR..."
     - docker push $ECR_URI:$BRANCH_NAME_FOR_TF
@@ -151,6 +152,8 @@ build-and-push-e2e-test:
       --build-arg AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
       --build-arg AWS_DEFAULT_REGION=${AWS_DEFAULT_REGION}
       --build-arg AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
+      --build-arg SLACK_BOT_TOKEN=${SLACK_BOT_TOKEN}
+      --build-arg SLACK_CHANNEL_NEW_ARRIVALS=${SLACK_CHANNEL_NEW_ARRIVALS}
       -t $ECR_URI:$BRANCH_NAME_FOR_TF -f tests_e2e/Dockerfile .
     - echo "Pushing the Docker image to ECR ecr e2e..."
     - docker push $ECR_URI:$BRANCH_NAME_FOR_TF

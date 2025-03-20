@@ -1,6 +1,7 @@
 from django.urls import path
 
 from data.views import (
+    AuthEmailDomainView,
     DataOpportunityListView,
     DataPersonView,
     VolunteerFormCreateView,
@@ -9,5 +10,6 @@ from data.views import (
 urlpatterns = [
     path("me/", DataPersonView.as_view()),
     path("opportunity/", DataOpportunityListView.as_view()),
+    path("auth-email-domain/", AuthEmailDomainView.as_view()),
     path("volunteer/", VolunteerFormCreateView().as_view()),
 ]

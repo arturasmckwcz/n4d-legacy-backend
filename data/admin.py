@@ -4,6 +4,7 @@ from django.forms.models import BaseInlineFormSet
 
 from data.models import (
     Activity,
+    AuthEmailDomain,
     Avatar,
     BerlinLocation,
     Contact,
@@ -80,6 +81,11 @@ class PersonAdmin(admin.ModelAdmin):
 
 @admin.register(Organization)
 class OrganizationAdmin(admin.ModelAdmin):
+    pass
+
+
+@admin.register(AuthEmailDomain)
+class AuthEmailDomainAdmin(admin.ModelAdmin):
     pass
 
 

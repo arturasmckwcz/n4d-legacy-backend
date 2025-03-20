@@ -14,6 +14,7 @@ from rest_framework.views import APIView
 from data.enums import OptionsList
 from data.models import (
     Activity,
+    AuthEmailDomain,
     BerlinLocation,
     FormLeadFrom,
     Language,
@@ -93,6 +94,16 @@ def get_options_used_in_opportunities(model, field_name):
     )
 
     return get_options_list(objects, "title")
+
+
+class AuthEmailDomainView(APIView):
+    permission_classes = (AllowAny,)
+
+    def get(self, request):
+        domain = request.GET.get("domain")
+
+        result = AuthEmailDomain.objects.filter(domain=domain).first()
+        return Response(result is not None)
 
 
 class VolunteerFormCreateView(CreateAPIView):

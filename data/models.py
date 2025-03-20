@@ -225,49 +225,102 @@ def get_opportunity_translated_field(
     language_code: str,
     field: Literal["title", "vo_information", "accomp_information"],
 ) -> str | None:
-    language = Language.objects.filter(iso_code=language_code).first()
+    """
+    Retrieves a translated field of an Opportunity object based on the provided language code.
+
+    This function attempts to retrieve a translated field (title, vo_information, or accomp_information)
+    of an Opportunity object. It first checks if a translation exists for the specified language.
+    If a translation exists, it returns the translated field. If not, it attempts to translate
+    the original language field to the target language using a translation service. The translated
+    text is then saved, and returned. If the translation service fails, the text from the original
+    language is returned.
+
+    Args:
+        obj: The Opportunity object for which to retrieve the translated field.
+        language_code: The ISO 639-1 language code of the desired translation.
+        field: The field to translate, which must be one of "title", "vo_information", or "accomp_information".
+
+    Returns:
+        The translated field as a string, or None if no translation is available and the original
+        language field is also empty.
+
+    Raises:
+        ValueError: If the provided language code is not recognized.
+    """
+
+    def _get_language(language_code: str) -> Language | None:
+        """Helper: Retrieves a Language object based on the language code."""
+
+        return Language.objects.filter(iso_code=language_code).first()
+
+    def _get_existing_translation(
+        obj: Opportunity, language: Language
+    ) -> OpportunityTranslation | None:
+        """Helper: Retrieves an existing translation for the Opportunity and language."""
+
+        return obj.translations.filter(language=language).first()
+
+    def _get_original_translation(obj: Opportunity) -> OpportunityTranslation | None:
+        """Helper: Retrieves the original language translation for the Opportunity."""
+
+        return OpportunityTranslation.objects.filter(
+            opportunity=obj, language=obj.original_language
+        ).first()
+
+    def _create_or_update_translation(
+        obj: Opportunity,
+        language: Language,
+        field: Literal["title", "vo_information", "accomp_information"],
+        translated_text: str,
+        existing_translation: OpportunityTranslation | None = None,
+    ) -> OpportunityTranslation:
+        """Helper: Creates or updates a translation object."""
+
+        if existing_translation:
+            setattr(existing_translation, field, translated_text)
+            existing_translation.save()
+            return existing_translation
+        else:
+            translation_kwargs = {
+                field: translated_text[:256] if field == "title" else translated_text,
+                "opportunity": obj,
+                "language": language,
+            }
+            new_translation = OpportunityTranslation(**translation_kwargs)
+            new_translation.save()
+            return new_translation
+
+    language = _get_language(language_code)
 
     if not language:
-        raise (Exception("Unknown language"))
+        raise ValueError("Unknown language")
 
-    translation = obj.translations.filter(language=language).first()  # pyright: ignore[reportAttributeAccessIssue]
+    existing_translation = _get_existing_translation(obj, language)
 
-    if translation:
-        translated_text = getattr(translation, field)
-        if translated_text:
-            return translated_text
+    if existing_translation and getattr(existing_translation, field):
+        return getattr(existing_translation, field)
 
-    original_translation = OpportunityTranslation.objects.filter(
-        opportunity=obj, language=obj.original_language
-    ).first()
+    original_translation = _get_original_translation(obj)
+
     if original_translation:
-        text = getattr(original_translation, field)
-        if not text:
+        original_text = getattr(original_translation, field)
+        if not original_text:
             return None
 
         translated_text = translate(
-            text=text,
+            text=original_text,
             source_language_code=getattr(obj.original_language, "iso_code"),
             target_language_code=language_code,
         )
+
         if translated_text:
-            if translation:
-                setattr(translation, field, translated_text)
-                translation.save()
-                return getattr(translation, field)
-            else:
-                translation_kwargs = {
-                    field: translated_text[:256]
-                    if field == "title"
-                    else translated_text,
-                    "opportunity": obj,
-                    "language": language,
-                }
-                opportunity_translation = OpportunityTranslation(**translation_kwargs)
-                opportunity_translation.save()
-                return getattr(opportunity_translation, field)
+            final_translation = _create_or_update_translation(
+                obj, language, field, translated_text, existing_translation
+            )
+            return getattr(final_translation, field)
         else:
-            return getattr(original_translation, field)
+            logger.error('Translation of "{text}" to "{language_code}" returned null')
+            return original_text
 
     return None
 
@@ -403,6 +456,13 @@ class OpportunityTranslation(models.Model):
 
     def __str__(self):
         return f"{self.opportunity.pk} | {self.language.iso_code}"
+
+
+class AuthEmailDomain(models.Model):
+    domain = models.CharField(max_length=128)
+
+    def __str__(self):
+        return f"{self.domain}"
 
 
 class VolunteerForm(ModelWithTimestamps):
