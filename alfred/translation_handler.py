@@ -19,9 +19,20 @@ except Exception as e:
 
 
 def translate(
-    text: str, source_language_code: str, target_language_code: str
+    text: str, source_language_code: str, target_language_code: str, dry_run=False
 ) -> str | None:
-    if not boto_client or not bool(text):
+    if dry_run:
+        logger.debug(
+            f'Dry run translation of "{text}" from "{source_language_code}" to "{target_language_code}"'
+        )
+        return text
+
+    if not boto_client:
+        logger.error("Machine translation service is not initialized.")
+        return None
+
+    if not bool(text):
+        logger.error("Text for translation is empty.")
         return None
 
     try:

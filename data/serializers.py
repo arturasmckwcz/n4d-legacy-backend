@@ -3,9 +3,10 @@ from rest_framework import serializers
 
 from alfred.settings import ENV
 from alfred.slack_handler import slack_post_message
-from data.enums import AUTHORIZED_DOMAINS, Environment, LanguageLevel
+from data.enums import Environment, LanguageLevel
 from data.models import (
     Activity,
+    AuthEmailDomain,
     Avatar,
     BerlinLocation,
     Contact,
@@ -19,11 +20,12 @@ from data.models import (
     Organization,
     Person,
     Skill,
+    Testimonial,
     Timeslot,
     VolunteerForm,
     VolunteerLanguage,
 )
-from data.utils import flatten_dict  # , is_valid_email
+from data.utils import flatten_dict, is_test_case  # , is_valid_email
 from users.serializers import AlfredUserSerializer
 
 logger = structlog.get_logger(__name__)
@@ -271,6 +273,8 @@ class OpportunitySerializer(serializers.ModelSerializer):
             "status",
             "opportunity_type",
             "accomp_datetime",
+            "created_at",
+            "updated_at",
         ]
 
     def get_timeslots(self, obj):
@@ -341,10 +345,10 @@ class OpportunityCreateSerializer(serializers.ModelSerializer):
 
     def validate_rac_email(self, value):
         _, domain = value.split("@")
-        if domain.lower() not in AUTHORIZED_DOMAINS:
+        if not AuthEmailDomain.is_domain_authorized(domain.lower()):
             warning_msg = f"Attempt of unauthorized access from email: {value}."
-            logger.warn(warning_msg)
             slack_post_message(warning_msg, dry_run=ENV != Environment.PRODUCTION)
+            raise serializers.ValidationError(warning_msg)
         return value
 
     def validate_rac_postal_code(
@@ -422,7 +426,8 @@ class OpportunityCreateSerializer(serializers.ModelSerializer):
 
         slack_post_message(
             f"hey, please check the new opportunity {title} from {opportunity_object.rac_email}",
-            dry_run=ENV != Environment.PRODUCTION,
+            dry_run=ENV != Environment.PRODUCTION
+            or is_test_case(opportunity_object.rac_email),
         )
 
         return opportunity_object
@@ -592,7 +597,39 @@ class VolunteerFormSerializer(serializers.ModelSerializer):
 
         slack_post_message(
             f"hey, please check the new arrival to volunteers: {volunteer_form.email}",
-            dry_run=ENV != Environment.PRODUCTION,
+            dry_run=ENV != Environment.PRODUCTION or is_test_case(volunteer_form.email),
         )
 
         return volunteer_form
+
+
+class TestimonialSerializer(serializers.ModelSerializer):
+    translated_text = serializers.SerializerMethodField()
+    activities = serializers.SerializerMethodField()
+
+    def get_translated_text(self, obj):
+        language_code = self.context.get("language", None)
+        if not language_code:
+            original_language_code = obj.original_language.iso_code
+            language_code = original_language_code if original_language_code else "de"
+
+        return obj.get_translated_text(language_code)
+
+    def get_activities(self, obj):
+        lang = self.context.get("language", "de")
+        activities_details = [
+            activity.get_title(lang) for activity in obj.activities.all()
+        ]
+        return activities_details
+
+    def to_representation(self, obj):
+        data = super().to_representation(obj)
+        if obj.volunteer_form:
+            name, *_ = obj.volunteer_form.full_name.split(" ")
+            data["name"] = name
+
+        return data
+
+    class Meta:
+        model = Testimonial
+        fields = ("name", "pic", "translated_text", "activities")

@@ -166,3 +166,8 @@ def get_day_number_from_DAY_CHOICES(day: str) -> int | None:
         if day == day_choice_day:
             return day_choice_number
     return None
+
+
+def is_test_case(field_value: str) -> bool:
+    test_values = ["john.doe@example.com", "jer@need4deed.org", "goods@need4deed.org"]
+    return field_value in test_values

@@ -36,7 +36,7 @@ class ValidOpportunityFormData:
         "languages": ["de", "en", "tr"],
         "opportunity_type": "accompanying",
         "rac_address": "Jerusalem",
-        "rac_email": "jer@need4deed.org.de",
+        "rac_email": "jer@need4deed.org",
         "rac_full_name": "Jeremiah",
         "rac_phone": "+972-54-1234567",
         "rac_plz": "12345",

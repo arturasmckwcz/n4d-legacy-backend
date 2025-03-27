@@ -20,11 +20,13 @@ from data.models import (
     Language,
     Opportunity,
     Skill,
+    Testimonial,
 )
 from data.serializers import (
     OpportunityCreateSerializer,
     OpportunitySerializer,
     PersonSerializer,
+    TestimonialSerializer,
     VolunteerFormSerializer,
 )
 from data.utils import filter_queryset
@@ -41,6 +43,21 @@ class DataPersonView(APIView):
 
         logger.debug(f"DataPersonView {response=}")
         return response
+
+
+class TestimonialListView(ListAPIView):
+    permission_classes = (AllowAny,)
+    serializer_class = TestimonialSerializer
+    queryset = Testimonial.objects.filter(is_active=True)
+
+    @method_decorator(cache_page(30))  # 45 mins
+    def dispatch(self, *args, **kwargs):
+        return super().dispatch(*args, **kwargs)
+
+    def get_serializer_context(self):
+        context = super().get_serializer_context()
+        context["language"] = self.request.GET.get("language", "de")
+        return context
 
 
 class DataOpportunityListView(mixins.CreateModelMixin, ListAPIView):
@@ -102,8 +119,8 @@ class AuthEmailDomainView(APIView):
     def get(self, request):
         domain = request.GET.get("domain")
 
-        result = AuthEmailDomain.objects.filter(domain=domain).first()
-        return Response(result is not None)
+        result = AuthEmailDomain.objects.filter(domain=domain).exists()
+        return Response(result)
 
 
 class VolunteerFormCreateView(CreateAPIView):

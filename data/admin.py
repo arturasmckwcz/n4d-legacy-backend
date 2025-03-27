@@ -16,6 +16,8 @@ from data.models import (
     Organization,
     Person,
     Skill,
+    Testimonial,
+    TitleTranslation,
     VolunteerForm,
     VolunteerLanguage,
 )
@@ -23,14 +25,14 @@ from data.models import (
 logger = structlog.get_logger(__name__)
 
 
-class OpportunityTranslationInlineFormSet(BaseInlineFormSet):
+class TranslationInlineFormSet(BaseInlineFormSet):
     pass
 
 
 class OpportunityTranslationInline(admin.TabularInline):
     model = OpportunityTranslation
     extra = 1
-    formset = OpportunityTranslationInlineFormSet
+    formset = TranslationInlineFormSet
     fields = ["language", "title", "accomp_information", "vo_information"]
 
 
@@ -87,6 +89,16 @@ class OrganizationAdmin(admin.ModelAdmin):
 @admin.register(AuthEmailDomain)
 class AuthEmailDomainAdmin(admin.ModelAdmin):
     pass
+
+
+@admin.register(Testimonial)
+class TestimonialAdmin(admin.ModelAdmin):
+    pass
+
+
+@admin.register(TitleTranslation)
+class TitleTranslationAdmin(admin.ModelAdmin):
+    search_fields = ["language__iso_code", "translation", "content_type__model"]
 
 
 @admin.register(Opportunity)

@@ -5,12 +5,16 @@ import structlog
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 from django.db import models, transaction
+from django.db.models.signals import post_delete
+from django.dispatch import receiver
 
+from alfred.settings import ENV
 from alfred.translation_handler import translate
 from data.enums import (
     DAY_CHOICES,
     DEFAULTS,
     BerlinLocations,
+    Environment,
     LanguageLevel,
     Languages,
     Need4DeedTimeSlots,
@@ -60,19 +64,22 @@ class Location(ModelWithTimestamps):
         )
 
 
-def get_title_translation(obj, language_iso_code):
+def get_field_translation(obj, language_iso_code, field="title"):
+    obj_field = getattr(obj, field) if hasattr(obj, field) else None
+
     try:
         content_type = ContentType.objects.get_for_model(obj)
     except ContentType.DoesNotExist:
         logger.error(f"Model {obj} happens to be missing in ContentType")
-        return obj.title
+        return obj_field
 
     translation = TitleTranslation.objects.filter(
         content_type=content_type,
+        field=field,
         object_id=obj.pk,
         language__iso_code=language_iso_code,
     ).first()
-    return translation.translation if translation else obj.title
+    return translation.translation if translation else obj_field
 
 
 class Activity(models.Model):
@@ -80,7 +87,7 @@ class Activity(models.Model):
     description = models.CharField(max_length=128, null=True)
 
     def get_title(self, language_code="de"):
-        return get_title_translation(self, language_code)
+        return get_field_translation(self, language_code)
 
     def __str__(self):
         return self.title
@@ -91,7 +98,7 @@ class Skill(models.Model):
     description = models.CharField(max_length=128, null=True)
 
     def get_title(self, language_code="de"):
-        return get_title_translation(self, language_code)
+        return get_field_translation(self, language_code)
 
     def __str__(self):
         return self.title
@@ -102,7 +109,7 @@ class FormLeadFrom(models.Model):
     description = models.CharField(max_length=128, null=True)
 
     def get_title(self, language_code="de"):
-        return get_title_translation(self, language_code)
+        return get_field_translation(self, language_code)
 
     def __str__(self):
         return self.title
@@ -115,6 +122,10 @@ class Language(models.Model):
     def get_title(self, language_code="de"):
         translation = self.translations.filter(language__iso_code=language_code).first()  # pyright: ignore[reportAttributeAccessIssue]
         return translation.title if translation else self.title
+
+    @classmethod
+    def get_language_obj(cls, iso_code: str):
+        return cls.objects.filter(iso_code=iso_code).first()
 
     def __str__(self):
         return f"{self.iso_code} {self.title}"
@@ -133,7 +144,8 @@ class LanguageTranslation(models.Model):
 
 class TitleTranslation(models.Model):
     language = models.ForeignKey(Language, on_delete=models.CASCADE)
-    translation = models.CharField(max_length=128)
+    field = models.CharField(max_length=64, null=True, blank=True, default="title")
+    translation = models.CharField(max_length=1024)
     content_type = models.ForeignKey(
         ContentType, on_delete=models.CASCADE, related_name="translations"
     )
@@ -144,7 +156,12 @@ class TitleTranslation(models.Model):
         unique_together = ("language", "content_type", "object_id")
 
     def __str__(self):
-        return f"{self.translation} ({self.language.iso_code})"
+        title = (
+            self.translation
+            if len(self.translation) <= 48
+            else f"{self.translation[:48]} ..."
+        )
+        return f"{self.content_object} [{self.language.iso_code}]: {title}"
 
 
 class Contact(ModelWithTimestamps):
@@ -248,26 +265,7 @@ def get_opportunity_translated_field(
         ValueError: If the provided language code is not recognized.
     """
 
-    def _get_language(language_code: str) -> Language | None:
-        """Helper: Retrieves a Language object based on the language code."""
-
-        return Language.objects.filter(iso_code=language_code).first()
-
-    def _get_existing_translation(
-        obj: Opportunity, language: Language
-    ) -> OpportunityTranslation | None:
-        """Helper: Retrieves an existing translation for the Opportunity and language."""
-
-        return obj.translations.filter(language=language).first()
-
-    def _get_original_translation(obj: Opportunity) -> OpportunityTranslation | None:
-        """Helper: Retrieves the original language translation for the Opportunity."""
-
-        return OpportunityTranslation.objects.filter(
-            opportunity=obj, language=obj.original_language
-        ).first()
-
-    def _create_or_update_translation(
+    def _create_or_update_translation_obj(
         obj: Opportunity,
         language: Language,
         field: Literal["title", "vo_information", "accomp_information"],
@@ -290,17 +288,17 @@ def get_opportunity_translated_field(
             new_translation.save()
             return new_translation
 
-    language = _get_language(language_code)
+    language = Language.get_language_obj(language_code)
 
     if not language:
         raise ValueError("Unknown language")
 
-    existing_translation = _get_existing_translation(obj, language)
+    existing_translation = obj.get_translation(language)
 
     if existing_translation and getattr(existing_translation, field):
         return getattr(existing_translation, field)
 
-    original_translation = _get_original_translation(obj)
+    original_translation = obj.get_translation(obj.original_language)
 
     if original_translation:
         original_text = getattr(original_translation, field)
@@ -311,10 +309,11 @@ def get_opportunity_translated_field(
             text=original_text,
             source_language_code=getattr(obj.original_language, "iso_code"),
             target_language_code=language_code,
+            dry_run=ENV != Environment.PRODUCTION,
         )
 
         if translated_text:
-            final_translation = _create_or_update_translation(
+            final_translation = _create_or_update_translation_obj(
                 obj, language, field, translated_text, existing_translation
             )
             return getattr(final_translation, field)
@@ -384,6 +383,9 @@ class Opportunity(ModelWithTimestamps):
         return get_opportunity_translated_field(
             self, language_code=iso_code, field="accomp_information"
         )
+
+    def get_translation(self, language: Language):
+        return self.translations.filter(language=language).first()
 
     @classmethod
     def create_with_translation(
@@ -461,8 +463,44 @@ class OpportunityTranslation(models.Model):
 class AuthEmailDomain(models.Model):
     domain = models.CharField(max_length=128)
 
+    @classmethod
+    def is_domain_authorized(cls, domain: str):
+        return cls.objects.filter(domain=domain).exists()
+
     def __str__(self):
         return f"{self.domain}"
+
+
+class Testimonial(models.Model):
+    original_language = models.ForeignKey(
+        Language,
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name="testimonial_original_language",
+    )
+    name = models.CharField(max_length=128, null=True, blank=True)
+    volunteer_form = models.ForeignKey(
+        "VolunteerForm", on_delete=models.SET_NULL, null=True, blank=True
+    )
+    pic = models.TextField()
+    activities = models.ManyToManyField(Activity)
+    is_active = models.BooleanField(default=True)
+
+    def get_translated_text(self, iso_code):
+        return get_field_translation(self, iso_code, field="translated_text")
+
+    def __str__(self):
+        name, *_ = (
+            self.volunteer_form.full_name.split(" ")
+            if self.volunteer_form
+            else (self.name,)
+        )
+        active = "👍🏼"
+        inactive = "👎"
+        return (
+            f"Testimonial {self.id} of {name} {active if self.is_active else inactive}"
+        )
 
 
 class VolunteerForm(ModelWithTimestamps):
@@ -502,3 +540,15 @@ class VolunteerLanguage(models.Model):
 
     def __str__(self):
         return f"{self.language.title} {self.level}"
+
+
+# GenericForeignKey doesn't provide the option for chained deletion
+# so here's listening to post_delete signal
+@receiver(post_delete, sender=Activity)
+@receiver(post_delete, sender=Skill)
+@receiver(post_delete, sender=FormLeadFrom)
+@receiver(post_delete, sender=Testimonial)
+def delete_title_translations(sender, instance, **kwargs):
+    TitleTranslation.objects.filter(
+        content_type=ContentType.objects.get_for_model(sender), object_id=instance.pk
+    ).delete()
