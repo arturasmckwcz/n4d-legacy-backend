@@ -426,8 +426,7 @@ class OpportunityCreateSerializer(serializers.ModelSerializer):
 
         slack_post_message(
             f"hey, please check the new opportunity {title} from {opportunity_object.rac_email}",
-            dry_run=ENV != Environment.PRODUCTION
-            or is_test_case(opportunity_object.rac_email),
+            dry_run=is_test_case(opportunity_object.rac_email),
         )
 
         return opportunity_object
@@ -597,7 +596,7 @@ class VolunteerFormSerializer(serializers.ModelSerializer):
 
         slack_post_message(
             f"hey, please check the new arrival to volunteers: {volunteer_form.email}",
-            dry_run=ENV != Environment.PRODUCTION or is_test_case(volunteer_form.email),
+            dry_run=is_test_case(volunteer_form.email),
         )
 
         return volunteer_form

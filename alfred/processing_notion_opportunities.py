@@ -425,6 +425,9 @@ def write_or_update_opportunity_to_db(
             # 1. create model
 
             opportunity_object = Opportunity(**opportunity_data)
+
+            # 1.1. add "de" as original_language
+            opportunity_object.original_language = Language.get_language_obj("de")
             opportunity_object.save()
             logger.debug(
                 f"{opportunity_object.rac_email=}, {opportunity_object.notion_id=}"
@@ -714,10 +717,7 @@ def execute_opportunities_seed_original_language():
     )
 
     for opportunity in opportunities_with_no_original_language:
-        translation_de = OpportunityTranslation.objects.filter(
-            opportunity=opportunity, language=de
-        ).first()
-        if translation_de:
+        if opportunity.translations.filter(language__iso_code="de").exists():  # pyright: ignore[reportAttributeAccessIssue]
             opportunity.original_language = de
 
     Opportunity.objects.bulk_update(
