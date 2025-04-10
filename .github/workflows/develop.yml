@@ -19,7 +19,7 @@ jobs:
       - name: Triger Staging Deployment
         uses: peter-evans/repository-dispatch@v3
         with:
-          token: "${{ secrets.PAT_TOKEN }}"
+          token: "${{ secrets.PAT }}"
           repository: need4deed-org/n4d-infra
           event-type: Backend-Deployment
       - name: Set up Python
