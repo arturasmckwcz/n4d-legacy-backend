@@ -54,7 +54,7 @@ jobs:
   staging-deployment:
     needs: build
     name: Deploy Staging Infrastructure
-    uses: need4deed-org/n4d-infra/.github/workflows/deploy-infra.yml
+    uses: need4deed-org/n4d-infra/.github/workflows/deploy-infra.yml@main
     with:
       environment: "pre"
     secrets:
