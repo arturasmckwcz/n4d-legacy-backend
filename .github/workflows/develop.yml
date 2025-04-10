@@ -16,13 +16,6 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-
-      - name: Triger Staging Deployment
-        uses: peter-evans/repository-dispatch@v3
-        with:
-          token: "${{ secrets.PAT }}"
-          repository: need4deed-org/n4d-infra
-          event-type: Backend-Deployment
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
@@ -58,6 +51,23 @@ jobs:
         with:
           name: coverage-report
           path: coverage.xml
+  staging-deployment:
+    needs: build
+    name: Deploy Staging Infrastructure
+    uses: need4deed-org/n4d-infra/.github/workflows/deploy-infra.yml
+    with:
+      environment: "pre"
+    secrets:
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      AWS_DEFAULT_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
+      TF_STATE_BUCKET: ${{ secrets.TF_STATE_BUCKET }}
+      VPC_TF_STATE_KEY: ${{ secrets.VPC_TF_STATE_KEY }}
+      BACKEND_TF_STATE_KEY: ${{ secrets.BACKEND_TF_STATE_KEY }}
+      AWS_ROLE: ${{ secrets.AWS_ROLE }}
+      DB_NAME: ${{ secrets.DB_NAME }}
+      DB_USER: ${{ secrets.DB_USER }}
+      DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
   build-and-push-alfred:
     if: false
     name: Build and Push Docker Image for Alfred
