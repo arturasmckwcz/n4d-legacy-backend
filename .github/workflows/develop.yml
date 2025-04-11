@@ -85,7 +85,7 @@ jobs:
       AWS_ROLE: ${{ secrets.TF_AWS_ROLE }}
       DB_NAME: ${{ secrets.DB_NAME }}
       DB_USER: ${{ secrets.DB_USER }}
-      DB_PASSWORD: ${{ secrets.DB_PASSWORD }}\
+      DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
       PAT: ${{ secrets.PAT }}
       ECR_HOST: ${{ secrets.ECR_HOST }}
   build-and-push-alfred:
