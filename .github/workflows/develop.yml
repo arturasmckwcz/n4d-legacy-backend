@@ -26,7 +26,7 @@ env:
   BASE_LAYER: bookworm-slim
   GLITCHTIP_DSN: ${{ secrets.GLITCHTIP_DSN }}
   POSTGRES_PASSWORD: "your-postgres-password"
-  POSTGRES_USER: "your-postgres-user" 
+  POSTGRES_USER: "your-postgres-user"
 
 jobs:
   build:
@@ -85,7 +85,8 @@ jobs:
       AWS_ROLE: ${{ secrets.TF_AWS_ROLE }}
       DB_NAME: ${{ secrets.DB_NAME }}
       DB_USER: ${{ secrets.DB_USER }}
-      DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+      DB_PASSWORD: ${{ secrets.DB_PASSWORD }}\
+      PAT: ${{ secrets.PAT }}
   build-and-push-alfred:
     if: false
     name: Build and Push Docker Image for Alfred
