@@ -25,6 +25,8 @@ env:
   UV_VERSION: 0.5
   BASE_LAYER: bookworm-slim
   GLITCHTIP_DSN: ${{ secrets.GLITCHTIP_DSN }}
+  POSTGRES_PASSWORD: "your-postgres-password"
+  POSTGRESS_USER: "your-postgres-user" 
 
 jobs:
   build:
