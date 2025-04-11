@@ -8,6 +8,22 @@ on:
 
 env:
   PYTHON_VERSION: "3.12"
+  DJANGO_SECRET_KEY: "your-secret-key"
+  DEBUG: "False"
+  AWS_SES_ACCESS_KEY_ID: "your-access-key-id"
+  AWS_SES_SECRET_ACCESS_KEY: "your-secret-access-key"
+  AWS_SES_REGION_NAME: "your-region-name"
+  AWS_SES_FROM_EMAIL: "your-from-email"
+  DOMAIN: "your-domain"
+  SITE_NAME: "your-site-name"
+  POSTGRES_HOST: "postgres.alfred.local"
+  ALFRED_LAST_COMMIT_HASH: $CI_COMMIT_SHORT_SHA
+  CELERY_RESULT_BACKEND: redis://localhost:6379
+  CELERY_BROKER_URL: redis://localhost:6379
+  ENVIRONMENT: "PRODUCTION"
+  BRANCH_NAME_FOR_TF: ${CI_COMMIT_SHORT_SHA}
+  UV_VERSION: 0.5
+  BASE_LAYER: bookworm-slim
 
 jobs:
   build:
