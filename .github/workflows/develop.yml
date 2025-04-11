@@ -87,6 +87,7 @@ jobs:
       DB_USER: ${{ secrets.DB_USER }}
       DB_PASSWORD: ${{ secrets.DB_PASSWORD }}\
       PAT: ${{ secrets.PAT }}
+      ECR_HOST: ${{ secrets.ECR_HOST }}
   build-and-push-alfred:
     if: false
     name: Build and Push Docker Image for Alfred
