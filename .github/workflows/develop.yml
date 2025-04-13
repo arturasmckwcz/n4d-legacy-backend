@@ -27,6 +27,9 @@ env:
   GLITCHTIP_DSN: ${{ secrets.GLITCHTIP_DSN }}
   SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
   SLACK_CHANNEL_NEW_ARRIVALS: ${{ secrets.SLACK_CHANNEL_NEW_ARRIVALS }}
+  NOTION_SECRET: ${{ secrets.NOTION_SECRET }}
+  NOTION_OPPORTUNITIES_ID: ${{ secrets.NOTION_OPPORTUNITIES_ID }}
+  NOTION_VOLUNTEERS_ID: ${{ secrets.NOTION_VOLUNTEERS_ID }}
   POSTGRES_PASSWORD: "your-postgres-password"
   POSTGRES_USER: "your-postgres-user"
 
@@ -132,6 +135,9 @@ jobs:
             --build-arg GLITCHTIP_DSN=${GLITCHTIP_DSN} \
             --build-arg SLACK_BOT_TOKEN=${SLACK_BOT_TOKEN}\
             --build-arg SLACK_CHANNEL_NEW_ARRIVALS=${SLACK_CHANNEL_NEW_ARRIVALS}\
+            --build-arg NOTION_SECRET=${NOTION_SECRET}\
+            --build-arg NOTION_OPPORTUNITIES_ID=${NOTION_OPPORTUNITIES_ID}\
+            --build-arg NOTION_VOLUNTEERS_ID=${NOTION_VOLUNTEERS_ID}\
             --build-arg ENVIRONMENT=${ENVIRONMENT} \
             -t $ECR_URI:${BRANCH_NAME_FOR_TF} .
 
