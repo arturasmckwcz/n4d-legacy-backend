@@ -194,8 +194,8 @@ jobs:
 
       - name: Deploy Alfred to Staging
         run: |
-          SERVICE_NAME="pre-migration-alfred-service"
-          CLUSTER_NAME="pre-migration-batman-cluster"
+          SERVICE_NAME="pre-n4d-alfred-service"
+          CLUSTER_NAME="pre-n4d-batman-cluster"
           aws ecs update-service \
             --cluster $CLUSTER_NAME \
             --service $SERVICE_NAME \
@@ -212,8 +212,8 @@ jobs:
          aws-region: ${{ secrets.AWS_DEFAULT_REGION }}
       - name: Wait for ECS Service to be Running
         run: |
-          SERVICE_NAME="pre-migration-alfred-service"
-          CLUSTER_NAME="pre-migration-batman-cluster"
+          SERVICE_NAME="pre-n4d-alfred-service"
+          CLUSTER_NAME="pre-n4d-batman-cluster"
           TIMEOUT=600
           INTERVAL=30
           ELAPSED=0
