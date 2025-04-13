@@ -127,6 +127,7 @@ jobs:
             --build-arg CELERY_BROKER_URL=${CELERY_BROKER_URL} \
             --build-arg CELERY_RESULT_BACKEND=${CELERY_RESULT_BACKEND} \
             --build-arg ALFRED_LAST_COMMIT_HASH=${BRANCH_NAME_FOR_TF} \
+            --build-arg GLITCHTIP_DSN=${GLITCHTIP_DSN} \
             --build-arg ENVIRONMENT=${ENVIRONMENT} \
             -t $ECR_URI:${BRANCH_NAME_FOR_TF} .
 
