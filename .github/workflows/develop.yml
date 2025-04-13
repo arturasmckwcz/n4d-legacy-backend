@@ -25,6 +25,8 @@ env:
   UV_VERSION: 0.5
   BASE_LAYER: bookworm-slim
   GLITCHTIP_DSN: ${{ secrets.GLITCHTIP_DSN }}
+  SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+  SLACK_CHANNEL_NEW_ARRIVALS: ${{ secrets.SLACK_CHANNEL_NEW_ARRIVALS }}
   POSTGRES_PASSWORD: "your-postgres-password"
   POSTGRES_USER: "your-postgres-user"
 
@@ -128,6 +130,8 @@ jobs:
             --build-arg CELERY_RESULT_BACKEND=${CELERY_RESULT_BACKEND} \
             --build-arg ALFRED_LAST_COMMIT_HASH=${BRANCH_NAME_FOR_TF} \
             --build-arg GLITCHTIP_DSN=${GLITCHTIP_DSN} \
+            --build-arg SLACK_BOT_TOKEN=${SLACK_BOT_TOKEN}\
+            --build-arg SLACK_CHANNEL_NEW_ARRIVALS=${SLACK_CHANNEL_NEW_ARRIVALS}\
             --build-arg ENVIRONMENT=${ENVIRONMENT} \
             -t $ECR_URI:${BRANCH_NAME_FOR_TF} .
 
