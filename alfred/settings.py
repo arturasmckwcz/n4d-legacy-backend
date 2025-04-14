@@ -122,7 +122,7 @@ WSGI_APPLICATION = "alfred.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": "test_name",
+        "NAME": read_env_var("POSTGRES_DB"),
         "USER": read_env_var("POSTGRES_USER"),
         "PASSWORD": read_env_var("POSTGRES_PASSWORD"),
         "HOST": read_env_var("POSTGRES_HOST"),
