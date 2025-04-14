@@ -145,12 +145,8 @@ jobs:
       - name: Push Alfred Docker Image to ECR
         run: |
           docker push $ECR_URI:${BRANCH_NAME_FOR_TF}
-          if [ "${{ github.ref }}" = "refs/heads/main" ]; then
-            docker tag $ECR_URI:${BRANCH_NAME_FOR_TF} $ECR_URI:main
-            docker push $ECR_URI:main
-          fi
   deploy-aflred:
-    name: Deploy Alfred to Staging
+    name: Deploy Alfred to Staging Environment
     runs-on: ubuntu-latest
     needs: [staging-deployment, build-and-push-alfred]
     steps:
@@ -164,7 +160,7 @@ jobs:
             aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
             aws-region: ${{ secrets.AWS_DEFAULT_REGION }}
 
-      - name: Deploy Alfred to Staging
+      - name: Deploy Alfred to Staging Environment
         run: |
           SERVICE_NAME="pre-n4d-alfred-service"
           CLUSTER_NAME="pre-n4d-batman-cluster"
