@@ -1,4 +1,4 @@
-FROM python:3.12-slim-bullseye
+FROM python:3.12-slim
 
 ARG DJANGO_SECRET_KEY
 ARG DEBUG
