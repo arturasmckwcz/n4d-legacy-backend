@@ -32,6 +32,7 @@ env:
   NOTION_VOLUNTEERS_ID: ${{ secrets.NOTION_VOLUNTEERS_ID }}
   POSTGRES_PASSWORD: "your-postgres-password"
   POSTGRES_USER: "your-postgres-user"
+  POSTGRES_DB: "your-postgres-db"
 
 jobs:
   build:
