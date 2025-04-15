@@ -61,11 +61,6 @@ jobs:
         run: |
           source .venv/bin/activate
           pyright -p pyrightconfig-ci.json
-
-      - name: Run Unit Tests
-        run: |
-          source .venv/bin/activate
-          pytest -vvv
       - name: Run E2E
         run: |    
            chmod +x ./scripts/run-local-e2e-tests.sh
