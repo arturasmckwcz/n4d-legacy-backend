@@ -11,10 +11,15 @@ fi
 export ENV="TEST"
 export DEBUG="True"
 
-docker compose -p batman -f docker-compose.e2e.yaml up --force-recreate -V &
+docker compose down --rmi all --volumes --remove-orphans
+docker system prune -af --volumes
+docker compose -f docker-compose.e2e.yaml up -d --build
+while ! docker compose -f docker-compose.e2e.yaml ps | grep -q "alfred.*Up"; do
+    echo "Waiting for Alfred service to start..."
+    sleep 5
+done
 
 sleep 15
-
 docker exec alfred python3 manage.py seed_data
 docker exec alfred python3 manage.py loaddata data/fixtures/activities.json 
 docker exec alfred python3 manage.py loaddata data/fixtures/berlinlocations.json
@@ -22,7 +27,7 @@ docker exec alfred python3 manage.py loaddata data/fixtures/need4deeddayschedule
 docker exec alfred python3 manage.py loaddata data/fixtures/skills.json
 docker exec alfred python3 manage.py load_test_data
 
-output=$(PYTEST_DISABLE_PLUGIN_AUTOLOAD=True ALFRED_API_URL=http://localhost:8000 python3 -m pytest -vvv tests_e2e)
+output=$(PYTEST_DISABLE_PLUGIN_AUTOLOAD=True ALFRED_API_URL=http://localhost:8000 python -m pytest -vvv tests_e2e)
 
 docker compose -p batman -f docker-compose.e2e.yaml down
 if echo "$output" | grep -q "FAILURES"; then
