@@ -20,16 +20,16 @@ env:
   ALFRED_LAST_COMMIT_HASH: $CI_COMMIT_SHORT_SHA
   CELERY_RESULT_BACKEND: redis://localhost:6379
   CELERY_BROKER_URL: redis://localhost:6379
-  ENVIRONMENT: "PRODUCTION"
+  ENVIRONMENT: "PRE"
   BRANCH_NAME_FOR_TF: "develop"
   UV_VERSION: 0.5
   BASE_LAYER: bookworm-slim
-  GLITCHTIP_DSN: ${{ secrets.GLITCHTIP_DSN }}
-  SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
-  SLACK_CHANNEL_NEW_ARRIVALS: ${{ secrets.SLACK_CHANNEL_NEW_ARRIVALS }}
-  NOTION_SECRET: ${{ secrets.NOTION_SECRET }}
-  NOTION_OPPORTUNITIES_ID: ${{ secrets.NOTION_OPPORTUNITIES_ID }}
-  NOTION_VOLUNTEERS_ID: ${{ secrets.NOTION_VOLUNTEERS_ID }}
+  GLITCHTIP_DSN: "your-glitchtip-dsn"
+  SLACK_BOT_TOKEN: "your-slack-bot-token"
+  SLACK_CHANNEL_NEW_ARRIVALS: "your-slack-channel-id"
+  NOTION_SECRET: "your-notion-secret"
+  NOTION_OPPORTUNITIES_ID: "your-notion-opportunities-id"
+  NOTION_VOLUNTEERS_ID: "your-notion-volunteers-id"
   POSTGRES_PASSWORD: "your-postgres-password"
   POSTGRES_USER: "your-postgres-user"
   POSTGRES_DB: "your-postgres-db"
@@ -66,7 +66,10 @@ jobs:
         run: |
           source .venv/bin/activate
           pytest -vvv
-
+      - name: Run E2E
+        run: |    
+           chmod +x ./scripts/run-local-e2e-tests.sh
+           ./scripts/run-local-e2e-tests.sh
       - name: Run Code Coverage
         run: |
           source .venv/bin/activate
@@ -76,7 +79,9 @@ jobs:
         with:
           name: coverage-report
           path: coverage.xml
+          
   staging-deployment:
+    if: false
     name: Prepare Staging Infrastructure
     uses: need4deed-org/n4d-infra/.github/workflows/deploy-infra.yml@main
     with:
@@ -146,6 +151,7 @@ jobs:
         run: |
           docker push $ECR_URI:${BRANCH_NAME_FOR_TF}
   deploy-aflred:
+    if: false
     name: Deploy Alfred to Staging Environment
     runs-on: ubuntu-latest
     needs: [staging-deployment, build-and-push-alfred]
@@ -169,6 +175,7 @@ jobs:
             --service $SERVICE_NAME \
             --force-new-deployment
   check-afred-service:
+    if: false
     needs: deploy-aflred
     runs-on: ubuntu-latest
     steps:
@@ -202,6 +209,7 @@ jobs:
           echo "ECS Service failed to start within the timeout period."
           exit 1
   run-e2e-tests:
+    if: false
     name: Run E2E Tests
     runs-on: ubuntu-latest
     needs: [check-afred-service]

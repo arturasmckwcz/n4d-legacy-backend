@@ -22,6 +22,14 @@ docker exec alfred python3 manage.py loaddata data/fixtures/need4deeddayschedule
 docker exec alfred python3 manage.py loaddata data/fixtures/skills.json
 docker exec alfred python3 manage.py load_test_data
 
-PYTEST_DISABLE_PLUGIN_AUTOLOAD=True ALFRED_API_URL=http://localhost:8000 python3 -m pytest -vvv tests_e2e
+output=$(PYTEST_DISABLE_PLUGIN_AUTOLOAD=True ALFRED_API_URL=http://localhost:8000 python3 -m pytest -vvv tests_e2e)
 
 docker compose -p batman -f docker-compose.e2e.yaml down
+if echo "$output" | grep -q "FAILURES"; then
+    echo "Tests failed"
+    echo "$output"
+    exit 1
+else
+    echo "Tests succeeded"
+    exit 0
+fi

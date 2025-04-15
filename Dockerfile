@@ -56,9 +56,6 @@ WORKDIR /app
 
 RUN apt update -y && apt upgrade -y
 
-RUN apt-get install -y postgresql-client curl \
-    && rm -rf /var/lib/apt/lists/*
-
 COPY requirements.txt /app/
 
 RUN --mount=type=cache,target=/root/.cache/pip \
