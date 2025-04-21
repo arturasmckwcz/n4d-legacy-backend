@@ -60,6 +60,7 @@ env:
     POSTGRES_PASSWORD: "your-postgres-password"
     POSTGRES_USER: "your-postgres-user"
     POSTGRES_DB: "your-postgres-db"
+    GLITCHTIP_DSN: "your-glitchtip-dsn"
   
 
 jobs:
