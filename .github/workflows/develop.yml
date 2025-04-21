@@ -15,13 +15,13 @@ env:
   AWS_SES_SECRET_ACCESS_KEY: "your-secret-access-key"
   AWS_SES_REGION_NAME: "your-region-name"
   AWS_SES_FROM_EMAIL: "your-from-email"
-  DOMAIN: "your-domain"
+  DOMAIN: "pre.api.need4deed.org"
   SITE_NAME: "your-site-name"
-  POSTGRES_HOST: "postgres.alfred.local"
+  POSTGRES_HOST: "postgres"
   ALFRED_LAST_COMMIT_HASH: $CI_COMMIT_SHORT_SHA
   CELERY_RESULT_BACKEND: redis://localhost:6379
   CELERY_BROKER_URL: redis://localhost:6379
-  ENVIRONMENT: "PRE"
+  ENVIRONMENT: "production"
   BRANCH_NAME_FOR_TF: "develop"
   UV_VERSION: 0.5
   BASE_LAYER: bookworm-slim
@@ -123,9 +123,9 @@ jobs:
             --build-arg GLITCHTIP_DSN=${GLITCHTIP_DSN} \
             --build-arg SLACK_BOT_TOKEN=${SLACK_BOT_TOKEN}\
             --build-arg SLACK_CHANNEL_NEW_ARRIVALS=${SLACK_CHANNEL_NEW_ARRIVALS}\
-            --build-arg NOTION_SECRET=${NOTION_SECRET}\
-            --build-arg NOTION_OPPORTUNITIES_ID=${NOTION_OPPORTUNITIES_ID}\
-            --build-arg NOTION_VOLUNTEERS_ID=${NOTION_VOLUNTEERS_ID}\
+            --build-arg NOTION_SECRET=${{ secrets.NOTION_SECRET }}\
+            --build-arg NOTION_OPPORTUNITIES_ID=${{ secrets.NOTION_OPPORTUNITIES_ID }}\
+            --build-arg NOTION_VOLUNTEERS_ID=${{ secrets.NOTION_VOLUNTEERS_ID }}\
             --build-arg ENVIRONMENT=${ENVIRONMENT} \
             -t $ECR_URI:${BRANCH_NAME_FOR_TF} .
 
