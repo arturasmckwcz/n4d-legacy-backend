@@ -23,7 +23,7 @@ jobs:
     NOTION_SECRET: ${{ secrets.NOTION_SECRET }}
     NOTION_OPPORTUNITIES_ID: ${{ secrets.NOTION_OPPORTUNITIES_ID }}
     NOTION_VOLUNTEERS_ID: ${{ secrets.NOTION_VOLUNTEERS_ID }}
-    DJANGO_SECRET_KEY: ${{ secrets.DJANGO_SECRET_KEY }}
+    DJANGO_SECRET_KEY: "secret_key"
     AWS_SES_FROM_EMAIL: "your-from-email"
     SLACK_BOT_TOKEN: "your-slack-bot-token"
     SLACK_CHANNEL_NEW_ARRIVALS: "your-slack-channel-id"

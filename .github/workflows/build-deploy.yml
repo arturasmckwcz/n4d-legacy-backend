@@ -48,6 +48,19 @@ env:
     UV_VERSION: 0.5
     BASE_LAYER: bookworm-slim
     SITE_NAME: "Need4Deed"
+    AWS_SES_ACCESS_KEY_ID: "your-access-key-id"
+    AWS_SES_SECRET_ACCESS_KEY: "your-secret-access-key"
+    AWS_SES_REGION_NAME: "your-region-name"
+    AWS_SES_FROM_EMAIL: "your-from-email"
+    SLACK_BOT_TOKEN: "your-slack-bot-token"
+    SLACK_CHANNEL_NEW_ARRIVALS: "your-slack-channel-id"
+    NOTION_SECRET: "your-notion-secret"
+    NOTION_OPPORTUNITIES_ID: "your-notion-opportunities-id"
+    NOTION_VOLUNTEERS_ID: "your-notion-volunteers-id"
+    POSTGRES_PASSWORD: "your-postgres-password"
+    POSTGRES_USER: "your-postgres-user"
+    POSTGRES_DB: "your-postgres-db"
+  
 
 jobs:
     python-build:
@@ -143,7 +156,6 @@ jobs:
             --build-arg AWS_SES_FROM_EMAIL=${{ secrets.AWS_SES_FROM_EMAIL }} \
             --build-arg DOMAIN=${DOMAIN} \
             --build-arg SITE_NAME=${SITE_NAME} \
-            --build-arg POSTGRES_HOST=${POSTGRES_HOST} \
             --build-arg CELERY_BROKER_URL=${CELERY_BROKER_URL} \
             --build-arg CELERY_RESULT_BACKEND=${CELERY_RESULT_BACKEND} \
             --build-arg ALFRED_LAST_COMMIT_HASH=${LAST_COMMIT_HASH} \
