@@ -7,128 +7,23 @@ on:
       - develop
   workflow_dispatch:
 
-env:
-  PYTHON_VERSION: "3.12"
-  DJANGO_SECRET_KEY: "your-secret-key"
-  DEBUG: "False"
-  AWS_SES_ACCESS_KEY_ID: "your-access-key-id"
-  AWS_SES_SECRET_ACCESS_KEY: "your-secret-access-key"
-  AWS_SES_REGION_NAME: "your-region-name"
-  AWS_SES_FROM_EMAIL: "your-from-email"
-  DOMAIN: "pre.api.need4deed.org"
-  SITE_NAME: "your-site-name"
-  POSTGRES_HOST: "postgres"
-  ALFRED_LAST_COMMIT_HASH: $CI_COMMIT_SHORT_SHA
-  CELERY_RESULT_BACKEND: redis://localhost:6379
-  CELERY_BROKER_URL: redis://localhost:6379
-  ENVIRONMENT: "production"
-  BRANCH_NAME_FOR_TF: "develop"
-  UV_VERSION: 0.5
-  BASE_LAYER: bookworm-slim
-  GLITCHTIP_DSN: ${{ secrets.GLITCHTIP_DSN }}
-  SLACK_BOT_TOKEN: "your-slack-bot-token"
-  SLACK_CHANNEL_NEW_ARRIVALS: "your-slack-channel-id"
-  NOTION_SECRET: "your-notion-secret"
-  NOTION_OPPORTUNITIES_ID: "your-notion-opportunities-id"
-  NOTION_VOLUNTEERS_ID: "your-notion-volunteers-id"
-  POSTGRES_PASSWORD: "your-postgres-password"
-  POSTGRES_USER: "your-postgres-user"
-  POSTGRES_DB: "your-postgres-db"
-
 jobs:
+ 
   build:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: ${{ env.PYTHON_VERSION }}
-
-      - name: Install Dependencies for Code Check
-        run: |
-          python -m venv .venv
-          source .venv/bin/activate
-          pip install -r requirements.txt -r dev-requirements.txt  
-
-      - name: Run Pre-commit
-        run: |
-          source .venv/bin/activate
-          pre-commit run --all-files
-
-      - name: Run Pyright
-        run: |
-          source .venv/bin/activate
-          pyright -p pyrightconfig-ci.json
-      - name : Run Unit Tests
-        run: |
-          source .venv/bin/activate
-          pytest -vvv
-      - name: Run E2E
-        run: |    
-           chmod +x ./scripts/run-local-e2e-tests.sh
-           ./scripts/run-local-e2e-tests.sh
-      - name: Run Code Coverage
-        run: |
-          source .venv/bin/activate
-          pytest --cov --cov-report term --cov-report xml:coverage.xml
-      - name: Upload Coverage Report
-        uses: actions/upload-artifact@v4
-        with:
-          name: coverage-report
-          path: coverage.xml
-          
-  
-  build-and-push-alfred:
-    name: Build and Push Docker Image for Alfred
-    runs-on: ubuntu-latest
-    needs: build
-    env:
-      ECR_URI: ${{ secrets.ECR_REGISTRY }}/${{ secrets.ECR_REPOSITORY }}
-    steps:
-      - name: Checkout Code
-        uses: actions/checkout@v4
-
-      - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v4
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ secrets.AWS_DEFAULT_REGION }}
-
-      - name: Log in to Amazon ECR
-        run: |
-          aws ecr get-login-password --region ${{ secrets.AWS_DEFAULT_REGION }} | docker login --username AWS --password-stdin ${{ secrets.ECR_REGISTRY }}
-
-      - name: Build Alfred Docker Image
-        run: |
-          docker build \
-            --build-arg DJANGO_SECRET_KEY=${DJANGO_SECRET_KEY} \
-            --build-arg DEBUG=${DEBUG} \
-            --build-arg AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }} \
-            --build-arg AWS_DEFAULT_REGION=${{ secrets.AWS_DEFAULT_REGION }} \
-            --build-arg AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }} \
-            --build-arg AWS_SES_ACCESS_KEY_ID=${AWS_SES_ACCESS_KEY_ID} \
-            --build-arg AWS_SES_SECRET_ACCESS_KEY=${AWS_SES_SECRET_ACCESS_KEY} \
-            --build-arg AWS_SES_REGION_NAME=${AWS_SES_REGION_NAME} \
-            --build-arg AWS_SES_FROM_EMAIL=${AWS_SES_FROM_EMAIL} \
-            --build-arg DOMAIN=${DOMAIN} \
-            --build-arg SITE_NAME=${SITE_NAME} \
-            --build-arg POSTGRES_HOST=${POSTGRES_HOST} \
-            --build-arg CELERY_BROKER_URL=${CELERY_BROKER_URL} \
-            --build-arg CELERY_RESULT_BACKEND=${CELERY_RESULT_BACKEND} \
-            --build-arg ALFRED_LAST_COMMIT_HASH=${BRANCH_NAME_FOR_TF} \
-            --build-arg GLITCHTIP_DSN=${GLITCHTIP_DSN} \
-            --build-arg SLACK_BOT_TOKEN=${SLACK_BOT_TOKEN}\
-            --build-arg SLACK_CHANNEL_NEW_ARRIVALS=${SLACK_CHANNEL_NEW_ARRIVALS}\
-            --build-arg NOTION_SECRET=${{ secrets.NOTION_SECRET }}\
-            --build-arg NOTION_OPPORTUNITIES_ID=${{ secrets.NOTION_OPPORTUNITIES_ID }}\
-            --build-arg NOTION_VOLUNTEERS_ID=${{ secrets.NOTION_VOLUNTEERS_ID }}\
-            --build-arg ENVIRONMENT=${ENVIRONMENT} \
-            -t $ECR_URI:${BRANCH_NAME_FOR_TF} .
-
-      - name: Push Alfred Docker Image to ECR
-        run: |
-          docker push $ECR_URI:${BRANCH_NAME_FOR_TF}
+   uses: ./.github/workflows/build-deploy.yml
+   with:
+    environment: test
+   secrets:
+    ECR_REGISTRY: ${{ secrets.ECR_REGISTRY }}
+    ECR_REPOSITORY: ${{ secrets.ECR_REPOSITORY }}
+    AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+    AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+    AWS_DEFAULT_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
+    GLITCHTIP_DSN: ${{ secrets.GLITCHTIP_DSN }}
+    NOTION_SECRET: ${{ secrets.NOTION_SECRET }}
+    NOTION_OPPORTUNITIES_ID: ${{ secrets.NOTION_OPPORTUNITIES_ID }}
+    NOTION_VOLUNTEERS_ID: ${{ secrets.NOTION_VOLUNTEERS_ID }}
+    DJANGO_SECRET_KEY: ${{ secrets.DJANGO_SECRET_KEY }}
+    AWS_SES_FROM_EMAIL: "your-from-email"
+    SLACK_BOT_TOKEN: "your-slack-bot-token"
+    SLACK_CHANNEL_NEW_ARRIVALS: "your-slack-channel-id"
