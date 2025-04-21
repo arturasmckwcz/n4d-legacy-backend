@@ -61,6 +61,7 @@ env:
     POSTGRES_USER: "your-postgres-user"
     POSTGRES_DB: "your-postgres-db"
     GLITCHTIP_DSN: ${{ secrets.GLITCHTIP_DSN }}
+    ENVIRONMENT: ${{ inputs.environment }}
   
 
 jobs:
