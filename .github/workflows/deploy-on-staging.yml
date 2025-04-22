@@ -1,8 +1,11 @@
-name: Deploy on Staging Endvironment
+name: Deploy on Staging Environment
 description: Manually trigger the deployment to the staging environment. This workflow deploys the latest Alfred image built from the develop branch.
 
 on:
-    workflow_dispatch:
+  push:
+    branches:
+      - develop
+  workflow_dispatch:
 
 jobs:
   staging-deployment:
@@ -24,6 +27,9 @@ jobs:
        PAT: ${{ secrets.PAT }}
        ECR_HOST: ${{ secrets.ECR_HOST }}
   deploy-aflred:
+    env:
+      SERVICE_NAME: "pre-n4d-alfred-service"
+      CLUSTER_NAME: "pre-n4d-cluster"
     name: Deploy Alfred to Staging Environment
     runs-on: ubuntu-latest
     needs: [staging-deployment]
@@ -40,8 +46,6 @@ jobs:
 
       - name: Deploy Alfred to Staging Environment
         run: |
-          SERVICE_NAME="pre-n4d-alfred-service"
-          CLUSTER_NAME="pre-n4d-batman-cluster"
           aws ecs update-service \
             --cluster $CLUSTER_NAME \
             --service $SERVICE_NAME \
@@ -50,6 +54,9 @@ jobs:
 
     needs: deploy-aflred
     runs-on: ubuntu-latest
+    env:
+      SERVICE_NAME: "pre-n4d-alfred-service"
+      CLUSTER_NAME: "pre-n4d-cluster"
     steps:
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
@@ -59,8 +66,7 @@ jobs:
          aws-region: ${{ secrets.AWS_DEFAULT_REGION }}
       - name: Wait for ECS Service to be Running
         run: |
-          SERVICE_NAME="pre-n4d-alfred-service"
-          CLUSTER_NAME="pre-n4d-batman-cluster"
+         
           TIMEOUT=600
           INTERVAL=30
           ELAPSED=0
