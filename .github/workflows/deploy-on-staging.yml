@@ -2,9 +2,6 @@ name: Deploy on Staging Environment
 description: Manually trigger the deployment to the staging environment. This workflow deploys the latest Alfred image built from the develop branch.
 
 on:
-  push:
-    branches:
-      - develop
   workflow_dispatch:
 
 jobs:

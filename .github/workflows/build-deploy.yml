@@ -178,7 +178,6 @@ jobs:
               echo "IMAGE_EXISTS=true" >> $GITHUB_ENV
             else
               echo "IMAGE_EXISTS=false" >> $GITHUB_ENV
-
         - name: Delete Existing Image in ECR
           if: env.IMAGE_EXISTS == 'true'
           run: |
