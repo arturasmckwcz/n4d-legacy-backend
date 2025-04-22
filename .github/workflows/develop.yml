@@ -1,0 +1,29 @@
+name: On Merge to Develop
+description: |
+  This workflow is triggered on pushes to the develop branch. It runs code checks, builds a Docker image for Alfred, and pushes it to ECR.
+on:
+  push:
+    branches:
+      - develop
+  workflow_dispatch:
+
+jobs:
+ 
+  build:
+   uses: ./.github/workflows/build-deploy.yml
+   with:
+    environment: test
+   secrets:
+    ECR_REGISTRY: ${{ secrets.ECR_REGISTRY }}
+    ECR_REPOSITORY: ${{ secrets.ECR_REPOSITORY }}
+    AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+    AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+    AWS_DEFAULT_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
+    GLITCHTIP_DSN: ${{ secrets.GLITCHTIP_DSN }}
+    NOTION_SECRET: ${{ secrets.NOTION_SECRET }}
+    NOTION_OPPORTUNITIES_ID: ${{ secrets.NOTION_OPPORTUNITIES_ID }}
+    NOTION_VOLUNTEERS_ID: ${{ secrets.NOTION_VOLUNTEERS_ID }}
+    DJANGO_SECRET_KEY: "secret_key"
+    AWS_SES_FROM_EMAIL: "your-from-email"
+    SLACK_BOT_TOKEN: "your-slack-bot-token"
+    SLACK_CHANNEL_NEW_ARRIVALS: "your-slack-channel-id"

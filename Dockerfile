@@ -56,7 +56,7 @@ WORKDIR /app
 
 RUN apt update -y && apt upgrade -y
 
-RUN apt-get install -y postgresql-client curl \
+RUN apt-get install -y curl \
     && rm -rf /var/lib/apt/lists/*
 
 COPY requirements.txt /app/
