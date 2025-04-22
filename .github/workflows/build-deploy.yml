@@ -170,6 +170,9 @@ jobs:
               --build-arg ENVIRONMENT=${{ inputs.environment }} \
               -t $ECR_URI:${IMAGE_TAG} .
       
+        - name: Delete exsiting Docker Image
+          run: |
+            aws ecr batch-delete-image --repository-name ${{ secrets.ECR_REPOSITORY }} --image-ids imageTag=${IMAGE_TAG}     
         - name: Push Alfred Docker Image to ECR
           run: |
             docker push $ECR_URI:${IMAGE_TAG}
