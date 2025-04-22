@@ -4,30 +4,56 @@ services:
     build:
       context: .
       args:
-        DJANGO_SECRET_KEY: ${DJANGO_SECRET_KEY}
-        DEBUG: ${DEBUG}
-        AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}
-        AWS_DEFAULT_REGION: ${AWS_DEFAULT_REGION}
-        AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
-        AWS_SES_ACCESS_KEY_ID: ${AWS_SES_ACCESS_KEY_ID}
-        AWS_SES_SECRET_ACCESS_KEY: ${AWS_SES_SECRET_ACCESS_KEY}
-        AWS_SES_REGION_NAME: ${AWS_SES_REGION_NAME}
-        AWS_SES_FROM_EMAIL: ${AWS_SES_FROM_EMAIL}
-        DOMAIN: ${DOMAIN}
-        SITE_NAME: ${SITE_NAME}
-        POSTGRES_HOST: ${POSTGRES_HOST} # "postgresdb"
-        NOTION_SECRET: ${NOTION_SECRET}
-        NOTION_OPPORTUNITIES_ID: ${NOTION_OPPORTUNITIES_ID}
-        NOTION_VOLUNTEERS_ID: ${NOTION_VOLUNTEERS_ID}
-        SLACK_BOT_TOKEN: ${SLACK_BOT_TOKEN}
-        SLACK_CHANNEL_NEW_ARRIVALS: ${SLACK_CHANNEL_NEW_ARRIVALS}
-        CELERY_BROKER_URL: ${CELERY_BROKER_URL} # "redis://valkey:6379"
-        CELERY_RESULT_BACKEND: ${CELERY_RESULT_BACKEND} # "redis://valkey:6379"
-        ALFRED_LAST_COMMIT_HASH: ${ALFRED_LAST_COMMIT_HASH} # "not local hashes"
-        ENVIRONMENT: ${ENVIRONMENT}
+            DJANGO_SECRET_KEY: "dummy_secret_key"
+            DEBUG: "False"
+            AWS_ACCESS_KEY_ID: "dummy_secret_key"
+            AWS_DEFAULT_REGION: "dummy_region"
+            AWS_SECRET_ACCESS_KEY: "dummy_secret_key"
+            AWS_SES_ACCESS_KEY_ID: "dummy_secret_key"
+            AWS_SES_SECRET_ACCESS_KEY: "dummy_secret_key"
+            AWS_SES_REGION_NAME: "dummy_region"
+            AWS_SES_FROM_EMAIL: "dummy_email"
+            DOMAIN: "localhost"
+            SITE_NAME: "localhost"
+            POSTGRES_HOST: "postgresdb"
+            NOTION_SECRET: "secret_notion"
+            NOTION_OPPORTUNITIES_ID: "opportunities_id"
+            NOTION_VOLUNTEERS_ID: "volunteers_id"
+            SLACK_BOT_TOKEN: "slack bot"
+            SLACK_CHANNEL_NEW_ARRIVALS: "dasdasdadsa"
+            CELERY_BROKER_URL: "redis://localhost:6379"
+            CELERY_RESULT_BACKEND: "redis://localhost:6379"
+            ALFRED_LAST_COMMIT_HASH: "not local hashes"
+            ENVIRONMENT: PRE
+            POSTGRES_DB: test_name
+            POSTGRES_USER: test_user
+            POSTGRES_PASSWORD: test_password
     image: alfred:dev
-    env_file:
-      - .env
+    environment:
+      DJANGO_SECRET_KEY: "dummy_secret_key"
+      DEBUG: "true"
+      AWS_ACCESS_KEY_ID: "dummy_secret_key"
+      AWS_DEFAULT_REGION: "dummy_region"
+      AWS_SECRET_ACCESS_KEY: "dummy_secret_key"
+      AWS_SES_ACCESS_KEY_ID: "dummy_secret_key"
+      AWS_SES_SECRET_ACCESS_KEY: "dummy_secret_key"
+      AWS_SES_REGION_NAME: "dummy_region"
+      AWS_SES_FROM_EMAIL: "dummy_email"
+      DOMAIN: "localhost"
+      SITE_NAME: "localhost"
+      POSTGRES_HOST: "postgresdb"
+      NOTION_SECRET: "secret_notion"
+      NOTION_OPPORTUNITIES_ID: "opportunities_id"
+      NOTION_VOLUNTEERS_ID: "volunteers_id"
+      SLACK_BOT_TOKEN: "slack bot"
+      SLACK_CHANNEL_NEW_ARRIVALS: "dasdasdadsa"
+      CELERY_BROKER_URL: "redis://localhost:6379"
+      CELERY_RESULT_BACKEND: "redis://localhost:6379"
+      ALFRED_LAST_COMMIT_HASH: "not local hashes"
+      ENVIRONMENT: PRE
+      POSTGRES_DB: test_name
+      POSTGRES_USER: test_user
+      POSTGRES_PASSWORD: test_password
     volumes:
       - .:/app
     ports:
@@ -62,3 +88,5 @@ services:
       interval: 3s
       timeout: 6s
       retries: 5
+    ports:
+      - "5432:5432"
