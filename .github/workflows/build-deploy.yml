@@ -169,19 +169,7 @@ jobs:
               --build-arg NOTION_VOLUNTEERS_ID=${{ secrets.NOTION_VOLUNTEERS_ID }}\
               --build-arg ENVIRONMENT=${{ inputs.environment }} \
               -t $ECR_URI:${IMAGE_TAG} .
-
-        - name: Check if Image Exists in ECR
-          id: check-image
-          run: |
-            IMAGE_EXISTS=$(aws ecr describe-images --repository-name ${{ secrets.ECR_REPOSITORY }} --image-ids imageTag=${IMAGE_TAG} --region ${{ secrets.AWS_DEFAULT_REGION }} || echo "false")
-            if [ "$IMAGE_EXISTS" != "false" ]; then
-              echo "IMAGE_EXISTS=true" >> $GITHUB_ENV
-            else
-              echo "IMAGE_EXISTS=false" >> $GITHUB_ENV
-        - name: Delete Existing Image in ECR
-          if: env.IMAGE_EXISTS == 'true'
-          run: |
-                aws ecr batch-delete-image --repository-name ${{ secrets.ECR_REPOSITORY }} --image-ids imageTag=${IMAGE_TAG} --region ${{ secrets.AWS_DEFAULT_REGION }}
+      
         - name: Push Alfred Docker Image to ECR
           run: |
             docker push $ECR_URI:${IMAGE_TAG}
