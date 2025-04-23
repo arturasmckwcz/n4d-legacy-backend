@@ -664,7 +664,9 @@ def write_opportunity_to_notion(opportunity: Opportunity):
     properties["Type"] = {
         "multi_select": [
             {"name": get_clean_select_for_notion(activity)}
-            for activity in get_list(opportunity.activities.all(), "title")
+            for activity in get_list(
+                opportunity.activities.all(), "translated_title_de"
+            )
         ]
     }
     properties["District VO"] = {
@@ -676,7 +678,7 @@ def write_opportunity_to_notion(opportunity: Opportunity):
     properties["Skills"] = {
         "multi_select": [
             {"name": get_clean_select_for_notion(skill)}
-            for skill in get_list(opportunity.skills.all(), "title")
+            for skill in get_list(opportunity.skills.all(), "translated_title_de")
         ]
     }
     properties["VO Schedule"] = {
