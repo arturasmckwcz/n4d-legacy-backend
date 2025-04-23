@@ -2,32 +2,18 @@ import traceback
 from datetime import datetime
 
 import structlog
+from django.contrib.contenttypes.models import ContentType
 from django.db import transaction
 
 from alfred.config.globals import comments_delimiter, comments_none
 from alfred.notion_handler import NotionHandler
-from alfred.utils import (
-    YesNo,
-    get_clean_select_for_notion,
-    get_database_object,
-    get_key_value,
-    get_list,
-    get_schedule_list,
-    get_the_first,
-    is_later_than,
-    parse_days,
-    read_env_var,
-    update_notion_page,
-)
-from data.models import (
-    Activity,
-    BerlinLocation,
-    Language,
-    Opportunity,
-    OpportunityTranslation,
-    OpportunityType,
-    Skill,
-)
+from alfred.utils import (YesNo, get_clean_select_for_notion,
+                          get_database_object, get_key_value, get_list,
+                          get_schedule_list, get_the_first, is_later_than,
+                          parse_days, read_env_var, update_notion_page)
+from data.models import (Activity, BerlinLocation, Language, Opportunity,
+                         OpportunityTranslation, OpportunityType, Skill,
+                         TitleTranslation)
 
 logger = structlog.get_logger(__name__)
 
@@ -455,21 +441,33 @@ def write_or_update_opportunity_to_db(
             opportunity_object.berlin_locations.set(berlin_location_objects)
 
             activity_objects = []
+            content_type_activity = ContentType.objects.get_for_model(Activity)
             for activity in m2m_data["activities"]:
                 try:
-                    activity_object, _ = Activity.objects.get_or_create(title=activity)
-                    activity_objects.append(activity_object)
+                    translation_obj = TitleTranslation.objects.filter(
+                        translation=activity,
+                        content_type=content_type_activity,
+                    ).first()
+                    if translation_obj:
+                        activity_object = Activity.objects.get(pk=translation_obj.object_id)
+                        activity_objects.append(activity_object)
                 except Exception as e:
                     logger.error(
-                        f"Error {e} occurred while processing activity {activity=}"
+                        f"Error {e} occurred while processing activity {activity}"
                     )
             opportunity_object.activities.set(activity_objects)
 
             skill_objects = []
+            content_type_skill = ContentType.objects.get_for_model(Skill)
             for skill in m2m_data["skills"]:
                 try:
-                    skill_object, _ = Skill.objects.get_or_create(title=skill)
-                    skill_objects.append(skill_object)
+                    translation_obj = TitleTranslation.objects.filter(
+                        translation=skill,
+                        content_type=content_type_skill,
+                    ).first()
+                    if translation_obj:
+                        skill_object = Skill.objects.get(pk=translation_obj.object_id)
+                        skill_objects.append(skill_object)
                 except Exception as e:
                     logger.error(f"Error {e} occurred while processing skill {skill=}")
             opportunity_object.skills.set(skill_objects)
