@@ -7,13 +7,29 @@ from django.db import transaction
 
 from alfred.config.globals import comments_delimiter, comments_none
 from alfred.notion_handler import NotionHandler
-from alfred.utils import (YesNo, get_clean_select_for_notion,
-                          get_database_object, get_key_value, get_list,
-                          get_schedule_list, get_the_first, is_later_than,
-                          parse_days, read_env_var, update_notion_page)
-from data.models import (Activity, BerlinLocation, Language, Opportunity,
-                         OpportunityTranslation, OpportunityType, Skill,
-                         TitleTranslation)
+from alfred.utils import (
+    YesNo,
+    get_clean_select_for_notion,
+    get_database_object,
+    get_key_value,
+    get_list,
+    get_schedule_list,
+    get_the_first,
+    is_later_than,
+    parse_days,
+    read_env_var,
+    update_notion_page,
+)
+from data.models import (
+    Activity,
+    BerlinLocation,
+    Language,
+    Opportunity,
+    OpportunityTranslation,
+    OpportunityType,
+    Skill,
+    TitleTranslation,
+)
 
 logger = structlog.get_logger(__name__)
 
@@ -449,7 +465,9 @@ def write_or_update_opportunity_to_db(
                         content_type=content_type_activity,
                     ).first()
                     if translation_obj:
-                        activity_object = Activity.objects.get(pk=translation_obj.object_id)
+                        activity_object = Activity.objects.get(
+                            pk=translation_obj.object_id
+                        )
                         activity_objects.append(activity_object)
                 except Exception as e:
                     logger.error(

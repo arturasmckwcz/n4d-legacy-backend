@@ -3,7 +3,9 @@
 from django.db import migrations
 
 
-def create_or_update_translation_obj(model, object_id, content_type, language, translation):
+def create_or_update_translation_obj(
+    model, object_id, content_type, language, translation
+):
     obj = model.objects.filter(
         object_id=object_id,
         content_type=content_type,
@@ -23,6 +25,7 @@ def create_or_update_translation_obj(model, object_id, content_type, language, t
 
     return obj
 
+
 def populate_activities(apps, schema_editor):
     TitleTranslation = apps.get_model("data", "TitleTranslation")
     Activity = apps.get_model("data", "Activity")
@@ -31,21 +34,21 @@ def populate_activities(apps, schema_editor):
     content_type = ContentType.objects.get_for_model(Activity)
 
     activities = [
-        "Daycare", 
-        "Sports", 
-        "Teaching German", 
-        "Translation", 
-        "Accompanying", 
-        "Arts", 
-        "Gardening", 
-        "One-day", 
-        "Playing", 
-        "Reading", 
-        "Activities-women", 
-        "Activities-men", 
-        "Assist", 
-        "Sorting", 
-        "Organizing", 
+        "Daycare",
+        "Sports",
+        "Teaching German",
+        "Translation",
+        "Accompanying",
+        "Arts",
+        "Gardening",
+        "One-day",
+        "Playing",
+        "Reading",
+        "Activities-women",
+        "Activities-men",
+        "Assist",
+        "Sorting",
+        "Organizing",
         "Miscellaneous",
         "Arzttermine",
         "Termine-Behörden",
@@ -58,29 +61,45 @@ def populate_activities(apps, schema_editor):
 
     en, _ = Language.objects.get_or_create(iso_code="en", defaults={"title": "English"})
     de, _ = Language.objects.get_or_create(iso_code="de", defaults={"title": "German"})
-    
+
     activity_translations = [
         ("Daycare", "Daycare", "Kinderbetreuung"),
         ("Sports", "Sports", "Sport"),
         ("Teaching German", "Teaching German", "Sprachcafé"),
-        ("Translation", "Translation at Accommodation Centers", "Sprachmittlung in Unterkünften"),
-        ("Accompanying", "Accompanying to doctors' or government appointments", "Ausfüllhilfe"),
+        (
+            "Translation",
+            "Translation at Accommodation Centers",
+            "Sprachmittlung in Unterkünften",
+        ),
+        (
+            "Accompanying",
+            "Accompanying to doctors' or government appointments",
+            "Ausfüllhilfe",
+        ),
         ("Arts", "Arts & Crafts", "Basteln"),
         ("Gardening", "Gardening", "Gartenarbeit"),
-        ("One-day", "One-day Volunteering (e.g. Festivals, Cleanups)", "Eintägiges Engagement (z. B. Feier, Aufräumaktionen)"),
+        (
+            "One-day",
+            "One-day Volunteering (e.g. Festivals, Cleanups)",
+            "Eintägiges Engagement (z. B. Feier, Aufräumaktionen)",
+        ),
         ("Playing", "Playing board games", "Brettspiele spielen"),
         ("Reading", "Reading books for children", "Bücher vorlesen für Kinder"),
-        ("Activities-women", "Activities for women", "Aktivitäten für Frauen*"), 
-        ("Activities-men","Activities for men", "Aktivitäten für Männer*"), 
-        ("Assist","Assist with homework", "Nachhilfe"), 
-        ("Sorting","Sorting clothing", "Kleiderkammer"), 
-        ("Organizing","Organizing excursions", "Ausflüge organisieren"), 
-        ("Miscellaneous","Sonstiges", "Sonstiges"),
-        ("Arzttermine","Doctor appointments", "Arzttermine"),
-        ("Termine-Behörden","Appointments with authorities*", "Termine bei Behörden*"),
-        ("Wohnungsbesichtigungen","Apartment viewings", "Wohnungsbesichtigungen"),
-        ("Termine-Schulen","Appointments in schools and daycare centers", "Termine in Schulen und Kitas"),
-        ("Wegbegleitung","Accompaniment", "Wegbegleitung"),
+        ("Activities-women", "Activities for women", "Aktivitäten für Frauen*"),
+        ("Activities-men", "Activities for men", "Aktivitäten für Männer*"),
+        ("Assist", "Assist with homework", "Nachhilfe"),
+        ("Sorting", "Sorting clothing", "Kleiderkammer"),
+        ("Organizing", "Organizing excursions", "Ausflüge organisieren"),
+        ("Miscellaneous", "Sonstiges", "Sonstiges"),
+        ("Arzttermine", "Doctor appointments", "Arzttermine"),
+        ("Termine-Behörden", "Appointments with authorities*", "Termine bei Behörden*"),
+        ("Wohnungsbesichtigungen", "Apartment viewings", "Wohnungsbesichtigungen"),
+        (
+            "Termine-Schulen",
+            "Appointments in schools and daycare centers",
+            "Termine in Schulen und Kitas",
+        ),
+        ("Wegbegleitung", "Accompaniment", "Wegbegleitung"),
     ]
     for title, translation_en, translation_de in activity_translations:
         try:
@@ -105,7 +124,6 @@ def populate_activities(apps, schema_editor):
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("data", "0069_titletranslation_field_and_more"),
     ]
