@@ -89,6 +89,10 @@ class Activity(models.Model):
     def get_title(self, language_code="de"):
         return get_field_translation(self, language_code)
 
+    @property
+    def translated_title_de(self):
+        return get_field_translation(self, "de")
+
     def __str__(self):
         return self.title
 
@@ -96,6 +100,10 @@ class Activity(models.Model):
 class Skill(models.Model):
     title = models.CharField(max_length=128, unique=True)
     description = models.CharField(max_length=128, null=True)
+
+    @property
+    def translated_title_de(self):
+        return get_field_translation(self, "de")
 
     def get_title(self, language_code="de"):
         return get_field_translation(self, language_code)
