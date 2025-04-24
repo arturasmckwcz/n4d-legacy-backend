@@ -4,20 +4,19 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('data', '0070_auto_20250419_1029'),
+        ("data", "0070_auto_20250419_1029"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='volunteerform',
-            name='email',
+            model_name="volunteerform",
+            name="email",
             field=models.EmailField(max_length=254),
         ),
         migrations.AlterField(
-            model_name='volunteerform',
-            name='phone',
+            model_name="volunteerform",
+            name="phone",
             field=models.CharField(max_length=64, null=True),
         ),
     ]
