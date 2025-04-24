@@ -594,8 +594,10 @@ class VolunteerFormSerializer(serializers.ModelSerializer):
         )
         VolunteerLanguage.objects.bulk_create(languages_for_m2m)
 
+        email, phone = volunteer_form.check_email_and_phone()
+
         slack_post_message(
-            f"hey, please check the new arrival to volunteers: {volunteer_form.email}",
+            f"hey, please check the new arrival to volunteers: {volunteer_form.email}{'\nWarning: '+email+' is already in use.' if email else ''}{'\nWarning: '+phone+' is already in use.' if phone else ''}",
             dry_run=is_test_case(volunteer_form.email),
         )
 

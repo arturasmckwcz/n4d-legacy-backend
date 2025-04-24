@@ -514,8 +514,8 @@ class Testimonial(models.Model):
 class VolunteerForm(ModelWithTimestamps):
     form_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     full_name = models.CharField(max_length=128, null=False)
-    phone = models.CharField(max_length=64, null=True, unique=True)
-    email = models.EmailField(null=False, unique=True)
+    phone = models.CharField(max_length=64, null=True)
+    email = models.EmailField(null=False)
     schedule = models.ManyToManyField(Need4DeedDaySchedule)
     postal_code = models.IntegerField()
     preferred_berlin_locations = models.ManyToManyField(BerlinLocation)
@@ -531,6 +531,28 @@ class VolunteerForm(ModelWithTimestamps):
         Opportunity, on_delete=models.SET_NULL, null=True, blank=True
     )
     last_edited_time_notion = models.DateTimeField(null=True)
+
+    def check_email_and_phone(self):
+        """
+        Check if the email and phone number are already used by another volunteer form.
+        """
+
+        email = (
+            self.email
+            if VolunteerForm.objects.filter(email=self.email)
+            .exclude(form_id=self.form_id)
+            .exists()
+            else None
+        )
+        phone = (
+            self.phone
+            if VolunteerForm.objects.filter(phone=self.phone)
+            .exclude(form_id=self.form_id)
+            .exists()
+            else None
+        )
+
+        return (email, phone)
 
     def __str__(self):
         return f"{self.full_name} | email: {self.email}"
