@@ -64,7 +64,7 @@ def read_env_var(
 ) -> str | int | float | tuple | list | dict | None:
     value = getenv(name)
 
-    logger.debug(f"Reading {name} {value} {type(value)}")
+    logger.debug(f"Environment variable {name} is {'not set' if not value else 'set'}")
 
     value = bool_string_to_bool(value=value)
 
