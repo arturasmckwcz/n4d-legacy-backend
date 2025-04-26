@@ -190,7 +190,7 @@ def create_or_update_opportunity_from_notion(
 
     except Exception as e:
         logger.error(
-            f"Notion record number {notion_record["properties"]["ID"]["unique_id"]["number"]} || Error processing opportunity: at {str(e)} url {notion_record['url']}"
+            f"Notion record number {notion_record['properties']['ID']['unique_id']['number']} || Error processing opportunity: at {str(e)} url {notion_record['url']}"
         )
         raise
 
@@ -539,7 +539,7 @@ def execute_opportunities_seed_pipeline():
             count_created += 1
         except Exception as e:
             logger.error(
-                f"Error writing opportunity {opportunity_page["id"]}: {str(e)}"
+                f"Error writing opportunity {opportunity_page['id']}: {str(e)}"
             )
 
     logger.info(f"Created {count_created} Opportunity objects")

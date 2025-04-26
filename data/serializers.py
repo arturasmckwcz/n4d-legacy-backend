@@ -597,7 +597,7 @@ class VolunteerFormSerializer(serializers.ModelSerializer):
         email, phone = volunteer_form.check_email_and_phone()
 
         slack_post_message(
-            f"hey, please check the new arrival to volunteers: {volunteer_form.email}{'\nWarning: '+email+' is already in use.' if email else ''}{'\nWarning: '+phone+' is already in use.' if phone else ''}",
+            f"hey, please check the new arrival to volunteers: {volunteer_form.email}{'\nWarning: ' + email + ' is already in use.' if email else ''}{'\nWarning: ' + phone + ' is already in use.' if phone else ''}",
             dry_run=is_test_case(volunteer_form.email),
         )
 
