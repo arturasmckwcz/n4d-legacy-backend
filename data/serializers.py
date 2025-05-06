@@ -262,7 +262,7 @@ class OpportunitySerializer(serializers.ModelSerializer):
             "title",
             "vo_information",
             "accomp_information",
-            "opportunity_type",
+            "accomp_datetime",
             "berlin_locations",
             "schedule_str",
             "datetime_str",
@@ -272,7 +272,6 @@ class OpportunitySerializer(serializers.ModelSerializer):
             "skills",
             "status",
             "opportunity_type",
-            "accomp_datetime",
             "created_at",
             "updated_at",
         ]
@@ -325,6 +324,9 @@ class OpportunitySerializer(serializers.ModelSerializer):
     def to_representation(self, instance):
         primary_keys = self.context.get("primary_keys", None)
         response = super().to_representation(instance)
+        if instance.opportunity_type == "volunteering" and instance.accomp_datetime:
+            processed_schedule_str = f"{instance.accomp_datetime.strftime('%d.%m.%Y %H:%M')}, {response['schedule_str']}"
+            response["schedule_str"] = processed_schedule_str
         return flatten_dict(response, primary_keys)
 
 
