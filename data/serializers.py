@@ -4,12 +4,27 @@ from rest_framework import serializers
 from alfred.settings import ENV
 from alfred.slack_handler import slack_post_message
 from data.enums import Environment, LanguageLevel
-from data.models import (Activity, AuthEmailDomain, Avatar, BerlinLocation,
-                         Contact, FormLeadFrom, Language, LanguageTranslation,
-                         Location, Need4DeedDaySchedule, Opportunity,
-                         OpportunityTranslation, Organization, Person, Skill,
-                         Testimonial, Timeslot, VolunteerForm,
-                         VolunteerLanguage)
+from data.models import (
+    Activity,
+    AuthEmailDomain,
+    Avatar,
+    BerlinLocation,
+    Contact,
+    FormLeadFrom,
+    Language,
+    LanguageTranslation,
+    Location,
+    Need4DeedDaySchedule,
+    Opportunity,
+    OpportunityTranslation,
+    Organization,
+    Person,
+    Skill,
+    Testimonial,
+    Timeslot,
+    VolunteerForm,
+    VolunteerLanguage,
+)
 from data.utils import flatten_dict, is_test_case  # , is_valid_email
 from users.serializers import AlfredUserSerializer
 
@@ -310,7 +325,7 @@ class OpportunitySerializer(serializers.ModelSerializer):
         primary_keys = self.context.get("primary_keys", None)
         response = super().to_representation(instance)
         if instance.opportunity_type == "volunteering" and instance.accomp_datetime:
-            processed_schedule_str = f"{instance.accomp_datetime.strftime('%d.%m.%Y %H:%M')}, {response["schedule_str"]}"
+            processed_schedule_str = f"{instance.accomp_datetime.strftime('%d.%m.%Y %H:%M')}, {response['schedule_str']}"
             response["schedule_str"] = processed_schedule_str
         return flatten_dict(response, primary_keys)
 
