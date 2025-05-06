@@ -262,7 +262,7 @@ class OpportunitySerializer(serializers.ModelSerializer):
             "title",
             "vo_information",
             "accomp_information",
-            "opportunity_type",
+            "accomp_datetime",
             "berlin_locations",
             "schedule_str",
             "datetime_str",
