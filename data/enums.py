@@ -130,3 +130,8 @@ class Environment:
     PRODUCTION = "production"
     TEST = "test"
     DEVELOP = "develop"
+
+
+class EventN4DType(models.TextChoices):
+    PARTY = "party", "Party"
+    WORKSHOP = "workshop", "Workshop"

@@ -8,6 +8,7 @@ from data.models import (
     Avatar,
     BerlinLocation,
     Contact,
+    EventN4D,
     FormLeadFrom,
     Language,
     Location,
@@ -183,3 +184,8 @@ class VolunteerLanguageAdmin(admin.ModelAdmin):
         "volunteer_form__email",
         "language__title",
     )
+
+
+@admin.register(EventN4D)
+class EventN4DAdmin(admin.ModelAdmin):
+    pass

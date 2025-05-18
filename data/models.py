@@ -15,6 +15,7 @@ from data.enums import (
     DEFAULTS,
     BerlinLocations,
     Environment,
+    EventN4DType,
     LanguageLevel,
     Languages,
     Need4DeedTimeSlots,
@@ -96,6 +97,9 @@ class Activity(models.Model):
     def __str__(self):
         return self.title
 
+    class Meta:
+        verbose_name_plural = "Activities"
+
 
 class Skill(models.Model):
     title = models.CharField(max_length=128, unique=True)
@@ -121,6 +125,9 @@ class FormLeadFrom(models.Model):
 
     def __str__(self):
         return self.title
+
+    class Meta:
+        verbose_name_plural = "Form leads from"
 
 
 class Language(models.Model):
@@ -445,6 +452,9 @@ class Opportunity(ModelWithTimestamps):
             )
             return opportunity
 
+    class Meta:
+        verbose_name_plural = "Opportunities"
+
 
 class OpportunityTranslation(models.Model):
     opportunity = models.ForeignKey(
@@ -570,6 +580,50 @@ class VolunteerLanguage(models.Model):
 
     def __str__(self):
         return f"{self.language.title} {self.level}"
+
+
+class EventN4D(models.Model):
+    """
+    Django model representing an event based on the EventN4D TypeScript interface.
+    """
+
+    active = models.BooleanField(default=True)
+    title = models.CharField(max_length=255)
+    subTitle = models.CharField(max_length=255, blank=True, null=True)
+    menuTitle = models.CharField(max_length=255)  # for the menu
+    hostName = models.CharField(max_length=255, blank=True, null=True)
+    date = (
+        models.DateTimeField()
+    )  # Using DateTimeField to accommodate Date type from TS
+    dateEnd = models.DateTimeField(blank=True, null=True)
+    type = models.CharField(
+        max_length=20,  # Adjust max_length based on the longest enum value
+        choices=EventN4DType.choices,
+        default=EventN4DType.PARTY,
+    )
+    pic = models.URLField(blank=True, null=True)  # Assuming pic is a URL for an image
+    time = models.CharField(max_length=50)  # Storing time as a string as in TS
+    location = models.CharField(max_length=255)  # address
+    locationLink = models.URLField(blank=True, null=True)  # to google maps
+    locationComment = models.CharField(
+        max_length=255, blank=True, null=True
+    )  # how to spot
+    description = models.TextField()
+    shortDescription = models.CharField(max_length=500)  # for card view
+    linkRSVP = models.URLField()  # registration form
+    followUpText = models.CharField(max_length=255, blank=True, null=True)
+    followUpLink = models.URLField(blank=True, null=True)  # the adjacent event
+    additionalTitle = models.CharField(max_length=255, blank=True, null=True)
+    # Using JSONField for additionalInfo which is a string array in TS
+    additionalInfo = models.JSONField(blank=True, null=True)
+    outro = models.TextField(blank=True, null=True)
+
+    class Meta:
+        verbose_name = "Event N4D"
+        verbose_name_plural = "Events N4D"
+
+    def __str__(self):
+        return self.title
 
 
 # GenericForeignKey doesn't provide the option for chained deletion
