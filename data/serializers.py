@@ -10,6 +10,7 @@ from data.models import (
     Avatar,
     BerlinLocation,
     Contact,
+    EventN4D,
     FormLeadFrom,
     Language,
     LanguageTranslation,
@@ -243,6 +244,91 @@ class OrganizationSerializer(serializers.ModelSerializer):
             PersonSerializer(person).data for person in obj.persons.all()
         ]
         return persons_details
+
+
+class EventSerializer(serializers.ModelSerializer):
+    title = serializers.SerializerMethodField()
+    subtitle = serializers.SerializerMethodField()
+    menu_title = serializers.SerializerMethodField()
+    time_str = serializers.SerializerMethodField()
+    location_comment = serializers.SerializerMethodField()
+    description = serializers.SerializerMethodField()
+    short_description = serializers.SerializerMethodField()
+    followup_text = serializers.SerializerMethodField()
+    additional_title = serializers.SerializerMethodField()
+    additional_info = serializers.SerializerMethodField()
+    outro = serializers.SerializerMethodField()
+
+    class Meta:
+        model = EventN4D
+        fields = [
+            "id",
+            "active",
+            "host_name",
+            "date",
+            "dateEnd",
+            "event_type",
+            "pic",
+            "address",
+            "location_link",
+            "linkRSVP",
+            "followup_link",
+            "title",
+            "subtitle",
+            "menu_title",
+            "time_str",
+            "location_comment",
+            "description",
+            "short_description",
+            "followup_text",
+            "additional_title",
+            "additional_info",
+            "outro",
+        ]
+
+    def get_title(self, obj):
+        language_code = self.context.get("language", "de")
+        return obj.get_title(language_code)
+
+    def get_subtitle(self, obj):
+        language_code = self.context.get("language", "de")
+        return obj.get_subtitle(language_code)
+
+    def get_menu_title(self, obj):
+        language_code = self.context.get("language", "de")
+        return obj.get_menu_title(language_code)
+
+    def get_time_str(self, obj):
+        language_code = self.context.get("language", "de")
+        return obj.get_time_str(language_code)
+
+    def get_location_comment(self, obj):
+        language_code = self.context.get("language", "de")
+        return obj.get_location_comment(language_code)
+
+    def get_description(self, obj):
+        language_code = self.context.get("language", "de")
+        return obj.get_description(language_code)
+
+    def get_short_description(self, obj):
+        language_code = self.context.get("language", "de")
+        return obj.get_short_description(language_code)
+
+    def get_followup_text(self, obj):
+        language_code = self.context.get("language", "de")
+        return obj.get_followup_text(language_code)
+
+    def get_additional_title(self, obj):
+        language_code = self.context.get("language", "de")
+        return obj.get_additional_title(language_code)
+
+    def get_additional_info(self, obj):
+        language_code = self.context.get("language", "de")
+        return obj.get_additional_info(language_code)
+
+    def get_outro(self, obj):
+        language_code = self.context.get("language", "de")
+        return obj.get_outro(language_code)
 
 
 class OpportunitySerializer(serializers.ModelSerializer):
