@@ -9,6 +9,7 @@ from data.models import (
     BerlinLocation,
     Contact,
     EventN4D,
+    EventTranslation,
     FormLeadFrom,
     Language,
     Location,
@@ -30,11 +31,31 @@ class TranslationInlineFormSet(BaseInlineFormSet):
     pass
 
 
-class OpportunityTranslationInline(admin.TabularInline):
+class OpportunityTranslationInline(admin.StackedInline):
     model = OpportunityTranslation
     extra = 1
     formset = TranslationInlineFormSet
     fields = ["language", "title", "accomp_information", "vo_information"]
+
+
+class EventTranslationInline(admin.StackedInline):
+    model = EventTranslation
+    extra = 1
+    formset = TranslationInlineFormSet
+    fields = [
+        "language",
+        "title",
+        "subtitle",
+        "menu_title",
+        "time_str",
+        "location_comment",
+        "description",
+        "short_description",
+        "followup_text",
+        "additional_title",
+        "additional_info",
+        "outro",
+    ]
 
 
 @admin.register(Contact)
@@ -138,7 +159,12 @@ class OpportunityAdmin(admin.ModelAdmin):
     ]
 
 
-class VolunteerLanguageInline(admin.TabularInline):
+@admin.register(EventN4D)
+class EventN4DAdmin(admin.ModelAdmin):
+    inlines = [EventTranslationInline]
+
+
+class VolunteerLanguageInline(admin.StackedInline):
     model = VolunteerLanguage
     extra = 1
 
@@ -184,8 +210,3 @@ class VolunteerLanguageAdmin(admin.ModelAdmin):
         "volunteer_form__email",
         "language__title",
     )
-
-
-@admin.register(EventN4D)
-class EventN4DAdmin(admin.ModelAdmin):
-    pass
