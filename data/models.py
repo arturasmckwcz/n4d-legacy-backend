@@ -654,7 +654,7 @@ class EventN4D(models.Model):
         choices=EventN4DType.choices,
         default=EventN4DType.PARTY,
     )
-    pic = models.URLField(blank=True, null=True)
+    pic = models.CharField(max_length=256, blank=True, null=True)
     address = models.CharField(max_length=256)
     location_link = models.URLField(blank=True, null=True)
     linkRSVP = models.URLField()
