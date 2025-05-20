@@ -4,12 +4,28 @@ from rest_framework import serializers
 from alfred.settings import ENV
 from alfred.slack_handler import slack_post_message
 from data.enums import Environment, LanguageLevel
-from data.models import (Activity, AuthEmailDomain, Avatar, BerlinLocation,
-                         Contact, EventN4D, FormLeadFrom, Language,
-                         LanguageTranslation, Location, Need4DeedDaySchedule,
-                         Opportunity, OpportunityTranslation, Organization,
-                         Person, Skill, Testimonial, Timeslot, VolunteerForm,
-                         VolunteerLanguage)
+from data.models import (
+    Activity,
+    AuthEmailDomain,
+    Avatar,
+    BerlinLocation,
+    Contact,
+    EventN4D,
+    FormLeadFrom,
+    Language,
+    LanguageTranslation,
+    Location,
+    Need4DeedDaySchedule,
+    Opportunity,
+    OpportunityTranslation,
+    Organization,
+    Person,
+    Skill,
+    Testimonial,
+    Timeslot,
+    VolunteerForm,
+    VolunteerLanguage,
+)
 from data.utils import flatten_dict, is_test_case  # , is_valid_email
 from users.serializers import AlfredUserSerializer
 

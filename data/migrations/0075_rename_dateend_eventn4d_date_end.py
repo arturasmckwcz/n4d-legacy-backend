@@ -4,15 +4,14 @@ from django.db import migrations
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('data', '0074_rename_followuplink_eventn4d_followup_link_and_more'),
+        ("data", "0074_rename_followuplink_eventn4d_followup_link_and_more"),
     ]
 
     operations = [
         migrations.RenameField(
-            model_name='eventn4d',
-            old_name='dateEnd',
-            new_name='date_end',
+            model_name="eventn4d",
+            old_name="dateEnd",
+            new_name="date_end",
         ),
     ]
