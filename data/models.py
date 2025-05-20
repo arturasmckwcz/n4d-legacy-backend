@@ -267,26 +267,19 @@ def get_translated_object_field(
     is_list: bool = False,
 ) -> str | None:
     """
-    Retrieves a translated field of an Opportunity object based on the provided language code.
-
-    This function attempts to retrieve a translated field (title, vo_information, or accomp_information)
-    of an Opportunity object. It first checks if a translation exists for the specified language.
-    If a translation exists, it returns the translated field. If not, it attempts to translate
-    the original language field to the target language using a translation service. The translated
-    text is then saved, and returned. If the translation service fails, the text from the original
-    language is returned.
-
+    Helper: Gets the translated field of an object.
     Args:
-        obj: The Opportunity object for which to retrieve the translated field.
-        language_code: The ISO 639-1 language code of the desired translation.
-        field: The field to translate, which must be one of "title", "vo_information", or "accomp_information".
-
+        obj (ObjectType): The object to translate.
+        language_code (str): The language code to translate to.
+        field (str): The field to translate.
+        translation_model (ObjectTranslationType): The translation model.
+        translation_object_field (str): The translation object field.
+        max_length (int | None): The maximum length of the translated text.
+        is_list (bool): Whether the field is a list or not.
     Returns:
-        The translated field as a string, or None if no translation is available and the original
-        language field is also empty.
-
+        str | None: The translated text or None if not found.
     Raises:
-        ValueError: If the provided language code is not recognized.
+        ValueError: If the language code is unknown.
     """
 
     def _create_or_update_translation_obj(
@@ -655,7 +648,7 @@ class EventN4D(models.Model):
     active = models.BooleanField(default=False)
     host_name = models.CharField(max_length=256, blank=True, null=True)
     date = models.DateTimeField()
-    dateEnd = models.DateTimeField(blank=True, null=True)
+    date_end = models.DateTimeField(blank=True, null=True)
     event_type = models.CharField(
         max_length=20,
         choices=EventN4DType.choices,
