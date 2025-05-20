@@ -4,6 +4,7 @@ from data.views import (
     AuthEmailDomainView,
     DataOpportunityListView,
     DataPersonView,
+    EventListView,
     TestimonialListView,
     VolunteerFormCreateView,
 )
@@ -14,4 +15,5 @@ urlpatterns = [
     path("auth-email-domain/", AuthEmailDomainView.as_view()),
     path("testimonial/", TestimonialListView.as_view()),
     path("volunteer/", VolunteerFormCreateView().as_view()),
+    path("event/", EventListView().as_view()),
 ]

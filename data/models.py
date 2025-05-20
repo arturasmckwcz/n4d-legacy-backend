@@ -1,3 +1,4 @@
+import json
 import uuid
 from typing import Literal
 
@@ -15,6 +16,7 @@ from data.enums import (
     DEFAULTS,
     BerlinLocations,
     Environment,
+    EventN4DType,
     LanguageLevel,
     Languages,
     Need4DeedTimeSlots,
@@ -96,6 +98,9 @@ class Activity(models.Model):
     def __str__(self):
         return self.title
 
+    class Meta:
+        verbose_name_plural = "Activities"
+
 
 class Skill(models.Model):
     title = models.CharField(max_length=128, unique=True)
@@ -121,6 +126,9 @@ class FormLeadFrom(models.Model):
 
     def __str__(self):
         return self.title
+
+    class Meta:
+        verbose_name_plural = "Form leads from"
 
 
 class Language(models.Model):
@@ -245,56 +253,82 @@ class Need4DeedDaySchedule(models.Model):
         return f"{DAY_CHOICES[self.day][1]} - {self.time_slot}"
 
 
-def get_opportunity_translated_field(
-    obj: "Opportunity",
+ObjectType = Literal["Opportunity", "EventN4D"]
+ObjectTranslationType = Literal["OpportunityTranslation", "EventTranslation"]
+
+
+def get_translated_object_field(
+    obj: ObjectType,
     language_code: str,
-    field: Literal["title", "vo_information", "accomp_information"],
+    field: str,
+    translation_model: ObjectTranslationType,
+    translation_object_field: str,
+    max_length: int | None = None,
+    is_list: bool = False,
 ) -> str | None:
     """
-    Retrieves a translated field of an Opportunity object based on the provided language code.
-
-    This function attempts to retrieve a translated field (title, vo_information, or accomp_information)
-    of an Opportunity object. It first checks if a translation exists for the specified language.
-    If a translation exists, it returns the translated field. If not, it attempts to translate
-    the original language field to the target language using a translation service. The translated
-    text is then saved, and returned. If the translation service fails, the text from the original
-    language is returned.
-
+    Helper: Gets the translated field of an object.
     Args:
-        obj: The Opportunity object for which to retrieve the translated field.
-        language_code: The ISO 639-1 language code of the desired translation.
-        field: The field to translate, which must be one of "title", "vo_information", or "accomp_information".
-
+        obj (ObjectType): The object to translate.
+        language_code (str): The language code to translate to.
+        field (str): The field to translate.
+        translation_model (ObjectTranslationType): The translation model.
+        translation_object_field (str): The translation object field.
+        max_length (int | None): The maximum length of the translated text.
+        is_list (bool): Whether the field is a list or not.
     Returns:
-        The translated field as a string, or None if no translation is available and the original
-        language field is also empty.
-
+        str | None: The translated text or None if not found.
     Raises:
-        ValueError: If the provided language code is not recognized.
+        ValueError: If the language code is unknown.
     """
 
     def _create_or_update_translation_obj(
-        obj: Opportunity,
+        obj: ObjectType,
         language: Language,
-        field: Literal["title", "vo_information", "accomp_information"],
+        field: str,
         translated_text: str,
-        existing_translation: OpportunityTranslation | None = None,
-    ) -> OpportunityTranslation:
+        max_length: int | None,
+        translation_model: ObjectTranslationType,
+        translation_object_field: str,
+        existing_translation: ObjectTranslationType | None = None,
+    ) -> ObjectTranslationType:
         """Helper: Creates or updates a translation object."""
 
         if existing_translation:
-            setattr(existing_translation, field, translated_text)
+            setattr(existing_translation, field, translated_text[:max_length])
             existing_translation.save()
             return existing_translation
         else:
             translation_kwargs = {
-                field: translated_text[:256] if field == "title" else translated_text,
-                "opportunity": obj,
+                field: translated_text[:max_length],
+                translation_object_field: obj,
                 "language": language,
             }
-            new_translation = OpportunityTranslation(**translation_kwargs)
+            new_translation = translation_model(**translation_kwargs)
             new_translation.save()
             return new_translation
+
+    def _translate_list(original_text: list) -> list[str]:
+        """
+        Helper: Translates a list of strings.
+        """
+        text_for_translation = (
+            json.dumps(original_text)
+            if isinstance(original_text, list)
+            else original_text
+        )
+
+        translated_text = translate(
+            text=text_for_translation,
+            source_language_code=getattr(obj.original_language, "iso_code"),
+            target_language_code=language_code,
+            dry_run=ENV != Environment.PRODUCTION,
+        )
+        return (
+            json.loads(translated_text)
+            if isinstance(original_text, list)
+            else translated_text
+        )
 
     language = Language.get_language_obj(language_code)
 
@@ -313,16 +347,27 @@ def get_opportunity_translated_field(
         if not original_text:
             return None
 
-        translated_text = translate(
-            text=original_text,
-            source_language_code=getattr(obj.original_language, "iso_code"),
-            target_language_code=language_code,
-            dry_run=ENV != Environment.PRODUCTION,
+        translated_text = (
+            translate(
+                text=original_text,
+                source_language_code=getattr(obj.original_language, "iso_code"),
+                target_language_code=language_code,
+                dry_run=ENV != Environment.PRODUCTION,
+            )
+            if not is_list
+            else _translate_list(original_text)
         )
 
         if translated_text:
             final_translation = _create_or_update_translation_obj(
-                obj, language, field, translated_text, existing_translation
+                obj=obj,
+                language=language,
+                field=field,
+                translated_text=translated_text,
+                existing_translation=existing_translation,
+                max_length=max_length,
+                translation_model=translation_model,
+                translation_object_field=translation_object_field,
             )
             return getattr(final_translation, field)
         else:
@@ -378,18 +423,31 @@ class Opportunity(ModelWithTimestamps):
         return f"{german.title if german else 'No title'} | {self.rac_email}"
 
     def get_title(self, iso_code="de"):
-        return get_opportunity_translated_field(
-            self, language_code=iso_code, field="title"
+        return get_translated_object_field(
+            self,
+            language_code=iso_code,
+            field="title",
+            max_length=256,
+            translation_model=OpportunityTranslation,
+            translation_object_field="opportunity",
         )
 
     def get_vo_information(self, iso_code="de"):
-        return get_opportunity_translated_field(
-            self, language_code=iso_code, field="vo_information"
+        return get_translated_object_field(
+            self,
+            language_code=iso_code,
+            field="vo_information",
+            translation_model=OpportunityTranslation,
+            translation_object_field="opportunity",
         )
 
     def get_accomp_information(self, iso_code="de"):
-        return get_opportunity_translated_field(
-            self, language_code=iso_code, field="accomp_information"
+        return get_translated_object_field(
+            self,
+            language_code=iso_code,
+            field="accomp_information",
+            translation_model=OpportunityTranslation,
+            translation_object_field="opportunity",
         )
 
     def get_translation(self, language: Language):
@@ -444,6 +502,9 @@ class Opportunity(ModelWithTimestamps):
                 accomp_information=accomp_information,
             )
             return opportunity
+
+    class Meta:
+        verbose_name_plural = "Opportunities"
 
 
 class OpportunityTranslation(models.Model):
@@ -570,6 +631,192 @@ class VolunteerLanguage(models.Model):
 
     def __str__(self):
         return f"{self.language.title} {self.level}"
+
+
+class EventN4D(models.Model):
+    """
+    Django model representing an event based on the EventN4D TypeScript interface.
+    """
+
+    original_language = models.ForeignKey(
+        Language,
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name="event_original_language",
+    )
+    active = models.BooleanField(default=False)
+    host_name = models.CharField(max_length=256, blank=True, null=True)
+    date = models.DateTimeField()
+    date_end = models.DateTimeField(blank=True, null=True)
+    event_type = models.CharField(
+        max_length=20,
+        choices=EventN4DType.choices,
+        default=EventN4DType.PARTY,
+    )
+    pic = models.URLField(blank=True, null=True)
+    address = models.CharField(max_length=256)
+    location_link = models.URLField(blank=True, null=True)
+    linkRSVP = models.URLField()
+    followup_link = models.URLField(blank=True, null=True)
+
+    class Meta:
+        verbose_name = "Event N4D"
+        verbose_name_plural = "Events N4D"
+
+        constraints = [
+            models.UniqueConstraint(
+                fields=["active"],
+                condition=models.Q(active=True),
+                name="one_active_event",
+            )
+        ]
+
+    def get_translation(self, language: Language):
+        return self.event_translations.filter(language=language).first()
+
+    def __str__(self):
+        return self.get_title("en") or f"Event {self.pk} | {self.date}"
+
+    def get_title(self, iso_code="de"):
+        return get_translated_object_field(
+            self,
+            language_code=iso_code,
+            field="title",
+            max_length=256,
+            translation_model=EventTranslation,
+            translation_object_field="event",
+        )
+
+    def get_subtitle(self, iso_code="de"):
+        return get_translated_object_field(
+            self,
+            language_code=iso_code,
+            field="subtitle",
+            max_length=256,
+            translation_model=EventTranslation,
+            translation_object_field="event",
+        )
+
+    def get_menu_title(self, iso_code="de"):
+        return get_translated_object_field(
+            self,
+            language_code=iso_code,
+            field="menu_title",
+            max_length=256,
+            translation_model=EventTranslation,
+            translation_object_field="event",
+        )
+
+    def get_time_str(self, iso_code="de"):
+        return get_translated_object_field(
+            self,
+            language_code=iso_code,
+            field="time_str",
+            max_length=256,
+            translation_model=EventTranslation,
+            translation_object_field="event",
+        )
+
+    def get_location_comment(self, iso_code="de"):
+        return get_translated_object_field(
+            self,
+            language_code=iso_code,
+            field="location_comment",
+            max_length=256,
+            translation_model=EventTranslation,
+            translation_object_field="event",
+        )
+
+    def get_description(self, iso_code="de"):
+        return get_translated_object_field(
+            self,
+            language_code=iso_code,
+            field="description",
+            translation_model=EventTranslation,
+            translation_object_field="event",
+        )
+
+    def get_short_description(self, iso_code="de"):
+        return get_translated_object_field(
+            self,
+            language_code=iso_code,
+            field="short_description",
+            max_length=512,
+            translation_model=EventTranslation,
+            translation_object_field="event",
+        )
+
+    def get_followup_text(self, iso_code="de"):
+        return get_translated_object_field(
+            self,
+            language_code=iso_code,
+            field="followup_text",
+            max_length=256,
+            translation_model=EventTranslation,
+            translation_object_field="event",
+        )
+
+    def get_additional_title(self, iso_code="de"):
+        return get_translated_object_field(
+            self,
+            language_code=iso_code,
+            field="additional_title",
+            max_length=256,
+            translation_model=EventTranslation,
+            translation_object_field="event",
+        )
+
+    def get_additional_info(self, iso_code="de"):
+        return get_translated_object_field(
+            self,
+            language_code=iso_code,
+            field="additional_info",
+            translation_model=EventTranslation,
+            translation_object_field="event",
+            is_list=True,
+        )
+
+    def get_outro(self, iso_code="de"):
+        return get_translated_object_field(
+            self,
+            language_code=iso_code,
+            field="outro",
+            max_length=256,
+            translation_model=EventTranslation,
+            translation_object_field="event",
+        )
+
+
+class EventTranslation(models.Model):
+    event = models.ForeignKey(
+        EventN4D, on_delete=models.CASCADE, related_name="event_translations"
+    )
+    language = models.ForeignKey(Language, on_delete=models.CASCADE)
+
+    title = models.CharField(max_length=256, blank=True, null=True)
+    subtitle = models.CharField(max_length=256, blank=True, null=True)
+    menu_title = models.CharField(max_length=256, blank=True, null=True)
+    time_str = models.CharField(max_length=256, blank=True, null=True)
+    location_comment = models.CharField(max_length=256, blank=True, null=True)
+    description = models.TextField()
+    short_description = models.CharField(max_length=512)
+    followup_text = models.CharField(max_length=256, blank=True, null=True)
+    additional_title = models.CharField(max_length=256, blank=True, null=True)
+    additional_info = models.JSONField(blank=True, null=True)
+    outro = models.TextField(max_length=256, blank=True, null=True)
+
+    class Meta:
+        unique_together = ("event", "language")
+
+    def save(self, *args, **kwargs):
+        if not self.event.original_language:
+            self.event.original_language = self.language
+
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        return f"{self.event.pk} | {self.language.iso_code}"
 
 
 # GenericForeignKey doesn't provide the option for chained deletion
