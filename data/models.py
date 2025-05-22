@@ -553,7 +553,7 @@ class Testimonial(models.Model):
     volunteer_form = models.ForeignKey(
         "VolunteerForm", on_delete=models.SET_NULL, null=True, blank=True
     )
-    pic = models.TextField()
+    pic = models.TextField(null=True, blank=True)
     activities = models.ManyToManyField(Activity)
     is_active = models.BooleanField(default=True)
 
