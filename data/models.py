@@ -1,4 +1,3 @@
-import json
 import uuid
 from typing import Literal
 
@@ -312,8 +311,10 @@ def get_translated_object_field(
         """
         Helper: Translates a list of strings.
         """
+        delimiter = "<|>"
+
         text_for_translation = (
-            json.dumps(original_text)
+            original_text.join(delimiter)
             if isinstance(original_text, list)
             else original_text
         )
@@ -325,7 +326,7 @@ def get_translated_object_field(
             dry_run=ENV != Environment.PRODUCTION,
         )
         return (
-            json.loads(translated_text)
+            translated_text.split(delimiter)
             if isinstance(original_text, list)
             else translated_text
         )
