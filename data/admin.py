@@ -7,6 +7,7 @@ from data.models import (
     AuthEmailDomain,
     Avatar,
     BerlinLocation,
+    Category,
     Contact,
     EventN4D,
     EventTranslation,
@@ -90,6 +91,11 @@ class SkillAdmin(admin.ModelAdmin):
 
 @admin.register(Activity)
 class ActivityAdmin(admin.ModelAdmin):
+    pass
+
+
+@admin.register(Category)
+class CategoryAdmin(admin.ModelAdmin):
     pass
 
 
