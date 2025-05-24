@@ -9,6 +9,7 @@ from data.models import (
     AuthEmailDomain,
     Avatar,
     BerlinLocation,
+    Category,
     Contact,
     EventN4D,
     FormLeadFrom,
@@ -244,6 +245,29 @@ class OrganizationSerializer(serializers.ModelSerializer):
             PersonSerializer(person).data for person in obj.persons.all()
         ]
         return persons_details
+
+
+class CategorySerializer(serializers.ModelSerializer):
+    translated_title = serializers.SerializerMethodField()
+    translated_description = serializers.SerializerMethodField()
+
+    def get_translated_title(self, obj):
+        language_code = self.context.get("language", "de")
+        return obj.get_translated_title(language_code)
+
+    def get_translated_description(self, obj):
+        language_code = self.context.get("language", "de")
+        return obj.get_translated_description(language_code)
+
+    class Meta:
+        model = Category
+        fields = [
+            "id",
+            "title",
+            "description",
+            "translated_title",
+            "translated_description",
+        ]
 
 
 class EventSerializer(serializers.ModelSerializer):
