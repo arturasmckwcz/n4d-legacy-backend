@@ -16,6 +16,7 @@ from data.models import (
     Activity,
     AuthEmailDomain,
     BerlinLocation,
+    Category,
     EventN4D,
     FormLeadFrom,
     Language,
@@ -24,6 +25,7 @@ from data.models import (
     Testimonial,
 )
 from data.serializers import (
+    CategorySerializer,
     EventSerializer,
     OpportunityCreateSerializer,
     OpportunitySerializer,
@@ -67,7 +69,22 @@ class EventListView(ListAPIView):
     serializer_class = EventSerializer
     queryset = EventN4D.objects.all()
 
-    @method_decorator(cache_page(30))  # 45 mins
+    @method_decorator(cache_page(60 * 45))  # 45 mins
+    def dispatch(self, *args, **kwargs):
+        return super().dispatch(*args, **kwargs)
+
+    def get_serializer_context(self):
+        context = super().get_serializer_context()
+        context["language"] = self.request.GET.get("language", "de")
+        return context
+
+
+class CategoryListView(ListAPIView):
+    permission_classes = (AllowAny,)
+    serializer_class = CategorySerializer
+    queryset = Category.objects.all()
+
+    @method_decorator(cache_page(60 * 60 * 24))  # 1 day
     def dispatch(self, *args, **kwargs):
         return super().dispatch(*args, **kwargs)
 
