@@ -87,8 +87,11 @@ class Category(models.Model):
     title = models.CharField(max_length=128, unique=True)
     description = models.CharField(max_length=128, null=True)
 
-    def get_title(self, language_code="de"):
+    def get_translated_title(self, language_code="de"):
         return get_field_translation(self, language_code)
+
+    def get_translated_description(self, language_code="de"):
+        return get_field_translation(self, language_code, "description")
 
     def __str__(self):
         return self.title
@@ -185,7 +188,7 @@ class TitleTranslation(models.Model):
     content_object = GenericForeignKey("content_type", "object_id")
 
     class Meta:
-        unique_together = ("language", "content_type", "object_id")
+        unique_together = ("language", "content_type", "object_id", "field")
 
     def __str__(self):
         title = (
