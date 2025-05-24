@@ -83,8 +83,25 @@ def get_field_translation(obj, language_iso_code, field="title"):
     return translation.translation if translation else obj_field
 
 
+class Category(models.Model):
+    title = models.CharField(max_length=128, unique=True)
+    description = models.CharField(max_length=128, null=True)
+
+    def get_title(self, language_code="de"):
+        return get_field_translation(self, language_code)
+
+    def __str__(self):
+        return self.title
+
+    class Meta:
+        verbose_name_plural = "Categories"
+
+
 class Activity(models.Model):
     title = models.CharField(max_length=128, unique=True)
+    category = models.ForeignKey(
+        Category, on_delete=models.DO_NOTHING, null=True, blank=True
+    )
     description = models.CharField(max_length=128, null=True)
 
     def get_title(self, language_code="de"):
