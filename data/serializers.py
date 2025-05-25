@@ -98,6 +98,12 @@ class SkillSerializer(serializers.ModelSerializer):
 
 
 class LanguageSerializer(serializers.ModelSerializer):
+    title = serializers.SerializerMethodField()
+
+    def get_title(self, obj):
+        language_code = self.context.get("language", "de")
+        return obj.get_title(language_code)
+
     class Meta:
         model = Language
         fields = [
