@@ -26,9 +26,11 @@ from data.models import (
 )
 from data.serializers import (
     ActivitySerializer,
+    BerlinLocationSerializer,
     CategorySerializer,
     EventSerializer,
     FormLeadFromSerializer,
+    LanguageSerializer,
     OpportunityCreateSerializer,
     OpportunitySerializer,
     PersonSerializer,
@@ -85,6 +87,15 @@ class EventListView(ListAPIView):
 class OptionListView(ListAPIView):
     permission_classes = (AllowAny,)
 
+    option_map = {
+        OptionsList.ACTIVITIES: (Activity.objects.all(), ActivitySerializer),
+        OptionsList.LANGUAGES: (Language.objects.all(), LanguageSerializer),
+        OptionsList.LOCATIONS: (BerlinLocation.objects.all(), BerlinLocationSerializer),
+        OptionsList.CATEGORIES: (Category.objects.all(), CategorySerializer),
+        OptionsList.SKILLS: (Skill.objects.all(), SkillSerializer),
+        OptionsList.LEADS: (FormLeadFrom.objects.all(), FormLeadFromSerializer),
+    }
+
     @method_decorator(cache_page(60 * 60 * 24))  # 1 day
     def dispatch(self, *args, **kwargs):
         return super().dispatch(*args, **kwargs)
@@ -99,27 +110,11 @@ class OptionListView(ListAPIView):
         if list_type is None:
             return Response({"error": "list_type parameter is required"}, status=400)
 
-        if list_type == OptionsList.CATEGORIES:
-            self.queryset = Category.objects.all()
-            self.serializer_class = CategorySerializer
+        if list_type in self.option_map:
+            self.queryset, self.serializer_class = self.option_map[list_type]
             return super().get(request, *args, **kwargs)
 
-        if list_type == OptionsList.ACTIVITIES:
-            self.queryset = Activity.objects.all()
-            self.serializer_class = ActivitySerializer
-            return super().get(request, *args, **kwargs)
-
-        if list_type == OptionsList.SKILLS:
-            self.queryset = Skill.objects.all()
-            self.serializer_class = SkillSerializer
-            return super().get(request, *args, **kwargs)
-
-        if list_type == OptionsList.LEADS:
-            self.queryset = FormLeadFrom.objects.all()
-            self.serializer_class = FormLeadFromSerializer
-            return super().get(request, *args, **kwargs)
-
-        return Response({"error": "list_type parameter is wrong"}, status=400)
+        return Response({"error": "list_type parameter is invalid"}, status=400)
 
 
 class DataOpportunityListView(mixins.CreateModelMixin, ListAPIView):
