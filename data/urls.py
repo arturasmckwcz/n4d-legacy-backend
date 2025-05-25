@@ -5,6 +5,7 @@ from data.views import (
     DataOpportunityListView,
     DataPersonView,
     EventListView,
+    OptionListView,
     TestimonialListView,
     VolunteerFormCreateView,
 )
@@ -16,4 +17,5 @@ urlpatterns = [
     path("testimonial/", TestimonialListView.as_view()),
     path("volunteer/", VolunteerFormCreateView().as_view()),
     path("event/", EventListView().as_view()),
+    path("lists/<str:list_type>/", OptionListView().as_view()),
 ]

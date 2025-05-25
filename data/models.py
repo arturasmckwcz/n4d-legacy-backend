@@ -66,13 +66,11 @@ class Location(ModelWithTimestamps):
 
 
 def get_field_translation(obj, language_iso_code, field="title"):
-    obj_field = getattr(obj, field) if hasattr(obj, field) else None
-
     try:
         content_type = ContentType.objects.get_for_model(obj)
     except ContentType.DoesNotExist:
         logger.error(f"Model {obj} happens to be missing in ContentType")
-        return obj_field
+        return None
 
     translation = TitleTranslation.objects.filter(
         content_type=content_type,
@@ -80,11 +78,31 @@ def get_field_translation(obj, language_iso_code, field="title"):
         object_id=obj.pk,
         language__iso_code=language_iso_code,
     ).first()
-    return translation.translation if translation else obj_field
+    return translation.translation if translation else None
+
+
+class Category(models.Model):
+    title = models.CharField(max_length=128, unique=True)
+    description = models.CharField(max_length=128, null=True)
+
+    def get_translated_title(self, language_code="de"):
+        return get_field_translation(self, language_code)
+
+    def get_translated_description(self, language_code="de"):
+        return get_field_translation(self, language_code, "description")
+
+    def __str__(self):
+        return self.title
+
+    class Meta:
+        verbose_name_plural = "Categories"
 
 
 class Activity(models.Model):
     title = models.CharField(max_length=128, unique=True)
+    category = models.ForeignKey(
+        Category, on_delete=models.DO_NOTHING, null=True, blank=True
+    )
     description = models.CharField(max_length=128, null=True)
 
     def get_title(self, language_code="de"):
@@ -168,7 +186,7 @@ class TitleTranslation(models.Model):
     content_object = GenericForeignKey("content_type", "object_id")
 
     class Meta:
-        unique_together = ("language", "content_type", "object_id")
+        unique_together = ("language", "content_type", "object_id", "field")
 
     def __str__(self):
         title = (
