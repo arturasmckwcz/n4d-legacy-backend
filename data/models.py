@@ -66,13 +66,11 @@ class Location(ModelWithTimestamps):
 
 
 def get_field_translation(obj, language_iso_code, field="title"):
-    obj_field = getattr(obj, field) if hasattr(obj, field) else None
-
     try:
         content_type = ContentType.objects.get_for_model(obj)
     except ContentType.DoesNotExist:
         logger.error(f"Model {obj} happens to be missing in ContentType")
-        return obj_field
+        return None
 
     translation = TitleTranslation.objects.filter(
         content_type=content_type,
@@ -80,7 +78,7 @@ def get_field_translation(obj, language_iso_code, field="title"):
         object_id=obj.pk,
         language__iso_code=language_iso_code,
     ).first()
-    return translation.translation if translation else obj_field
+    return translation.translation if translation else None
 
 
 class Category(models.Model):
