@@ -83,6 +83,12 @@ class AvatarSerializer(serializers.ModelSerializer):
 
 
 class SkillSerializer(serializers.ModelSerializer):
+    title = serializers.SerializerMethodField()
+
+    def get_title(self, obj):
+        language_code = self.context.get("language", "de")
+        return obj.get_title(language_code)
+
     class Meta:
         model = Skill
         fields = [
@@ -102,15 +108,28 @@ class LanguageSerializer(serializers.ModelSerializer):
 
 
 class ActivitySerializer(serializers.ModelSerializer):
+    title = serializers.SerializerMethodField()
+
+    def get_title(self, obj):
+        language_code = self.context.get("language", "de")
+        return obj.get_title(language_code)
+
     class Meta:
         model = Activity
         fields = [
+            "id",
             "title",
             "description",
         ]
 
 
 class FormLeadFromSerializer(serializers.ModelSerializer):
+    title = serializers.SerializerMethodField()
+
+    def get_title(self, obj):
+        language_code = self.context.get("language", "de")
+        return obj.get_title(language_code)
+
     class Meta:
         model = FormLeadFrom
         fields = [

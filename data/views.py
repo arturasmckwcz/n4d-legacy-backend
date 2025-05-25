@@ -25,11 +25,14 @@ from data.models import (
     Testimonial,
 )
 from data.serializers import (
+    ActivitySerializer,
     CategorySerializer,
     EventSerializer,
+    FormLeadFromSerializer,
     OpportunityCreateSerializer,
     OpportunitySerializer,
     PersonSerializer,
+    SkillSerializer,
     TestimonialSerializer,
     VolunteerFormSerializer,
 )
@@ -79,10 +82,8 @@ class EventListView(ListAPIView):
         return context
 
 
-class CategoryListView(ListAPIView):
+class OptionListView(ListAPIView):
     permission_classes = (AllowAny,)
-    serializer_class = CategorySerializer
-    queryset = Category.objects.all()
 
     @method_decorator(cache_page(60 * 60 * 24))  # 1 day
     def dispatch(self, *args, **kwargs):
@@ -92,6 +93,33 @@ class CategoryListView(ListAPIView):
         context = super().get_serializer_context()
         context["language"] = self.request.GET.get("language", "de")
         return context
+
+    def get(self, request, *args, **kwargs):
+        list_type = kwargs.get("list_type", None)
+        if list_type is None:
+            return Response({"error": "list_type parameter is required"}, status=400)
+
+        if list_type == OptionsList.CATEGORIES:
+            self.queryset = Category.objects.all()
+            self.serializer_class = CategorySerializer
+            return super().get(request, *args, **kwargs)
+
+        if list_type == OptionsList.ACTIVITIES:
+            self.queryset = Activity.objects.all()
+            self.serializer_class = ActivitySerializer
+            return super().get(request, *args, **kwargs)
+
+        if list_type == OptionsList.SKILLS:
+            self.queryset = Skill.objects.all()
+            self.serializer_class = SkillSerializer
+            return super().get(request, *args, **kwargs)
+
+        if list_type == OptionsList.LEADS:
+            self.queryset = FormLeadFrom.objects.all()
+            self.serializer_class = FormLeadFromSerializer
+            return super().get(request, *args, **kwargs)
+
+        return Response({"error": "list_type parameter is wrong"}, status=400)
 
 
 class DataOpportunityListView(mixins.CreateModelMixin, ListAPIView):

@@ -107,6 +107,7 @@ class OpportunityType(models.TextChoices):
 
 
 class OptionsList:
+    CATEGORIES = "categories"
     LOCATIONS = "locations"
     LANGUAGES = "languages"
     ACTIVITIES = "activities"

@@ -2,10 +2,10 @@ from django.urls import path
 
 from data.views import (
     AuthEmailDomainView,
-    CategoryListView,
     DataOpportunityListView,
     DataPersonView,
     EventListView,
+    OptionListView,
     TestimonialListView,
     VolunteerFormCreateView,
 )
@@ -17,5 +17,5 @@ urlpatterns = [
     path("testimonial/", TestimonialListView.as_view()),
     path("volunteer/", VolunteerFormCreateView().as_view()),
     path("event/", EventListView().as_view()),
-    path("category/", CategoryListView().as_view()),
+    path("lists/<str:list_type>/", OptionListView().as_view()),
 ]
