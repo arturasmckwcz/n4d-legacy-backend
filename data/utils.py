@@ -57,7 +57,7 @@ def generate_square_pattern_svg(size: int, granularity: int, color: str) -> str 
     def rect_template(x: int, y: int) -> str:
         return f"""
         <rect x='{x}' y='{y}' width='{granularity}' height='{granularity}' fill='{color}' />
-        <rect x='{size-granularity-x}' y='{y}' width='{granularity}' height='{granularity}' fill='{color}' />
+        <rect x='{size - granularity - x}' y='{y}' width='{granularity}' height='{granularity}' fill='{color}' />
         """
 
     def random_rects() -> str:

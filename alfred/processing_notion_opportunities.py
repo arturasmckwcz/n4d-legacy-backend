@@ -2,6 +2,7 @@ import traceback
 from datetime import datetime
 
 import structlog
+from django.contrib.contenttypes.models import ContentType
 from django.db import transaction
 
 from alfred.config.globals import comments_delimiter, comments_none
@@ -27,6 +28,7 @@ from data.models import (
     OpportunityTranslation,
     OpportunityType,
     Skill,
+    TitleTranslation,
 )
 
 logger = structlog.get_logger(__name__)
@@ -188,7 +190,7 @@ def create_or_update_opportunity_from_notion(
 
     except Exception as e:
         logger.error(
-            f"Notion record number {notion_record["properties"]["ID"]["unique_id"]["number"]} || Error processing opportunity: at {str(e)} url {notion_record['url']}"
+            f"Notion record number {notion_record['properties']['ID']['unique_id']['number']} || Error processing opportunity: at {str(e)} url {notion_record['url']}"
         )
         raise
 
@@ -455,21 +457,35 @@ def write_or_update_opportunity_to_db(
             opportunity_object.berlin_locations.set(berlin_location_objects)
 
             activity_objects = []
+            content_type_activity = ContentType.objects.get_for_model(Activity)
             for activity in m2m_data["activities"]:
                 try:
-                    activity_object, _ = Activity.objects.get_or_create(title=activity)
-                    activity_objects.append(activity_object)
+                    translation_obj = TitleTranslation.objects.filter(
+                        translation=activity,
+                        content_type=content_type_activity,
+                    ).first()
+                    if translation_obj:
+                        activity_object = Activity.objects.get(
+                            pk=translation_obj.object_id
+                        )
+                        activity_objects.append(activity_object)
                 except Exception as e:
                     logger.error(
-                        f"Error {e} occurred while processing activity {activity=}"
+                        f"Error {e} occurred while processing activity {activity}"
                     )
             opportunity_object.activities.set(activity_objects)
 
             skill_objects = []
+            content_type_skill = ContentType.objects.get_for_model(Skill)
             for skill in m2m_data["skills"]:
                 try:
-                    skill_object, _ = Skill.objects.get_or_create(title=skill)
-                    skill_objects.append(skill_object)
+                    translation_obj = TitleTranslation.objects.filter(
+                        translation=skill,
+                        content_type=content_type_skill,
+                    ).first()
+                    if translation_obj:
+                        skill_object = Skill.objects.get(pk=translation_obj.object_id)
+                        skill_objects.append(skill_object)
                 except Exception as e:
                     logger.error(f"Error {e} occurred while processing skill {skill=}")
             opportunity_object.skills.set(skill_objects)
@@ -523,7 +539,7 @@ def execute_opportunities_seed_pipeline():
             count_created += 1
         except Exception as e:
             logger.error(
-                f"Error writing opportunity {opportunity_page["id"]}: {str(e)}"
+                f"Error writing opportunity {opportunity_page['id']}: {str(e)}"
             )
 
     logger.info(f"Created {count_created} Opportunity objects")
@@ -648,7 +664,9 @@ def write_opportunity_to_notion(opportunity: Opportunity):
     properties["Type"] = {
         "multi_select": [
             {"name": get_clean_select_for_notion(activity)}
-            for activity in get_list(opportunity.activities.all(), "title")
+            for activity in get_list(
+                opportunity.activities.all(), "translated_title_de"
+            )
         ]
     }
     properties["District VO"] = {
@@ -660,7 +678,7 @@ def write_opportunity_to_notion(opportunity: Opportunity):
     properties["Skills"] = {
         "multi_select": [
             {"name": get_clean_select_for_notion(skill)}
-            for skill in get_list(opportunity.skills.all(), "title")
+            for skill in get_list(opportunity.skills.all(), "translated_title_de")
         ]
     }
     properties["VO Schedule"] = {

@@ -16,6 +16,8 @@ from data.models import (
     Activity,
     AuthEmailDomain,
     BerlinLocation,
+    Category,
+    EventN4D,
     FormLeadFrom,
     Language,
     Opportunity,
@@ -23,9 +25,16 @@ from data.models import (
     Testimonial,
 )
 from data.serializers import (
+    ActivitySerializer,
+    BerlinLocationSerializer,
+    CategorySerializer,
+    EventSerializer,
+    FormLeadFromSerializer,
+    LanguageSerializer,
     OpportunityCreateSerializer,
     OpportunitySerializer,
     PersonSerializer,
+    SkillSerializer,
     TestimonialSerializer,
     VolunteerFormSerializer,
 )
@@ -58,6 +67,54 @@ class TestimonialListView(ListAPIView):
         context = super().get_serializer_context()
         context["language"] = self.request.GET.get("language", "de")
         return context
+
+
+class EventListView(ListAPIView):
+    permission_classes = (AllowAny,)
+    serializer_class = EventSerializer
+    queryset = EventN4D.objects.all()
+
+    @method_decorator(cache_page(60 * 45))  # 45 mins
+    def dispatch(self, *args, **kwargs):
+        return super().dispatch(*args, **kwargs)
+
+    def get_serializer_context(self):
+        context = super().get_serializer_context()
+        context["language"] = self.request.GET.get("language", "de")
+        return context
+
+
+class OptionListView(ListAPIView):
+    permission_classes = (AllowAny,)
+
+    option_map = {
+        OptionsList.ACTIVITIES: (Activity.objects.all(), ActivitySerializer),
+        OptionsList.LANGUAGES: (Language.objects.all(), LanguageSerializer),
+        OptionsList.LOCATIONS: (BerlinLocation.objects.all(), BerlinLocationSerializer),
+        OptionsList.CATEGORIES: (Category.objects.all(), CategorySerializer),
+        OptionsList.SKILLS: (Skill.objects.all(), SkillSerializer),
+        OptionsList.LEADS: (FormLeadFrom.objects.all(), FormLeadFromSerializer),
+    }
+
+    @method_decorator(cache_page(60 * 60 * 24))  # 1 day
+    def dispatch(self, *args, **kwargs):
+        return super().dispatch(*args, **kwargs)
+
+    def get_serializer_context(self):
+        context = super().get_serializer_context()
+        context["language"] = self.request.GET.get("language", "de")
+        return context
+
+    def get(self, request, *args, **kwargs):
+        list_type = kwargs.get("list_type", None)
+        if list_type is None:
+            return Response({"error": "list_type parameter is required"}, status=400)
+
+        if list_type in self.option_map:
+            self.queryset, self.serializer_class = self.option_map[list_type]
+            return super().get(request, *args, **kwargs)
+
+        return Response({"error": "list_type parameter is invalid"}, status=400)
 
 
 class DataOpportunityListView(mixins.CreateModelMixin, ListAPIView):

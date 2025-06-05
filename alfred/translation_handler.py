@@ -18,6 +18,21 @@ except Exception as e:
     logger.error(f"Error {e} occurred instantiating boto3 client.")
 
 
+def fake_translation(text: str) -> str:
+    """
+    Fake translation function for testing purposes.
+    """
+    return (
+        text.replace("a", "-")
+        .replace("e", "-")
+        .replace("i", "-")
+        .replace("o", "-")
+        .replace("u", "-")
+        if isinstance(text, str)
+        else text
+    )
+
+
 def translate(
     text: str, source_language_code: str, target_language_code: str, dry_run=False
 ) -> str | None:
@@ -25,7 +40,7 @@ def translate(
         logger.debug(
             f'Dry run translation of "{text}" from "{source_language_code}" to "{target_language_code}"'
         )
-        return text
+        return fake_translation(text)
 
     if not boto_client:
         logger.error("Machine translation service is not initialized.")

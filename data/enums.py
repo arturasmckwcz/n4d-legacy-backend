@@ -107,6 +107,7 @@ class OpportunityType(models.TextChoices):
 
 
 class OptionsList:
+    CATEGORIES = "categories"
     LOCATIONS = "locations"
     LANGUAGES = "languages"
     ACTIVITIES = "activities"
@@ -130,3 +131,8 @@ class Environment:
     PRODUCTION = "production"
     TEST = "test"
     DEVELOP = "develop"
+
+
+class EventN4DType(models.TextChoices):
+    PARTY = "party", "Party"
+    WORKSHOP = "workshop", "Workshop"

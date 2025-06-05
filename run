@@ -1,0 +1,19 @@
+#! /bin/bash
+
+if [ -z "$1" ]; then
+    echo "Usage: $0 db | mig | make"
+    exit 1
+fi
+
+if [ "$1" == "db" ]; then
+    echo "Running database shell..."
+    python manage.py dbshell
+elif [ "$1" == "mig" ]; then
+    echo "Migrating..."
+    python manage.py migrate
+elif [ "$1" == "make" ]; then
+    echo "Make migrations..."
+    python manage.py makemigrations
+else
+    echo "Invalid argument. Use: 'db' | 'mig' | 'make'."
+fi

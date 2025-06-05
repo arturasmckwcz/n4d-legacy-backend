@@ -9,7 +9,9 @@ from data.models import (
     AuthEmailDomain,
     Avatar,
     BerlinLocation,
+    Category,
     Contact,
+    EventN4D,
     FormLeadFrom,
     Language,
     LanguageTranslation,
@@ -81,6 +83,12 @@ class AvatarSerializer(serializers.ModelSerializer):
 
 
 class SkillSerializer(serializers.ModelSerializer):
+    title = serializers.SerializerMethodField()
+
+    def get_title(self, obj):
+        language_code = self.context.get("language", "de")
+        return obj.get_title(language_code)
+
     class Meta:
         model = Skill
         fields = [
@@ -90,6 +98,12 @@ class SkillSerializer(serializers.ModelSerializer):
 
 
 class LanguageSerializer(serializers.ModelSerializer):
+    title = serializers.SerializerMethodField()
+
+    def get_title(self, obj):
+        language_code = self.context.get("language", "de")
+        return obj.get_title(language_code)
+
     class Meta:
         model = Language
         fields = [
@@ -100,15 +114,28 @@ class LanguageSerializer(serializers.ModelSerializer):
 
 
 class ActivitySerializer(serializers.ModelSerializer):
+    title = serializers.SerializerMethodField()
+
+    def get_title(self, obj):
+        language_code = self.context.get("language", "de")
+        return obj.get_title(language_code)
+
     class Meta:
         model = Activity
         fields = [
+            "id",
             "title",
             "description",
         ]
 
 
 class FormLeadFromSerializer(serializers.ModelSerializer):
+    title = serializers.SerializerMethodField()
+
+    def get_title(self, obj):
+        language_code = self.context.get("language", "de")
+        return obj.get_title(language_code)
+
     class Meta:
         model = FormLeadFrom
         fields = [
@@ -245,6 +272,114 @@ class OrganizationSerializer(serializers.ModelSerializer):
         return persons_details
 
 
+class CategorySerializer(serializers.ModelSerializer):
+    translated_title = serializers.SerializerMethodField()
+    translated_description = serializers.SerializerMethodField()
+
+    def get_translated_title(self, obj):
+        language_code = self.context.get("language", "de")
+        return obj.get_translated_title(language_code)
+
+    def get_translated_description(self, obj):
+        language_code = self.context.get("language", "de")
+        return obj.get_translated_description(language_code)
+
+    class Meta:
+        model = Category
+        fields = [
+            "id",
+            "title",
+            "description",
+            "translated_title",
+            "translated_description",
+        ]
+
+
+class EventSerializer(serializers.ModelSerializer):
+    title = serializers.SerializerMethodField()
+    subtitle = serializers.SerializerMethodField()
+    menu_title = serializers.SerializerMethodField()
+    time_str = serializers.SerializerMethodField()
+    location_comment = serializers.SerializerMethodField()
+    description = serializers.SerializerMethodField()
+    short_description = serializers.SerializerMethodField()
+    followup_text = serializers.SerializerMethodField()
+    additional_title = serializers.SerializerMethodField()
+    additional_info = serializers.SerializerMethodField()
+    outro = serializers.SerializerMethodField()
+
+    class Meta:
+        model = EventN4D
+        fields = [
+            "id",
+            "active",
+            "host_name",
+            "date",
+            "date_end",
+            "event_type",
+            "pic",
+            "address",
+            "location_link",
+            "linkRSVP",
+            "followup_link",
+            "title",
+            "subtitle",
+            "menu_title",
+            "time_str",
+            "location_comment",
+            "description",
+            "short_description",
+            "followup_text",
+            "additional_title",
+            "additional_info",
+            "outro",
+        ]
+
+    def get_title(self, obj):
+        language_code = self.context.get("language", "de")
+        return obj.get_title(language_code)
+
+    def get_subtitle(self, obj):
+        language_code = self.context.get("language", "de")
+        return obj.get_subtitle(language_code)
+
+    def get_menu_title(self, obj):
+        language_code = self.context.get("language", "de")
+        return obj.get_menu_title(language_code)
+
+    def get_time_str(self, obj):
+        language_code = self.context.get("language", "de")
+        return obj.get_time_str(language_code)
+
+    def get_location_comment(self, obj):
+        language_code = self.context.get("language", "de")
+        return obj.get_location_comment(language_code)
+
+    def get_description(self, obj):
+        language_code = self.context.get("language", "de")
+        return obj.get_description(language_code)
+
+    def get_short_description(self, obj):
+        language_code = self.context.get("language", "de")
+        return obj.get_short_description(language_code)
+
+    def get_followup_text(self, obj):
+        language_code = self.context.get("language", "de")
+        return obj.get_followup_text(language_code)
+
+    def get_additional_title(self, obj):
+        language_code = self.context.get("language", "de")
+        return obj.get_additional_title(language_code)
+
+    def get_additional_info(self, obj):
+        language_code = self.context.get("language", "de")
+        return obj.get_additional_info(language_code)
+
+    def get_outro(self, obj):
+        language_code = self.context.get("language", "de")
+        return obj.get_outro(language_code)
+
+
 class OpportunitySerializer(serializers.ModelSerializer):
     berlin_locations = serializers.SerializerMethodField(read_only=True)
     activities = serializers.SerializerMethodField(read_only=True)
@@ -262,7 +397,7 @@ class OpportunitySerializer(serializers.ModelSerializer):
             "title",
             "vo_information",
             "accomp_information",
-            "opportunity_type",
+            "accomp_datetime",
             "berlin_locations",
             "schedule_str",
             "datetime_str",
@@ -272,7 +407,6 @@ class OpportunitySerializer(serializers.ModelSerializer):
             "skills",
             "status",
             "opportunity_type",
-            "accomp_datetime",
             "created_at",
             "updated_at",
         ]
@@ -325,6 +459,9 @@ class OpportunitySerializer(serializers.ModelSerializer):
     def to_representation(self, instance):
         primary_keys = self.context.get("primary_keys", None)
         response = super().to_representation(instance)
+        if instance.opportunity_type == "volunteering" and instance.accomp_datetime:
+            processed_schedule_str = f"{instance.accomp_datetime.strftime('%d.%m.%Y %H:%M')}, {response['schedule_str']}"
+            response["schedule_str"] = processed_schedule_str
         return flatten_dict(response, primary_keys)
 
 
@@ -594,8 +731,10 @@ class VolunteerFormSerializer(serializers.ModelSerializer):
         )
         VolunteerLanguage.objects.bulk_create(languages_for_m2m)
 
+        email, phone = volunteer_form.check_email_and_phone()
+
         slack_post_message(
-            f"hey, please check the new arrival to volunteers: {volunteer_form.email}",
+            f"hey, please check the new arrival to volunteers: {volunteer_form.email}{'\nWarning: ' + email + ' is already in use.' if email else ''}{'\nWarning: ' + phone + ' is already in use.' if phone else ''}",
             dry_run=is_test_case(volunteer_form.email),
         )
 
