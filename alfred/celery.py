@@ -51,9 +51,4 @@ app.conf.beat_schedule = {
         "task": "alfred.tasks.process_sync_volunteerform",
         "schedule": schedule,
     },
-    "seed_opportunities_original_language": {
-        "task": "alfred.tasks.process_opportunities",
-        "enabled": False,
-        "schedule": schedule,
-    },
 }
